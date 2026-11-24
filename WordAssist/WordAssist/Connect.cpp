@@ -24,7 +24,6 @@ extern CAddInModule _AtlModule;
 #include "stringconversions.h"
 
 #pragma warning( disable : 4702 ) // Unreachable code
-#include "LuaState.h"
 
 using namespace except ;
 
@@ -170,14 +169,6 @@ STDMETHODIMP CConnect::OnConnection(IDispatch *pApplication,
 	{
 		logging::set_logger(logger_ptr(new file_logger));
 		logging::log_debug("OnConnection") ;
-
-		luawrapper::LuaState lua_state ;
-		if (! lua_state.is_valid())
-		{
-			logging::log_error("Failed to initialize Lua VM.") ;
-			logging::log_error(lua_state.get_string(-1)) ;
-		}
-
 
 		// store/restore the clipboard contents
 		CClipboardBackup cbb ;

@@ -21,8 +21,6 @@ Building Felix requires the following separate libraries:
 
 - Windows Template Library (WTL): http://sourceforge.net/projects/wtl/
 - Boost: http://www.boost.org/
-- Lua: http://www.lua.org/
-- LuaBridge: https://github.com/vinniefalco/LuaBridge
 - Python: https://www.python.org/
 
 Felix also links to the following libraries:
