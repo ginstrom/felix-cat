@@ -1,0 +1,5 @@
+Source: https://github.com/rmartinho/cpptemplate (mirror of bitbucket.org/ginstrom/cpptemplate)
+Commit: 4c5980c51c0c1f01d7d77f798aedc6a02903cb81 (2014-02-08)
+
+Pinned to the last wide-string (std::wstring) version. The next upstream
+commit (5b1dd29) switched to UTF-8 std::string, which Felix does not use.
