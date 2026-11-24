@@ -1,0 +1,62 @@
+# Build output
+Unicode_Debug/
+Unicode_Release/
+Testing/
+Testing_64/
+Release_64/
+Profiler/
+Release/
+Debug/
+x64/
+*.obj
+*.pch
+*.ipch
+*.pdb
+*.idb
+*.ilk
+*.sbr
+*.tlog
+*.lastbuildstate
+*.unsuccessfulbuild
+*.log
+*.tmp
+*.i
+
+# MIDL / #import generated
+*.tlh
+*.tli
+*.tlb
+*_i.c
+*_p.c
+*_h.h
+dlldata.c
+AddIn.h
+Felix/felix_tm.h
+
+# Visual Studio user/state files
+.vs/
+*.suo
+*.user
+*.sdf
+*.opensdf
+*.ncb
+*.aps
+*.VC.db
+*.VC.opendb
+*.psess
+*.vsp
+
+# Misc
+*~
+*.orig
+*.pyc
+*.kpf
+.idea/
+doxy_docs/
+*PVS-Studio.cfg
+python_tools/build
+python_tools/.coverage
+python_tools/htmlcov
+
+# Local dependency paths (copy Dependencies.props.example)
+Dependencies.local.props
