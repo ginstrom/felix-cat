@@ -25,6 +25,11 @@ other locations, copy `Dependencies.local.props.example` to
 | WTL      | `third_party\wtl\Include\` | WTL 10 (SourceForge or the `wtl` NuGet package). |
 | cpptempl | `third_party\cpptempl\` | **Already included in the repo.** Felix's HTML template engine, pinned to the last wide-string version (commit 4c5980c). See `third_party\cpptempl\SOURCE.txt`. |
 
+> **Boost and long paths:** the Boost installer fails with "MoveFile failed; code 3"
+> if its folder path is long, because some doc file names exceed the Windows
+> 260-character limit. Install it to a short path such as `C:\local\boost_1_91_0`
+> and set `BoostDir` and `BoostLibDir` in `Dependencies.local.props`.
+
 Scintilla's headers are already in `common\`. At runtime Felix loads
 `SciLexer.dll`, which must sit next to `Felix.exe`.
 
