@@ -156,6 +156,7 @@ int MainSub(HINSTANCE hInstance, LPTSTR lpstrCmdLine, int nCmdShow)
 	bool bRun = true;
 	bool bAutomation = false;
 	bool bRegister = false ;
+	bool bExplicitRegister = false ;	// /RegServer on the command line
 #ifdef _DEBUG
 	bRegister = true ;
 #endif
@@ -177,6 +178,7 @@ int MainSub(HINSTANCE hInstance, LPTSTR lpstrCmdLine, int nCmdShow)
 		else if( ! _tcsicmp( lpszToken, _T("RegServer") )  )
 		{
 			bRegister = true ;
+			bExplicitRegister = true ;
 			bRun = false;
 			break;
 		}
@@ -208,7 +210,12 @@ int MainSub(HINSTANCE hInstance, LPTSTR lpstrCmdLine, int nCmdShow)
 		{
 			logging::log_error("Failed to register COM server.") ;
 			logging::log_exception(e) ;
-			e.notify_user(L"Failed to register COM server.") ;
+			// Debug builds re-register on every launch, which fails without
+			// admin rights (E_ACCESSDENIED). Only nag when it was asked for.
+			if (bExplicitRegister)
+			{
+				e.notify_user(L"Failed to register COM server.") ;
+			}
 		}
 	}
 	// run as main window
