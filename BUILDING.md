@@ -30,8 +30,12 @@ other locations, copy `Dependencies.local.props.example` to
 > 260-character limit. Install it to a short path such as `C:\local\boost_1_91_0`
 > and set `BoostDir` and `BoostLibDir` in `Dependencies.local.props`.
 
-Scintilla's headers are already in `common\`. At runtime Felix loads
-`SciLexer.dll`, which must sit next to `Felix.exe`.
+Scintilla's headers are already in `common\`. The build copies `Felix\SciLexer.dll`
+next to `Felix.exe`.
+
+**No Office on the build machine?** Set `<FelixNoExcel>true</FelixNoExcel>` in
+`Dependencies.local.props`. Felix then builds without the Excel type libraries,
+and Excel export shows a "not available" message instead.
 
 **Lua is no longer needed.** Felix only created an unused Lua VM at startup,
 so that code and the Lua, LuaBridge and LuaWrapper sources have been removed
@@ -43,30 +47,56 @@ from the project.
    projects. You can **cancel** that for now.
 2. Choose the configuration `Unicode_Debug|Win32`. `Unicode_Release` treats
    warnings as errors. `Testing` builds the Boost.Test unit tests into the exe.
-3. Right-click the **Felix** project and choose **Build**.
+3. Build **Felix English** and **Felix Japanese** (the UI resource DLLs), then **Felix**.
 
-The build ends by running `Felix.exe /RegServer` to register its COM server.
-That step writes to the machine-wide registry, so either run Visual Studio
-**as Administrator** or ignore that one step failing while you work on compiling.
+Or from a Developer PowerShell:
+
+```powershell
+msbuild "Felix\EngResource\Felix English.vcxproj" /p:Configuration=Unicode_Debug /p:Platform=Win32
+msbuild "Felix\JpnResource\Felix Japanese.vcxproj" /p:Configuration=Unicode_Debug /p:Platform=Win32
+msbuild Felix\Felix.vcxproj /p:Configuration=Unicode_Debug /p:Platform=Win32 /m
+```
 
 The pre-build step copies `Felix\html\` to `%LOCALAPPDATA%\Felix\html\`, where
 the UI templates are loaded from at runtime.
+
+## 4. Run
+
+Run `Felix\Unicode_Debug\Felix.exe`. It needs, next to it:
+
+- `SciLexer.dll` (copied by the build)
+- `lang\EngResource.dll` and `lang\JpnResource.dll` (from the two resource projects).
+  Without them Felix stops with the assertion `localized_instance != 0`.
+
+Felix logs to `%LOCALAPPDATA%\Felix\logs\felix.log`.
+
+**COM registration.** Felix is also a COM server, which the Word, Excel and
+PowerPoint add-ins use. Registering it writes to the machine-wide registry, so
+it needs admin rights. The build's final step (`Felix.exe /RegServer`) fails
+without them, and so does the automatic re-registration that Debug builds do
+on every launch. That one is now only logged, and Felix runs normally. To
+register for real, run `Felix.exe /RegServer` once from an Administrator terminal.
 
 ## What changed from the original VS 2013 setup
 
 - `PlatformToolset` v120 → v145, Windows SDK 10.0, in Felix and its two resource DLL projects.
 - The hardcoded `D:\dev\cpp\...` include and library paths were replaced by `Dependencies.props`.
+  `common\` is on the include path *after* the system headers, because its
+  `dbghelp.h` and `Parser.h` would otherwise hide the SDK's copies.
 - The `#import`s of Office 2000 OLB files and `vbscript.tlb` now use
   `libid:` registry lookups (`ExcelInterfaceReal.h`, `common\WordAutomationObject.h`, `common\RegEx.h`).
+- Boost.Test no longer links itself automatically, so the project names its
+  library explicitly. `boost_test_wchar_shim.cpp` covers a gap caused by Felix's
+  non-native `wchar_t` (`/Zc:wchar_t-`).
+- `Felix.rc` includes `winres.h` instead of MFC's `afxres.h`.
+- cpptempl is compiled through `Felix\cpptempl_build.cpp` so it can use the precompiled header.
 - The Armadillo/SoftwarePassport copy-protection step was removed from the Release build.
 - The dead Lua startup code was removed.
 
-## Expected next problems
+## Not done yet
 
-These aren't verified yet, because the project hasn't been compiled under VS 2026.
-
-- Stricter conformance in the new compiler: `/permissive-` is the default for
-  new projects but **not** for upgraded ones, so it stays off here.
-- Newer Office type libraries can add names that clash with Windows macros.
-  The fix is to add more `rename(...)` clauses to the `#import`.
-- Boost removals since ~1.57, for example `boost/filesystem` v2-era calls.
+- `Unicode_Release` and `Testing` configurations haven't been built.
+- The Word/Excel/PowerPoint add-ins and their test projects are still on VS 2013 settings.
+- Excel export needs Office installed; Word Assist will need Word's type library too.
+- Felix still uses the non-standard `/Zc:wchar_t-`. Switching to a built-in
+  `wchar_t` is the long-term fix, but it touches all string and COM code.
