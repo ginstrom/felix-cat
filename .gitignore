@@ -60,3 +60,7 @@ python_tools/htmlcov
 
 # Local dependency paths (copy Dependencies.props.example)
 Dependencies.local.props
+
+# Large third-party trees (cpptempl may be committed)
+third_party/boost/
+third_party/wtl/

@@ -45,8 +45,6 @@
 
 #endif
 
-#include "LuaState.h"
-
 using namespace except ;
 
 /** memory debugging */
@@ -345,12 +343,6 @@ int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, LPTSTR lp
 	// going to a subroutine makes it cleaner to separate app code from error handling
 	try
 	{
-		luawrapper::LuaState lua_state ;
-		if (! lua_state.is_valid())
-		{
-			logging::log_error("Failed to initialize Lua VM.") ;
-			logging::log_error(lua_state.get_string(-1)) ;
-		}
 		return MainSub( hInstance, lpstrCmdLine, nCmdShow ) ;
 	}
 	catch ( CException &e )

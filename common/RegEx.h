@@ -11,7 +11,8 @@
 #include "Exceptions.h"
 #include "stringconversions.h"
 
-#import "C:/dev/cpp/Common DLLs/vbscript.tlb" \
+// Microsoft VBScript Regular Expressions 5.5 (vbscript.dll), found via the registry
+#import "libid:3F4DACA7-160D-11D2-A8E9-00104B365C9F" \
 	no_namespace \
 	named_guids
 

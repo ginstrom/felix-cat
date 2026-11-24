@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copy to Dependencies.local.props and uncomment what you need. -->
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <!-- <BoostDir>C:\local\boost_1_86_0</BoostDir> -->
+    <!-- <BoostLibDir>C:\local\boost_1_86_0\lib32-msvc-14.3</BoostLibDir> -->
+    <!-- <WtlDir>C:\dev\WTL10\Include</WtlDir> -->
+    <!-- <CppTemplDir>C:\dev\cpptempl</CppTemplDir> -->
+  </PropertyGroup>
+</Project>

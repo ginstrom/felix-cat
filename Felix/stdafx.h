@@ -87,8 +87,6 @@ static const size_t MAX_MEMORY_SIZE_FOR_DEMO = 10 ;
 //	#define _ATL_DEBUG_INTERFACES 
 #endif 
 
-#include <lua.hpp>
-
 #include <Windows.h>
 #include <commdlg.h>
 

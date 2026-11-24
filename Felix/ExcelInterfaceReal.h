@@ -1,13 +1,18 @@
 #pragma once
 
 
-#import "D:\dev\cpp\Common DLLs\Word 2000 OLBs\MSO.DLL"	\
-	rename_namespace("MSOffice") rename("RGB", "OfficeRGB") rename( "SearchPath", "OfficeSearchPath" ) rename("DocumentProperties", "OfficeDocumentProperties") named_guids    
+// Type libraries are located through the registry (requires Office installed
+// on the build machine). Was: Office 2000 OLBs at hardcoded D:\dev paths.
+// Office core (MSO.DLL)
+#import "libid:2DF8D04C-5BFA-101B-BDE5-00AA0044DE52"	\
+	rename_namespace("MSOffice") rename("RGB", "OfficeRGB") rename( "SearchPath", "OfficeSearchPath" ) rename("DocumentProperties", "OfficeDocumentProperties") named_guids
 
-#import "D:\Program Files (x86)\Common Files\microsoft shared\VBA\VBA6\\VBE6EXT.olb" \
-	rename_namespace("VBE6") 
+// VBA extensibility (VBE6EXT.OLB)
+#import "libid:0002E157-0000-0000-C000-000000000046" \
+	rename_namespace("VBE6")
 
-#import "D:\dev\cpp\Common DLLs\Word 2000 OLBs\EXCEL9.olb" \
+// Excel
+#import "libid:00020813-0000-0000-C000-000000000046" \
 	exclude( "IFont" ) exclude( "IPicture" )\
 	rename("DialogBox", "DialogBoxForExcel") rename( "RGB", "RGBForExcel") \
 	rename( "CopyFile", "CopyFileForExcel" ) rename( "ReplaceText", "ReplaceTextForExcel" ) \

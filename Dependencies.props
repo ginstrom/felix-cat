@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Locations of third-party libraries used to build Felix.
+
+  Defaults assume everything lives under third_party\ next to this file:
+
+    third_party\boost\               Boost source tree (contains boost\version.hpp)
+    third_party\boost\lib32-msvc-14.3\   32-bit compiled Boost libs (test, filesystem, regex)
+    third_party\wtl\Include\         WTL headers (atlapp.h etc.)
+    third_party\cpptempl\            cpptempl.h / cpptempl.cpp
+
+  To use different locations, copy Dependencies.local.props.example to
+  Dependencies.local.props (git-ignored) and set the properties there.
+-->
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildThisFileDirectory)Dependencies.local.props"
+          Condition="Exists('$(MSBuildThisFileDirectory)Dependencies.local.props')" />
+
+  <PropertyGroup>
+    <FelixRoot>$(MSBuildThisFileDirectory)</FelixRoot>
+    <FelixThirdParty Condition="'$(FelixThirdParty)'==''">$(FelixRoot)third_party\</FelixThirdParty>
+
+    <BoostDir Condition="'$(BoostDir)'==''">$(FelixThirdParty)boost</BoostDir>
+    <BoostLibDir Condition="'$(BoostLibDir)'=='' and '$(Platform)'=='x64'">$(BoostDir)\lib64-msvc-14.3</BoostLibDir>
+    <BoostLibDir Condition="'$(BoostLibDir)'==''">$(BoostDir)\lib32-msvc-14.3</BoostLibDir>
+    <WtlDir Condition="'$(WtlDir)'==''">$(FelixThirdParty)wtl\Include</WtlDir>
+    <CppTemplDir Condition="'$(CppTemplDir)'==''">$(FelixThirdParty)cpptempl</CppTemplDir>
+  </PropertyGroup>
+</Project>

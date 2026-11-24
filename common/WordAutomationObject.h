@@ -6,13 +6,17 @@
 
 #pragma warning(disable:4146) // unary minus operator applied to unsigned type
 
-#import "C:/dev/cpp/Common DLLs/Word 2000 OLBs/MSO.DLL"	\
-	rename_namespace("MSOffice") rename("RGB", "OfficeRGB") rename( "SearchPath", "OfficeSearchPath" ) rename("DocumentProperties", "OfficeDocumentProperties") named_guids    
+// Type libraries are located through the registry (requires Office installed).
+// Office core (MSO.DLL)
+#import "libid:2DF8D04C-5BFA-101B-BDE5-00AA0044DE52"	\
+	rename_namespace("MSOffice") rename("RGB", "OfficeRGB") rename( "SearchPath", "OfficeSearchPath" ) rename("DocumentProperties", "OfficeDocumentProperties") named_guids
 
-#import "D:\Program Files (x86)\Common Files\microsoft shared\VBA\VBA6\\VBE6EXT.olb" \
-	rename_namespace("VBE6") 
+// VBA extensibility (VBE6EXT.OLB)
+#import "libid:0002E157-0000-0000-C000-000000000046" \
+	rename_namespace("VBE6")
 
-#import "C:/dev/cpp/Common DLLs/Word 2000 OLBs/MSWORD9.olb" \
+// Word
+#import "libid:00020905-0000-0000-C000-000000000046" \
 	rename_namespace("MSWord") rename("FindText", "WordFindText") rename("ExitWindows","MSWordExitWindows") \
 	rename( "RGB", "WordRBG" ) rename( "ReplaceText", "WordReplaceText" )
 
