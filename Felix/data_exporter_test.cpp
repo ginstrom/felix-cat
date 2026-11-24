@@ -158,7 +158,7 @@ BOOST_AUTO_TEST_SUITE( test_multiterm_data_exporter_6 )
 		expected += L"りんご\tapple\t-\n" ;
 		expected += L"日本語\tJapanese\t-\n" ;
 
-		BOOST_MESSAGE("Checking in export_gloss\n") ;
+		BOOST_TEST_MESSAGE("Checking in export_gloss\n") ;
 
 		BOOST_CHECK_EQUAL(expected, device->m_value) ;
 	}

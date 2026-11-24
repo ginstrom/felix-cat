@@ -19,7 +19,7 @@ BOOST_AUTO_TEST_SUITE( ArrayTests )
 		array_type a ;
 		BOOST_CHECK_EQUAL ( a.begin() , a.end() ) ; 
 		a.resize( 10 ) ;
-		std::fill(a.begin(), a.end(), 0) ;
+		std::fill(a.begin(), a.end(), array_type::value_type(0)) ;
 		a(0) = 5 ;
 		a(1) = 25 ;
 		BOOST_CHECK ( a.begin() != a.end() ) ;

@@ -296,10 +296,11 @@ echo Server registration done!
       <BrowseInformationFile>.\Testing/</BrowseInformationFile>
       <WarningLevel>Level4</WarningLevel>
       <TreatWarningAsError>true</TreatWarningAsError>
+      <!-- Warnings added by compilers newer than VS 2013. Exempted from /WX until the code is cleaned up: C4840 CString to variadic, C4838 narrowing, C4458/C4459 hiding, C4566 Japanese in narrow literals (StringEx_test.cpp), C4091 empty typedef, C4302 pointer truncation, C4100 unused parameter, C4702 unreachable code. -->
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <DebugInformationFormat>OldStyle</DebugInformationFormat>
       <EnablePREfast>false</EnablePREfast>
-      <DisableSpecificWarnings>4520</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4840;4838;4458;4459;4566;4091;4302;4100;4702;4520</DisableSpecificWarnings>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>

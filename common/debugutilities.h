@@ -152,7 +152,7 @@ public:
 		}
 
 		CString message = FormatWinError(error) ;
-		ATLTRACE( "%s(%d): %d (%s)\n", file_name, line, error, message ) ;
+		ATLTRACE( "%s(%d): %d (%s)\n", file_name, line, error, static_cast<LPCTSTR>(message) ) ;
 	}
 	// trace routines
 

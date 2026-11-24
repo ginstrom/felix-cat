@@ -5,6 +5,7 @@
 #include "output_device.h"
 #include "logging.h"
 #include "input_device_file.h"
+#include <VersionHelpers.h>
 
 static const int ONEKB = 1024 ;
 static const int ONEMB = (ONEKB*ONEKB) ;
@@ -13,13 +14,10 @@ static const int TENMB = (10*ONEMB) ;
 using namespace except;
 
 
-bool is_vista_or_later() 
+bool is_vista_or_later()
 {
-	OSVERSIONINFO osvi;
-
-	osvi.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
-	GetVersionEx (&osvi);
-	return (osvi.dwMajorVersion >= 6);
+	// GetVersionEx is deprecated (and lies without an app manifest).
+	return IsWindowsVistaOrGreater() != FALSE ;
 }
 const CString get_load_failure_msg( const CString & file_name )  
 {

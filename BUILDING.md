@@ -37,9 +37,9 @@ next to `Felix.exe`.
 `Dependencies.local.props`. Felix then builds without the Excel type libraries,
 and Excel export shows a "not available" message instead.
 
-**Lua is no longer needed.** Felix only created an unused Lua VM at startup,
-so that code and the Lua, LuaBridge and LuaWrapper sources have been removed
-from the project.
+**Lua is no longer needed.** Lua was never actually used: Felix and Word Assist
+only created an unused Lua VM at startup. That code, and the Lua, LuaBridge and
+LuaWrapper sources, have been removed from both projects.
 
 ## 3. Build
 
@@ -77,6 +77,31 @@ without them, and so does the automatic re-registration that Debug builds do
 on every launch. That one is now only logged, and Felix runs normally. To
 register for real, run `Felix.exe /RegServer` once from an Administrator terminal.
 
+## 5. Unit tests
+
+The `Testing` configuration compiles Felix's ~2300 Boost.Test unit tests into
+`Felix\Testing\Felix.exe`. Running it executes the tests and exits; it shows no window.
+
+1. Build `Testing|Win32`.
+2. Copy `SciLexer.dll` and the `lang\` folder from `Felix\Unicode_Debug\` into
+   `Felix\Testing\` (the Testing configuration has no copy step yet).
+3. Run `Felix\Testing\Felix.exe`. The summary report goes to standard error,
+   for example `Felix.exe 2> results.txt`. Individual failures go to
+   `OutputDebugString`, so you see them in the VS Output window when debugging,
+   or with a tool such as DebugView.
+
+`Testing` treats warnings as errors, minus a listed set of warnings that newer
+compilers added (see the comment in `Felix.vcxproj`).
+
+**Last run (VS 2026, Boost 1.91): 2288 of 2294 passed.** The 6 that fail depend on
+your old development machine:
+
+- `test_get_docs_path`, `test_get_local_helpfile_name`, `test_get_local_appdata_folder`:
+  these expect the literal path `D:\Users\Ryan\AppData\Local`.
+- `test_has_name_clash_true`: needs `D:\dev\testdata\felix\testmem.ftm`.
+- `load_multiterm6`: needs `c:\test\Multiterm.6.0.sample_small.txt`, which isn't in `TestData\`.
+- `export_gloss_mt55`: writes to `c:\test\`. When that folder is missing, the
+  failed open is followed by a memory access violation, which is worth fixing.
 ## What changed from the original VS 2013 setup
 
 - `PlatformToolset` v120 → v145, Windows SDK 10.0, in Felix and its two resource DLL projects.
@@ -91,12 +116,17 @@ register for real, run `Felix.exe /RegServer` once from an Administrator termina
 - `Felix.rc` includes `winres.h` instead of MFC's `afxres.h`.
 - cpptempl is compiled through `Felix\cpptempl_build.cpp` so it can use the precompiled header.
 - The Armadillo/SoftwarePassport copy-protection step was removed from the Release build.
-- The dead Lua startup code was removed.
+- The unused Lua startup code was removed from Felix and Word Assist.
+- Test fixes for newer Boost/compiler: `BOOST_MESSAGE` → `BOOST_TEST_MESSAGE`,
+  an `int`→`short` fill in `array_test.cpp`, and `GetVersionEx` replaced by
+  `IsWindowsVistaOrGreater()`.
 
 ## Not done yet
 
-- `Unicode_Release` and `Testing` configurations haven't been built.
+- `Unicode_Release` hasn't been built.
+- The six machine-specific tests above should use relative or computed paths and checked-in test data.
 - The Word/Excel/PowerPoint add-ins and their test projects are still on VS 2013 settings.
+  (Word Assist's Lua has been removed already.)
 - Excel export needs Office installed; Word Assist will need Word's type library too.
 - Felix still uses the non-standard `/Zc:wchar_t-`. Switching to a built-in
   `wchar_t` is the long-term fix, but it touches all string and COM code.
