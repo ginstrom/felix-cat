@@ -6,5 +6,7 @@
     <!-- <BoostLibDir>C:\local\boost_1_91_0\lib32-msvc-14.5</BoostLibDir> -->
     <!-- <WtlDir>C:\dev\WTL10\Include</WtlDir> -->
     <!-- <CppTemplDir>C:\dev\cpptempl</CppTemplDir> -->
+    <!-- Build without Microsoft Office (Excel export disabled): -->
+    <!-- <FelixNoExcel>true</FelixNoExcel> -->
   </PropertyGroup>
 </Project>

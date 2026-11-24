@@ -23,7 +23,22 @@
     <BoostDir Condition="'$(BoostDir)'==''">$(FelixThirdParty)boost</BoostDir>
     <BoostLibDir Condition="'$(BoostLibDir)'=='' and '$(Platform)'=='x64'">$(BoostDir)\lib64-msvc-14.5</BoostLibDir>
     <BoostLibDir Condition="'$(BoostLibDir)'==''">$(BoostDir)\lib32-msvc-14.5</BoostLibDir>
+    <!-- Tags in Boost's compiled library names, e.g. libboost_X-vc145-mt-sgd-x32-1_91.lib.
+         Boost.Test no longer auto-links, so the project names its library explicitly. -->
+    <BoostLibToolset Condition="'$(BoostLibToolset)'==''">vc145</BoostLibToolset>
+    <BoostLibVersion Condition="'$(BoostLibVersion)'==''">1_91</BoostLibVersion>
     <WtlDir Condition="'$(WtlDir)'==''">$(FelixThirdParty)wtl\Include</WtlDir>
     <CppTemplDir Condition="'$(CppTemplDir)'==''">$(FelixThirdParty)cpptempl</CppTemplDir>
   </PropertyGroup>
+
+  <!--
+    Set FelixNoExcel to true (in Dependencies.local.props) on a machine without
+    Microsoft Office. Felix then builds without the Excel type libraries, and
+    Excel export shows an error message instead.
+  -->
+  <ItemDefinitionGroup Condition="'$(FelixNoExcel)'=='true'">
+    <ClCompile>
+      <PreprocessorDefinitions>FELIX_NO_EXCEL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
 </Project>

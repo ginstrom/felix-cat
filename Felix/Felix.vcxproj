@@ -87,6 +87,8 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Unicode_Debug|Win32'">
     <PreBuildEvent>
       <Command>xcopy /E /I /Y /Q "$(ProjectDir)html" "%LOCALAPPDATA%\Felix\html\"
+if not exist "$(OutDir)" mkdir "$(OutDir)"
+copy /Y "$(ProjectDir)SciLexer.dll" "$(OutDir)"
 </Command>
     </PreBuildEvent>
     <CustomBuildStep>
@@ -144,7 +146,7 @@ echo Server registration done!
       <Culture>0x0409</Culture>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>dbghelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>dbghelp.lib;libboost_unit_test_framework-$(BoostLibToolset)-mt-sgd-x32-$(BoostLibVersion).lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>.\Unicode_Debug/Felix.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -222,7 +224,7 @@ echo Server registration done!
       <Culture>0x0409</Culture>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>dbghelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>dbghelp.lib;libboost_unit_test_framework-$(BoostLibToolset)-mt-x32-$(BoostLibVersion).lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>.\Unicode_Release/Felix.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -304,7 +306,7 @@ echo Server registration done!
       <Culture>0x0409</Culture>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>dbghelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>dbghelp.lib;libboost_unit_test_framework-$(BoostLibToolset)-mt-sgd-x32-$(BoostLibVersion).lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>.\Testing/Felix.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -328,6 +330,7 @@ echo Server registration done!
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="cpptempl_build.cpp" />
+    <ClCompile Include="boost_test_wchar_shim.cpp" />
     <ClCompile Include="$(CppTemplDir)\cpptempl_test.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Testing|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Unicode_Debug|Win32'">NotUsing</PrecompiledHeader>

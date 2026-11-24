@@ -1,5 +1,30 @@
 #pragma once
 
+#ifdef FELIX_NO_EXCEL
+
+// Built without Microsoft Office: no Excel type library is available, so
+// Excel export reports an error instead. Remove FELIX_NO_EXCEL from the
+// project's preprocessor definitions once Office is installed.
+#include "ExcelInterface.h"
+#include "Exceptions.h"
+
+class ExcelInterfaceReal : public ExcelInterface
+{
+public:
+	ExcelInterfaceReal()
+	{
+		throw except::CProgramException(
+			ATL::CString(L"Excel export is not available in this build of Felix "
+				L"(it was built without Microsoft Office). "
+				L"Export to tab-separated text instead."),
+			_T(__FILE__), __LINE__) ;
+	}
+	void SaveAs(const CString) {}
+	void SetCellText(int, int, const wstring) {}
+	void MakeCellBold(int, int) {}
+};
+
+#else // FELIX_NO_EXCEL
 
 // Type libraries are located through the registry (requires Office installed
 // on the build machine). Was: Office 2000 OLBs at hardcoded D:\dev paths.
@@ -89,3 +114,5 @@ public:
 	  }
 
 };
+
+#endif // FELIX_NO_EXCEL
