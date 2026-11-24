@@ -125,7 +125,13 @@ public:
 		m_listener(listener)
 	{}
 	~multiterm_data_exporter_6()
-	{ m_file->close() ; }
+	{
+		// m_file is still null if open_destination failed.
+		if (m_file)
+		{
+			m_file->close() ;
+		}
+	}
 	void export_gloss(mem_engine::memory_pointer mem);
 	void set_source( wstring source ) { m_source_lang = source ; }
 	void set_target( wstring target ) { m_target_lang = target ; }

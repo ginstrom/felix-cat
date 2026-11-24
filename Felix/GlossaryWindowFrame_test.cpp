@@ -4,6 +4,7 @@
 #include "memory_local.h"
 #include "felix_factory.h"
 #include "input_device_fake.h"
+#include "test_temp_dir.h"
 
 #ifdef UNIT_TEST
 #include <boost/test/unit_test.hpp>
@@ -198,18 +199,30 @@ BOOST_AUTO_TEST_SUITE( TestGlossaryWindow )
 	{
 		app_props::props_ptr props(new app_props::properties) ;
 		GlossaryWindowFrame gloss_dlg(props) ;
-		CString filename = _T("c:\\test\\Multiterm.6.0.sample_small.txt") ;
+		// A small MultiTerm 6 export: UTF-16LE with a BOM, a header row
+		// naming the languages, then one tab-separated row per term.
+		wstring text = L"English\tGerman\tNotes\r\n" ;
+		text += L"apple\tApfel\t-\r\n" ;
+		text += L"bread\tBrot\t-\r\n" ;
+		text += L"cheese\tK\x00E4se\t-\r\n" ;
+		text += L"house\tHaus\t-\r\n" ;
+		text += L"street\tStra\x00DFe\t-\r\n" ;
+		TestTempDir temp ;
+		CString filename = temp.write_utf16_file(_T("Multiterm.6.0.sample_small.txt"), text) ;
+
 		gloss_dlg.import_multiterm(filename) ;
 		BOOST_CHECK_EQUAL(1u, gloss_dlg.m_model->size()) ;
 		mem_engine::memory_pointer mem = gloss_dlg.m_model->get_first_memory() ;
 		BOOST_CHECK_EQUAL(5u, mem->size()) ;
+		BOOST_CHECK(L"English" == mem->get_memory_info()->get_source_language()) ;
+		BOOST_CHECK(L"German" == mem->get_memory_info()->get_target_language()) ;
 	}
 	BOOST_AUTO_TEST_CASE( export_gloss_mt55 )
 	{
 		app_props::props_ptr props(new app_props::properties) ;
 		GlossaryWindowFrame gloss_dlg(props) ;
-		CString filename = _T("c:\\test\\mt.55.output.txt") ;
-		::DeleteFile(filename) ;
+		TestTempDir temp ;
+		CString filename = temp.path(_T("mt.55.output.txt")) ;
 		string source("Japanese") ;
 		string target("English") ;
 
@@ -251,8 +264,8 @@ BOOST_AUTO_TEST_SUITE( TestGlossaryWindow )
 	{
 		app_props::props_ptr props(new app_props::properties) ;
 		GlossaryWindowFrame gloss_dlg(props) ;
-		CString filename = _T("c:\\test\\mt.6.output.txt") ;
-		::DeleteFile(filename) ;
+		TestTempDir temp ;
+		CString filename = temp.path(_T("mt.6.output.txt")) ;
 
 		wstring source(L"Japanese") ;
 		wstring target(L"English") ;
@@ -281,6 +294,31 @@ BOOST_AUTO_TEST_SUITE( TestGlossaryWindow )
 		string actual = string2string(wstring(raw_text+1)) ;
 
 		BOOST_CHECK_EQUAL(expected, actual) ;
+	}
+
+	// Exporting somewhere that can't be written used to crash (the exporter's
+	// destructor closed a file that was never opened); now it just throws.
+	BOOST_AUTO_TEST_CASE( export_gloss_mt55_bad_folder_throws )
+	{
+		app_props::props_ptr props(new app_props::properties) ;
+		GlossaryWindowFrame gloss_dlg(props) ;
+		TestTempDir temp ;
+		CString filename = temp.path(_T("no-such-folder\\mt.55.output.txt")) ;
+
+		mem_engine::memory_pointer mem = FelixFactory().make_memory() ;
+		BOOST_CHECK_THROW(gloss_dlg.export_multiterm_55_sub("Japanese", "English", filename, mem),
+						  except::CException) ;
+	}
+	BOOST_AUTO_TEST_CASE( export_gloss_mt6_bad_folder_throws )
+	{
+		app_props::props_ptr props(new app_props::properties) ;
+		GlossaryWindowFrame gloss_dlg(props) ;
+		TestTempDir temp ;
+		CString filename = temp.path(_T("no-such-folder\\mt.6.output.txt")) ;
+
+		mem_engine::memory_pointer mem = FelixFactory().make_memory() ;
+		BOOST_CHECK_THROW(gloss_dlg.export_multiterm_6_sub(L"Japanese", L"English", filename, mem),
+						  except::CException) ;
 	}
 
 	//////////////////////////////////////////////////////////////////////////

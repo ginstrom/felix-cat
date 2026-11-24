@@ -31,7 +31,12 @@ BOOST_AUTO_TEST_SUITE( TestFileOpHandler )
 	{
 		CString out = get_local_appdata_folder() ;
 		string actual = (LPCSTR)CT2A(out) ;
-		string expected = "D:\\Users\\Ryan\\AppData\\Local" ;
+		// Compare against the environment rather than the shell API that
+		// get_local_appdata_folder itself uses.
+		TCHAR from_env[MAX_PATH] = {0} ;
+		::GetEnvironmentVariable(_T("LOCALAPPDATA"), from_env, MAX_PATH) ;
+		string expected = (LPCSTR)CT2A(from_env) ;
+		BOOST_REQUIRE(! expected.empty()) ;
 		BOOST_CHECK_EQUAL(actual, expected) ;
 	}
 

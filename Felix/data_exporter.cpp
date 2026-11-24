@@ -168,7 +168,10 @@ void TradosDataExporter::export_trados( memory_pointer mem )
 // Return type		: 
 TradosDataExporter::~TradosDataExporter()
 {
-	m_file->close() ;
+	if (m_file)
+	{
+		m_file->close() ;
+	}
 }
 
 void TradosDataExporter::set_source( tstring source ) 
@@ -903,8 +906,12 @@ multiterm_data_exporter_55::multiterm_data_exporter_55(CProgressListener *listen
 }
 
 multiterm_data_exporter_55::~multiterm_data_exporter_55() 
-{ 
-	m_file->close(); 
+{
+	// m_file is still null if open_destination failed.
+	if (m_file)
+	{
+		m_file->close();
+	}
 }
 void multiterm_data_exporter_55::set_source( const string source ) 
 { 
@@ -920,9 +927,10 @@ void multiterm_data_exporter_55::set_target( const string target )
 }
 void multiterm_data_exporter_55::open_destination( const CString destination )
 {
-	OutputDeviceFile *file_device = new OutputDeviceFile ;
+	// Owned from the start, so it isn't leaked if open() throws.
+	std::shared_ptr<OutputDeviceFile> file_device(new OutputDeviceFile) ;
 	file_device->open(destination) ;
-	m_file = output_device_ptr (file_device) ;
+	m_file = file_device ;
 }
 void multiterm_data_exporter_55::write_record( const record_pointer &rec )
 {
@@ -994,10 +1002,11 @@ void multiterm_data_exporter_55::export_gloss( mem_engine::memory_pointer &mem )
 
 void multiterm_data_exporter_6::open_destination( const CString destination )
 {
-	OutputDeviceFile *file_device = new OutputDeviceFile ;
+	// Owned from the start, so it isn't leaked if open() throws.
+	std::shared_ptr<OutputDeviceFile> file_device(new OutputDeviceFile) ;
 	file_device->open(destination) ;
-	file_device->m_file.write_16le_bom() ;	
-	m_file = output_device_ptr (file_device) ;
+	file_device->m_file.write_16le_bom() ;
+	m_file = file_device ;
 }
 
 void multiterm_data_exporter_6::write_record( const mem_engine::record_pointer &rec )

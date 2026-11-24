@@ -11,6 +11,7 @@
 #ifdef UNIT_TEST
 #include <boost/test/unit_test.hpp>
 #include "memory_fake.h"
+#include "test_temp_dir.h"
 
 using namespace mem_engine ;
 
@@ -121,9 +122,14 @@ BOOST_AUTO_TEST_SUITE( TestFelixModel )
 		app_props::props_ptr props(new app_props::properties) ;
 
 		FelixModel model(props) ;
+		// has_name_clash compares real files, so both must exist.
+		TestTempDir temp ;
+		const char contents[] = "x" ;
+		CString gloss = temp.write_file(_T("testgloss.fgloss"), contents, 1) ;
+		CString location = temp.write_file(_T("testmem.ftm"), contents, 1) ;
+
 		auto mem = model.add_memory();
-		mem->set_location(L"D:\\dev\\testdata\\felix\\testgloss.fgloss") ;
-		CString location = L"D:\\dev\\testdata\\felix\\testmem.ftm" ;
+		mem->set_location(gloss) ;
 		BOOST_CHECK_EQUAL(false, model.has_name_clash(location));
 	}
 	BOOST_AUTO_TEST_CASE(test_has_name_clash_true)
@@ -131,9 +137,12 @@ BOOST_AUTO_TEST_SUITE( TestFelixModel )
 		app_props::props_ptr props(new app_props::properties) ;
 
 		FelixModel model(props) ;
-		model.add_memory()->set_location(L"D:\\dev\\testdata\\felix\\testmem.ftm") ;
-		model.add_memory()->set_location(L"D:\\dev\\testdata\\felix\\testmem.ftm") ;
-		CString location = L"D:\\dev\\testdata\\felix\\testmem.ftm" ;
+		TestTempDir temp ;
+		const char contents[] = "x" ;
+		CString location = temp.write_file(_T("testmem.ftm"), contents, 1) ;
+
+		model.add_memory()->set_location(location) ;
+		model.add_memory()->set_location(location) ;
 		BOOST_CHECK_EQUAL(true, model.has_name_clash(location));
 	}
 

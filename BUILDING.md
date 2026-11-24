@@ -93,15 +93,53 @@ The `Testing` configuration compiles Felix's ~2300 Boost.Test unit tests into
 `Testing` treats warnings as errors, minus a listed set of warnings that newer
 compilers added (see the comment in `Felix.vcxproj`).
 
-**Last run (VS 2026, Boost 1.91): 2288 of 2294 passed.** The 6 that fail depend on
-your old development machine:
+**Run the suites one at a time.** After a crash (access violation, stack
+overflow), Boost.Test reports every remaining test as "passed" without running
+it. A single run of `Felix.exe` therefore can't be trusted while anything
+crashes. `tools\run-test-suites.ps1` runs each top-level suite in its own
+process, so a crash only spoils its own suite:
 
-- `test_get_docs_path`, `test_get_local_helpfile_name`, `test_get_local_appdata_folder`:
-  these expect the literal path `D:\Users\Ryan\AppData\Local`.
-- `test_has_name_clash_true`: needs `D:\dev\testdata\felix\testmem.ftm`.
-- `load_multiterm6`: needs `c:\test\Multiterm.6.0.sample_small.txt`, which isn't in `TestData\`.
-- `export_gloss_mt55`: writes to `c:\test\`. When that folder is missing, the
-  failed open is followed by a memory access violation, which is worth fixing.
+```powershell
+powershell -ExecutionPolicy Bypass -File tools\run-test-suites.ps1
+powershell -ExecutionPolicy Bypass -File tools\run-test-suites.ps1 -Only TestMemory,TestFelixModel
+```
+
+It writes a report per suite, with failure details in `<suite>.debug.txt`, plus
+`summary.csv` to `Felix\Testing\test-results\`, and prints the suites that failed.
+
+Tests that need real files use `common\test_temp_dir.h`, which makes a scratch
+folder under `%TEMP%` and deletes it afterwards.
+
+**Last run (VS 2026, Boost 1.91): 2237 tests ran, 57 failed or aborted, in 24 suites.**
+(An earlier note here said "2288 of 2294 passed". That was wrong: a crash early in
+the run meant most tests were never executed.) The causes are, roughly:
+
+- **Source encoding.** 17 source files are Shift-JIS. On an English-locale
+  machine MSVC reads them as code page 1252, so Japanese string literals are
+  silently garbled. This breaks the Japanese-text tests (`TestDistance`,
+  `TestCmpmaker`, `match_makerTestCase`, `test_search_match_tester`,
+  `test_get_gloss_fuzzy`, ...). It also affects the app: `common\ui.h` holds the
+  Japanese file-dialog labels.
+- **Hardcoded paths and test files** from the old development machine
+  (`C:\test\...`, `D:\dev\...`, `L:\dev\Test Files\...`, `D:\Users\Ryan\...`):
+  `test_text_template_locations`, `test_text_templates_*`, `AppTemplateTest`,
+  `TestComMemories/test_load`, `TestMemory`, `CTMXReaderTestCase`,
+  `test_trados_data_importer`, `TestGlossWinCollectionHasClashes/test_two_true`,
+  `view_state_initial_*`, `TestCMemoryManagerDlg`.
+- **The old user name** (`user_name_default_Ryan`, `test_memory_info`).
+- **COM registration.** `test_memory_remote` and `test_record_remote` need the
+  Felix COM server registered (see section 4).
+- Not yet diagnosed: `TestComMemories/test_load` ends in a **stack overflow**
+  when its file is missing, and `test_library/get_proc_address`,
+  `TestMemoryFunctions/ensure_path_exists_nothrow`,
+  `TestCMainFrameMatchLookup/*eating_numbers_flipped*`.
+
+Fixed: the six machine-specific tests listed in the previous version of this
+file, and a real crash. If an export file couldn't be opened (for example, a
+MultiTerm export to a folder that doesn't exist), the exporter's destructor
+dereferenced a null pointer. It now reports the error instead. Regression tests:
+`export_gloss_mt55_bad_folder_throws`, `export_gloss_mt6_bad_folder_throws`.
+
 ## What changed from the original VS 2013 setup
 
 - `PlatformToolset` v120 → v145, Windows SDK 10.0, in Felix and its two resource DLL projects.
@@ -124,7 +162,7 @@ your old development machine:
 ## Not done yet
 
 - `Unicode_Release` hasn't been built.
-- The six machine-specific tests above should use relative or computed paths and checked-in test data.
+- The remaining failing tests (see section 5): fix the source encoding, then replace hardcoded paths with `test_temp_dir.h` or checked-in test data.
 - The Word/Excel/PowerPoint add-ins and their test projects are still on VS 2013 settings.
   (Word Assist's Lua has been removed already.)
 - Excel export needs Office installed; Word Assist will need Word's type library too.
