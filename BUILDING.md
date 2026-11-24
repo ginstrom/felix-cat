@@ -1,14 +1,14 @@
-# Building Felix (Visual Studio 2022)
+# Building Felix (Visual Studio 2026)
 
 This branch retargets the main **Felix** application from VS 2013 (`v120`) to
-VS 2022 (`v143`). The Word/Excel/PowerPoint add-ins and the test projects are
+VS 2026 (`v145`, MSVC 14.50). The Word/Excel/PowerPoint add-ins and the test projects are
 not migrated yet.
 
 ## 1. Install the toolchain
 
-- **Visual Studio 2022** (Community is fine) with the
+- **Visual Studio 2026** (Community is fine) with the
   **Desktop development with C++** workload, plus these individual components:
-  - *C++ ATL for latest v143 build tools (x86 & x64)*
+  - *C++ ATL for latest v145 build tools (x86 & x64)*
   - a Windows 10/11 SDK (installed by the workload)
 - **Microsoft Office** (Excel and Word). Felix `#import`s the Office type
   libraries by their registry ID, so Office must be installed on the build machine.
@@ -49,7 +49,7 @@ the UI templates are loaded from at runtime.
 
 ## What changed from the original VS 2013 setup
 
-- `PlatformToolset` v120 → v143, Windows SDK 10.0, in Felix and its two resource DLL projects.
+- `PlatformToolset` v120 → v145, Windows SDK 10.0, in Felix and its two resource DLL projects.
 - The hardcoded `D:\dev\cpp\...` include and library paths were replaced by `Dependencies.props`.
 - The `#import`s of Office 2000 OLB files and `vbscript.tlb` now use
   `libid:` registry lookups (`ExcelInterfaceReal.h`, `common\WordAutomationObject.h`, `common\RegEx.h`).
@@ -58,7 +58,7 @@ the UI templates are loaded from at runtime.
 
 ## Expected next problems
 
-These aren't verified yet, because the project hasn't been compiled under VS 2022.
+These aren't verified yet, because the project hasn't been compiled under VS 2026.
 
 - Stricter conformance in the new compiler: `/permissive-` is the default for
   new projects but **not** for upgraded ones, so it stays off here.
