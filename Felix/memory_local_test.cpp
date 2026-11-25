@@ -8,6 +8,8 @@
 #include <boost/test/unit_test.hpp>
 #include "input_device_fake.h"
 #include "mem_tests.h"
+#include "test_paths.h"
+#include "test_data_files.h"
 
 
 BOOST_AUTO_TEST_SUITE( TestMemoryMapRecords )
@@ -443,12 +445,13 @@ BOOST_AUTO_TEST_SUITE( TestMemory )
 	// get_correct_encoding
 	BOOST_AUTO_TEST_CASE( GetFileEncodingXmlUtf8 )
 	{
-		file::CPath path( CString( _T("L:\\dev\\Test Files\\MemoryFiles\\") ) ) ;
+		TestTempDir temp ;
+		file::CPath path ;
 		// create a local memory
 		memory_local mem(app_props::get_props()) ;
 
 		// xml file
-		path.Append( _T("TestMem.xml") ) ;
+		path = test_data::write_one_record_memory( temp ) ;
 
 		UINT file_size = file::file::size( path.Path() ) ;
 
@@ -459,12 +462,13 @@ BOOST_AUTO_TEST_SUITE( TestMemory )
 	}
 	BOOST_AUTO_TEST_CASE( GetFileEncodingTextUtf8 )
 	{
-		file::CPath path( CString( _T("L:\\dev\\Test Files\\MemoryFiles\\") ) ) ;
+		TestTempDir temp ;
+		file::CPath path ;
 		// create a local memory
 		memory_local mem(app_props::get_props()) ;
 
 		// utf-8 text file
-		path.ReplaceFileSpec( _T("UTF8.txt") ) ;
+		path = temp.write_codepage_file( _T("UTF8.txt"), test_data::japanese_sample_text(), CP_UTF8 ) ;
 
 		UINT file_size = file::file::size( path.Path() ) ;
 
@@ -476,12 +480,13 @@ BOOST_AUTO_TEST_SUITE( TestMemory )
 	}
 	BOOST_AUTO_TEST_CASE( GetFileEncodingTextSjis )
 	{
-		file::CPath path( CString( _T("L:\\dev\\Test Files\\MemoryFiles\\") ) ) ;
+		TestTempDir temp ;
+		file::CPath path ;
 		// create a local memory
 		memory_local mem(app_props::get_props()) ;
 		// sjis text file
 
-		path.ReplaceFileSpec( _T("SJIS.txt") ) ;
+		path = temp.write_codepage_file( _T("SJIS.txt"), test_data::japanese_sample_text(), 932 ) ;
 
 		UINT file_size = file::file::size( path.Path() ) ;
 
@@ -493,12 +498,13 @@ BOOST_AUTO_TEST_SUITE( TestMemory )
 	}
 	BOOST_AUTO_TEST_CASE( GetFileEncodingTextUtf16 )
 	{
-		file::CPath path( CString( _T("L:\\dev\\Test Files\\MemoryFiles\\") ) ) ;
+		TestTempDir temp ;
+		file::CPath path ;
 		// create a local memory
 		memory_local mem(app_props::get_props()) ;
 		// utf-16 text file
 
-		path.ReplaceFileSpec( _T("UTF16.txt") ) ;
+		path = temp.write_utf16_file( _T("UTF16.txt"), test_data::japanese_sample_text() ) ;
 
 		UINT file_size = file::file::size( path.Path() ) ;
 
@@ -625,8 +631,9 @@ BOOST_AUTO_TEST_SUITE( TestMemory )
 		// this will throw an AllocException on load. Make sure our backup
 		// function works...
 		mem.m_throw_exception = true ;
-		BOOST_CHECK_NO_THROW(mem.load( _T("C:\\test\\test_memories\\one_record.xml") )) ;
-		BOOST_CHECK_EQUAL((int)mem.size(), 1) ;
+		TestTempDir temp ;
+		BOOST_CHECK_NO_THROW(mem.load( test_data::write_one_record_memory(temp) )) ;
+		BOOST_REQUIRE_EQUAL((int)mem.size(), 1) ;
 
 		/*
 		<source><![CDATA[foo]]></source>
@@ -650,7 +657,9 @@ BOOST_AUTO_TEST_SUITE( TestMemory )
 	{
 		// create a local memory
 		memory_local mem(app_props::get_props()) ;
-		CString filename = _T("C:\\dev\\Test Files\\MemoryFiles\\EmptyFile.xml") ;
+		// (Used to point at a file that no longer exists, so it passed for the wrong reason.)
+		TestTempDir temp ;
+		CString filename = temp.write_file( _T("EmptyFile.xml"), "", 0 ) ;
 		BOOST_CHECK_THROW(mem.load( filename ), CException) ;
 	}
 
@@ -658,7 +667,19 @@ BOOST_AUTO_TEST_SUITE( TestMemory )
 	{
 		// create a local memory
 		memory_local mem(app_props::get_props()) ;
-		CString filename = _T("C:\\dev\\Test Files\\MemoryFiles\\ReallyTmx.xml") ;
+		// A TMX file with an .xml extension: not a Felix memory. (Used to point
+		// at a file that no longer exists, so it passed for the wrong reason.)
+		TestTempDir temp ;
+		const char tmx[] = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+			"<tmx version=\"1.4\">\n"
+			"<header creationtool=\"test\" creationtoolversion=\"1\" segtype=\"sentence\"\n"
+			" o-tmf=\"test\" adminlang=\"en-US\" srclang=\"en-US\" datatype=\"plaintext\" />\n"
+			"<body>\n"
+			"<tu><tuv xml:lang=\"en-US\"><seg>foo</seg></tuv>"
+			"<tuv xml:lang=\"ja\"><seg>bar</seg></tuv></tu>\n"
+			"</body>\n"
+			"</tmx>\n" ;
+		CString filename = temp.write_file( _T("ReallyTmx.xml"), tmx, sizeof(tmx) - 1 ) ;
 		BOOST_CHECK_THROW(mem.load( filename ), CException) ;
 	}
 
@@ -1751,7 +1772,7 @@ BOOST_AUTO_TEST_SUITE( test_memory_info )
 		mem_info->set_creator( L"FooBar" ) ;
 		BOOST_CHECK_EQUAL( L"FooBar", mem.get_memory_info()->get_creator() ) ;
 
-		BOOST_CHECK_EQUAL( wstring(L"Ryan"),  mem_info->get_current_user()) ;
+		BOOST_CHECK_EQUAL( test_paths::user_name(),  mem_info->get_current_user()) ;
 	}
 
 	BOOST_AUTO_TEST_CASE(get_creation_date)

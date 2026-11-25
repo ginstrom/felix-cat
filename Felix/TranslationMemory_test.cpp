@@ -14,6 +14,7 @@
 #include "memory_local.h"
 #include <boost/test/unit_test.hpp>
 #include "input_device_file.h"
+#include "test_paths.h"
 
 BOOST_AUTO_TEST_SUITE( TestMemoryFunctions )
 
@@ -40,7 +41,7 @@ BOOST_AUTO_TEST_SUITE( TestMemoryFunctions )
 	BOOST_AUTO_TEST_CASE(ensure_path_exists_nothrow)
 	{
 		InputDeviceFile input ;
-		BOOST_CHECK_NO_THROW(input.ensure_file_exists(_T("c:\\dev\\cpp\\Assistant Suite\\Felix\\TranslationMemory_test.cpp"))) ;
+		BOOST_CHECK_NO_THROW(input.ensure_file_exists(test_paths::repo_path(_T("Felix\\TranslationMemory_test.cpp")))) ;
 	}
 	BOOST_AUTO_TEST_CASE(get_correct_encoding_xml_utf8_sq)
 	{

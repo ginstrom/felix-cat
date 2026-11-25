@@ -26,14 +26,15 @@ using namespace cpptempl ;
 		data[L"changeid"] = cpptempl::make_data(L"Ryan" ) ;
 		data[L"usagecount"] = cpptempl::make_data(L"1" ) ;
 
-		file::view raw_view ;
-
-		LPCWSTR rawData = static_cast< LPCWSTR >( raw_view.create_view( _T("L:\\Dev\\Test Files\\tatemplates\\tmx_tu_out.xml") ) ) ;
-		BOOST_CHECK( rawData != NULL ) ;
-		textstream_reader<wchar_t> reader ;
-		reader.set_buffer(rawData) ;
-		reader.jump_to_first_of(L'<') ;
-		wstring expected(reader.get_current_pos()) ;
+		// The expected output used to be read from L:\Dev\Test Files\tatemplates\tmx_tu_out.xml.
+		const wstring expected = L"<tu tuid=\"1\" srclang=\"EN-US\">\r\n"
+			L"<tuv xml:lang=\"EN-US\">\r\n"
+			L"<seg>foo</seg>\r\n"
+			L"</tuv>\r\n"
+			L"<tuv xml:lang=\"JP\" creationdate=\"20060119T133635Z\" creationid=\"Ryan\" lastusagedate=\"20060119T133635Z\" changedate=\"20060119T133635Z\" changeid=\"Ryan\" usagecount=\"1\">\r\n"
+			L"<seg><b>bar</b></seg>\r\n"
+			L"</tuv>\r\n"
+			L"</tu>" ;
 		LPCWSTR resFile = L"<tu tuid=\"{$id}\" srclang=\"{$srclang}\">\r\n"
 			L"<tuv xml:lang=\"{$srclang}\">\r\n"
 			L"<seg>{$srcseg}</seg>\r\n"

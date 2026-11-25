@@ -10,7 +10,11 @@
 
 
 #include <boost/test/unit_test.hpp>
-BOOST_AUTO_TEST_SUITE( test_memory_remote )
+#include "test_paths.h"
+
+// Needs the fake COM servers in python_tools\MemoryEngineFake.py to be registered.
+BOOST_AUTO_TEST_SUITE( test_memory_remote,
+	* boost::unit_test::precondition(test_paths::requires_prog_id(L"Felix.RemoteMemoryFake")) )
 
 	using namespace mem_engine ;
 	using namespace except ;

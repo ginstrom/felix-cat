@@ -5,6 +5,7 @@
 #include "Felix_properties.h"
 #include "output_device_fake.h"
 #include "config_file.h"
+#include "test_paths.h"
 
 #include <boost/test/unit_test.hpp>
 
@@ -29,7 +30,7 @@ BOOST_AUTO_TEST_SUITE( test_properties )
 		output_device_ptr device(new OutputDeviceFake) ;
 		CString filename = L"felix_rules.frules" ;
 		wstring actual = get_config_filename(filename, device) ;
-		wstring expected = L"D:\\Users\\Ryan\\AppData\\Local\\Felix\\prefs\\felix_rules.frules" ;
+		wstring expected = (LPCWSTR)CT2W(test_paths::felix_appdata(_T("prefs\\felix_rules.frules"))) ;
 
 		BOOST_CHECK_EQUAL(actual, expected) ;
 	}
@@ -161,7 +162,7 @@ BOOST_AUTO_TEST_SUITE( test_properties_general )
 		BOOST_CHECK(!props.m_data.m_must_login);
 		BOOST_CHECK(!props.m_data.m_save_credentials);
 		BOOST_CHECK(props.m_saved_credentials.empty());
-		BOOST_CHECK_EQUAL(L"Ryan", wstring(props.m_data.m_user_name));
+		BOOST_CHECK_EQUAL(test_paths::user_name(), wstring(props.m_data.m_user_name));
 	}
 
 	BOOST_AUTO_TEST_CASE( test_NumMems_15 )
@@ -169,11 +170,11 @@ BOOST_AUTO_TEST_SUITE( test_properties_general )
 		BOOST_CHECK_EQUAL(15, NumMems) ;
 	}
 
-	BOOST_AUTO_TEST_CASE( user_name_default_Ryan)
+	BOOST_AUTO_TEST_CASE( user_name_default_is_login_name)
 	{
 		properties_general props ;
-		wstring actual(props.m_data.m_user_name); 
-		wstring expected = L"Ryan" ;
+		wstring actual(props.m_data.m_user_name);
+		wstring expected = test_paths::user_name() ;
 		BOOST_CHECK_EQUAL(expected, actual) ;
 	}
 

@@ -73,6 +73,17 @@ public:
 		return full_path ;
 	}
 
+	//! Writes text in a multibyte code page (e.g. 932 for Shift-JIS, CP_UTF8).
+	CString write_codepage_file(LPCTSTR filename, const std::wstring &text, UINT code_page) const
+	{
+		const int len = ::WideCharToMultiByte(code_page, 0, text.c_str(),
+			static_cast<int>(text.size()), NULL, 0, NULL, NULL) ;
+		std::string bytes(static_cast<size_t>(len), '\0') ;
+		::WideCharToMultiByte(code_page, 0, text.c_str(), static_cast<int>(text.size()),
+			&bytes[0], len, NULL, NULL) ;
+		return write_file(filename, bytes.data(), bytes.size()) ;
+	}
+
 	//! Writes text as UTF-16LE with a byte order mark.
 	CString write_utf16_file(LPCTSTR filename, const std::wstring &text) const
 	{

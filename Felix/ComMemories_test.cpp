@@ -6,6 +6,7 @@
 #ifdef UNIT_TEST
 
 #include "felix_model_fake.h"
+#include "test_data_files.h"
 #include <boost/test/unit_test.hpp>
 
 // test_properties_loaded_history
@@ -71,12 +72,16 @@ BOOST_AUTO_TEST_SUITE( TestComMemories )
 		mems->set_model(model) ;
 
 		CComPtr<IMemory> mem ;
-		CComBSTR filename = L"C:\\test\\test_memories\\one_record.xml" ;
+		TestTempDir temp ;
+		CComBSTR filename = test_data::write_one_record_memory(temp) ;
 		BOOST_CHECK(SUCCEEDED(mems->Load(filename, &mem))) ;
 
 		long count = 0 ;
 		mems->get_Count(&count) ;
 		BOOST_CHECK_EQUAL(count, 1) ;
+
+		// Calling through a null mem used to end the whole run in a stack overflow.
+		BOOST_REQUIRE(mem) ;
 
 		ULONG memsize = 10 ;
 		mem->GetSize(&memsize) ;

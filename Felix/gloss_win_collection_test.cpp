@@ -6,6 +6,7 @@
 
 #include "GlossaryDlgListenerFake.h"
 #include "mem_tests.h"
+#include "test_temp_dir.h"
 #include <boost/test/unit_test.hpp>
 
 using namespace mem_engine ;
@@ -814,7 +815,9 @@ BOOST_AUTO_TEST_SUITE(TestGlossWinCollectionHasClashes)
 		app_props::props_ptr props(new app_props::properties) ;
 		gloss_window_pointer gloss_window = glosses.add(props) ; 
 
-		CString location = L"D:\\dev\\testdata\\felix\\testmem.ftm" ;
+		// has_clashes compares real files, so the file must exist.
+		TestTempDir temp ;
+		CString location = temp.write_file(_T("testmem.ftm"), "x", 1) ;
 
 		memory_pointer mem1(new memory_local(props)) ;
 		mem1->set_location("C:\\mem1.xml") ;

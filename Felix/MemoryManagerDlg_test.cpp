@@ -5,6 +5,8 @@
 #include "FelixModelInterface.h"
 #include <boost/test/unit_test.hpp>
 #include "felix_factory.h"
+#include "test_paths.h"
+#include "test_temp_dir.h"
 
 #ifdef UNIT_TEST
 
@@ -78,13 +80,14 @@ BOOST_AUTO_TEST_SUITE( TestCMemoryManagerDlg )
 	}
 	BOOST_AUTO_TEST_CASE( TestOperator )
 	{
-		BOOST_CHECK( L"Ryan" == CUserName().as_wstring() ) ;
+		const wstring login_name = test_paths::user_name() ;
+		BOOST_CHECK( login_name == CUserName().as_wstring() ) ;
 
 		CUserName user_name ;
-		BOOST_CHECK( L"Ryan" == user_name.as_wstring() ) ;
+		BOOST_CHECK( login_name == user_name.as_wstring() ) ;
 
 		wstring wstr_un = user_name ;
-		BOOST_CHECK( L"Ryan" == wstr_un ) ;
+		BOOST_CHECK( login_name == wstr_un ) ;
 	}
 	// message processing
 	BOOST_AUTO_TEST_CASE( test_message_ZERO)
@@ -192,7 +195,7 @@ BOOST_AUTO_TEST_SUITE( TestCMemoryManagerDlg )
 
 		string expected = string("<table width=\"100%\" class=\"info\">\r\n")
 			+ "<tr><td bgcolor=\"#F2F2F2\"><b>File Name:</b></td><td id=\"file_name\" bgcolor=\"#F2F2F2\">spam</td></tr>\r\n"
-			+ "<tr><td><b>Creator:</b></td><td id=\"creator\">Ryan</td></tr>\r\n"
+			+ "<tr><td><b>Creator:</b></td><td id=\"creator\">" + string2string(test_paths::user_name()) + "</td></tr>\r\n"
 			+ "<tr><td bgcolor=\"#F0F0F0\"><b>Field:</b></td><td id=\"field\" bgcolor=\"#F0F0F0\"><b>Default</b></td></tr>\r\n"
 			+ "<tr><td><b>Created:</b></td><td id=\"created_on\">2008/11/04 14:49:56</td></tr>\r\n"
 			+ "<tr><td bgcolor=\"#F0F0F0\"><b>Source Language:</b></td><td id=\"source_language\" bgcolor=\"#F0F0F0\"><b>Default</b></td></tr>\r\n"
@@ -271,7 +274,7 @@ BOOST_AUTO_TEST_SUITE( TestCMemoryManagerDlg )
 		memory_pointer mem = model->create_memory() ;
 		wstring text = dialog.get_creator_name(mem->get_memory_info()) ;
 		CStringA actual = text.c_str() ;
-		string expected = "Ryan" ;
+		string expected = string2string(test_paths::user_name()) ;
 		BOOST_CHECK_EQUAL(expected, string(actual)) ;
 	}
 	BOOST_AUTO_TEST_CASE( get_creator_name_empty)
@@ -451,10 +454,13 @@ BOOST_AUTO_TEST_SUITE( TestCMemoryManagerDlg )
 		CMemoryManagerDlg dialog (get_props()) ;
 		model_ptr model = get_model() ;
 		memory_pointer mem = model->create_memory() ;
-		mem->set_location("c:\\test\\bigmem.xml") ;
+		// 1.25 MiB, written to a scratch file (was a 12 MB c:\test\bigmem.xml).
+		TestTempDir temp ;
+		std::string contents(1310720, 'x') ;
+		mem->set_location(temp.write_file(_T("bigmem.xml"), contents.data(), contents.size())) ;
 		wstring text = dialog.get_file_size(mem) ;
 		CStringA actual = text.c_str() ;
-		string expected = "12.22 MBytes" ;
+		string expected = "1.25 MBytes" ;
 		BOOST_CHECK_EQUAL(expected, string(actual)) ;
 	}
 

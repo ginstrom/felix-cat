@@ -4,6 +4,7 @@
 #include "ProgressListener.h"
 #include "MockListener.h"
 #include "felix_factory.h"
+#include "test_temp_dir.h"
 
 #include <boost/test/unit_test.hpp>
 
@@ -19,13 +20,24 @@ BOOST_AUTO_TEST_SUITE( test_trados_data_importer )
 		CMockListener dummy ;
 		trados_data_importer importer(&dummy) ;
 
-		importer.open_data_source( _T("L:\\dev\\Test Files\\Trados Parsing\\TEST_ONE_SENTENCE_SIMPLE.txt") ) ;
+		// A one-sentence Trados Workbench text export (was on L:\dev\Test Files).
+		TestTempDir temp ;
+		const char trados[] =
+			"<TrU>\r\n"
+			"<CrD>13122002, 01:55:01\r\n"
+			"<CrU>TANAKA\r\n"
+			"<Seg L=JA>Kore wa tesuto desu.\r\n"
+			"<Seg L=EN-US>This is a test.\r\n"
+			"</TrU>\r\n" ;
+		const CString filename = temp.write_file(_T("TEST_ONE_SENTENCE_SIMPLE.txt"), trados, sizeof(trados) - 1) ;
+
+		importer.open_data_source( filename ) ;
 
 		importer.set_source_language( _T("JA") ) ;
 		importer.set_target_language( _T("EN-US") ) ;
 
 		mem_engine::memory_pointer mem = FelixFactory().make_memory() ;
-		bool LoadSuccess = importer.load(_T("L:\\dev\\Test Files\\Trados Parsing\\TEST_ONE_SENTENCE_SIMPLE.txt"), mem ) ;
+		bool LoadSuccess = importer.load(filename, mem ) ;
 
 		BOOST_CHECK( LoadSuccess ) ;
 

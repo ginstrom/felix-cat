@@ -93,11 +93,11 @@ The `Testing` configuration compiles Felix's ~2300 Boost.Test unit tests into
 `Testing` treats warnings as errors, minus a listed set of warnings that newer
 compilers added (see the comment in `Felix.vcxproj`).
 
-**Run the suites one at a time.** After a crash (access violation, stack
-overflow), Boost.Test reports every remaining test as "passed" without running
-it. A single run of `Felix.exe` therefore can't be trusted while anything
-crashes. `tools\run-test-suites.ps1` runs each top-level suite in its own
-process, so a crash only spoils its own suite:
+**Crashes hide results.** After a crash (access violation, stack overflow),
+Boost.Test reports every remaining test as "passed" without running it. A
+single run of `Felix.exe` is trustworthy only while nothing crashes; check that
+the summary has no "aborted" tests. `tools\run-test-suites.ps1` runs each
+top-level suite in its own process, so a crash only spoils its own suite:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File tools\run-test-suites.ps1
@@ -105,36 +105,44 @@ powershell -ExecutionPolicy Bypass -File tools\run-test-suites.ps1 -Only TestMem
 ```
 
 It writes a report per suite, with failure details in `<suite>.debug.txt`, plus
-`summary.csv` to `Felix\Testing\test-results\`, and prints the suites that failed.
+`summary.csv` to `Felix\Testing\test-results\`, prints the suites that failed,
+and exits with 1 if any did.
 
-Tests that need real files use `common\test_temp_dir.h`, which makes a scratch
-folder under `%TEMP%` and deletes it afterwards.
+**Tests must not depend on the machine.** Helpers for that:
 
-**Last run (VS 2026, Boost 1.91): 2248 tests ran, 46 failed or aborted, in 19 suites.**
-(An earlier note here said "2288 of 2294 passed". That was wrong: a crash early in
-the run meant most tests were never executed.) The causes are, roughly:
+- `common\test_paths.h`: `%LOCALAPPDATA%`, the Felix app data folder, the
+  login name, and paths in the source tree (`repo_path`, worked out from the
+  test exe's location). Also `requires_prog_id`, which skips a suite when a COM
+  class isn't registered.
+- `common\test_temp_dir.h`: a scratch folder under `%TEMP%`, deleted afterwards,
+  for tests that need real files (raw bytes, UTF-16, or any code page).
+- `Felix\test_data_files.h`: small Felix data files (a one-record memory,
+  Japanese sample text).
 
-- **Hardcoded paths and test files** from the old development machine
-  (`C:\test\...`, `D:\dev\...`, `L:\dev\Test Files\...`, `D:\Users\Ryan\...`):
-  `test_text_template_locations`, `test_text_templates_*`, `AppTemplateTest`,
-  `TestComMemories/test_load`, `TestMemory`, `CTMXReaderTestCase`,
-  `test_trados_data_importer`, `TestGlossWinCollectionHasClashes/test_two_true`,
-  `view_state_initial_*`, `TestCMemoryManagerDlg`.
-- **The old user name** (`user_name_default_Ryan`, `test_memory_info`).
-- **COM registration.** `test_memory_remote` and `test_record_remote` need the
-  Felix COM server registered (see section 4).
-- Not yet diagnosed: `TestComMemories/test_load` ends in a **stack overflow**
-  when its file is missing, and `test_library/get_proc_address`,
-  `TestMemoryFunctions/ensure_path_exists_nothrow`.
+**Last run (VS 2026, Boost 1.91): 2282 passed, 14 skipped, 0 failed** (5016
+assertions). The 14 skipped are `test_memory_remote` and `test_record_remote`.
+They need the fake COM servers `Felix.RemoteMemoryFake` / `Felix.RemoteRecordFake`
+from `python_tools\MemoryEngineFake.py`, a Python 2 + pywin32 script that has
+to be registered, and they run automatically when it is.
 
-Fixed so far:
+(An earlier version of this file said "2288 of 2294 passed". That was wrong: a
+crash early in the run meant most tests never ran.)
 
-- The six machine-specific tests listed in the previous version of this file.
-- A real crash. If an export file couldn't be opened (for example, a MultiTerm
-  export to a folder that doesn't exist), the exporter's destructor dereferenced
-  a null pointer. It now reports the error instead. Regression tests:
-  `export_gloss_mt55_bad_folder_throws`, `export_gloss_mt6_bad_folder_throws`.
-- **Source encoding** (11 tests). See "Source file encoding" below.
+What it took to get here:
+
+- **Machine-specific tests**: about 45 tests hardcoded the original development
+  machine (`C:\test\...`, `D:\dev\...`, `L:\dev\Test Files\...`,
+  `D:\Users\Ryan\...`, the user name "Ryan", and the removed Armadillo
+  `ArmAccess.DLL`). They now use the helpers above. `TestDegenerateEmpty` and
+  `TestDegenerateBogus` used to pass only because their files were missing; they
+  now get a real empty file and a real TMX file.
+- **A real crash**: if an export file couldn't be opened (for example, a
+  MultiTerm export to a folder that doesn't exist), the exporter's destructor
+  dereferenced a null pointer. It now reports the error instead. Regression
+  tests: `export_gloss_mt55_bad_folder_throws`, `export_gloss_mt6_bad_folder_throws`.
+- **Source encoding** (11 tests): see "Source file encoding" below.
+- The "stack overflow" in `TestComMemories/test_load` was in the test: when the
+  load failed it called through a null pointer. It now stops at a `BOOST_REQUIRE`.
 
 ## Source file encoding
 
@@ -179,7 +187,7 @@ the narrow-string encoding this also sets doesn't change any existing string.
 ## Not done yet
 
 - `Unicode_Release` hasn't been built.
-- The remaining failing tests (see section 5): replace hardcoded paths with `test_temp_dir.h` or checked-in test data.
+- The 14 remote-memory tests are skipped unless the fake COM server in `python_tools\MemoryEngineFake.py` (Python 2 + pywin32) is registered. See section 5.
 - The Word/Excel/PowerPoint add-ins and their test projects are still on VS 2013 settings.
   (Word Assist's Lua has been removed already.)
 - Excel export needs Office installed; Word Assist will need Word's type library too.

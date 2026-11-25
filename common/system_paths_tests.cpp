@@ -7,14 +7,11 @@
 
 #ifdef UNIT_TEST
 #include <boost/test/unit_test.hpp>
+#include "test_paths.h"
 
-// The local app data folder, read from the environment rather than with the
-// shell API that the code under test uses.
 static string local_appdata_from_env()
 {
-	TCHAR buffer[MAX_PATH] = {0} ;
-	::GetEnvironmentVariable(_T("LOCALAPPDATA"), buffer, MAX_PATH) ;
-	return string(CT2A(buffer)) ;
+	return test_paths::narrow(test_paths::local_appdata()) ;
 }
 
 BOOST_AUTO_TEST_SUITE( test_system_paths )

@@ -24,9 +24,11 @@ BOOST_AUTO_TEST_SUITE( test_library )
 	}
 	BOOST_AUTO_TEST_CASE( get_proc_address)
 	{
-		CLibrary library(_T("ArmAccess.DLL")) ;
-		BOOST_CHECK(library.is_loaded()) ;
-		FARPROC proc_address = library.get_proc_address("InstallKeyLater") ;
+		// Was ArmAccess.DLL (Armadillo copy protection), which is no longer
+		// used or installed. Any system DLL exercises the same code.
+		CLibrary library(_T("kernel32.dll")) ;
+		BOOST_REQUIRE(library.is_loaded()) ;
+		FARPROC proc_address = library.get_proc_address("GetTickCount") ;
 		BOOST_CHECK(proc_address) ;
 	}
 

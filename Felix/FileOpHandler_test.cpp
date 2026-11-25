@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "FileOpHandler.h"
 #include <boost/test/unit_test.hpp>
+#include "test_paths.h"
 
 #ifdef UNIT_TEST
 BOOST_AUTO_TEST_SUITE( TestFileOpHandler )
@@ -33,9 +34,7 @@ BOOST_AUTO_TEST_SUITE( TestFileOpHandler )
 		string actual = (LPCSTR)CT2A(out) ;
 		// Compare against the environment rather than the shell API that
 		// get_local_appdata_folder itself uses.
-		TCHAR from_env[MAX_PATH] = {0} ;
-		::GetEnvironmentVariable(_T("LOCALAPPDATA"), from_env, MAX_PATH) ;
-		string expected = (LPCSTR)CT2A(from_env) ;
+		string expected = test_paths::narrow(test_paths::local_appdata()) ;
 		BOOST_REQUIRE(! expected.empty()) ;
 		BOOST_CHECK_EQUAL(actual, expected) ;
 	}
