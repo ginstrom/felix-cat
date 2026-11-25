@@ -27,8 +27,13 @@ Exclusions: no hook changes here (step 03).
 Build and run all three test programs `Debug|x64`. Expected: baselines (Excel 49, PPT 65, Word 134 plus whatever step 01 added) plus 8 new cases in each, all passing. Building the add-in projects is not needed in this step.
 
 ## Completion criteria
-- [ ] Helper declared and defined exactly per the contract.
-- [ ] 8 new cases pass in all three test programs; no regressions.
-- [ ] Committed; index row 02 updated.
+- [x] Helper declared and defined exactly per the contract.
+- [x] 8 new cases pass in all three test programs; no regressions.
+- [x] Committed; index row 02 updated.
 
 ## Execution record
+- Red: Test_Excel build failed with C2039/C3861 (keystroke_target_is_main_window not a member of shortcuts).
+- Green: added the declaration (common/keyboard_shortcuts.h) and definition (.cpp) per the contract; also returns false for a NULL class pointer. New test file common/keystroke_target_test.cpp (UTF-8 BOM, CRLF) added to the three test vcxproj and .filters files.
+- Build (PowerShell, MSBuild by full path, /p:Configuration=Debug /p:Platform=x64): all three succeeded. Runlog not used (needs Python).
+- Results (<exe> --report_level=short): Test_Excel 57/57 cases, 160 assertions (was 49); Test_PPT 73/73, 201 assertions (was 65); Test_WordAssist 161/161, 492 assertions (was 153). Each +8, no regressions.
+- Deviations: none. Later steps: step 03 can call shortcuts::keystroke_target_is_main_window from the hooks; the three add-in projects already compile keyboard_shortcuts.cpp.

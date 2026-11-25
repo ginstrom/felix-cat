@@ -144,6 +144,9 @@
     <ClCompile Include="..\..\common\keyboard_shortcuts.cpp">
       <Filter>Source Files\files_under_test</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\common\keystroke_target_test.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\WordAssist\WordAssist\keyboard_shortcuts_word.cpp">
       <Filter>Source Files\files_under_test</Filter>
     </ClCompile>

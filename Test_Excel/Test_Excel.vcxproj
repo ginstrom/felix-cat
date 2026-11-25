@@ -211,6 +211,7 @@
     <ClCompile Include="..\common\input_device_file.cpp" />
     <ClCompile Include="key_mapper_excel_test.cpp" />
     <ClCompile Include="..\common\keyboard_shortcuts.cpp" />
+    <ClCompile Include="..\common\keystroke_target_test.cpp" />
     <ClCompile Include="..\ExcelAssist\ExcelAssist\keyboard_shortcuts_excel.cpp" />
     <ClCompile Include="keyboard_shortcuts_excel_test.cpp" />
     <ClCompile Include="..\common\logging.cpp" />

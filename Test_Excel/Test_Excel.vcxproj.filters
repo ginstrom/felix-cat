@@ -75,6 +75,9 @@
     <ClCompile Include="..\common\keyboard_shortcuts.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\common\keystroke_target_test.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="..\ExcelAssist\ExcelAssist\keyboard_shortcuts_excel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

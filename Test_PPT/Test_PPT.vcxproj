@@ -209,6 +209,7 @@
     <ClCompile Include="..\common\input_device_file.cpp" />
     <ClCompile Include="..\common\key_mapper_ppt_test.cpp" />
     <ClCompile Include="..\common\keyboard_shortcuts.cpp" />
+    <ClCompile Include="..\common\keystroke_target_test.cpp" />
     <ClCompile Include="..\PowerPointAssist\PowerPointAssist\keyboard_shortcuts_ppt.cpp" />
     <ClCompile Include="keyboard_shortcuts_ppt_test.cpp" />
     <ClCompile Include="keyboard_shortcuts_test.cpp" />
