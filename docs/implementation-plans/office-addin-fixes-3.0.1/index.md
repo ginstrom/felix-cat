@@ -42,7 +42,7 @@ Purpose: fix three Office add-in bugs in Felix 3.0.1. Felix.exe does not change.
 | 02 | [02-keystroke-target-helper.md](02-keystroke-target-helper.md) | #2: shared `keystroke_target_is_main_window` with tests in three test projects | none | S-M, moderate (Win32 window tests, three vcxproj edits) | done, 95aa876 |
 | 03 | [03-hook-guards.md](03-hook-guards.md) | #2: guard in Excel, Word, PowerPoint hooks; AC5-AC8 | 02 | S code, M manual verification (keystroke probes) | done (manual AC5-AC8 not run: deferred to QA), f1ea03f |
 | 04 | [04-excel-formula-bar-refresh.md](04-excel-formula-bar-refresh.md) | #3: `RefreshActiveCell`, `write_selection_text`, fakes, tests; AC9-AC10 | none | M, moderate (Excel `#import` in Test_Excel) | done (manual AC9-AC10 not run: deferred to QA), a323bec |
-| 05 | [05-release-notes-and-final-check.md](05-release-notes-and-final-check.md) | Release-note lines, full regression, Win32 build check | 01, 03, 04 | S, easy | pending |
+| 05 | [05-release-notes-and-final-check.md](05-release-notes-and-final-check.md) | Release-note lines, full regression, Win32 build check | 01, 03, 04 | S, easy | done (manual AC1-AC10 deferred to QA), see commit "Step 05" |
 
 ## Execution order
 01, 02, 03, 04, 05, sequentially. 01, 02 and 04 are logically independent, but 01 and 02 both edit `Test_WordAssist.vcxproj` and 02 and 04 both edit `Test_Excel.vcxproj`, so run them one after another rather than in parallel. Integration checkpoint after 04: all three test programs green, then step 05.
@@ -58,7 +58,7 @@ Purpose: fix three Office add-in bugs in Felix 3.0.1. Felix.exe does not change.
 | Release notes (user decision) | 05 |
 
 ## Overall completion criteria
-All five steps done; Test_WordAssist, Test_Excel and Test_PPT pass with the new cases added to the baseline totals; manual AC1-AC10 recorded in the task files' execution records (or a stated reason why one could not be run); Win32 builds of the three add-ins attempted and the outcome recorded; release-notes lines added; nothing pushed.
+Status 2026-11-26: met, except the manual AC1-AC10 checks, which are deferred to QA (they need Felix registered, which raises a UAC prompt). Win32 builds of the three add-ins succeeded. All five steps done; Test_WordAssist, Test_Excel and Test_PPT pass with the new cases added to the baseline totals; manual AC1-AC10 recorded in the task files' execution records (or a stated reason why one could not be run); Win32 builds of the three add-ins attempted and the outcome recorded; release-notes lines added; nothing pushed.
 
 ## Blockers and open questions
 None blocking. Notes for implementers:
