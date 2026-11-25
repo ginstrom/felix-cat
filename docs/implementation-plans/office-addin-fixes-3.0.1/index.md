@@ -38,7 +38,7 @@ Purpose: fix three Office add-in bugs in Felix 3.0.1. Felix.exe does not change.
 
 | ID | Task file | Outcome | Depends on | Size | Status |
 |---|---|---|---|---|---|
-| 01 | [01-word-concordance-trim.md](01-word-concordance-trim.md) | #1: trim helper plus two call sites; AC1-AC4 | none | S, easy | done (manual AC1-AC4 not run: needs Felix registration) |
+| 01 | [01-word-concordance-trim.md](01-word-concordance-trim.md) | #1: trim helper plus two call sites; AC1-AC4 | none | S, easy | done, e8ace76 (manual AC1-AC4 not run: needs Felix registration) |
 | 02 | [02-keystroke-target-helper.md](02-keystroke-target-helper.md) | #2: shared `keystroke_target_is_main_window` with tests in three test projects | none | S-M, moderate (Win32 window tests, three vcxproj edits) | pending |
 | 03 | [03-hook-guards.md](03-hook-guards.md) | #2: guard in Excel, Word, PowerPoint hooks; AC5-AC8 | 02 | S code, M manual verification (keystroke probes) | pending |
 | 04 | [04-excel-formula-bar-refresh.md](04-excel-formula-bar-refresh.md) | #3: `RefreshActiveCell`, `write_selection_text`, fakes, tests; AC9-AC10 | none | M, moderate (Excel `#import` in Test_Excel) | pending |
