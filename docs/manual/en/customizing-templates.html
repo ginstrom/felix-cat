@@ -1,0 +1,457 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta content="document" name="resource-type" />
+<meta content="Software" name="classification" />
+<meta content="User Guide for the Felix computer aided translation (CAT) solution. Introduction to Felix." name="description" />
+<meta content="CAT, translation memory, computer aided translation, software, help, manual" name="keywords" />
+<meta content="ALL" name="robots" />
+<meta content="Global" name="distribution" />
+<meta content="Safe For Kids" name="rating" />
+<meta content="Copyright Ginstrom IT Solutions (GITS)" name="copyright" />
+<meta content="Ryan Ginstrom" name="author" />
+<meta content="English" name="language" />
+<meta content="Completed" name="doc-class" />
+<meta content="Creative Commons" name="doc-rights" />
+
+    <title>12. Customizing Felix Templates &mdash; Felix Manual 1.7.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/agogo.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.7.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="top" title="Felix Manual 1.7.1.1 documentation" href="index.html" />
+    <link rel="next" title="13. Troubleshooting Felix" href="troubleshooting.html" />
+    <link rel="prev" title="11.1.1.3. Felix COM API Code Samples" href="scripting/samples.html" /> 
+  </head>
+  <body>
+    <div class="header-wrapper">
+      <div class="header">
+        <div class="headertitle"><a
+          href="index.html">Felix Manual 1.7.1.1 documentation</a></div>
+        <div class="rel">
+          <a href="scripting/samples.html" title="11.1.1.3. Felix COM API Code Samples"
+             accesskey="P">previous</a> |
+          <a href="troubleshooting.html" title="13. Troubleshooting Felix"
+             accesskey="N">next</a> |
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a>
+        </div>
+       </div>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="customizing-felix-templates">
+<span id="customizing"></span><span id="index-0"></span><h1>12. Customizing Felix Templates<a class="headerlink" href="#customizing-felix-templates" title="Permalink to this headline">¶</a></h1>
+<p>This page describes how to use the Felix templates and style sheet to customize the way that Felix presents information.</p>
+<div class="section" id="introduction">
+<h2>12.1. Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>Felix uses templates to present most of its information: translation matches, concordance results, and search results. It also uses a CSS style sheet to control presentation.</p>
+<p>You can modify these templates or CSS style sheet in order to customize how information is presented in Felix. One caveat: when you install a Felix upgrade, the templates and style sheet will be overwritten, so be sure to back up your modified files before upgrading.</p>
+<p>The files are located in the following directory.</p>
+<dl class="docutils">
+<dt>Vista:</dt>
+<dd><a href="#id1"><span class="problematic" id="id2">`</span></a>C:\Users\UserName\AppData\Local\Felix\html\ `</dd>
+<dt>XP:</dt>
+<dd><a href="#id3"><span class="problematic" id="id4">`</span></a>C:\Documents and Settings\UserName\Local Settings\Application Data\Felix\html\ `</dd>
+</dl>
+<p>Where UserName is your account user name. The files in the &#8220;en&#8221; folder are English, and those in the &#8220;jp&#8221; folder are Japanese.</p>
+</div>
+<div class="section" id="syntax-primer">
+<h2>12.2. Syntax Primer<a class="headerlink" href="#syntax-primer" title="Permalink to this headline">¶</a></h2>
+<p>The syntax of the templating language is very simple. There are two types of constructs: variables and loops. If a variable has attributes, you can use the dot (&#8221;.&#8221;) operator to access them.</p>
+<div class="section" id="variables">
+<h3>12.2.1. Variables<a class="headerlink" href="#variables" title="Permalink to this headline">¶</a></h3>
+<p>Variables are included like this: <cite>{$variable}</cite>. Assuming we have a variable &#8220;food&#8221;, it would look like this:</p>
+<div class="highlight-python"><pre>I love {$food}.</pre>
+</div>
+<p>If the variable &#8220;food&#8221; is set to &#8220;eggy-weggies&#8221;, the result will be:</p>
+<p>I love eggy-weggies.</p>
+<p>If the variable has an attribute, you&#8217;d access it with the dot (&#8221;.&#8221;) operator: {$variable.attribute_name}. For example, in concordance results there is a records collection. Each record in that collection has several attributes. Assuming you have a record variable named &#8220;record&#8221;, you could thus do this:</p>
+<div class="highlight-python"><pre>The source is '{$record.source}'.</pre>
+</div>
+<p>If the value of the &#8220;source&#8221; attribute is &#8220;long-ticks of toast&#8221;, the result will be:</p>
+<div class="highlight-python"><pre>The source is 'long-ticks of toast'.</pre>
+</div>
+</div>
+<div class="section" id="loops">
+<h3>12.2.2. Loops<a class="headerlink" href="#loops" title="Permalink to this headline">¶</a></h3>
+<dl class="docutils">
+<dt>Loops are used to present each of a collection of objects (such as matches or concordance results). Loops start with:</dt>
+<dd><cite>{% for varname in collection_name %}</cite>. They end with:
+<cite>{% endfor %}</cite>.</dd>
+</dl>
+<p>For example, given a collection name &#8220;records&#8221;, you could access each record as follows:</p>
+<div class="highlight-python"><pre>The source values are:
+{% for record in records %}{$record.source}
+{% endfor %}</pre>
+</div>
+<p>If there were two records, with source strings &#8220;source 1&#8221; and &#8220;source 2&#8221;, the output would be as follows:</p>
+<div class="highlight-python"><pre>The source values are:
+source 1
+source 2</pre>
+</div>
+<div class="section" id="special-loop-variable">
+<h4>12.2.2.1. Special loop Variable<a class="headerlink" href="#special-loop-variable" title="Permalink to this headline">¶</a></h4>
+<p>Within loops, a loop variable is also available, with the following attributes.</p>
+<dl class="docutils">
+<dt>index</dt>
+<dd>The item number in the loop (1, 2, ... n)</dd>
+<dt>index0</dt>
+<dd>The 0-based index</dd>
+<dt>length</dt>
+<dd>The number of items in the collection</dd>
+</dl>
+<p>Here&#8217;s an example of the loop variable in action:</p>
+<div class="highlight-python"><pre>The index values are
+{% for r in records %}{$loop.index} {% endfor %}</pre>
+</div>
+<p>If there were two records, the output would be as follows:</p>
+<div class="highlight-python"><pre>The index values are::
+1 2</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="templates">
+<h2>12.3. Templates<a class="headerlink" href="#templates" title="Permalink to this headline">¶</a></h2>
+<p>Below are the various templates used in Felix.</p>
+<div class="section" id="match-templates">
+<h3>12.3.1. Match Templates<a class="headerlink" href="#match-templates" title="Permalink to this headline">¶</a></h3>
+<p>This section lists the variables available for match templates.</p>
+</div>
+<div class="section" id="single-match-view">
+<h3>12.3.2. Single match view<a class="headerlink" href="#single-match-view" title="Permalink to this headline">¶</a></h3>
+<p>These are the variables for files:</p>
+<blockquote>
+<div>match_fuzzy.txt
+match_perfect.txt
+match_fuzzy_full.txt
+match_perfect_full.txt</div></blockquote>
+<dl class="docutils">
+<dt>query_color</dt>
+<dd>The text color for query segments</dd>
+<dt>source_color</dt>
+<dd>The text color for source segments</dd>
+<dt>trans_color</dt>
+<dd>The text color for translation segments</dd>
+<dt>index</dt>
+<dd>The match number (0-based)</dd>
+<dt>query</dt>
+<dd>The query segment</dd>
+<dt>source</dt>
+<dd>The source segment</dd>
+<dt>trans</dt>
+<dd>The translation segment</dd>
+<dt>context</dt>
+<dd>The context of the current record</dd>
+<dt>created</dt>
+<dd>The date the record was created</dd>
+<dt>modified</dt>
+<dd>The date the record was last modified</dd>
+<dt>reliability</dt>
+<dd>The reliability score of the record (number between 0 and 9)</dd>
+<dt>validated</dt>
+<dd>Whether the record has been validated</dd>
+<dt>creator</dt>
+<dd>The creator of the record</dd>
+<dt>modified_by</dt>
+<dd>The last user to modify the record</dd>
+<dt>score</dt>
+<dd>The match score</dd>
+<dt>num</dt>
+<dd>The index of this match (1-based)</dd>
+<dt>total</dt>
+<dd>The total number of matches</dd>
+<dt>next_nav</dt>
+<dd>The text for the Next/Previous links (if any)</dd>
+<dt>mem</dt>
+<dd>The name of the memory that this record belongs to</dd>
+<dt>refcount</dt>
+<dd>The reference count of the record</dd>
+<dt>ref_count</dt>
+<dd>alias for refcount</dd>
+</dl>
+<div class="section" id="matches-all-txt">
+<h4>12.3.2.1. matches_all.txt<a class="headerlink" href="#matches-all-txt" title="Permalink to this headline">¶</a></h4>
+<p>These are the variables for file: matches_all.txt</p>
+<dl class="docutils">
+<dt>query_color</dt>
+<dd>The text color for query segments</dd>
+<dt>source_color</dt>
+<dd>The text color for source segments</dd>
+<dt>trans_color</dt>
+<dd>The text color for translation segments</dd>
+<dt>records</dt>
+<dd><p class="first">The collection of matches for the current query. Each record object has the following attributes (accessed via the dot (&#8221;.&#8221;) operator, e.g. &#8220;{$record.query}&#8221;).</p>
+<dl class="last docutils">
+<dt>active</dt>
+<dd>If this is the active record, then it will be &#8220;&gt;&gt; &#8221;. Otherwise it will be empty.</dd>
+<dt>query</dt>
+<dd>The query segment</dd>
+<dt>source</dt>
+<dd>The source segment</dd>
+<dt>trans</dt>
+<dd>The translation segment</dd>
+<dt>score</dt>
+<dd>The match score</dd>
+<dt>context</dt>
+<dd>The context of the current record</dd>
+<dt>created</dt>
+<dd>The date the record was created</dd>
+<dt>modified</dt>
+<dd>The date the record was last modified</dd>
+<dt>reliability</dt>
+<dd>The reliability score of the record (number between 0 and 9)</dd>
+<dt>validated</dt>
+<dd>Whether the record has been validated</dd>
+<dt>creator</dt>
+<dd>The creator of the record</dd>
+<dt>modified_by</dt>
+<dd>The last user to modify the record</dd>
+<dt>mem</dt>
+<dd>The name of the memory that this record belongs to</dd>
+<dt>refcount</dt>
+<dd>The reference count of the record</dd>
+<dt>ref_count</dt>
+<dd>alias for refcount</dd>
+</dl>
+</dd>
+</dl>
+</div>
+</div>
+<div class="section" id="search-window-templates">
+<h3>12.3.3. Search Window Templates<a class="headerlink" href="#search-window-templates" title="Permalink to this headline">¶</a></h3>
+<p>These are the variables for search window template:</p>
+<div class="section" id="search-matches-txt">
+<h4>12.3.3.1. search_matches.txt<a class="headerlink" href="#search-matches-txt" title="Permalink to this headline">¶</a></h4>
+<dl class="docutils">
+<dt>results</dt>
+<dd><p class="first">The collection of matches for the current query. Each record object has the following attributes (accessed via the dot (&#8221;.&#8221;) operator, e.g. &#8220;{$record.query}&#8221;).</p>
+<dl class="last docutils">
+<dt>source</dt>
+<dd>The source segment</dd>
+<dt>trans</dt>
+<dd>The translation segment</dd>
+<dt>context</dt>
+<dd>The context of the current record</dd>
+<dt>created</dt>
+<dd>The date the record was created</dd>
+<dt>modified</dt>
+<dd>The date the record was last modified</dd>
+<dt>reliability</dt>
+<dd>The reliability score of the record (number between 0 and 9)</dd>
+<dt>validated</dt>
+<dd>Whether the record has been validated</dd>
+<dt>creator</dt>
+<dd>The creator of the record</dd>
+<dt>modified_by</dt>
+<dd>The last user to modify the record</dd>
+<dt>num</dt>
+<dd>The index of the current match</dd>
+<dt>num0</dt>
+<dd>The 0-based index of the current match</dd>
+<dt>mem</dt>
+<dd>The name of the memory that this record belongs to</dd>
+<dt>memory</dt>
+<dd>Alias for mem</dd>
+<dt>refcount</dt>
+<dd>The reference count of the record</dd>
+<dt>ref_count</dt>
+<dd>alias for refcount</dd>
+</dl>
+</dd>
+<dt>message</dt>
+<dd>Any messages (e.g. feedback)</dd>
+<dt>pagination</dt>
+<dd>The pagination text (e.g. previous page/next page links)</dd>
+<dt>page</dt>
+<dd>The current page number in the results</dd>
+</dl>
+</div>
+</div>
+<div class="section" id="concordance-glossary-match-templates">
+<h3>12.3.4. Concordance/Glossary Match Templates<a class="headerlink" href="#concordance-glossary-match-templates" title="Permalink to this headline">¶</a></h3>
+<p>These are the variables for the concordance and glossary match templates:</p>
+<blockquote>
+<div>mem_concordance.txt
+mem_concordance0.txt
+gloss_match.txt
+gloss_match0.txt</div></blockquote>
+<dl class="docutils">
+<dt>records</dt>
+<dd><p class="first">The collection of matches for the current query. Each record object has the following attributes (accessed via the dot (&#8221;.&#8221;) operator, e.g. &#8220;{$record.query}&#8221;).</p>
+<dl class="last docutils">
+<dt>active</dt>
+<dd>If this is the active record, then it will be &#8220;&gt;&gt; &#8221;. Otherwise it will be empty. (Available for concordance view only)</dd>
+<dt>source</dt>
+<dd>The source segment</dd>
+<dt>trans</dt>
+<dd>The translation segment</dd>
+<dt>context</dt>
+<dd>The context of the current record</dd>
+<dt>created</dt>
+<dd>The date the record was created</dd>
+<dt>modified</dt>
+<dd>The date the record was last modified</dd>
+<dt>reliability</dt>
+<dd>The reliability score of the record (number between 0 and 9)</dd>
+<dt>validated</dt>
+<dd>Whether the record has been validated</dd>
+<dt>creator</dt>
+<dd>The creator of the record</dd>
+<dt>modified_by</dt>
+<dd>The last user to modify the record</dd>
+<dt>mem</dt>
+<dd>The name of the memory that this record belongs to</dd>
+<dt>refcount</dt>
+<dd>The reference count of the record</dd>
+<dt>ref_count</dt>
+<dd>alias for refcount</dd>
+</dl>
+</dd>
+</dl>
+</div>
+<div class="section" id="other-templates">
+<h3>12.3.5. Other Templates<a class="headerlink" href="#other-templates" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="item-info-txt">
+<h4>12.3.5.1. item_info.txt<a class="headerlink" href="#item-info-txt" title="Permalink to this headline">¶</a></h4>
+<p>The &#8220;item_info.txt&#8221; template is for showing information about the selected memory or glossary in the Memory Manager dialog. The variables are as follows:</p>
+<dl class="docutils">
+<dt>file_name</dt>
+<dd>The name of the memory/glossary file</dd>
+<dt>creator</dt>
+<dd>The creator of the memory/glossary</dd>
+<dt>field</dt>
+<dd>The field that the memory/glossary belongs to</dd>
+<dt>created_on</dt>
+<dd>Date created</dd>
+<dt>source_language</dt>
+<dd>The source language of the memory/glossary</dd>
+<dt>target_language</dt>
+<dd>The target language of the memory/glossary</dd>
+<dt>client</dt>
+<dd>The client</dd>
+<dt>mem_size</dt>
+<dd>Number of records</dd>
+<dt>file_size</dt>
+<dd>The size of the file</dd>
+<dt>reliability</dt>
+<dd>Average reliability of records in the memory/glossary</dd>
+<dt>validated</dt>
+<dd>Proportion of records that are validated</dd>
+<dt>locked</dt>
+<dd>Whether the memory/glossary is locked (records can&#8217;t be added or deleted)</dd>
+</dl>
+</div>
+<div class="section" id="next-nav-txt">
+<h4>12.3.5.2. next_nav.txt<a class="headerlink" href="#next-nav-txt" title="Permalink to this headline">¶</a></h4>
+<dl class="docutils">
+<dt>prev_score</dt>
+<dd>The score of the previous match</dd>
+<dt>next_score</dt>
+<dd>The score of the next match</dd>
+</dl>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="sidebar">
+          <h3>Table Of Contents</h3>
+          <ul>
+<li class="toctree-l1"><a class="reference internal" href="tutorial-word.html">Quick-start Tutorial Using MS Word</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial-ppt.html">Quick-start Tutorial Using MS PowerPoint</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="about.html">1. About Felix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting-started.html">2. Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="first-time.html">3. Using Felix for the First Time</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting-around.html">4. Getting around in Felix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="menus.html">5. The Menus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="placement.html">6. The Placement Feature</a></li>
+<li class="toctree-l1"><a class="reference internal" href="word.html">7. Using Felix from Word</a></li>
+<li class="toctree-l1"><a class="reference internal" href="excel.html">8. Using Felix from Excel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="powerpoint.html">9. Using Felix from PowerPoint</a></li>
+<li class="toctree-l1"><a class="reference internal" href="faq.html">10. FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scripting-felix.html">11. Scripting Felix</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">12. Customizing Felix Templates</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#introduction">12.1. Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#syntax-primer">12.2. Syntax Primer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#templates">12.3. Templates</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">13. Troubleshooting Felix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="whats-new.html">14. What&#8217;s New in Felix</a></li>
+</ul>
+
+          <h3 style="margin-top: 1.5em;">Search</h3>
+          <form class="search" action="search.html" method="get">
+            <input type="text" name="q" />
+            <input type="submit" value="Go" />
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+          </form>
+          <p class="searchtip" style="font-size: 90%">
+            Enter search terms or a module, class or function name.
+          </p>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <a href="scripting/samples.html" title="11.1.1.3. Felix COM API Code Samples"
+             >previous</a> |
+          <a href="troubleshooting.html" title="13. Troubleshooting Felix"
+             >next</a> |
+          <a href="genindex.html" title="General Index"
+             >index</a>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer">
+        &copy; Copyright 2012, Ryan Ginstrom.
+      Last updated on Jan 02, 2015.
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+  </body>
+</html>

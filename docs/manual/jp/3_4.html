@@ -1,0 +1,269 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Felix :: 翻訳者のための翻訳メモリ :: 3.4 編集モード</title>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+
+    <meta name="resource-type" content="document" />
+
+    <meta name="classification" content="Software" />
+    <meta name="description" content="メモリ型翻訳ツールFelixの利用者マニュアル。編集モードを利用して翻訳メモリや用語エントリを編集する。" />
+    <meta name="MSSmartTagsPreventParsing" content="TRUE" />
+    <meta name="keywords" content="編集,メモリ型翻訳ツール,Felix,ヘルプ,ガイド,マニュアル,翻訳" />
+    <meta name="robots" content="ALL" />
+    <meta name="distribution" content="Global" />
+    <meta name="rating" content="Safe For Kids" />
+    <meta name="copyright" content="Copyright Ginstrom IT Solutions (GITS)" />
+    <meta name="author" content="Ryan Ginstrom" />
+
+    <meta name="language" content="Japanese" />
+    <meta name="doc-class" content="Completed" />
+    <meta name="doc-rights" content="Copyrighted Work" />
+</head>
+
+<body>
+<div id="container">
+    <div id="header">
+        <div class="left">
+            <h1>Felix マニュアル</h1>
+        </div>
+    </div>
+
+	<div id="body">
+
+        
+            <div id="l">
+                <h1>3.4 編集モード</h1>
+
+<p>翻訳メモリ ウィンドウおよびグロサリ ウィンドウに表示されたエントリを編集するときは、編集モードを使用できます。 編集モードでの編集結果は、翻訳メモリ データベースおよびグロサリ ファイルに反映されます。Felix の編集モードでの編集は通常の文書編集プログラムでの編集操作と非常に類似しており、翻訳メモリとグロサリを極めて効率的に管理することができます。</p>
+
+<p>
+<a href="#section_3_4_1">3.4.1 編集モードの開始と終了</a><br />
+<a href="#section_3_4_2">3.4.2 テキストの編集と書式設定</a><br />
+<a href="#section_3_4_3">3.4.3 検索と置換</a>
+</p>
+
+<a name="section_3_4_1"></a>
+<h2>3.4.1 編集モードの開始と終了</h2>
+
+<h3>編集モードの開始</h3>
+
+<p>編集モードを開始するには、翻訳メモリ ウィンドウまたはグロサリ ウィンドウの [<strong>表示(<u>V</u>)</strong>] メニューから [<strong>編集モード(<u>E</u>)</strong>] を選択します。または、編集対象のウィンドウをアクティブにして、キーボード ショートカット Ctrl+E を押します。</p>
+
+<p>ウィンドウに表示されたエントリを編集できる状態になります。編集モードが有効である間は、[<strong>表示(<u>V</u>)</strong>] メニューの [<strong>編集モード(<u>E</u>)</strong>] 項目にチェックマークが付きます。</p>
+
+<h3>編集モードの終了</h3>
+
+<p>編集モードを開始するには、翻訳メモリ ウィンドウまたはグロサリ ウィンドウの [<strong>表示(<u>V</u>)</strong>] メニューから [<strong>編集モード(<u>E</u>)</strong>] を選択します。または、編集対象のウィンドウをアクティブにして、キーボード ショートカット <code>Ctrl+E</code> を押します。</p>
+
+<p>編集モードを終了すると、表示中のエントリに加えられた変更が翻訳メモリ データベースまたはグロサリ ファイルに反映されます。</p>
+
+<a name="section_3_4_2"></a>
+
+<h2>3.4.2 テキストの編集と書式設定</h2>
+
+<p>原文、訳文、文脈の各フィールドを編集するときは、様々な書式設定機能を使用できます。たとえば、Ctrl-B（太字）や Ctrl-I（斜体）などの標準的なキーボード ショートカットを使用できるほか、現在選択中のテキストのフォント情報を [<strong>フォント</strong>] ダイアログで設定できます。 <strong>フォント</strong>] ダイアログを開くには、[<strong>書式(<u>O</u>)</strong>] メニューから [<strong>フォント...(<u>F</u>)</strong> ] を選択します。</p>
+
+<a name="section_3_4_3"></a>
+<h2>3.4.3 検索と置換</h2>
+
+<p>編集モードでは、テキストの検索と置換を実行できます。</p>
+
+<h3>テキストの検索</h3>
+
+<ol>
+  <li>
+    編集モードのとき、キーボード ショートカット Ctrl+F を使用します。
+
+<p>【注記】 編集モードではないときに、Ctrl+F を押すと、[<strong>メモリ エントリの検索 / グロサリ エントリの検索</strong>] ダイアログ ボックスが表示されます。</p>
+
+</li>
+
+<li>
+    [<strong>検索</strong>] ダイアログボックスが表示されいます。
+    <img alt="「検索」ダイアログボックス" src="img/edit_mode_find_dlg.png" />
+
+<p>適切な検索条件を入力します。</p>
+
+<table cellspacing="1" cellpadding="1" border="0">
+       <tr>
+        <th valign="top">検索する文字列：</th>
+        <td>検索対象の文字列</td></tr>
+      <tr>
+        <th valign="top">検索するフィールド：</th>
+        <td>
+          検索対象のフィールド<br />
+
+<table cellspacing="1" cellpadding="1"  border="0">
+            <tr>
+              <th>すべてのフィールド</th>
+              <td>ウィンドウ内のすべてのテキストを検索します。</td></tr>
+            <tr>
+              <th>文脈のフィールド</th>
+              <td>[文脈] フィールド内のテキストのみを検索します。</td></tr>
+            <tr>
+              <th>原文のフィールド</th>
+              <td>[原文] フィールド内のテキストのみを検索します。</td></tr>
+            <tr>
+              <th>訳文のフィールド</th>
+              <td>[訳文] フィールド内のテキストのみを検索します。</td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <th>大文字と小文字を区別しない</th>
+        <td>検索時に大文字と小文字の違いを無視します。</td></tr>
+      <tr>
+        <th valign="top" class="nobr">単語単位で検索する</th>
+        <td>単語全体が一致するテキストのみを検索します。たとえば、[<strong>検索する文字列</strong>   ] フィールドに "bet" と入力すると、"bet" は取り出されますが、"better" は取り出されません。
+        </td>
+      </tr>
+      <tr>
+        <th valign="top">検索</th>
+        <td>検索を実行します。</td></tr>
+      <tr>
+        <th valign="top">閉じる</th>
+        <td>[<strong>テキストの検索</strong>] ダイアログ ボックスを閉じます。</td>
+      </tr>
+    </table>
+
+</li>
+
+<li>
+    検索条件の入力が完了したら、[<strong>検索</strong>] をクリックします。検索条件に一致するテキストが見つかった場合、[<strong>検索</strong>] をもう一度クリックすると、検索条件に一致する次のテキストに移動します。
+  </li>
+
+<li>検索が終了したら、[<strong>閉じる</strong>] をクリックします。</li>
+</ol>
+
+<h3>テキストの置換</h3>
+
+<ol>
+  <li>
+    編集モードのときに、ウィンドウ内のテキストを検索して置換するには、[<strong>編集(<u>E</u>)</strong>] メニューから [<strong>置換(<u>R</u>)</strong>] を選択します。
+    または、キーボード ショートカット <code>Ctrl+H</code>を押します。
+
+<p>【注意】置換機能は編集モードのみで使用できます。</p>
+
+</li>
+
+<li>
+    [<strong>置換</strong>] ダイアログ ボックスが表示されます。
+    <img alt="[置換] ダイアログ ボックス"
+         class="screenshot" src="img/edit_mode_replace_dlg.png" />
+
+<p>適切な検索条件を入力します。</p>
+
+<table cellspacing="1" cellpadding="1" border="0">   
+       <tr>
+        <th valign="top">検索する文字列：</th>
+        <td>検索対象の文字列</td>
+       </tr>
+      <tr>
+        <th valign="top">テキストの置換</th>
+        <td>検索条件に一致したテキスト置き換える新しいテキストを指定します。</td>
+      </tr>
+      <tr>
+        <th valign="top">検索するフィールド：</th>
+        <td>検索対象のフィールド<br />
+          <table cellspacing="1" cellpadding="1"  border="0">
+            <tr>
+              <th>すべてのフィールド</th>
+              <td>ウィンドウ内のすべてのテキストを検索します。</td>
+            </tr>
+            <tr>
+              <th>文脈のフィールド</th>
+              <td>[文脈] フィールド内のテキストのみを検索します。</td>
+            </tr>
+            <tr>
+              <th>原文のフィールド</th>
+              <td>[原文] フィールド内のテキストのみを検索します。</td>
+            </tr>
+            <tr>
+              <th>訳文のフィールド</th>
+              <td>[訳文] フィールド内のテキストのみを検索します。</td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <th>大文字と小文字を区別しない</th>
+        <td>検索時に大文字と小文字の違いを無視します。</td>
+      </tr>
+      <tr>
+        <th valign="top" class="nobr">単語単位で検索する</th>
+        <td>単語全体が一致するテキストのみを検索します。たとえば、[<strong>検索する文字列</strong>   ] フィールドに "bet" と入力すると、"bet" は取り出されますが、"better" は取り出されません。
+        </td>
+      </tr>
+      <tr>
+        <th valign="top">検索</th>
+        <td>検索条件に一致する（次の）テキストを見つけます。</td>
+      </tr>
+      <tr>
+        <th valign="top">置換</th>
+        <td>検索条件に一致したテキストを、[<strong>置換する文字列</strong> ] フィールドのテキストで置き換えます。</td>
+      </tr>
+      <tr>
+        <th valign="top">すべてを置換</th>
+        <td><strong>検索する文字列</strong>] フィールドに一致するすべてのテキストを、[<strong>置換する文字列</strong> ] フィールドのテキストで一括置換します。
+        </td>
+      </tr>
+      <tr>
+        <th valign="top">閉じる</th>
+        <td>[<strong>置換</strong>] ダイアログ ボックスを閉じます。</td>
+      </tr>
+    </table>
+  </li>
+
+<li>
+    検索条件の入力が完了したら、[<strong>検索</strong>] をクリックします。検索条件に一致するテキストが見つかった場合、[<strong>検索</strong>] をもう一度クリックすると、検索条件に一致する次のテキストに移動します。
+
+<p><strong>すべてを置換</strong>]ボタンをクリックすると、検索条件に一致する文字列を[<strong>置換する文字列</strong> ] フィールドのテキストで一括置換されます。</p>
+
+</li>
+
+<li>
+    検索と置換が終了したら、[<strong>閉じる</strong>]をクリックします。
+  </li>
+</ol>
+
+<a href="3_3_8.html">前に戻る（ネットワーク）</a> |
+    <a href="4.html">次へ進む(Felixのメニュー)</a>
+            </div>
+            <div id="r">
+                <ul>
+        <li><a href="index.html">目 次</a></li>
+        <li><a href="1.html">1. 概要</a></li>
+        <li><a href="2.html">2. システムの要件およびインストール</a></li>
+        <li><a href="3.html">3. Felixの使い方</a>
+            <ul>
+                <li><a href="3.html">3.1 はじめに</a></li>
+                <li><a href="3_2.html">3.2 翻訳メモリウィンドウ</a></li>
+                <li><a href="3_3.html">3.3 グロサリ ウィンドウ</a></li>
+                <li><strong>3.4 編集モード</strong></li>
+            </ul>
+        </li>
+        <li><a href="4.html">4. Felixのメニュー</a></li>
+        <li><a href="5.html">5. Word で Felix を使用する</a></li>
+        <li><a href="6.html">6. Excelで使用する</a></li>
+        <li><a href="7.html">7. PowerPointでFelixを使用する</a></li>
+        <li><a href="8.html">8. よく聞かれる質問</a></li>
+
+<li><a href="appendix_a.html">付録：Felix ソフトウェアとスクリプト</a></li>
+
+</ul>
+            </div>
+
+        </div>
+<br clear="all"/></div>
+
+    <div id="footer"><div><div>
+        Copyright &copy; 2008 Ginstrom IT Solutions (GITS).
+        | <a href="../../../../index.html" title="Felixウェブサイトを参照">Felixウェブサイト</a>
+        | <a href="mailto:&#115;&#117;&#112;&#112;&#111;&#114;&#116;&#64;&#102;&#101;&#108;&#105;&#120;&#45;&#99;&#97;&#116;&#46;&#99;&#111;&#109;" title="Felixに関するお問い合わせ">お問い合わせ</a>
+    
+    </div></div></div>
+</body>
+</html>

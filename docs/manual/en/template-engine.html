@@ -1,0 +1,492 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>
+    Customizing Felix Templates - Felix Manual
+</title>
+    <link rel="shortcut icon" href="../../../favicon.ico" type="image/vnd.microsoft.icon" />
+    <link rel="icon" href="../../../favicon.ico" type="image/vnd.microsoft.icon" />
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+
+    <meta name="resource-type" content="document" />
+
+    <meta name="classification" content="Software" />
+    <meta name="description" content="User Guide for the Felix computer aided translation (CAT) solution. Using Felix from Microsoft Word." />
+    <meta name="MSSmartTagsPreventParsing" content="TRUE" />
+    <meta name="keywords" content="felix, word, CAT, translation memory, computer aided translation, software, help, manual" />
+    <meta name="robots" content="ALL" />
+    <meta name="distribution" content="Global" />
+    <meta name="rating" content="Safe For Kids" />
+    <meta name="copyright" content="Copyright Ginstrom IT Solutions (GITS)" />
+    <meta name="author" content="Ryan Ginstrom" />
+
+    <meta name="language" content="English" />
+    <meta name="doc-class" content="Completed" />
+    <meta name="doc-rights" content="Copyrighted Work" />
+</head>
+
+<body>
+<div id="container">
+    <div id="header">
+        <div class="left">
+            <h1>Felix Manual</h1>
+        </div>
+    </div>
+
+	<div id="body">
+
+        
+            <div id="l">
+                
+<a name="top"></a>
+<h1>Appendix B: Customizing Felix Templates</h1>
+
+<p>This page describes how to use the Felix templates and style sheet to customize the way that Felix presents information.
+</p>
+
+<ul>
+<li> <a href="#intro">Introduction</a></li>
+<li> <a href="#syntax">Syntax Primer</a></li>
+<li> <a href="#match">Match Templates</a></li>
+<li> <a href="#search_window">Search Templates</a></li>
+<li> <a href="#concordance">Concordance/Glossary Match Templates</a></li>
+<li> <a href="#others">Other Templates</a></li>
+</ul>
+
+<a name="intro"></a>
+<h2>Introduction</h2>
+
+<p>Felix uses templates to present most of its information: translation matches, concordance results, and search results. It also uses a CSS style sheet to control presentation.
+</p>
+
+<p>You can modify these templates or CSS style sheet in order to customize how information is presented in Felix. One caveat: when you install a Felix upgrade, the templates and style sheet will be overwritten, so be sure to back up your modified files before upgrading.
+</p>
+
+<p>The files are located in the following directory.
+</p>
+
+<dl>
+<dt>Vista:</dt>
+<dd>C:\Users\<em>UserName</em>\AppData\Local\Felix\html\</dd>
+<dt>XP:</dt>
+<dd>C:\Documents and Settings\<em>UserName</em>\Local Settings\Application Data\Felix\html\</dd>
+</dl>
+
+<p>Where <em>UserName</em> is your account user name. The files in the "en" folder are English, and those in the "jp" folder are Japanese.
+</p>
+
+<p><a href="#top">Back to the Top</a>
+</p>
+
+<a name="syntax"></a>
+<h2>Syntax Primer</h2>
+
+
+<p>The syntax of the templating language is very simple. There are two types of constructs: variables and loops. If a variable has attributes, you can use the dot (".") operator to access them.
+</p>
+
+<h3>Variables</h3>
+
+<p>Variables are included like this: <code>{$variable}</code>. Assuming we have a variable "food", it would look like this:
+</p>
+
+<div class="samplecode">
+I love {$food}.
+</div>
+
+<p>If the variable "food" is set to "eggy-weggies", the result will be:
+</p>
+
+<pre>I love eggy-weggies.</pre>
+
+<p>If the variable has an attribute, you'd access it with the dot (".") operator: <code>{$variable.attribute_name}</code>. For example, in concordance results there is a <code>records</code> collection. Each record in that collection has several attributes. Assuming you have a record variable named "record", you could thus do this:
+</p>
+
+<div class="samplecode">
+The source is '{$record.source}'.
+</div>
+
+<p>If the value of the "source" attribute is "long-ticks of toast", the result will be:
+</p>
+
+<pre>The source is 'long-ticks of toast'.</pre>
+
+<h3>Loops</h3>
+
+<p>Loops are used to present each of a collection of objects (such as matches or concordance results). Loops start with:<br />
+"<code>{% for <em>varname</em> in <em>collection_name</em> %}</code>".
+They end with: <br />
+"<code>{% endfor %}</code>".
+</p>
+
+<p>For example, given a collection name "records", you could access each record as follows:
+</p>
+
+<pre class="samplecode">
+The source values are:
+{% for record in records %}{$record.source}
+{% endfor %}</pre>
+
+<p>If there were two records, with source strings "source 1" and "source 2", the output would be as follows:
+</p>
+
+<pre>The source values are:
+source 1
+source 2
+</pre>
+
+<h4>Special loop Variable</h4>
+
+<p>Within loops, a <code>loop</code> variable is also available, with the following attributes.
+</p>
+
+<dl>
+    <dt>index</dt>
+    <dd>The item number in the loop (1, 2, ... n)</dd>
+
+    <dt>index0</dt>
+    <dd>The 0-based index</dd>
+
+    <dt>length</dt>
+    <dd>The number of items in the collection</dd>
+</dl>
+
+<p>Here's an example of the <code>loop</code> variable in action.
+</p>
+
+<pre class="samplecode">
+The index values are:
+{% for r in records %}{$loop.index} {% endfor %}</pre>
+
+
+<p>If there were two records, the output would be as follows:
+</p>
+
+<pre>The index values are:
+1 2 </pre>
+
+<p><a href="#top">Back to the Top</a></p>
+
+<a name="match"></a>
+<h2>Match Templates</h2>
+
+<p>This section lists the variables available for match templates.</p>
+
+<h3>Single match view</h3>
+
+<p>These are the variables for files:</p>
+
+<ul>
+<li>match_fuzzy.txt</li>
+<li>match_perfect.txt</li>
+<li>match_fuzzy_full.txt</li>
+<li>match_perfect_full.txt</li>
+</ul>
+
+<dl>
+<dt>query_color</dt>
+    <dd>The text color for query segments</dd>
+<dt>source_color</dt>
+    <dd>The text color for source segments</dd>
+<dt>trans_color</dt>
+    <dd>The text color for translation segments</dd>
+<dt>index</dt>
+    <dd>The match number (0-based)</dd>
+
+<dt>query</dt>
+    <dd>The query segment</dd>
+<dt>source</dt>
+    <dd>The source segment</dd>
+<dt>trans</dt>
+    <dd>The translation segment</dd>
+
+<dt>context</dt>
+    <dd>The context of the current record</dd>
+<dt>created</dt>
+    <dd>The date the record was created</dd>
+<dt>modified</dt>
+    <dd>The date the record was last modified</dd>
+<dt>reliability</dt>
+    <dd>The reliability score of the record (number between 0 and 9)</dd>
+<dt>validated</dt>
+    <dd>Whether the record has been validated</dd>
+
+<dt>creator</dt>
+    <dd>The creator of the record</dd>
+<dt>modified_by</dt>
+    <dd>The last user to modify the record</dd>
+
+<dt>score</dt>
+    <dd>The match score</dd>
+
+<dt>num</dt>
+    <dd>The index of this match (1-based)</dd>
+<dt>total</dt>
+    <dd>The total number of matches</dd>
+
+<dt>next_nav</dt>
+    <dd>The text for the Next/Previous links (if any)</dd>
+
+	<dt>mem</dt>
+    <dd>The name of the memory that this record belongs to</dd>
+	<dt>refcount</dt>
+    <dd>The reference count of the record</dd>
+	<dt>ref_count</dt>
+    <dd>alias for <code>refcount</code></dd>
+</dl>
+
+<h3>matches_all.txt</h3>
+
+<p>These are the variables for file: matches_all.txt</p>
+
+<dl>
+<dt>query_color</dt>
+    <dd>The text color for query segments</dd>
+<dt>source_color</dt>
+    <dd>The text color for source segments</dd>
+<dt>trans_color</dt>
+    <dd>The text color for translation segments</dd>
+
+
+<dt>records</dt>
+    <dd>The collection of matches for the current query. Each record object has the following attributes (accessed via the dot (".") operator, e.g. "{$record.query}").<dl>
+
+	<dt>active</dt>
+    <dd>If this is the active record, then it will be "&gt;&gt; ". Otherwise it will be empty.</dd>
+<dt>query</dt>
+    <dd>The query segment</dd>
+<dt>source</dt>
+    <dd>The source segment</dd>
+<dt>trans</dt>
+    <dd>The translation segment</dd>
+
+	<dt>score</dt>
+    <dd>The match score</dd>
+
+<dt>context</dt>
+    <dd>The context of the current record</dd>
+<dt>created</dt>
+    <dd>The date the record was created</dd>
+<dt>modified</dt>
+    <dd>The date the record was last modified</dd>
+<dt>reliability</dt>
+    <dd>The reliability score of the record (number between 0 and 9)</dd>
+<dt>validated</dt>
+    <dd>Whether the record has been validated</dd>
+
+<dt>creator</dt>
+    <dd>The creator of the record</dd>
+<dt>modified_by</dt>
+    <dd>The last user to modify the record</dd>
+
+
+	<dt>mem</dt>
+    <dd>The name of the memory that this record belongs to</dd>
+	<dt>refcount</dt>
+    <dd>The reference count of the record</dd>
+	<dt>ref_count</dt>
+    <dd>alias for <code>refcount</code></dd>
+</dl></dd>
+</dl>
+
+<p><a href="#top">Back to the Top</a></p>
+
+<a name="search_window"></a>
+<h2>Search Window Templates</h2>
+
+These are the variables for search window template:
+
+<ul>
+    <li>search_matches.txt</li>
+</ul>
+
+<dl>
+<dt>results</dt>
+    <dd>The collection of matches for the current query. Each record object has the following attributes (accessed via the dot (".") operator, e.g. "{$record.query}").
+    <dl>
+<dt>source</dt>
+    <dd>The source segment</dd>
+<dt>trans</dt>
+    <dd>The translation segment</dd>
+<dt>context</dt>
+    <dd>The context of the current record</dd>
+<dt>created</dt>
+    <dd>The date the record was created</dd>
+<dt>modified</dt>
+    <dd>The date the record was last modified</dd>
+<dt>reliability</dt>
+    <dd>The reliability score of the record (number between 0 and 9)</dd>
+<dt>validated</dt>
+    <dd>Whether the record has been validated</dd>
+
+<dt>creator</dt>
+    <dd>The creator of the record</dd>
+<dt>modified_by</dt>
+    <dd>The last user to modify the record</dd>
+
+	<dt>num</dt>
+    <dd>The index of the current match</dd>
+	<dt>num0</dt>
+    <dd>The 0-based index of the current match</dd>
+
+	<dt>mem</dt>
+    <dd>The name of the memory that this record belongs to</dd>
+	<dt>memory</dt>
+    <dd>Alias for <code>mem</code></dd>
+	<dt>refcount</dt>
+    <dd>The reference count of the record</dd>
+	<dt>ref_count</dt>
+    <dd>alias for <code>refcount</code></dd>
+</dl></dd>
+
+    <dt>message</dt>
+    <dd>Any messages (e.g. feedback)</dd>
+
+    <dt>pagination</dt>
+    <dd>The pagination text (e.g. previous page/next page links)</dd>
+
+    <dt>page</dt>
+    <dd>The current page number in the results</dd>
+
+</dl>
+
+<p><a href="#top">Back to the Top</a></p>
+
+
+<a name="concordance"></a>
+<h2>Concordance/Glossary Match Templates</h2>
+
+These are the variables for the concordance and glossary match templates:
+
+<ul>
+    <li>mem_concordance.txt</li>
+    <li>mem_concordance0.txt</li>
+    <li>gloss_match.txt</li>
+    <li>gloss_match0.txt</li>
+</ul>
+
+<dl>
+<dt>records</dt>
+    <dd>The collection of matches for the current query. Each record object has the following attributes (accessed via the dot (".") operator, e.g. "{$record.query}").<dl>
+	<dt>active</dt>
+    <dd>If this is the active record, then it will be "&gt;&gt; ". Otherwise it will be empty. <em>(Available for concordance view only)</em></dd>
+<dt>source</dt>
+    <dd>The source segment</dd>
+<dt>trans</dt>
+    <dd>The translation segment</dd>
+<dt>context</dt>
+    <dd>The context of the current record</dd>
+<dt>created</dt>
+    <dd>The date the record was created</dd>
+<dt>modified</dt>
+    <dd>The date the record was last modified</dd>
+<dt>reliability</dt>
+    <dd>The reliability score of the record (number between 0 and 9)</dd>
+<dt>validated</dt>
+    <dd>Whether the record has been validated</dd>
+
+<dt>creator</dt>
+    <dd>The creator of the record</dd>
+<dt>modified_by</dt>
+    <dd>The last user to modify the record</dd>
+
+
+	<dt>mem</dt>
+    <dd>The name of the memory that this record belongs to</dd>
+	<dt>refcount</dt>
+    <dd>The reference count of the record</dd>
+	<dt>ref_count</dt>
+    <dd>alias for <code>refcount</code></dd>
+</dl></dd>
+</dl>
+
+<p><a href="#top">Back to the Top</a></p>
+
+<a name="others"></a>
+<h2>Other Templates</h2>
+
+<h3>item_info.txt</h3>
+The "item_info.txt" template is for showing information about the selected memory or glossary in the Memory Manager dialog. The variables are as follows:
+
+<dl>
+<dt>file_name</dt>
+    <dd>The name of the memory/glossary file</dd>
+<dt>creator</dt>
+    <dd>The creator of the memory/glossary</dd>
+<dt>field</dt>
+    <dd>The field that the memory/glossary belongs to</dd>
+<dt>created_on</dt>
+    <dd>Date created</dd>
+<dt>source_language</dt>
+    <dd>The source language of the memory/glossary</dd>
+<dt>target_language</dt>
+    <dd>The target language of the memory/glossary</dd>
+<dt>client</dt>
+    <dd>The client</dd>
+<dt>mem_size</dt>
+    <dd>Number of records</dd>
+<dt>file_size</dt>
+    <dd>The size of the file</dd>
+<dt>reliability</dt>
+    <dd>Average reliability of records in the memory/glossary</dd>
+<dt>validated</dt>
+    <dd>Proportion of records that are validated</dd>
+<dt>locked</dt>
+    <dd>Whether the memory/glossary is locked (records can't be added or deleted)</dd>
+</dl>
+
+<h3>next_nav.txt</h3>
+
+<dl>
+<dt>prev_score</dt>
+    <dd>The score of the previous match</dd>
+<dt>next_score</dt>
+    <dd>The score of the next match</dd>
+</dl>
+
+<p>
+    <a href="#top">Back to the Top</a> |
+    <a href="appendix_a.html">Back (Scripting Felix)</a>
+</p>
+
+
+
+            </div>
+            <div id="r">
+                <ul>
+        <li><a href="index.html">Contents</a></li>
+        <li><a href="1.html">1. Overview</a></li>
+        <li><a href="2.html">2. Getting Started</a></li>
+        <li><a href="3.html">3. Using Felix</a></li>
+        <li><a href="4.html">4. The Menus</a></li>
+        <li><a href="5.html">5. Using from Word</a></li>
+        <li><a href="6.html">6. Using from Excel</a></li>
+        <li><a href="7.html">7. Using from PowerPoint</a></li>
+        <li><a href="8.html">8. FAQ</a></li>
+
+<li><a href="appendix_a.html">Appendix A. Scripting Felix</a></li>
+        <li><strong>Appendix B. Customizing Felix Templates</strong></li>
+
+</ul>
+            </div>
+
+        </div>
+<br clear="all"/></div>
+
+    <div id="footer"><div><div>
+        Copyright &copy; 2008 Ginstrom IT Solutions (GITS).
+        | <a href="../../../index.html" title="Visit the Felix Website">Felix Website</a>
+        | <a href="mailto:&#115;&#117;&#112;&#112;&#111;&#114;&#116;&#64;&#102;&#101;&#108;&#105;&#120;&#45;&#99;&#97;&#116;&#46;&#99;&#111;&#109;" title="Contact information for Felix developers">Contact</a>
+    
+    </div></div></div>
+</body>
+</html>
+
+
+
+
+
+
+
+

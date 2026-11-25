@@ -1,0 +1,285 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta content="document" name="resource-type" />
+<meta content="Software" name="classification" />
+<meta content="User Guide for the Felix computer aided translation (CAT) solution. Introduction to Felix." name="description" />
+<meta content="CAT, translation memory, computer aided translation, software, help, manual" name="keywords" />
+<meta content="ALL" name="robots" />
+<meta content="Global" name="distribution" />
+<meta content="Safe For Kids" name="rating" />
+<meta content="Copyright Ginstrom IT Solutions (GITS)" name="copyright" />
+<meta content="Ryan Ginstrom" name="author" />
+<meta content="English" name="language" />
+<meta content="Completed" name="doc-class" />
+<meta content="Creative Commons" name="doc-rights" />
+
+    <title>11.1.1.2.4. Memory &mdash; Felix Manual 1.7.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/agogo.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.7.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="Felix Manual 1.7.1.1 documentation" href="../index.html" />
+    <link rel="up" title="11.1.1.2. Felix COM API Objects" href="objects.html" />
+    <link rel="next" title="11.1.1.2.5. SearchResult" href="searchresult.html" />
+    <link rel="prev" title="11.1.1.2.3. Memories" href="memories.html" /> 
+  </head>
+  <body>
+    <div class="header-wrapper">
+      <div class="header">
+        <div class="headertitle"><a
+          href="../index.html">Felix Manual 1.7.1.1 documentation</a></div>
+        <div class="rel">
+          <a href="memories.html" title="11.1.1.2.3. Memories"
+             accesskey="P">previous</a> |
+          <a href="searchresult.html" title="11.1.1.2.5. SearchResult"
+             accesskey="N">next</a> |
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a>
+        </div>
+       </div>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="memory">
+<span id="index-0"></span><h1>11.1.1.2.4. Memory<a class="headerlink" href="#memory" title="Permalink to this headline">¶</a></h1>
+<p>The <strong>Memory</strong> object represents a Felix translation memory or glossary. It is normally retrieved from a <a class="reference internal" href="memories.html"><em>Memories</em></a> collection.</p>
+<div class="section" id="properties">
+<h2>11.1.1.2.4.1. Properties<a class="headerlink" href="#properties" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="11%" />
+<col width="9%" />
+<col width="6%" />
+<col width="73%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Type</th>
+<th class="head">Access</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Client</td>
+<td>String</td>
+<td>Get/Set</td>
+<td>The client that this TM/glossary is for</td>
+</tr>
+<tr class="row-odd"><td>CreatedOn</td>
+<td>Date</td>
+<td>Get/Set</td>
+<td>The date and time that this TM/glossary was created</td>
+</tr>
+<tr class="row-even"><td>Creator</td>
+<td>String</td>
+<td>Get/Set</td>
+<td>The creator of the TM/glossary</td>
+</tr>
+<tr class="row-odd"><td>Field</td>
+<td>String</td>
+<td>Get/Set</td>
+<td>The field of the TM/glossary (e.g. &#8220;Electronics&#8221; or &#8220;Education&#8221;)</td>
+</tr>
+<tr class="row-even"><td>IsLocked</td>
+<td>Boolean</td>
+<td>Get/Set</td>
+<td>Whether the TM/glossary is locked. It is not possible add/delete records to/from locked Memory objects.</td>
+</tr>
+<tr class="row-odd"><td>IsMemory</td>
+<td>Boolean</td>
+<td>Get/Set</td>
+<td>True if the object is a TM, False if it is a glossary</td>
+</tr>
+<tr class="row-even"><td>ModifiedBy</td>
+<td>String</td>
+<td>Get/Set</td>
+<td>The last user to modify the TM/glossary</td>
+</tr>
+<tr class="row-odd"><td>ModifiedOn</td>
+<td>Date</td>
+<td>Get/Set</td>
+<td>The date and time that this TM/glossary was last modified</td>
+</tr>
+<tr class="row-even"><td>Records</td>
+<td>Object</td>
+<td>Get</td>
+<td>The <a class="reference internal" href="records.html"><em>Records</em></a> collection representing the records in the TM/glossary</td>
+</tr>
+<tr class="row-odd"><td>SourceLanguage</td>
+<td>String</td>
+<td>Get/Set</td>
+<td>The source language of the TM/glossary</td>
+</tr>
+<tr class="row-even"><td>TargetLanguage</td>
+<td>String</td>
+<td>Get/Set</td>
+<td>The target language of the TM/glossary</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="methods">
+<h2>11.1.1.2.4.2. Methods<a class="headerlink" href="#methods" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="16%" />
+<col width="21%" />
+<col width="63%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Arguments</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>AddRecord</td>
+<td>Object <em>Record</em></td>
+<td>Adds a <a class="reference internal" href="record.html"><em>Record</em></a> object to the TM/glossary</td>
+</tr>
+<tr class="row-odd"><td>GetSize</td>
+<td><em>none</em></td>
+<td>Returns the size of the TM/glossary</td>
+</tr>
+<tr class="row-even"><td>RemoveRecord</td>
+<td>Object <em>Record</em></td>
+<td>Removes the specified <a class="reference internal" href="record.html"><em>Record</em></a> object from the TM/glossary</td>
+</tr>
+<tr class="row-odd"><td>Save</td>
+<td><em>none</em></td>
+<td>Saves the TM/glossary at the current location</td>
+</tr>
+<tr class="row-even"><td>SaveAs</td>
+<td>String <em>Location</em></td>
+<td>Saves the TM/glossary at the specified location</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="example">
+<h2>11.1.1.2.4.3. Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
+<p>Here&#8217;s some sample code to print out information about the active memory:</p>
+<div class="highlight-python"><pre>Sub PrintActiveMemoryInfo()
+
+    Dim felix As Object
+    Set felix = CreateObject("Felix.App")
+    felix.Visible = True
+
+    ' Create the mem object
+    Dim mem As Object
+    Set mem = felix.App2.ActiveMemory
+
+    ' Print out info
+    Debug.Print mem.Creator
+    Debug.Print mem.CreatedOn
+    Debug.Print mem.Client
+    Debug.Print mem.Field
+
+End Sub</pre>
+</div>
+</div>
+<div class="section" id="navigation">
+<h2>11.1.1.2.4.4. Navigation<a class="headerlink" href="#navigation" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference internal" href="objects.html"><em>Felix COM API Objects</em></a></li>
+<li>Back: <a class="reference internal" href="memories.html"><em>Memories</em></a></li>
+<li>Next: <a class="reference internal" href="searchresult.html"><em>SearchResult</em></a></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="sidebar">
+          <h3>Table Of Contents</h3>
+          <ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial-word.html">Quick-start Tutorial Using MS Word</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial-ppt.html">Quick-start Tutorial Using MS PowerPoint</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../about.html">1. About Felix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started.html">2. Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../first-time.html">3. Using Felix for the First Time</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting-around.html">4. Getting around in Felix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../menus.html">5. The Menus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../placement.html">6. The Placement Feature</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../word.html">7. Using Felix from Word</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../excel.html">8. Using Felix from Excel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../powerpoint.html">9. Using Felix from PowerPoint</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">10. FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../scripting-felix.html">11. Scripting Felix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../customizing-templates.html">12. Customizing Felix Templates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../troubleshooting.html">13. Troubleshooting Felix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../whats-new.html">14. What&#8217;s New in Felix</a></li>
+</ul>
+
+          <h3 style="margin-top: 1.5em;">Search</h3>
+          <form class="search" action="../search.html" method="get">
+            <input type="text" name="q" />
+            <input type="submit" value="Go" />
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+          </form>
+          <p class="searchtip" style="font-size: 90%">
+            Enter search terms or a module, class or function name.
+          </p>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <a href="memories.html" title="11.1.1.2.3. Memories"
+             >previous</a> |
+          <a href="searchresult.html" title="11.1.1.2.5. SearchResult"
+             >next</a> |
+          <a href="../genindex.html" title="General Index"
+             >index</a>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer">
+        &copy; Copyright 2012, Ryan Ginstrom.
+      Last updated on Jan 02, 2015.
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+  </body>
+</html>

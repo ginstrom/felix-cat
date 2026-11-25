@@ -1,0 +1,230 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta content="document" name="resource-type" />
+<meta content="Software" name="classification" />
+<meta content="User Guide for the Felix computer aided translation (CAT) solution. Introduction to Felix." name="description" />
+<meta content="CAT, translation memory, computer aided translation, software, help, manual" name="keywords" />
+<meta content="ALL" name="robots" />
+<meta content="Global" name="distribution" />
+<meta content="Safe For Kids" name="rating" />
+<meta content="Copyright Ginstrom IT Solutions (GITS)" name="copyright" />
+<meta content="Ryan Ginstrom" name="author" />
+<meta content="Japanese" name="language" />
+<meta content="Completed" name="doc-class" />
+<meta content="Creative Commons" name="doc-rights" />
+
+    <title>5. 置換機能 &mdash; Felix v. 1.7.1 マニュアル</title>
+    
+    <link rel="stylesheet" href="_static/agogo.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.7.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/translations.js"></script>
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <link rel="author" title="このドキュメントについて" href="about.html" />
+    <link rel="top" title="Felix v. 1.7.1 マニュアル" href="index.html" />
+    <link rel="next" title="5.3.1. 置換ルールの管理" href="rule-manager.html" />
+    <link rel="prev" title="4. Felixのメニュー" href="menus.html" /> 
+  </head>
+  <body>
+    <div class="header-wrapper">
+      <div class="header">
+        <div class="headertitle"><a
+          href="index.html">Felix v. 1.7.1 マニュアル</a></div>
+        <div class="rel">
+          <a href="menus.html" title="4. Felixのメニュー"
+             accesskey="P">前へ</a> |
+          <a href="rule-manager.html" title="5.3.1. 置換ルールの管理"
+             accesskey="N">次へ</a> |
+          <a href="genindex.html" title="総合索引"
+             accesskey="I">索引</a>
+        </div>
+       </div>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="placement">
+<span id="index-0"></span><span id="id1"></span><h1>5. 置換機能<a class="headerlink" href="#placement" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>Felixの置換機能を使用すると、数字や用語集の登録語、またはあらかじめ設定したルールに基づく置換語を自動的に訳文に挿入することができます。これらの置換機能の詳細は、 <a class="reference internal" href="memwindow/preferences.html#placement-props"><em>自動置換</em></a> を参照してください。</p>
+<div class="section" id="placement-numbers">
+<span id="id2"></span><h2>5.1. 数字の置換<a class="headerlink" href="#placement-numbers" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>訳文中の数字を自動的に置換することができます。例えば、翻訳メモリ内に次のようなエントリが登録されている場合、このように置換を行うことができます:</p>
+<div class="highlight-python"><pre>原文： Vamos a ir el 5 de Mayo
+訳文： Let's go on May 5</pre>
+</div>
+<p>このエントリを利用して次の原文を翻訳する場合:</p>
+<div class="highlight-python"><pre>Vamos a ir el 10 de Mayo</pre>
+</div>
+<p>完全に一致する訳文がなくても、Felixのメモリは以下の訳文を訳文候補として提示します:</p>
+<div class="highlight-python"><pre>Let's go on May 10</pre>
+</div>
+<p>このように置き換えられた数字は、マッチウィンドウに青く表示されます。一致スコア(%)の隣にグレーの文字で表示される[P]は、この訳文候補が置換マッチ（Placement match）であることを表します。</p>
+<div class="figure">
+<img alt="数字の置換" src="_images/placement_number.png" />
+<p class="caption">数字の置換</p>
+</div>
+</div>
+<div class="section" id="placement-gloss">
+<span id="id3"></span><h2>5.2. 用語の置換<a class="headerlink" href="#placement-gloss" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>訳文中の用語を自動的に置換することができます。例えば、翻訳メモリ内に次のような訳文が登録されている場合、このように置換を行うことができます:</p>
+<div class="highlight-python"><pre>Source: Go to YYY
+Translation: Vaya a BBB</pre>
+</div>
+<p>また、次のような用語エントリがある場合:</p>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="35%" />
+<col width="65%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">原文</th>
+<th class="head">Translation</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>YYY</td>
+<td>BBB</td>
+</tr>
+<tr class="row-odd"><td>ZZZ</td>
+<td>CCC</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p>次のフレーズをメモリに照会すると:</p>
+<div class="highlight-python"><pre>Go to ZZZ</pre>
+</div>
+<p>Felixは「ZZZ」を「CCC」という用語に翻訳すべきと認識し、メモリに登録されている訳文をベースに次のような翻訳候補を提示します:</p>
+<div class="highlight-python"><pre>Vaya a CCC</pre>
+</div>
+</div>
+<div class="section" id="placement-rules">
+<span id="id4"></span><h2>5.3. ルール設定による置換<a class="headerlink" href="#placement-rules" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>あらかじめ検索語・置換語を設定して訳文内で置換を行う機能です。置換ルールは正規表現として設定します。</p>
+<p>次のような置換ルールを設定した場合:</p>
+<div class="highlight-python"><pre>原文： (\d+)(\d)億円
+訳文： \1.\2 billion yen</pre>
+</div>
+<p>下記の原文にこの置換ルールを適用した場合:</p>
+<div class="highlight-python"><pre>原文： 123億円</pre>
+</div>
+<p>上述の置換ルールにより、訳文は下記のように置き換えられます:</p>
+<div class="highlight-python"><pre>訳文： 12.3 billion yen</pre>
+</div>
+<p>または、翻訳メモリ内に次のような訳文が登録されている場合:</p>
+<div class="highlight-python"><pre>原文： 85億円を投資しました。
+訳文： Invested 8.5 billion yen.</pre>
+</div>
+<p>あるいは、以下のフレーズをメモリに照会した場合:</p>
+<div class="highlight-python"><pre>22億円を投資しました。</pre>
+</div>
+<p>Felixは次のように置換を提示します:</p>
+<div class="highlight-python"><pre>Invested 2.2 billion yen.</pre>
+</div>
+<p>上記のサンプルはいずれも、数字の置換によく似ていますが、数字の置換は小数点の位置を認識して行うものではありません。一方、置換ルールを活用すると、より効率的な数字の置換が可能になります。例えば電話番号や日付、またはあらゆるフォーマット付きテキストを置き換えることができます。</p>
+<p>ルールを管理するには、「ツール」メニューから「置換ルールの管理」を選択します。「ルールの管理」ダイアログが表示されます。詳細について、 <a class="reference internal" href="rule-manager.html#rule-manager"><em>置換ルールの管理</em></a> を参照してください。</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="rule-manager.html">5.3.1. 置換ルールの管理</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="rule-manager.html#rule-editor">5.3.1.1. [置換ルールの編集]ダイアログボックス</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="sidebar">
+          <h3>目次</h3>
+          <ul>
+<li class="toctree-l1"><a class="reference internal" href="tutorial-word.html">Felixチュートリアル：MSワードで使う</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial-ppt.html">Felixチュートリアル：MS パワーポイントで使う</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="about.html">1. Felixについて</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting-started.html">2. はじめに</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting-around.html">3. Felixの基本操作</a></li>
+<li class="toctree-l1"><a class="reference internal" href="menus.html">4. Felixのメニュー</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">5. 置換機能</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#placement-numbers">5.1. 数字の置換</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#placement-gloss">5.2. 用語の置換</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#placement-rules">5.3. ルール設定による置換</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="word.html">6. Word で Felix を使用する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="excel.html">7. Excel でFelix を使用する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="powerpoint.html">8. PowerPointでFelixを使用する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="faq.html">9. よく聞かれる質問</a></li>
+<li class="toctree-l1"><a class="reference internal" href="whats-new.html">10. Felixの変更点</a></li>
+</ul>
+
+          <h3 style="margin-top: 1.5em;">検索</h3>
+          <form class="search" action="search.html" method="get">
+            <input type="text" name="q" />
+            <input type="submit" value="検索" />
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+          </form>
+          <p class="searchtip" style="font-size: 90%">
+            モジュール、クラス、または関数名を入力してください
+          </p>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <a href="menus.html" title="4. Felixのメニュー"
+             >前へ</a> |
+          <a href="rule-manager.html" title="5.3.1. 置換ルールの管理"
+             >次へ</a> |
+          <a href="genindex.html" title="総合索引"
+             >索引</a>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer">
+        &copy; Copyright 2012, Ryan Ginstrom.
+      最終更新: May 15, 2013
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>
+    Felix :: 翻訳者のための翻訳メモリ :: 翻訳エントリを追加する
+</title>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+
+    <meta name="resource-type" content="document" />
+
+    <meta name="classification" content="Software" />
+    <meta name="description" content="メモリ型翻訳ツールFelixの利用者マニュアル。翻訳エントリの追加について。" />
+    <meta name="MSSmartTagsPreventParsing" content="TRUE" />
+    <meta name="keywords" content="メモリ型翻訳ツール,Felix,ヘルプ,ガイド,マニュアル,翻訳" />
+    <meta name="robots" content="ALL" />
+    <meta name="distribution" content="Global" />
+    <meta name="rating" content="Safe For Kids" />
+    <meta name="copyright" content="Copyright Ginstrom IT Solutions (GITS)" />
+    <meta name="author" content="Ryan Ginstrom" />
+
+    <meta name="language" content="Japanese" />
+    <meta name="doc-class" content="Completed" />
+    <meta name="doc-rights" content="Copyrighted Work" />
+</head>
+
+<body>
+<div id="container">
+    <div id="header">
+        <div class="left">
+            <h1>Felix マニュアル</h1>
+        </div>
+    </div>
+
+	<div id="body">
+
+        
+            <div id="l">
+                <h1>3.2.1 翻訳エントリを追加する</h1>
+
+<p>「エントリ」とは、TM（翻訳メモリ）や用語集の基本単位です。TU（Translation Unit）ともいいます。一つのエントリは原文（または原語）、訳文（または訳語）、その他の情報で構成されます。</p>
+
+<ol>
+  <li>[<strong>編集(<u>E</u>)</strong>] メニューから [<strong>エントリの追加(<u>A</u>)</strong>] を選択します。  
+  <div><img alt="エントリの追加" src="img/addentrymenu.png" /></div> </li>
+
+<li>[<strong>エントリの追加</strong>] ダイアログボックスが表示されます。
+  <div><img alt="エントリの作成" src="img/addentry_dlg.png" /> 
+  </div> </li>
+
+<li>必要なフィールドを入力して、[OK] ボタンをクリックします。 
+
+<table>
+
+<tr>
+    <td><strong>原文:</strong> </td>
+    <td>翻訳エントリの訳文 (<EM>必須入力</EM>)</td></tr>
+  <tr>
+    <td><strong>訳文：</strong> </td>
+    <td>翻訳エントリの訳文 (<EM>必須入力</EM>)</td></tr>
+   <tr>
+    <td><strong>文脈:</strong> </td>
+    <td>コンテキスト(文脈): 翻訳エントリの文脈（原文/訳文が使用される文脈など - <em>省略可能</em>）</td>
+   </tr>
+   <tr>
+    <td><strong>信頼度：</strong> </td>
+    <td>翻訳エントリの信頼度（任意の整数値） 
+        (<em>省略可能</em>)</td>
+   </tr>
+   <tr>
+    <td><strong>確認済み：</strong> </td>
+    <td>翻訳エントリを確定する場合は、このボックスにチェックマークを付けます。 翻訳エントリを確定しても、その後で編集することは可能です。
+        (<em>省略可能</em>)</td>
+    </tr>
+    <tr>
+      <td><strong>作成日時：</strong></td>
+      <td>翻訳エントリが作成された日時
+        (<em>読み取り専用</em>)</td>
+    </tr>
+    <tr>
+      <td><strong>更新日時：</strong></td>
+      <td>翻訳エントリが最後に更新された日時
+        (<em>読み取り専用</em>       )</td>
+    </tr>
+    <tr>
+      <td><strong>特殊な文字列<a href="#note1" title="注記 １">[1]</a>:</strong></td>
+      <td>ユーザー定義の特殊な文字列（<em>省略可能</em>）。これらの文字列を編集/追加するには、[<strong>文字列の編集</strong>] および [<strong>文字列の追加</strong> ] のボタンを使用します。</td>
+    </tr>
+</table>
+
+<p>
+原文、訳文、文脈の各フィールドにテキストを入力するときは、様々な書式設定機能を使用できます。<strong>編集</strong>タグのWYSIWYG機能を使用すれば、一般的なワードプロ プログラムを使用したときと全く同じように翻訳エントリを編集できます。また、<strong>原文</strong> タグを使用すれば、各フィールドごとに実際のHTMLソースコードを編集し、メモリ管理が大幅に容易になります。
+</p>
+
+<p>原文、訳文、文脈の各フィールドを編集するときは、様々な書式設定機能を使用できます。たとえば、Ctrl-B（太字）や Ctrl-I（斜体）などの標準的なキーボード ショートカットを使用できるほか、現在選択中のテキストのフォント情報を [フォント] ダイアログで設定できます。[フォント] ダイアログを開くには、[<strong>書式(<u>R</u>)</strong>] メニューから [<strong>フォント...(<u>F</u>)</strong>] を選択します。</p>
+
+<p><br /><br />特殊シンボルを挿入する場合は、[<strong>書式(<u>R</u>)</strong>] メニューから [<strong>シンボルの挿入(<u>S</u>)...</strong>] を選択します。[ シンボルの挿入 ] ダイアログボックスが表示されます。
+  先頭のアンド記号（&amp;）および末尾のセミコロン（;）を付けないで、HTML シンボル名または Unicode 番号を入力してください。たとえば、"beta" を入力すると "&beta;" が挿入され、"#128" を入力すると "&#128;" が挿入されます。シンボルは現在のカーソル位置に挿入されます。</p>
+
+<p><br /><br />通常のダイアログ ボックスと同様に、[フォント] ダイアログでも、Enter キーが特別な意味を持ちます。つまり、データを入力して、単に Enter キーを押すだけで、[<strong>OK</strong>]ボタンを押したのと同じことになります。段落マーカー（&lt;P&gt;）を挿入するには、Ctrl + Enter キーを押します。改行文字（&lt;br&gt;）を挿入するには、Shift + Enter キーを押します。</p>
+
+<p>翻訳エントリの情報の入力が完了したら、[<strong>OK</strong>] をクリックしてください。</p>     
+</li>
+
+<li>エントリ（原語と訳語のペア）がグロサリに追加されます。
+  <div><img alt="Added entry" src="img/added_entry.png" /></div></li>
+ </ol>
+
+<h3>注記</h3>
+<ol>
+    <li><a name="note1"></a>特殊な文字列は主にTMをインポートした場合（Felix以外のTMを読み込んだ場合）に役立ちます。その場合、Felixでは使用されないタグなどの情報があれば、この「特殊な文字列」として保存されます。FelixのTMをその外部形式で保存した場合、特殊な文字列があればそのタグなどに変換されます。</li>
+</ol>
+
+<p>
+<a href="3_2.html">前に戻る（翻訳メモリウィンドウ）</a> |
+<a href="3_2_2.html">次へ進む（翻訳メモリを検索する）</a>
+</p>
+            </div>
+            <div id="r">
+                <ul>
+        <li><a href="index.html">目 次</a></li>
+        <li><a href="1.html">1. 概要</a></li>
+        <li><a href="2.html">2. システムの要件およびインストール</a></li>
+        <li><a href="3.html">3. Felixの使い方</a>
+            <ul>
+                <li><a href="3.html">3.1 はじめに</a></li>
+                <li><a href="3_2.html"><strong>3.2 翻訳メモリウィンドウ</strong></a></li>
+                <li><a href="3_3.html">3.3 グロサリ ウィンドウ</a></li>
+                <li><a href="3_4.html">3.4 編集モード</a></li>
+            </ul>
+        </li>
+        <li><a href="4.html">4. Felixのメニュー</a></li>
+        <li><a href="5.html">5. Word で Felix を使用する</a></li>
+        <li><a href="6.html">6. Excelで使用する</a></li>
+        <li><a href="7.html">7. PowerPointでFelixを使用する</a></li>
+        <li><a href="8.html">8. よく聞かれる質問</a></li>
+
+<li><a href="appendix_a.html">付録：Felix ソフトウェアとスクリプト</a></li>
+
+</ul>
+            </div>
+
+        </div>
+<br clear="all"/></div>
+
+    <div id="footer"><div><div>
+        Copyright &copy; 2008 Ginstrom IT Solutions (GITS).
+        | <a href="../../../../index.html" title="Felixウェブサイトを参照">Felixウェブサイト</a>
+        | <a href="mailto:&#115;&#117;&#112;&#112;&#111;&#114;&#116;&#64;&#102;&#101;&#108;&#105;&#120;&#45;&#99;&#97;&#116;&#46;&#99;&#111;&#109;" title="Felixに関するお問い合わせ">お問い合わせ</a>
+    
+    </div></div></div>
+</body>
+</html>

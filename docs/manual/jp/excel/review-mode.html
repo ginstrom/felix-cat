@@ -1,0 +1,321 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta content="document" name="resource-type" />
+<meta content="Software" name="classification" />
+<meta content="User Guide for the Felix computer aided translation (CAT) solution. Introduction to Felix." name="description" />
+<meta content="CAT, translation memory, computer aided translation, software, help, manual" name="keywords" />
+<meta content="ALL" name="robots" />
+<meta content="Global" name="distribution" />
+<meta content="Safe For Kids" name="rating" />
+<meta content="Copyright Ginstrom IT Solutions (GITS)" name="copyright" />
+<meta content="Ryan Ginstrom" name="author" />
+<meta content="Japanese" name="language" />
+<meta content="Completed" name="doc-class" />
+<meta content="Creative Commons" name="doc-rights" />
+
+    <title>7.2. 校正モード &mdash; Felix v. 1.7.1 マニュアル</title>
+    
+    <link rel="stylesheet" href="../_static/agogo.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.7.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="author" title="このドキュメントについて" href="../about.html" />
+    <link rel="top" title="Felix v. 1.7.1 マニュアル" href="../index.html" />
+    <link rel="up" title="7. Excel でFelix を使用する" href="../excel.html" />
+    <link rel="next" title="7.3. Felixのユーザー設定（Excel）" href="preferences.html" />
+    <link rel="prev" title="7.1. 翻訳モード" href="trans-mode.html" /> 
+  </head>
+  <body>
+    <div class="header-wrapper">
+      <div class="header">
+        <div class="headertitle"><a
+          href="../index.html">Felix v. 1.7.1 マニュアル</a></div>
+        <div class="rel">
+          <a href="trans-mode.html" title="7.1. 翻訳モード"
+             accesskey="P">前へ</a> |
+          <a href="preferences.html" title="7.3. Felixのユーザー設定（Excel）"
+             accesskey="N">次へ</a> |
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a>
+        </div>
+       </div>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="excel-review-mode">
+<span id="id1"></span><h1>7.2. 校正モード<a class="headerlink" href="#excel-review-mode" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>Felixには、翻訳を校正するための校正モードが用意されています。校正モードでは、翻訳モードと似た操作でセルの内容を検索していきますが、この場合は原文ではなく訳文の検索が行われます。</p>
+<p>検索対象（セルまたはテキストボックス）の訳文を訂正した場合、Alt + ↑を押して、FelixのTMの中の訳文を訂正します。</p>
+<img alt="校正モードのボタン" class="align-left" src="../_images/switch_t.png" />
+<p>校正モードに切り替えるには、左のブタンをクリックします。翻訳モードに戻るには、もう一度クリックします。</p>
+<p>校正モード中は、括弧で囲まれたアスタリスク (*) がメニュー項目の右側に表示されます。そしてツールバーのボタンの色が逆転されます。</p>
+<img alt="MS Excelでの校正モードのツールバー" src="../_images/excel_toolbar_review.png" />
+<p>校正モードでのエクセルのツール バー</p>
+<div class="section" id="id2">
+<h2>7.2.1. 訳文を検索する<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>翻訳メモリ内で検索するセルを選択します。次に、「Felix」のメニューから「選択の検索(L)」を選択します。あるいは、ショートカットの「ALT + L」を押します。対象のセルと一致した訳文がFelix上で表示されます。</p>
+<p>Wordと異なり、Excelでは書式情報が保持されないことに注意してください。</p>
+<p>テキストボックスが選択しているとき、その中の文字が検索されます。</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>ツールバー・ボタン</td>
+<td>選択の検索</td>
+</tr>
+<tr class="row-even"><td>メニューコマンド</td>
+<td><img alt="選択の検索" src="../_images/lookup_trans.png" /></td>
+</tr>
+<tr class="row-odd"><td>キーボード ショートカット</td>
+<td>Alt + L</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id3">
+<h2>7.2.2. 複数の翻訳候補を操作する<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>Felix の翻訳メモリ内で分節を検索すると、翻訳メモリ ウィンドウの [ツール] メニューから [プロパティ...] &gt; [メモリ ] タブで指定された最小一致スコア以上の翻訳エントリがすべて取り出されるため、複数の翻訳候補が提示されることがあります。（翻訳歴の機能（ :ref:` excel-trans-history`を参照）を有効にした場合、完全に一致した訳文が表示されます。）</p>
+<p>翻訳候補の数、および表示中の翻訳候補の番号は、翻訳メモリ ウィンドウの右下に表示されます。</p>
+<img alt="Felixのウィンドウでファジーの一致が表示される" src="../_images/felix_fuzzy1.png" />
+<p>この例1つの翻訳候補しかなく、これが表示されています。</p>
+<p>次の候補を表示するには、翻訳メモリ ウィンドウ内の [次へ] をクリックするか、Excel 内部からショートカット Alt + N を押します（または、[Felix] メニューから [次の訳文へ] を選択します）。</p>
+<div class="admonition tip">
+<p class="first admonition-title">ちなみに</p>
+<p class="last">次の訳文候補のスコア（この例では68%）が [次へ] の右側のカッコ内に表示されます。</p>
+</div>
+<p>前の候補を表示するには、翻訳メモリ ウィンドウ内の [戻る] をクリックするか、Word 内部からショートカット Alt + P を押します（または、[Felix] メニューから [前の訳文へ] を選択します）。</p>
+<div class="admonition tip">
+<p class="first admonition-title">ちなみに</p>
+<p class="last">前の訳文候補のスコア（この例では68%）が [ 戻る] の右側のカッコ内に表示されます。</p>
+</div>
+<p>候補は循環的に表示されます。最後の候補が表示されているときに [次へ] をクリックすると、最初の候補が表示されます。 同様に、最初の候補が表示されているときに [戻る] をクリックすると、最後の候補が表示されます。</p>
+</div>
+<div class="section" id="id4">
+<h2>7.2.3. 訳文を訂正する<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<blockquote>
+<div><p>訳文の訂正が必要な場合、修正してから一旦他のセルに移動して（たとえば、EnterキーやTabキーを押して） 、訂正録対象のセルにカーソルを戻す必要があります。（フォーカスが移動しないと入力した文字が認識されないため）
+Excelの [Felix] メニューから [訳文の登録] を選択するか、ショートカットAlt + ↑を押します。</p>
+<p>あるいは、[登録して次へ] を選択する（または、ショートカットAlt + Sを押す）こともできます。こうすると、訳文が翻訳メモリに登録された後、次のセルが自動的に選択されると同時に、そのセルの内容が翻訳メモリ内で検索されます。セルのスキャン方向は、左から右、上から下の順です。スキャンはテキストが入力された最初のセルが見つかるか、スキャンの最大範囲（左右上下に5セル×5セルの範囲）に達するまで続けられます。</p>
+</div></blockquote>
+<div class="section" id="id5">
+<h3>7.2.3.1. 現在のセルの訳文を訂正する<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>ツールバー・ボタン</td>
+<td><img alt="元に戻す" src="../_images/lookup_trans.png" /></td>
+</tr>
+<tr class="row-even"><td>メニューコマンド</td>
+<td>訳文の訂正</td>
+</tr>
+<tr class="row-odd"><td>キーボード ショートカット</td>
+<td>Alt + ↑</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id6">
+<h3>7.2.3.2. 翻訳エントリを訂正して、次のせりを検索する<a class="headerlink" href="#id6" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>ツールバー・ボタン</td>
+<td><img alt="訂正して、次を検索" src="../_images/lookup_trans.png" /></td>
+</tr>
+<tr class="row-even"><td>メニューコマンド</td>
+<td>訂正して次へ</td>
+</tr>
+<tr class="row-odd"><td>キーボード ショートカット</td>
+<td>Alt + S</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="id7">
+<h2>7.2.4. 次の訳文を検索する<a class="headerlink" href="#id7" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>Excelの [Felix] メニューから [選択の検索] を選択するか、ショートカットAlt + Lを押します。</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>ツールバー・ボタン</td>
+<td><img alt="次のセルを検索" src="../_images/lookup_next_trans.png" /></td>
+</tr>
+<tr class="row-even"><td>メニューコマンド</td>
+<td>次を選択</td>
+</tr>
+<tr class="row-odd"><td>キーボード ショートカット</td>
+<td>ALT + →</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id8">
+<h2>7.2.5. 翻訳メモリから訳文を取得する<a class="headerlink" href="#id8" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<blockquote>
+<div><p>Felixの翻訳メモリ（「訳文」フィールド）から訳文候補を取り込む宛先のセルを選択します。
+Excelの [Felix] メニューから [訳文の取得] を選択するか、ショートカットAlt + ↓を押します。</p>
+<p>あるいは、[取得して次へ] を選択する（または、ショートカットAlt + Gを押す）こともできます。こうすると、訳文候補が翻訳メモリからセルに取り込まれた後、（テキストが入力された）次のセルが自動的に選択されると同時に、そのセルの内容が翻訳メモリ内で検索されます。セルのスキャン方向は、左から右、上から下の順です。スキャンはテキストが入力された最初のセルが見つかるか、スキャンの最大範囲（左右上下に5セル×5セルの範囲）に達するまで続けられます。</p>
+</div></blockquote>
+<div class="section" id="id9">
+<h3>7.2.5.1. もとの訳文を戻して、次のセルを検索する<a class="headerlink" href="#id9" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>ツールバー・ボタン</td>
+<td><img alt="次のセルを検索" src="../_images/get_trans_and_next.png" /></td>
+</tr>
+<tr class="row-even"><td>メニューコマンド</td>
+<td>取得して次へ</td>
+</tr>
+<tr class="row-odd"><td>キーボード ショートカット</td>
+<td>Alt + G</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id10">
+<h3>7.2.5.2. 訳文を元に戻す<a class="headerlink" href="#id10" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>ツールバー・ボタン</td>
+<td><img alt="次のセルを検索" src="../_images/restore.png" /></td>
+</tr>
+<tr class="row-even"><td>メニューコマンド</td>
+<td>訳文の取得</td>
+</tr>
+<tr class="row-odd"><td>キーボード ショートカット</td>
+<td>Alt + ↓</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="id11">
+<h2>7.2.6. 編集の自動反映<a class="headerlink" href="#id11" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>翻訳歴を利用している場合、（ :ref:` excel-trans-history` を参照）エクセルのシート（またはワークブック）の訳文を編集して、一つの操作でその編集を一括反映できます。</p>
+<p>この機能を使用するには、
+Felix &gt;&gt; 編集の反映...を選択して、</p>
+<dl class="docutils">
+<dt>シート</dt>
+<dd>表示中のワークシート</dd>
+<dt>すべてのワークブック</dt>
+<dd>開いているワークブックすべて</dd>
+</dl>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="sidebar">
+          <h3>目次</h3>
+          <ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial-word.html">Felixチュートリアル：MSワードで使う</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial-ppt.html">Felixチュートリアル：MS パワーポイントで使う</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../about.html">1. Felixについて</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started.html">2. はじめに</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting-around.html">3. Felixの基本操作</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../menus.html">4. Felixのメニュー</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../placement.html">5. 置換機能</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../word.html">6. Word で Felix を使用する</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../excel.html">7. Excel でFelix を使用する</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="trans-mode.html">7.1. 翻訳モード</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="">7.2. 校正モード</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preferences.html">7.3. Felixのユーザー設定（Excel）</a></li>
+<li class="toctree-l2"><a class="reference internal" href="trans-history.html">7.4. 翻訳歴</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../powerpoint.html">8. PowerPointでFelixを使用する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">9. よく聞かれる質問</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../whats-new.html">10. Felixの変更点</a></li>
+</ul>
+
+          <h3 style="margin-top: 1.5em;">検索</h3>
+          <form class="search" action="../search.html" method="get">
+            <input type="text" name="q" />
+            <input type="submit" value="検索" />
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+          </form>
+          <p class="searchtip" style="font-size: 90%">
+            モジュール、クラス、または関数名を入力してください
+          </p>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <a href="trans-mode.html" title="7.1. 翻訳モード"
+             >前へ</a> |
+          <a href="preferences.html" title="7.3. Felixのユーザー設定（Excel）"
+             >次へ</a> |
+          <a href="../genindex.html" title="総合索引"
+             >索引</a>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer">
+        &copy; Copyright 2012, Ryan Ginstrom.
+      最終更新: May 15, 2013
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+  </body>
+</html>

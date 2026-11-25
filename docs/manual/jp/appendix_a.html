@@ -1,0 +1,381 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<META HTTP-EQUIV="content-type" CONTENT="text/html; charset=Shift_JIS">
+
+    <title>
+Felix - 翻訳者のための翻訳メモリ ::Felix ソフトウェアとスクリプト
+</title>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+
+    <meta name="resource-type" content="document" />
+
+    <meta name="classification" content="Software" />
+    <meta name="description" content="User Guide for the Felix computer aided translation (CAT) solution. Translation memory made by translators, for translators." />
+    <meta name="MSSmartTagsPreventParsing" content="TRUE" />
+    <meta name="keywords" content="CAT, translation memory, computer aided translation, software" />
+    <meta name="robots" content="ALL" />
+    <meta name="distribution" content="Global" />
+    <meta name="rating" content="Safe For Kids" />
+    <meta name="copyright" content="Copyright Ginstrom IT Solutions (GITS)" />
+    <meta name="author" content="Ryan Ginstrom" />
+
+    <meta name="language" content="Japanese" />
+    <meta name="doc-class" content="Completed" />
+    <meta name="doc-rights" content="Copyrighted Work" />
+</head>
+
+<body>
+<div id="container">
+    <div id="header">
+        <div class="left">
+<h1>Felix マニュアル</h1>
+        </div>
+    </div>
+
+	<div id="body">
+
+        
+            <div id="l">
+                       <div clas="item">
+
+
+<h1>Felix ソフトウェアとスクリプト</h1>
+
+<p>Felix ソフトウェアのほとんどの機能は、Visual Basic (VB)、Visual Basic for Applications (VBA)、他の COM 対応プログラミング言語 (C++ など) のスクリプトを使用して記述することができます。そのため、<strong>Felix</strong> は非常に柔軟で強力なツールになっています。独自のカスタム スクリプトを開発すれば、さまざまなタスク（文書の前処理など）を自動的に実行することができます。 </p>
+
+<p>実際、Felix ソフトウェアに付属しいる Microsoft Word マクロと Microsoft Excel マクロは、VB や VBA などのスクリプトを利用して、すべての処理を実行しています。これらのスクリプトをユーザー独自の目的に応じてカスタマイズしたり、新しいスクリプトを書いたりすることができます。さらに、<B>Felix</B> の機能を利用する他の VB スクリプトやアプリケーションを開発することも可能です。 </p>
+
+<p>たとえば、<strong>Felix</strong> ソフトウェアに付属の <strong>TagAssist</strong> アプリケーション（HTML や XML などのタグ付きファイルを編集するツール）では、オートメーション関数を通じて <strong>Felix</strong> の機能を利用し、さまざまな編集タスクを実行しています。 </p>
+
+<a name = "1"></a>
+<h2>1. オートメーション関数の仕様  </h2>
+
+
+
+<p><strong>プロパティ：</strong>
+<table border=1>
+  
+  <TR>
+<TH>名前 
+<TH>型 
+<TH>読取り 
+<TH>書込み 
+<TH>説明 
+  <TR>
+<TD><CODE>CorrectedTranslation</CODE> 
+<TD><CODE>String</CODE> 
+<TD>Yes 
+<TD>Yes 
+<TD>現在表示されている訳文を取得または訂正します。</TD>
+  <TR>
+<TD><CODE>GlossaryLocation</CODE> 
+<TD><CODE>String</CODE> 
+<TD>Yes 
+<TD>Yes 
+<TD>メイン グロサリ（Main Glossary）ファイルの名前を取得または設定します。 </TD>
+  <TR>
+<TD><CODE>GlossarySize</CODE> 
+<TD><CODE>Long</CODE> 
+<TD>Yes 
+<TD>No 
+<TD>メイン グロサリ（Main Glossary）ファイルのサイズを取得します。 </TD>
+  <TR>
+<TD><CODE>IsVisible</CODE> 
+<TD><CODE>Boolean</CODE> 
+<TD>Yes 
+<TD>Yes 
+<TD>翻訳メモリ ウィンドウの表示/非表示の状態を調べます(読み取り時)。 </TD>
+  <TR>
+<TD><CODE>MemoryLocation</CODE> 
+<TD><CODE>String</CODE> 
+<TD>Yes 
+<TD>Yes 
+<TD>翻訳メモリのファイル名を取得または設定します。 </TD>
+  <TR>
+<TD><CODE>MemorySize</CODE> 
+<TD><CODE>Long</CODE> 
+<TD>Yes 
+<TD>No 
+<TD>翻訳メモリのサイズを取得します。 </TD>
+  <TR>
+<TD><CODE>NumGlossaryMatches</CODE> 
+<TD><CODE>Integer</CODE> 
+<TD>Yes 
+<TD>No 
+<TD>メイン グロサリ（Main Glossary）ファイル内での一致の件数を取得します。 </TD>
+  <TR>
+<TD><CODE>NumMatches</CODE> 
+<TD><CODE>Long</CODE> 
+<TD>Yes 
+<TD>No 
+<TD>翻訳メモリ内での一致の件数を取得します。 </TD>
+  <TR>
+<TD><CODE>Query</CODE> 
+<TD><CODE>String</CODE> 
+<TD>Yes 
+<TD>Yes 
+<TD>翻訳メモリ内で検索する分節（照会= クエリー）を取得または設定します。クエリーを設定ると、翻訳メモリ ウィンドウの「照会」フィールドの分節が翻訳メモリ内で検索され、(あいまい) 一致した原文/訳文ペアが翻訳メモリ ウィンドウに表示されます。 また、「照会」フィールドの分節に含まれる単語やフレーズがグロサリ内で検索され、一致したグロサリ エントリがグロサリ ウィンドウに表示されます。 </TD>
+  <TR>
+<TD><CODE>RegistryValue</CODE> 
+<TD><CODE>String</CODE> 
+<TD>Yes 
+<TD>Yes 
+    <TD>
+<p>レジストリ内の値を取得または設定します。<strong>Felix</strong> の関数を通じてレジストリを操作することは、ユーザー自身がレジストリを直接操作することと比較して、次のような利点があります。</p>
+      <ol>
+<li>ほとんどのマクロ言語やスクリプト言語には、レジストリ値を設定する機能が備わっていないか、非常に限られた機能しかありません。 
+<li><strong>Felix</strong> をアンインストールした場合、<strong>Felix</strong> を通じて設定されたレジストリ値は自動的に削除されます。 ユーザー自身が直接設定したレジストリ値は削除されません。</li></ol>
+<p>      RegistryValue 関数を呼び出すときは、2つの文字列引数（アプリケーション名とキー）を指定します。<br> 例：<br> MemoryLocation = oFelix.RegistryValue( &quot;Word&quot;, &quot;CurrentProjectMemory&quot; ) <br> oFelix.RegistryValue( &quot;Word&quot;, &quot;SourceWordCount&quot; ) 
+        </div>
+       <div clas="item">
+      <h1></h1>
+	 &quot;1345&quot; &lt; /P 
+      
+	 &gt; &lt; /P 
+      
+	 &gt; &lt; /P 
+      
+	 &gt; &lt; /P 
+      
+	 &gt; &lt; /P 
+      
+	 &gt; &lt; /P 
+      
+	 &gt; &lt; /P 
+      
+	 &gt; &lt; /P 
+      
+	 &gt; &lt; /P 
+      
+	 &gt; &lt; /P &gt; </P> 
+</TD>
+  <TR>
+<TD><CODE>Score</CODE> 
+<TD><CODE>Double</CODE> 
+<TD>Yes 
+<TD>No 
+<TD>現在表示されているエントリの一致率(%)を取得します。 </TD>
+  <TR>
+<TD><CODE>Translation</CODE> 
+<TD><CODE>String</CODE> 
+<TD>Yes 
+<TD>Yes 
+<TD>現在のクエリー（照会フィールド）に対応する訳文を取得または設定します。訳文を設定すると、新しい翻訳エントリが作成されて、翻訳メモリに追加されます（または翻訳メモリ内の既存のエントリが置換されます）。 新しい翻訳エントリでは、クエリー（照会フィールド）が原文として使用され、翻訳者が入力した内容が訳文として使用されます。 </TD></TR>
+
+  <TR>
+<TD><CODE>TranslationForReview</CODE> 
+<TD><CODE>String</CODE> 
+<TD>Yes 
+<TD>Yes 
+<TD>翻訳メモリ内で訳文を検索するか、現在の訳文を取り出します。</TD></TR>
+
+</table>
+<p><strong>メソッド：</strong>
+<table border=1>
+  
+  <TR>
+<TH>メソッド名 
+<TH>パラメータ 
+<TH>リターン値 
+<TH>操作の説明 
+  <TR>
+<TD><CODE>AddEntryToGlossary</CODE> 
+<TD><CODE>String </CODE>Source, <CODE>String </CODE>Translation, <CODE>String </CODE>Context 
+<TD>None 
+<TD>グロサリ エントリをグロサリ ファイルに追加します。 </TD>
+  <TR>
+<TD><CODE>AddGlossaryEntry</CODE> 
+<TD><CODE>String </CODE>Translation 
+<TD>None 
+<TD>グロサリ エントリをグロサリ ファイルに追加します。翻訳メモリ ウィンドウに現在表示されている検索対象分節（「照会」フィールド）がグロサリ エントリの原文になります。 </TD>
+  <TR>
+<TD><CODE>AddMemoryEntry</CODE> 
+<TD><CODE>String </CODE>Source, <CODE>String </CODE>Translation 
+<TD>None 
+<TD>翻訳エントリを翻訳メモリに追加します。 </TD>
+  <TR>
+<TD><CODE>ClearGlossary</CODE> 
+<TD>None 
+<TD>None 
+<TD>メイン グロサリ ウィンドウをクリアします。</TD>
+  <TR>
+<TD><CODE>ClearMemory</CODE> 
+<TD>None 
+<TD>None 
+<TD>翻訳メモリ ウィンドウをクリアします。</TD>
+  <TR>
+<TD><CODE>Concordance</CODE> 
+<TD><CODE>String </CODE>Query 
+<TD>None 
+<TD>翻訳メモリの「原文」フィールドに対してコンコーダンス（一致）検索を実行します。 </TD>
+  <TR>
+<TD><CODE>DeleteTranslation</CODE> 
+<TD>None 
+<TD>None 
+<TD>翻訳メモリ ウィンドウに現在表示されている翻訳エントリを削除します。 </TD>
+  <TR>
+<TD><CODE>EditCurrentMemory</CODE> 
+<TD>None 
+<TD>None 
+<TD>翻訳メモリ ウィンドウに現在表示されてい翻訳エントリを編集します。[エントリの編集] ダイアログが表示されます。</TD>
+  <TR>
+<TD><CODE>GlossMatch</CODE> 
+<TD><CODE>Integer</CODE> Index 
+<TD>String 
+<TD>位置 <EM>Index</EM> にあるグロサリ エントリをメイン グロサリ（Main Glossary）から取り出します。</TD>
+  <TR>
+<TD><CODE>NextTranslation</CODE> 
+<TD>None 
+<TD>None 
+<TD>次の訳文候補を表示します。</TD>
+  <TR>
+<TD><CODE>PrevTranslation</CODE> 
+<TD>None 
+<TD>None 
+<TD>前の訳文候補を表示します。</TD>
+  <TR>
+<TD><CODE>Quit</CODE> 
+<TD>None 
+<TD>None 
+<TD><strong>Felix</strong> を終了します。 </TD>
+  <TR>
+<TD><CODE>QuitSilently</CODE> 
+<TD>None 
+<TD>None 
+<TD>確認用のダイアログ ボックス（翻訳メモリへの変更を保存するように指示するダイアログなど）を表示しないで、<strong>Felix</strong> を終了します。 </TD>
+  <TR>
+<TD><CODE>Save</CODE> 
+<TD>None 
+<TD>None 
+<TD>翻訳メモリとメイン グロサリを保存します。 </TD>
+  <TR>
+<TD><CODE>ScoreAtIndex</CODE> 
+<TD><CODE>Integer</CODE> Index 
+<TD><CODE>Double</CODE> 
+<TD>索引番号が <CODE>Index</CODE> であるエントリのスコアを取得します。 </TD>
+  <TR>
+<TD><CODE>TranslationAtIndex</CODE> 
+<TD><CODE>Integer</CODE> Index 
+<TD><CODE>String</CODE> 
+<TD>索引番号が <CODE>Index</CODE> であるエントリの訳文を取得します。 
+  </TD></TR>
+  <TR>
+<TD><CODE>TranslationConcordance</CODE> 
+<TD><CODE>String </CODE>Query 
+<TD>None 
+<TD>翻訳メモリの「訳文」フィールドに対してコンコーダンス（一致）検索を実行します。</TD></TR> 
+
+
+</table></p>
+
+<a name = "2">
+<h2> 2. コードの例 </h2>
+</a>
+
+<h3>VBA/Visual Basic</h3>
+
+<p>
+<b>グロサリと翻訳メモリのクリア</b>
+</p>
+
+<pre>    ' You could also add the type library to the references and declare
+' Dim assistant As New FelixLib.App
+Dim assistant As Object
+Set assistant = CreateObject(&quot;Felix.App&quot;)
+assistant.ClearGlossary
+assistant.ClearMemory
+</pre>
+
+<h3>C++</h3>
+
+<p>
+<b>クエリー（照会）と訳文の設定</b>
+</p>
+
+<pre>
+#include &lt;string&gt; // for wstring 
+
+// put this in your path or use the absolute path 
+#import &quot;Felix.tlb&quot; no_auto_exclude, raw_interfaces_only 
+
+// Note: obviously, these functions could live in a C++ object, which would eliminate the need to call
+// CoCreateInstance every time. This is the approach that TagAssist uses. However, the sample has been
+// condensed into two functions for brevity.
+
+
+
+// set the current query
+inline void set_query(  const std::wstring &amp;query )  
+{ 
+	CComPtr&lt;  FelixLib::IApp &gt; app ; 
+	// error handling omitted for brevity 
+	app.CoCreateInstance( L&quot;Felix.App&quot;, NULL, CLSCTX_LOCAL_SERVER|CLSCTX_INPROC_SERVER ) ; 
+	
+	// make it visible 
+	app-&gt;put_IsVisible( VARIANT_TRUE ) ; 
+
+	// put the query 
+	// Felix will respond by showing a list of any matches 
+	CComBSTR bQuery( query.c_str() ); 
+	app-&gt;put_Query( bQuery ) ;
+} 
+
+// set the translation for the current query
+inline void set_trans( const std::wstring  &amp;trans )
+{ 
+	CComPtr&lt;  FelixLib::IApp &gt; app ; 
+	// error handling omitted for brevity 
+	app.CoCreateInstance( L&quot;Felix.App&quot;, NULL, CLSCTX_LOCAL_SERVER|CLSCTX_INPROC_SERVER ) ; 
+
+	// make it visible 
+	app-&gt;put_IsVisible( VARIANT_TRUE ) ; 
+
+	// put the translation 
+	// If there is a current query, this will create a new entry, with the query as the
+	// source and the trans as the translation.
+	CComBSTR bTrans( trans.c_str() ) ;
+	app-&gt;put_Translation( bTrans ) ;
+}
+</pre>
+
+
+        </div>
+
+            </div>
+            <div id="r">
+                       <div clas="item">
+
+    <ul>
+<li><a href="index.html">目 次&nbsp;</a></li>
+<li><a href="1.html">1.&nbsp;概要</a></li>
+<li><a href="2.html">2. システム要件およびインストール</a></li>
+<li><a href="3.html">3. Felixの使い方</a></li>
+<li><a href="4.html">4. Felixのメニュー</a></li>
+<li><a href="5.html">5. Wordで使用する</a></li>
+<li><a href="6.html">6. Excelで使用する</a></li>
+<li><a href="7.html">7. PowerPointで使用する</a></li>
+<li><a href="8.html">8. よく聞かれる質問</a></li>
+<li><strong>付録 A：Felix ソフトウェアとスクリプト</strong></li>
+    </ul>
+        </div>
+
+            </div>
+
+        </div>
+<br clear="all"/></div>
+
+    <div id="footer"><div><div>
+Copyright &copy; 2008 Ginstrom IT Solutions (GITS).| <a href="../../../../index.html" title="Visit the Felix Website">Felixウェブサイト</a> | <a href="mailto:&#115;&#117;&#112;&#112;&#111;&#114;&#116;&#64;&#102;&#101;&#108;&#105;&#120;&#45;&#99;&#97;&#116;&#46;&#99;&#111;&#109;" title="Contact information for Felix developers">お問い合わせ</a>
+    
+    </div></div></div>
+</div>
+</body>
+</html>
+
+
+
+
+
+

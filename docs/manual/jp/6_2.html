@@ -1,0 +1,353 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>
+    Felix :: 翻訳者のための翻訳メモリ :: 6.2 Excelでの翻訳モード
+</title>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+
+    <meta name="resource-type" content="document" />
+
+    <meta name="classification" content="Software" />
+    <meta name="description" content="メモリ型翻訳ツールFelixの利用者マニュアル。MS Excel で翻訳モードを使用する。" />
+    <meta name="MSSmartTagsPreventParsing" content="TRUE" />
+    <meta name="keywords" content="エクセル,Excel, メモリ型翻訳ツール,Felix,ヘルプ,ガイド,マニュアル,翻訳" />
+    <meta name="robots" content="ALL" />
+    <meta name="distribution" content="Global" />
+    <meta name="rating" content="Safe For Kids" />
+    <meta name="copyright" content="Copyright Ginstrom IT Solutions (GITS)" />
+    <meta name="author" content="Ryan Ginstrom" />
+
+    <meta name="language" content="Japanese" />
+    <meta name="doc-class" content="Completed" />
+    <meta name="doc-rights" content="Copyrighted Work" />
+</head>
+
+<body>
+<div id="container">
+    <div id="header">
+        <div class="left">
+            <h1>Felix マニュアル</h1>
+        </div>
+    </div>
+
+	<div id="body">
+
+        
+            <div id="l">
+                <a name="top"></a>
+<h1>6.2 翻訳モード</h1> 
+
+<p>このセクションの目次は以下のとおりです。</p>
+
+<blockquote dir="ltr">
+    <a href="#section_1">6.2.1 はじめに</a><br />
+    <a href="#section_2">6.2.2 セルを検索する</a><br />
+    <a href="#section_3">6.2.3 複数の翻訳候補を操作する</a><br />
+    <a href="#section_4">6.2.4 訳文を登録する</a><br />
+    <a href="#section_5">6.2.5 次のセルを検索する</a><br />
+    <a href="#section_6">6.2.6 翻訳メモリから訳文を取得する</a><br />
+    <a href="#section_7">6.2.7 自動翻訳</a><br />
+    <a href="#section_8">6.2.8 グロサリ エントリを一括登録する</a><br />
+    <a href="#section_9">6.2.9 翻訳エントリを一括登録する</a><br />
+</blockquote>
+
+<a name="section_1"></a>
+
+<h2>6.2.1 はじめに</h2>
+
+<p>翻訳モードとは、エクセルのシートを翻訳するモードです。通常の翻訳作業では、このモードを使用します。</p>
+
+<p>エクセルで翻訳を行う際、次の点を留意しなければなりません。まずは、エクセルではすべての操作があくまでもセル（またテキストボックス）単位で行われます。たとえ一つのセルに複数の文があっても、そのセル全体しか検索できません。一つのセルにとても長い文章があった場合、それをワードにコピペーして訳すとやりやすくなります。</p>
+
+<p>また、一旦現在のセルと違うセルを選択しないと、現在のセルに入力した文字が認識されません。したがって、あるセルの文字を翻訳してから、一旦他のセルを選択して、もとのセルを再度選択してからその訳文を登録する必要があります。</p>
+
+<p><a href="#top">目次に戻る</a></p>
+
+<a name="section_2"></a>
+
+<h2>6.2.2 セルを検索する</h2>
+
+<p>翻訳メモリ内で検索するセルを選択します。Excelの [<strong>Felix</strong>] メニューから [<strong>選択の検索</strong>] を選択するか、ショートカット<strong>Alt + L</strong>を押します。</p>
+
+<p>Wordと異なり、Excelでは書式情報が保持されないことに注意してください。</p>
+
+<p>テキストボックスが選択しているとき、その中の文字が検索されます。</p>
+
+<table cellspacing="1" cellpadding="1" width="100%" border="1">
+  <tr>
+    <td>ツールバーのボタン</td>
+    <td><img alt="選択中の分節を翻訳メモリ内で検索する" hspace="0" 
+      src="img/lookup.png" 
+      align="bottom" border="0" /></td></tr>
+  <tr>
+    <td>メニューコマンド</td>
+    <td>選択範囲の検索</td></tr>
+  <tr>
+    <td>キーボード ショートカット</td>
+    <td><code>Alt + L</code></td>
+  </tr>
+</table>
+
+<p><a href="#top">目次に戻る</a></p>
+
+<a name="section_3"></a>
+
+<h2>6.2.3 複数の翻訳候補を操作する</h2>
+
+<p>翻訳対象の分節を <strong>Felix</strong> の翻訳メモリを検索すると、最小一致スコア以上の翻訳エントリがすべて取り出されるため、複数の翻訳候補が提示される可能性があります。</p>
+
+<p>翻訳候補の数、および表示中の翻訳候補の番号は、翻訳メモリ ウィンドウの右下に表示されます。</p>
+
+<img src="img/felix_fuzzy.png"
+     alt="Felixのウィンドウでファジーの一致が表示される"
+     class="screenshot" />
+
+<p>この例1つの翻訳候補しかなく、これが表示されています。</p>
+
+<p>次の候補を表示するには、翻訳メモリ ウィンドウ内の [<span  style="color: blue"><u>次へ</u></span>] をクリックするか、Excel 内部からショートカット <strong>Alt + N</strong> を押します（または、[<strong>Felix</strong>] メニューから [<strong>次の訳文へ</strong>] を選択します）。</p>
+
+<p><strong>ヒント：</strong>次の訳文候補のスコア（この例では68%）が [<span  style="color: blue"><u>次へ</u></span>] の右側のカッコ内に表示されます。</p>
+
+<p>前の候補を表示するには、翻訳メモリ ウィンドウ内の [<span  style="color: blue"><u>戻る</u></span>] をクリックするか、Word 内部からショートカット <strong>Alt + P </strong>を押します（または、[<strong>Felix</strong>] メニューから [<strong>前の訳文へ</strong>] を選択します）。</p>
+
+<p><strong>ヒント：</strong>前の訳文候補のスコア（この例では68%）が [ <span  style="color: blue"><u>戻る</u></span>] の右側のカッコ内に表示されます。</p>
+
+<p>候補は循環的に表示されます。最後の候補が表示されているときに [<span style="color: blue"><u>次へ</u></span>] をクリックすると、最初の候補が表示されます。 同様に、最初の候補が表示されているときに [<span style="color: blue"><u>戻る</u></span>] をクリックすると、最後の候補が表示されます。</p>
+
+<p><a href="#top">目次に戻る</a></p>
+
+<a name="section_4"></a>
+
+<h2>6.2.4 訳文を登録する</h2>
+
+<ol>
+  <li>訳文を入力してから、一旦他のセルに移動して（たとえば、EnterキーやTabキーを押して） 、再度登録対象のセルにカーソルを戻す必要があります。（フォーカスが移動しないと入力した文字が認識されないため）</li>
+
+<li>Excelの [<strong>Felix</strong>] メニューから [<strong>訳文の登録</strong>] を選択するか、ショートカット<strong>Alt + ↑</strong>を押します。
+  <br />
+  <br /> あるいは、[<strong>登録して次へ</strong>] を選択する（または、ショートカット<strong>Alt + S</strong>を押す）こともできます。こうすると、訳文が翻訳メモリに登録された後、次のセルが自動的に選択されると同時に、そのセルの内容が翻訳メモリ内で検索されます。セルのスキャン方向は、左から右、上から下の順です。スキャンはテキストが入力された最初のセルが見つかるか、スキャンの最大範囲（左右上下に5セル×5セルの範囲）に達するまで続けられます。 </li>
+</ol>
+
+<h3>翻訳エントリを登録して、次のセルを検索する</h3>
+
+<table cellspacing="1" cellpadding="1" width="100%" border="1">
+  <tr>
+    <td>ツールバーのボタン</td>
+    <td>
+        <img alt="翻訳エントリを取得して、次のセルを検索する"
+           hspace="0" src="img/set_and_next.png"
+           align="bottom" border="0" />
+    </td>
+  </tr>
+  <tr>
+    <td>メニューコマンド</td>
+    <td>登録して次へ (<u>S</u>)</td></tr>
+  <tr>
+    <td>キーボード ショートカット</td>
+    <td><code>Alt + S</code></td>
+  </tr>
+</table>
+
+<h3>現在のセルを訳文として登録する</h3>
+
+<table cellspacing="1" cellpadding="1" width="100%" border="1">
+  <tr>
+    <td>ツールバーのボタン</td>
+    <td><img alt="訳文を登録する" hspace="0" 
+      src="img/set.png" 
+      align="bottom" border="0" />
+    </td>
+  </tr>
+  <tr>
+    <td>メニューコマンド</td>
+    <td>訳文の登録</td>
+  </tr>
+  <tr>
+    <td>キーボード ショートカット</td>
+    <td><code>Alt + ↑</code></td>
+  </tr>
+</table>
+
+<p><a href="#top">目次に戻る</a></p>
+
+<a  name="section_5"></a>
+
+<h2>6.2.5 次のセルを検索する</h2>
+
+<p>翻訳メモリ内で検索する次のセルを選択するには、[<strong>Felix</strong>] メニューから [<strong>次の文の選択</strong>] を選択するか、ショートカット<strong>Alt + →</strong>を押します。</p>
+
+<table cellspacing="1" cellpadding="1" width="100%" border="1">
+  <tr>
+    <td>ツールバーのボタン</td>
+    <td><img alt="次のセルの検索" hspace="0" 
+      src="img/lookup_next.png" 
+      align="bottom" border="0" /></td>
+   </tr>
+  <tr>
+    <td>メニューコマンド</td>
+    <td>次の文の選択</td>
+  </tr>
+  <tr>
+    <td>キーボード ショートカット</td>
+    <td><code>ALT + →</code></td>
+  </tr>
+</table>
+
+<p><a href="#top">目次に戻る</a></p>
+
+<a name="section_6"></a>
+
+<h2>6.2.6 翻訳メモリから訳文を取得する</h2>
+<ol>
+  <li><strong>Felix</strong>の翻訳メモリ（「訳文」フィールド）から訳文候補を取り込む宛先のセルを選択します。</li>
+
+<li>Excelの [<strong>Felix</strong>] メニューから [<strong>訳文の取得</strong>] を選択するか、ショートカット<strong>Alt + ↓</strong>を押します。
+  <br />
+  あるいは、[<strong>取得して次へ</strong>] を選択する（または、ショートカット<strong>Alt + G</strong>を押す）こともできます。こうすると、訳文候補が翻訳メモリからセルに取り込まれた後、（テキストが入力された）次のセルが自動的に選択されると同時に、そのセルの内容が翻訳メモリ内で検索されます。セルのスキャン方向は、左から右、上から下の順です。スキャンはテキストが入力された最初のセルが見つかるか、スキャンの最大範囲（左右上下に5セル×5セルの範囲）に達するまで続けられます。</li>
+</ol>
+
+<h3>翻訳エントリを取得して、次のセルを検索する</h3>
+
+<table cellspacing="1" cellpadding="1" width="100%" border="1">
+  <tr>
+    <td>ツールバーのボタン</td>
+    <td><img 
+      alt="翻訳エントリを取得して、次の文を検索する" hspace="0" 
+      src="img/get_and_next.png" 
+      align="bottom" border="0" /></td></tr>
+  <tr>
+    <td>メニューコマンド</td>
+    <td>取得して次へ (<u>G</u>)</td></tr>
+  <tr>
+    <td>キーボード ショートカット</td>
+    <td><code>ALT + G</code></td>
+  </tr>
+</table>       
+
+<h3>訳文を取得する</h3>
+
+<table cellspacing="1" cellpadding="1" width="100%" border="1">
+  <tr>
+    <td>ツールバーのボタン</td>
+    <td><img alt="訳文を取得する" hspace="0" 
+      src="img/get.png" 
+      align="bottom" border="0" /></td></tr>
+  <tr>
+    <td>メニューコマンド</td>
+    <td>訳文の取得</td></tr>
+  <tr>
+    <td>キーボード ショートカット</td>
+    <td><code>Alt + ↓</code></td>
+  </tr>
+</table>
+
+<p><a href="#top">目次に戻る</a></p>
+
+<a name="section_7"></a>
+
+<h2>6.2.7 自動翻訳</h2>
+
+<p>表やリストの短い項目を翻訳するときなどは、ほとんどの項目が翻訳メモリと100%一致することが分かっているため、数多くの項目を手作業で検索して逐次チェックするのは非常に退屈な作業です。そのような場合に、 Felix の「自動翻訳機能」を使用すれば、現在選択されているセル内の項目（分節や単語など）を連続的に検索し、翻訳メモリと完全（100%）一致する項目については、それらの項目を翻訳メモリ内の訳文で自動的に置き換えることができます。</p>
+
+<p>自動翻訳機能を使用すには、翻訳対象のセクションを選択して、[<strong>Felix</strong>] メニューから [<strong>自動翻訳...</strong>] を選択します。</p>
+
+<dl>
+    <dt>選択範囲</dt><dd>任意に選択した範囲</dd>
+    <dt>シート</dt><dd>表示中のワークシート</dd>
+    <dt>すべてのワークブック</dt><dd>開いているワークブックすべて</dd>
+</dl>
+
+<blockquote><strong>ヒント：</strong>シフト(Shift)キーを押しながら上記の項目を選択すると、自動翻訳されなかったセル（完全一致がなかったセル）の背景色が変わります。その後、これらのセルを翻訳して訳文を登録すると、元の背景色に戻ります。この機能を利用すると、どのセルが訳されているか、どのセルが訳されていないかが一目で分かります。</blockquote>
+
+<p><a href="#top">目次に戻る</a></p>
+
+<a name="section_8"></a>
+
+<h2>6.2.8 グロサリ エントリを一括登録する</h2>
+
+<ol>
+  <li>Excelのワークシート上に、3列からなるグロサリリストを用意します。左の列には原語、中央の列には訳語を入力します（必須）。右の列は文脈や備考を入力します（オプション）。 
+
+<p><strong>ヒント：</strong> 2つの必須カラム（原文と訳文）が連続したセル列に正しい順序で並んでいれば、それ以外のセル列に別の情報が入力されていてもかまいません。必ずA列を原語にする必要はありません。たとえば、単語（原語）をカラムBに入力し、訳語をカラムCに入力し、文脈をカラムDに入力した場合に、カラムAとEに別の情報が入力されていてもかまいません。文脈を登録しない場合は、3番目のカラムを必ずブランクにしてください。 
+  </p>
+
+</li>
+
+<li>用語テーブル（単語と訳語のペア、文脈）の左上隅のセルを選択します（用語テーブルの見出しは選択しないでください）。
+	<img alt="Excel で用語集の自動登録"
+    	src="img/excelglossreg.jpg" class="screenshot" /> 
+  </li>
+
+<li>Excel メニューバーの [<strong>Felix</strong>] メニューから [<strong>グロサリへの一括登録</strong>] を選択します。</li> 
+
+<li>この方法で登録したグロサリは、<strong>Felix</strong> のメイン グロサリ ウィンドウに自動的に追加されます。</li>
+
+</ol>
+
+<p><strong>ヒント：</strong> 原文のセルと訳文のセルのどちらかに文字が入っていなければ、その行が無視されて、登録処理が次の行に進みます（スキップされます）。続けて３行が無視（スキップ）されると、用語集の終わりだと認識して、登録処理が終了します。</p>
+
+<p><a href="#top">目次に戻る</a></p>
+
+<a name="section_9"></a>
+
+<h2>6.2.9 翻訳エントリを一括登録する</h2>
+
+<p>Excel から翻訳メモリに翻訳エントリを一括登録する手順はグロリ エントリを一括登録する手順と似ていますが、3番目の省略可能カラム（文脈）を使用しない点が異なります。</p>
+
+<ol>
+  <li>2つの必須カラムからなる翻訳エントリ テーブルを入力した Excel シートを作成します。 最初の必須カラムには原文を入力し、2番目の必須カラムには訳文を入力します。 
+
+<p><strong>ヒント：</strong>2つの必須カラム（原文と訳文）が連続したセル列に正しい順序で並んでいれば、それ以外のセル列に別の情報が入力されていてもかまいません。必ずA列を原語にする必要はありません。たとえば、原文をカラムBに入力し、訳文をカラムCに入力した場合に、カラムAとDに別の情報が入力されていてもかまいません。 2つの必須カラム原文と訳文）が存在すれば、翻訳エントリを一括登録できます。</p>
+  </li>
+
+<li>翻訳エントリ テーブル（原文/訳文ペア）の左上隅のセルを選択します。翻訳エントリ テーブルの見出しは選択しないでください。</li>
+
+<li>[<strong>Felix </strong>]メニューから、[<strong>メモリへの一括登録</strong>]をクリックします。</li> 
+
+<li>原文と訳文のペアが[<strong>Felix</strong>]翻訳メモリに連続的に登録されます。</li>
+</ol>
+
+<p>
+    <a href="#top">先頭に戻る</a> |
+    <a href="6.html">前に戻る（はじめに）</a> |
+    <a href="6_3.html">次へ進む（校正モード）</a>
+</p>
+            </div>
+            <div id="r">
+                <ul>
+        <li><a href="index.html">目 次</a></li>
+        <li><a href="1.html">1. 概要</a></li>
+        <li><a href="2.html">2. システムの要件およびインストール</a></li>
+        <li><a href="3.html">3. Felixの使い方</a></li>
+        <li><a href="4.html">4. Felixのメニュー</a></li>
+        <li><a href="5.html">5. Word で Felix を使用する</a></li>
+        <li><strong>6. Excelで使用する</strong>
+            <ul>
+            <li><a href="6.html#section_1">6.1 はじめに</a></li>
+            <li><strong>6.2 翻訳モード</strong></li>
+            <li><a href="6_3.html">6.3 校正モード</a></li>
+            <li><a href="6_4.html">6.4 Felix のユーザ設定</a></li>
+            <li><a href="6_5.html">6.5 翻訳歴</a></li>
+            </ul>
+        </li>
+        <li><a href="7.html">7. PowerPointでFelixを使用する</a></li>
+        <li><a href="8.html">8. よく聞かれる質問</a></li>
+
+<li><a href="appendix_a.html">付録：Felix ソフトウェアとスクリプト</a></li>
+
+</ul>
+            </div>
+
+        </div>
+<br clear="all"/></div>
+
+    <div id="footer"><div><div>
+        Copyright &copy; 2008 Ginstrom IT Solutions (GITS).
+        | <a href="../../../../index.html" title="Felixウェブサイトを参照">Felixウェブサイト</a>
+        | <a href="mailto:&#115;&#117;&#112;&#112;&#111;&#114;&#116;&#64;&#102;&#101;&#108;&#105;&#120;&#45;&#99;&#97;&#116;&#46;&#99;&#111;&#109;" title="Felixに関するお問い合わせ">お問い合わせ</a>
+    
+    </div></div></div>
+</body>
+</html>

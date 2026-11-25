@@ -1,0 +1,197 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>
+    About Felix :: Felix Manual
+</title>
+    <link rel="shortcut icon" href="../../../favicon.ico" type="image/vnd.microsoft.icon" />
+    <link rel="icon" href="../../../favicon.ico" type="image/vnd.microsoft.icon" />
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+
+    <meta name="resource-type" content="document" />
+
+    <meta name="classification" content="Software" />
+    <meta name="description" content="User Guide for the Felix computer aided translation (CAT) solution. How Felix works." />
+    <meta name="MSSmartTagsPreventParsing" content="TRUE" />
+    <meta name="keywords" content="CAT, translation memory, computer aided translation, software, help, manual" />
+    <meta name="robots" content="ALL" />
+    <meta name="distribution" content="Global" />
+    <meta name="rating" content="Safe For Kids" />
+    <meta name="copyright" content="Copyright Ginstrom IT Solutions (GITS)" />
+    <meta name="author" content="Ryan Ginstrom" />
+
+    <meta name="language" content="English" />
+    <meta name="doc-class" content="Completed" />
+    <meta name="doc-rights" content="Copyrighted Work" />
+</head>
+
+<body>
+<div id="container">
+    <div id="header">
+        <div class="left">
+            <h1>Felix Manual</h1>
+        </div>
+    </div>
+
+	<div id="body">
+
+        
+            <div id="l">
+                <h1>1.2 About Felix</h1>
+
+<p><strong>Felix</strong> consists
+of two main components: a memory component and a glossary component. Both
+components feature a similar, intuitive user interface, but the two components
+have different and
+complementary roles.</p>
+
+<h2>Screen Shots </h2>
+
+<p><strong>Memory Window</strong>
+<img alt="Main Window" src="img/felix.png" />
+</p>
+
+<p><strong>Glossary Window</strong>
+</p>
+
+<blockquote><img alt="Glossary Window" src="img/gloss_window.png" /></blockquote>
+
+<h3>How it Works</h3>
+
+<p>As you translate a document, <strong>Felix</strong> keeps a record
+of each source sentence you translate, along with the corresponding translation
+and other information, in translation memory entries. Each time you translate a
+new sentence, <strong>Felix</strong> compares it with the
+entries in its database. If it finds an entry matching or nearly matching the
+current sentence, it suggests the translation to you:
+</p>
+
+<blockquote>
+    <img alt="Memory Search Results View" src="img/felix_fuzzy.png" />
+</blockquote>
+
+<p>
+Where <strong>Query</strong> is the sentence you are currently translating,
+<strong>Source</strong> is the sentence in the memory, and <strong>Trans</strong> is the translation
+you gave for that sentence. <strong>Score</strong> shows the similarity score for the two
+sentences. The parts that are different are bold and highlighted in red, for
+ease of recognition. You can choose to use the suggestion as-is, retrieve the
+suggestion and edit it, or ignore the suggestion and write a new translation.
+</p>
+
+<p>If there is a perfect match, the search results will be shown with a green background
+and a check mark for easy recognition.
+</p>
+
+<blockquote>
+    <img alt="Memory Search Results View" src="img/felix.png" />
+</blockquote>
+
+<p>
+Meanwhile, as <strong>Felix</strong> searches the
+translation memory for matches, it also looks for occurrences of your glossary
+entries in that sentence, and lists any matches it
+finds. A glossary is a list of technical or frequently occurring terms
+that you would like to refer to as you translate.
+</p>
+
+<p>
+<img alt="Glossary Search Results View" hspace="20" src="img/glosssearchresultsview.jpg" border="0" />
+</p>
+
+<p>
+You can import the glossary entry translations into your
+document as you type. In the <strong>TagAssist</strong>
+application, glossary entry translations appear in an Autocomplete window, for
+even greater speed and ease of retrieval.
+Additionally, as you translate, <strong>Felix</strong> automatically adds short sentences and phrases to the glossary [<a href="#note1">1</a>].
+There are also numerous tools to quickly and efficiently build glossaries, both
+from <strong>Felix</strong> itself and from its various
+interfaces.
+</p>
+
+<p>Translation memories and glossaries are stored in XML format, a widely
+recognized standard for data storage. Both memories and glossaries are saved
+with the same xml schema, making them highly interchangeable. Additionally,
+<strong>Felix</strong>
+can import memories and glossaries in Trados text and Microsoft Excel formats, and export
+memories and glossaries into Trados text files as well.
+</p>
+
+<p><strong>Felix</strong> uses Unicode internally. This means it
+can process and display just about any language, as well as most mathematical
+and other special symbols.
+</p>
+
+<p><strong>Felix</strong> includes a variety of features to help you edit,
+build, and manage your translation memories and glossaries. You can use
+<strong>Felix</strong> from Microsoft Word or Excel, as well as the
+<strong>TagAssist</strong> [<a href="#note2">2</a>] application, or even
+control it from a custom application using automation.
+</p>
+
+<p><strong>Felix</strong> is also fully bilingual. A
+single shortcut key or menu command is all that is required to
+toggle the user interface between Japanese and English.
+</p>
+
+<blockquote>
+    <img alt="Japanese-language view" hspace="0" src="img/felix_j.png" border="0" />
+</blockquote>
+
+<h4>Notes</h4>
+<p>[<a name="note1">1</a>] Translation
+memory entries with a source field whose length is below a specific number of
+characters are automatically added to the glossary. You can configure this
+length in the user preferences. See <a href="3_2_11.html">3.2.11 Set User Preferences</a> for details.<br />
+[<a name="note2">2</a>] <strong>TagAssist</strong> is a what-you-see-is-what-you-get (WYSIWYG) HTML editor that includes a full <strong>Felix</strong> interface. It is included in the <strong>Felix</strong> product suite. See the <strong>TagAssist</strong> documentation for details.
+</p>
+
+<p>
+<a href="1_1.html">Back</a> |
+<a href="2.html">Next</a>
+</p>
+            </div>
+            <div id="r">
+                <ul>
+        <li><a href="index.html">Contents</a></li>
+        <li><a href="1.html">1. Overview</a>
+            <ul>
+                <li><a href="1_1.html">1.1 About This Manual</a></li>
+                <li><strong>1.2 About Felix</strong></li>
+            </ul>
+        </li>
+        <li><a href="2.html">2. Getting Started</a></li>
+        <li><a href="3.html">3. Using Felix</a></li>
+        <li><a href="4.html">4. The Menus</a></li>
+        <li><a href="5.html">5. Using from Word</a></li>
+        <li><a href="6.html">6. Using from Excel</a></li>
+        <li><a href="7.html">7. Using from PowerPoint</a></li>
+        <li><a href="8.html">8. FAQ</a></li>
+
+<li><a href="appendix_a.html">Appendix A. Scripting Felix</a></li>
+        <li><a href="template-engine.html">Appendix B. Customizing Felix Templates</a></li>
+
+</ul>
+            </div>
+
+        </div>
+<br clear="all"/></div>
+
+    <div id="footer"><div><div>
+        Copyright &copy; 2008 Ginstrom IT Solutions (GITS).
+        | <a href="../../../index.html" title="Visit the Felix Website">Felix Website</a>
+        | <a href="mailto:&#115;&#117;&#112;&#112;&#111;&#114;&#116;&#64;&#102;&#101;&#108;&#105;&#120;&#45;&#99;&#97;&#116;&#46;&#99;&#111;&#109;" title="Contact information for Felix developers">Contact</a>
+    
+    </div></div></div>
+</body>
+</html>
+
+
+
+
+
+
+
+

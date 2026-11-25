@@ -1,0 +1,196 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>
+    Add an Entry :: Felix Manual
+</title>
+    <link rel="shortcut icon" href="../../../favicon.ico" type="image/vnd.microsoft.icon" />
+    <link rel="icon" href="../../../favicon.ico" type="image/vnd.microsoft.icon" />
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+
+    <meta name="resource-type" content="document" />
+
+    <meta name="classification" content="Software" />
+    <meta name="description" content="User Guide for the Felix computer aided translation (CAT) solution. Adding a memory entry." />
+    <meta name="MSSmartTagsPreventParsing" content="TRUE" />
+    <meta name="keywords" content="CAT, translation memory, computer aided translation, software, help, manual" />
+    <meta name="robots" content="ALL" />
+    <meta name="distribution" content="Global" />
+    <meta name="rating" content="Safe For Kids" />
+    <meta name="copyright" content="Copyright Ginstrom IT Solutions (GITS)" />
+    <meta name="author" content="Ryan Ginstrom" />
+
+    <meta name="language" content="English" />
+    <meta name="doc-class" content="Completed" />
+    <meta name="doc-rights" content="Copyrighted Work" />
+</head>
+
+<body>
+<div id="container">
+    <div id="header">
+        <div class="left">
+            <h1>Felix Manual</h1>
+        </div>
+    </div>
+
+	<div id="body">
+
+        
+            <div id="l">
+                <h1>3.2.1 Add an Entry</h1>
+
+<p>An <em>entry</em>, or translation unit (TU), is the basic unit of Felix
+translation memories (TMs) and glossaries. An entry consists of a source
+segment and its translation, as well as other optional information such as
+context, when the entry was created and by whom, and reliability.</p>
+
+<ol>
+  <li>From the <strong><u>E</u>dit</strong> menu, select
+  <strong><u>A</u>dd Entry</strong>.
+  <div><img alt="Add Entry" src="img/addentrymenu.png" /></div> </li>
+
+<li>The <strong>Add Entry</strong> dialog appears.
+  <div><img alt="Create Record" src="img/addentry_dlg.png" />
+  </div> </li>
+
+<li>Fill in the entry fields.
+
+<table>
+
+<tr>
+    <td><strong>SOURCE:</strong> </td>
+    <td>The source for the memory record
+        (<em>required</em>      )</td></tr>
+  <tr>
+    <td><strong>TRANSLATION:</strong> </td>
+    <td>The translation for the memory record
+        (<em>required</em>      )</td></tr>
+   <tr>
+    <td><strong>CONTEXT:</strong> </td>
+    <td>The context for the memory record
+        (<em>optional</em>      )</td>
+   </tr>
+   <tr>
+    <td><strong>RELIABILITY:</strong> </td>
+    <td>The reliability score for the memory record
+        (<em>optional</em>       )</td>
+   </tr>
+   <tr>
+    <td><strong>VALIDATED:</strong> </td>
+    <td>Whether the memory record is validated
+        (<em>optional</em>      )</td>
+    </tr>
+    <tr>
+      <td><strong>CREATED:</strong></td>
+      <td>The date the record was created
+        (<em>read-only</em>      )</td>
+    </tr>
+    <tr>
+      <td><strong>MODIFIED:</strong></td>
+      <td>The date the record was last modified
+        (<em>read-only</em>       )</td>
+    </tr>
+    <tr>
+      <td><strong>EXTRA
+        STRINGS <a href="#note1" title="Note 1">[1]</a>:</strong></td>
+      <td>User-defined extra strings (<em>optional</em>   ). Use the
+        <strong>Edit Strings</strong> and <strong>Add String</strong> buttons to
+        edit/add user extra strings.</td>
+    </tr>
+</table>
+
+<br />
+  The Source, Translation, and Context fields have
+  <strong>Editor</strong> and <strong>Source</strong> tags. The
+  <strong>Editor</strong> tags provide a WYSIWYG editor, enabling you to edit
+  entries much like you would with a popular word-processing program. The
+  <strong>Source</strong> tags, meanwhile, allow you to edit the actual HTML
+  source code of each field, giving you greater control.
+
+<p>In Editor mode, a full range of text-formatting features is available for
+  the source, translation, and context fields. In addition to common keyboard
+  shortcuts such as Control-B for bold and Control-I for italic, you can set the
+  font information for the current selection from the Font dialog. To call up
+  the Font dialog, from the <strong>Fo<u>r</u>mat</strong> menu, select
+  <strong><u>F</u>ont&#8230;</strong>.</p>
+
+<p>If you would like to insert a special symbol, select <strong>Fo<u>r</u>mat</strong>
+  &gt;&gt; <strong>Insert <u>S</u>ymbol&#8230;</strong>. The Insert Symbol dialog appears.
+  Enter the <span class="caps">HTML</span> symbolic name or unicode number, without the leading ampersand
+  (&amp;) or trailing semicolon (;). For instance, entering &#8220;beta&#8221; will input
+  &#8221;β,&#8221; and entering &#8221;#128&#8221; will input &#8221;€.&#8221; The symbol is inserted at the current
+  cursor position.</p>
+
+<p>Because this is a dialog, the return key is handled
+  in a special way. Pressing the return key by itself is the same as pressing
+  the <strong>OK</strong> button. To insert a pagraph marker (&lt;P&gt;), press Ctrl
+  + Return. To insert a newline (&lt;BR&gt;), press Shift + Return.</p>
+
+<p>When you are finished entering the entry information,
+click <strong>OK</strong> .</p>
+</li>
+
+<li>The entry is added to the memory.
+  <div><img alt="Added entry" src="img/added_entry.png" /></div></li>
+ </ol>
+
+<h3>Notes</h3>
+<ol>
+    <li><a name="note1"></a>The extra strings are mainly useful when you import
+    TMs from other formats. If a tag in another memory format isn't used by
+    Felix, it will be stored as an "extra string." Then if you export your Felix
+    memory back into that external format, the original tag information wil
+    be preserved.</li>
+</ol>
+
+<p>
+<a href="3_2.html">Back (The Memory Window)</a> |
+<a href="3_2_2.html">Next (Search the Memory)</a>
+</p>
+            </div>
+            <div id="r">
+                <ul>
+        <li><a href="index.html">Contents</a></li>
+        <li><a href="1.html">1. Overview</a></li>
+        <li><a href="2.html">2. Getting Started</a></li>
+        <li><a href="3.html">3. Using Felix</a>
+            <ul>
+                <li><a href="3.html">3.1 Getting Started</a></li>
+                <li><a href="3_2.html"><strong>3.2 The Memory Window</strong></a></li>
+                <li><a href="3_3.html">3.3 The Glossary Windows</a></li>
+                <li><a href="3_4.html">3.4 Edit Mode</a></li>
+                <li><a href="3_5-searching.html">3.5 Search &amp; Replace</a></li>
+            </ul>
+        </li>
+        <li><a href="4.html">4. The Menus</a></li>
+        <li><a href="5.html">5. Using from Word</a></li>
+        <li><a href="6.html">6. Using from Excel</a></li>
+        <li><a href="7.html">7. Using from PowerPoint</a></li>
+        <li><a href="8.html">8. FAQ</a></li>
+
+<li><a href="appendix_a.html">Appendix A. Scripting Felix</a></li>
+        <li><a href="template-engine.html">Appendix B. Customizing Felix Templates</a></li>
+
+</ul>
+            </div>
+
+        </div>
+<br clear="all"/></div>
+
+    <div id="footer"><div><div>
+        Copyright &copy; 2008 Ginstrom IT Solutions (GITS).
+        | <a href="../../../index.html" title="Visit the Felix Website">Felix Website</a>
+        | <a href="mailto:&#115;&#117;&#112;&#112;&#111;&#114;&#116;&#64;&#102;&#101;&#108;&#105;&#120;&#45;&#99;&#97;&#116;&#46;&#99;&#111;&#109;" title="Contact information for Felix developers">Contact</a>
+    
+    </div></div></div>
+</body>
+</html>
+
+
+
+
+
+
+
+

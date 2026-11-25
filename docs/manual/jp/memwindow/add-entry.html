@@ -1,0 +1,239 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta content="document" name="resource-type" />
+<meta content="Software" name="classification" />
+<meta content="User Guide for the Felix computer aided translation (CAT) solution. Introduction to Felix." name="description" />
+<meta content="CAT, translation memory, computer aided translation, software, help, manual" name="keywords" />
+<meta content="ALL" name="robots" />
+<meta content="Global" name="distribution" />
+<meta content="Safe For Kids" name="rating" />
+<meta content="Copyright Ginstrom IT Solutions (GITS)" name="copyright" />
+<meta content="Ryan Ginstrom" name="author" />
+<meta content="Japanese" name="language" />
+<meta content="Completed" name="doc-class" />
+<meta content="Creative Commons" name="doc-rights" />
+
+    <title>3.2.1. エントリの追加 &mdash; Felix v. 1.7.1 マニュアル</title>
+    
+    <link rel="stylesheet" href="../_static/agogo.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.7.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="author" title="このドキュメントについて" href="../about.html" />
+    <link rel="top" title="Felix v. 1.7.1 マニュアル" href="../index.html" />
+    <link rel="up" title="3. Felixの基本操作" href="../getting-around.html" />
+    <link rel="next" title="3.2.2. エントリの編集" href="edit-entry.html" />
+    <link rel="prev" title="3. Felixの基本操作" href="../getting-around.html" /> 
+  </head>
+  <body>
+    <div class="header-wrapper">
+      <div class="header">
+        <div class="headertitle"><a
+          href="../index.html">Felix v. 1.7.1 マニュアル</a></div>
+        <div class="rel">
+          <a href="../getting-around.html" title="3. Felixの基本操作"
+             accesskey="P">前へ</a> |
+          <a href="edit-entry.html" title="3.2.2. エントリの編集"
+             accesskey="N">次へ</a> |
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a>
+        </div>
+       </div>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="add-entry">
+<span id="index-0"></span><span id="id1"></span><h1>3.2.1. エントリの追加<a class="headerlink" href="#add-entry" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>「エントリ」とは、TM（翻訳メモリ）や用語集の基本単位です。TU（Translation Unit）ともいいます。一つのエントリは原文（または原語）、訳文（または訳語）、その他の情報で構成されます。</p>
+<ol class="arabic">
+<li><p class="first">[編集(E)] メニューから [エントリの追加(A)] を選択します。</p>
+<blockquote>
+<div><img alt="エントリの追加" src="../_images/addentrymenu.png" />
+</div></blockquote>
+</li>
+<li><p class="first">[エントリの追加] ダイアログボックスが表示されます。</p>
+<blockquote>
+<div><img alt="エントリの作成" src="../_images/addentry_dlg.png" />
+</div></blockquote>
+</li>
+<li><p class="first">必要なフィールドを入力して、[OK] ボタンをクリックします。</p>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head"><p class="first last">項目</p>
+</th>
+<th class="head"><p class="first last">説明</p>
+</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><p class="first last">原語:</p>
+</td>
+<td><p class="first last">翻訳エントリの原語 (必須入力)</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p class="first last">訳語:</p>
+</td>
+<td><p class="first last">翻訳エントリの訳語 (必須入力)</p>
+</td>
+</tr>
+<tr class="row-even"><td><p class="first last">文脈:</p>
+</td>
+<td><p class="first last">(コンテキスト)訳エントリの文脈（原文/訳文が使用される文脈など (省略可能）</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p class="first last">信頼度:</p>
+</td>
+<td><p class="first last">翻訳エントリの信頼度（任意の整数値 - 省略可能）</p>
+</td>
+</tr>
+<tr class="row-even"><td><p class="first last">確定済み:</p>
+</td>
+<td><p class="first last">翻訳エントリを確定する場合は、このボックスにチェックマークを付けます（任意指定）。 翻訳エントリを確定しても、その後で編集することは可能です。</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p class="first last">作成日時:</p>
+</td>
+<td><p class="first last">翻訳エントリが作成された日時（読み取り専用）</p>
+</td>
+</tr>
+<tr class="row-even"><td><p class="first last">更新日時:</p>
+</td>
+<td><p class="first last">翻訳エントリが最後に更新された日時（読み取り専用）</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p class="first last">任意のフィールド <a class="footnote-reference" href="#f1" id="id2">[1]</a>:</p>
+</td>
+<td><p class="first last">ユーザ定義の項目(省略可能)。これらの文字列を編集/追加するには、[フィールドの編集] および [フィールドの追加 ] のボタンを使用します。</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>「エディタ」タブと「ソース」タブ</strong></p>
+<blockquote>
+<div><p>原文、訳文、文脈の各フィールドにテキストを入力するときは、様々な書式設定機能を使用できます。編集タグのWYSIWYG機能を使用すれば、一般的なワードプロ プログラムを使用したときと全く同じように翻訳エントリを編集できます。また、原文 タグを使用すれば、各フィールドごとに実際のHTMLソースコードを編集し、メモリ管理が大幅に容易になります。</p>
+</div></blockquote>
+<p><strong>編集モード</strong></p>
+<blockquote>
+<div><p>編集モードでは、原文、訳文、文脈の各フィールドを編集するときは、様々な書式設定機能を使用できます。たとえば、Ctrl-B（太字）や Ctrl-I（斜体）などの標準的なキーボード ショートカットを使用できるほか、現在選択中のテキストのフォント情報を [フォント] ダイアログで設定できます。[フォント] ダイアログを開くには、[書式(R)] メニューから [フォント...(F)] を選択します。</p>
+</div></blockquote>
+<p><strong>特殊文字</strong></p>
+<blockquote>
+<div><p>特殊シンボルを挿入する場合は、[書式(R)] メニューから [シンボルの挿入(S)...] を選択します。[ シンボルの挿入 ] ダイアログボックスが表示されます。先頭のアンド記号（&amp;）および末尾のセミコロン（;）を付けないで、HTML シンボル名または Unicode 番号を入力してください。たとえば、&#8221;beta&#8221; を入力すると &#8220;β&#8221; が挿入され、&#8221;#128&#8221; を入力すると &#8220;&#8221; が挿入されます。シンボルは現在のカーソル位置に挿入されます。</p>
+</div></blockquote>
+<p><strong>改行の扱い方</strong></p>
+<blockquote>
+<div><p>通常のダイアログ ボックスと同様に、[フォント] ダイアログでも、Enter キーが特別な意味を持ちます。つまり、データを入力して、単に Enter キーを押すだけで、[OK]ボタンを押したのと同じことになります。段落マーカー（&lt;P&gt;）を挿入するには、「Ctrl + Enter」キーを押します。改行文字（&lt;br&gt;）を挿入するには、「Shift + Enter」 キーを押します。</p>
+</div></blockquote>
+</div></blockquote>
+</li>
+<li><p class="first">情報の入力が終わったら、「OK」ボタンをクリックします。</p>
+</li>
+<li><p class="first">エントリ（原語と訳語のペア）がグロサリに追加されます。</p>
+<blockquote>
+<div><img alt="エントリが追加されました。" src="../_images/added_entry.png" />
+</div></blockquote>
+</li>
+</ol>
+<table class="docutils footnote" frame="void" id="f1" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[1]</a></td><td>特殊なフィールド（文字列）は主にTMをインポートした場合（Felix以外のTMを読み込んだ場合）に役立ちます。その場合、Felixでは使用されないタグなどの情報があれば、この「特殊な文字列」として保存されます。FelixのTMをその外部形式で保存した場合、特殊な文字列があればそのタグなどに変換されます。</td></tr>
+</tbody>
+</table>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="sidebar">
+          <h3>目次</h3>
+          <ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial-word.html">Felixチュートリアル：MSワードで使う</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial-ppt.html">Felixチュートリアル：MS パワーポイントで使う</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../about.html">1. Felixについて</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started.html">2. はじめに</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting-around.html">3. Felixの基本操作</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../menus.html">4. Felixのメニュー</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../placement.html">5. 置換機能</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../word.html">6. Word で Felix を使用する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../excel.html">7. Excel でFelix を使用する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../powerpoint.html">8. PowerPointでFelixを使用する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">9. よく聞かれる質問</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../whats-new.html">10. Felixの変更点</a></li>
+</ul>
+
+          <h3 style="margin-top: 1.5em;">検索</h3>
+          <form class="search" action="../search.html" method="get">
+            <input type="text" name="q" />
+            <input type="submit" value="検索" />
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+          </form>
+          <p class="searchtip" style="font-size: 90%">
+            モジュール、クラス、または関数名を入力してください
+          </p>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <a href="../getting-around.html" title="3. Felixの基本操作"
+             >前へ</a> |
+          <a href="edit-entry.html" title="3.2.2. エントリの編集"
+             >次へ</a> |
+          <a href="../genindex.html" title="総合索引"
+             >索引</a>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer">
+        &copy; Copyright 2012, Ryan Ginstrom.
+      最終更新: May 15, 2013
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+  </body>
+</html>

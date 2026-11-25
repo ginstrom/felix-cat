@@ -1,0 +1,148 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Replace Command Help :: Felix Manual</title>
+    <link rel="shortcut icon" href="../../../favicon.ico" type="image/vnd.microsoft.icon" />
+    <link rel="icon" href="../../../favicon.ico" type="image/vnd.microsoft.icon" />
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+
+    <meta name="resource-type" content="document" />
+
+    <meta name="classification" content="Software" />
+    <meta name="description" content="Help for using replace commands in Felix. User Guide for the Felix computer aided translation (CAT) solution." />
+    <meta name="MSSmartTagsPreventParsing" content="TRUE" />
+    <meta name="keywords" content="replace, replace, find, CAT, translation memory, computer aided translation, software, help, manual" />
+    <meta name="robots" content="ALL" />
+    <meta name="distribution" content="Global" />
+    <meta name="rating" content="Safe For Kids" />
+    <meta name="copyright" content="Copyright Ginstrom IT Solutions (GITS)" />
+    <meta name="author" content="Ryan Ginstrom" />
+
+    <meta name="language" content="English" />
+    <meta name="doc-class" content="Completed" />
+    <meta name="doc-rights" content="Copyrighted Work" />
+</head>
+
+<body>
+<div id="container">
+    <div id="header">
+        <div class="left">
+            <h1>Felix Manual</h1>
+        </div>
+    </div>
+
+	<div id="body">
+
+        
+            <div id="l">
+                <h1>Replace Command Help</h1>
+
+<p>This section provides help on replace commands.</p>
+
+<p>Enter a term in the "From" field to replace that term anywhere in a source or translation. Use the tags below in the format <em>tag:term</em> to make fine-grained replacement operations.</p>
+
+<table style="border:none;">
+<tr>
+    <td>source:</td>
+    <td>Replace in the source field</td>
+</tr>
+<tr>
+    <td>trans:</td>
+    <td>Replace in the translation field</td>
+</tr>
+<tr>
+    <td>context:</td>
+    <td>Replace in the context field</td>
+</tr>
+<tr>
+    <td>created-by:</td>
+    <td>Replace the creator field</td>
+</tr>
+<tr>
+    <td>created:</td>
+    <td>Replace the date created</td>
+</tr>
+<tr>
+    <td>modified-by:</td>
+    <td>Replace the modified-by field</td>
+</tr>
+<tr>
+    <td>modified:</td>
+    <td>Replace the date modified</td>
+</tr>
+<tr>
+    <td>reliability:</td>
+    <td>Replace the reliability</td>
+</tr>
+<tr>
+    <td>validated:</td>
+    <td>Mark the record as validated ("true") or not validated ("false")</td>
+</tr>
+<tr>
+    <td>refcount:</td>
+    <td>Change the reference count of the record</td>
+</tr>
+</table>
+
+<h3>Examples</h3>
+
+<p>Replace 'aaa' in source and translation segments with 'bbb'</p>
+<table border="0">
+    <tr><td>From</td><td>aaa</td></tr>
+    <tr><td>To</td><td>bbb</td></tr>
+</table>
+
+<p>Replace 'xxx' in source segments with 'yyy'</p>
+<table border="0">
+    <tr><td>From</td><td>source:xxx</td></tr>
+    <tr><td>To</td><td>yyy</td></tr>
+</table>
+
+<p>Follow a tag by an asterisk (*) to replace the entire field. For example, to change the "created-by" field of all matching records to "Ryan":</p>
+<table border="0">
+    <tr><td>From</td><td>created-by:*</td></tr>
+    <tr><td>To</td><td>Ryan</td></tr>
+</table>
+
+<p>Change the record's date created to 2009-10-01</p>
+<table border="0">
+    <tr><td>From</td><td>created:</td></tr>
+    <tr><td>To</td><td>2009-10-01</td></tr>
+</table>
+
+<p>Make the reliability of the record 5</p>
+<table border="0">
+    <tr><td>From</td><td>reliability:</td></tr>
+    <tr><td>To</td><td>5</td></tr>
+</table>
+
+<p>Validate the record</p>
+<table border="0">
+    <tr><td>From</td><td>validated:</td></tr>
+    <tr><td>To</td><td>true</td></tr>
+</table>
+            </div>
+            <div id="r">
+                <a href="3_5-searching.html">Back to Search &amp; Replace Help</a>
+            </div>
+
+        </div>
+<br clear="all"/></div>
+
+    <div id="footer"><div><div>
+        Copyright &copy; 2008 Ginstrom IT Solutions (GITS).
+        | <a href="../../../index.html" title="Visit the Felix Website">Felix Website</a>
+        | <a href="mailto:&#115;&#117;&#112;&#112;&#111;&#114;&#116;&#64;&#102;&#101;&#108;&#105;&#120;&#45;&#99;&#97;&#116;&#46;&#99;&#111;&#109;" title="Contact information for Felix developers">Contact</a>
+    
+    </div></div></div>
+</body>
+</html>
+
+
+
+
+
+
+
+

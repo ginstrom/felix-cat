@@ -1,0 +1,178 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>
+    Felix :: 翻訳者のための翻訳メモリ :: 翻訳メモリの管理
+</title>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+
+    <meta name="resource-type" content="document" />
+
+    <meta name="classification" content="Software" />
+    <meta name="description" content="メモリ型翻訳ツールFelixの利用者マニュアル。翻訳メモリを管理する。" />
+    <meta name="MSSmartTagsPreventParsing" content="TRUE" />
+    <meta name="keywords" content="メモリ型翻訳ツール,Felix,ヘルプ,ガイド,マニュアル,翻訳,管理" />
+    <meta name="robots" content="ALL" />
+    <meta name="distribution" content="Global" />
+    <meta name="rating" content="Safe For Kids" />
+    <meta name="copyright" content="Copyright Ginstrom IT Solutions (GITS)" />
+    <meta name="author" content="Ryan Ginstrom" />
+
+    <meta name="language" content="Japanese" />
+    <meta name="doc-class" content="Completed" />
+    <meta name="doc-rights" content="Copyrighted Work" />
+</head>
+
+<body>
+<div id="container">
+    <div id="header">
+        <div class="left">
+            <h1>Felix マニュアル</h1>
+        </div>
+    </div>
+
+	<div id="body">
+
+        
+            <div id="l">
+                <h1>3.2.12 翻訳メモリを管理する</h1>
+
+<p>翻訳メモリは一度にいくつでも開くことができますが、コンピュータの物理メモリとディクススペースによっては制限されます。様々なメモリを管理するには、[メモリ管理 ] ダイアログボックスを使用してください。</p>
+
+<p>[<strong>メモリマネージャ</strong>] ダイアログボックスを呼び出すには、[<strong>ツール</strong>] メニューから [<strong>メモリマネージャ...</strong> ] を選択します。</p>
+
+<img alt="[ツール] メニューから [メモリマネージャ... ] を選択します。" hspace="0" 
+   class="screenshot"
+    src="img/felix_menu_mem_mgr.png" />
+
+<p>[メモリ管理] ダイアログボックスが現れます。</p>
+
+<img alt="[メモリ管理] ダイアログボックス" hspace="0"
+   class="screenshot"
+    src="img/memory_manager_dlg.png" />
+
+<table width="100%" border="1">
+
+<tr>
+    <th>メモリリスト</th>
+    <td>現在ロードされているメモリのリスト。チェックボックスが選択されているメモリが“アクティブ”で、アクティブメモリだけが検索などに使用されます。
+    </td>
+  </tr>
+  <tr>
+    <th>上に移動</th>
+    <td>選択したメモリをリストの上に移動します。リストの一番上にあるメモリは“アクティブ”メモリで、このメモリに新しいエントリが追加されます。</td></tr>
+  <tr>
+    <th>下に移動</th>
+    <td>選択したメモリをリストの下に移動します。リストの一番上にあるメモリは“アクティブ”メモリで、このメモリに新しいエントリが追加されます。</td></tr>
+  <tr>
+    <th>追加...</th>
+    <td><strong>Felix</strong>に特定のメモリを追加（ロード）します。</td></tr>
+  <tr>
+    <th>削除</th>
+    <td><strong>Felix</strong>から特定のメモリーを解除（アンロード）します。このメモリはハードディスクから削除されません。</td>
+  </tr>
+  <tr>
+    <th>メモリ情報ビュー</th>
+    <td>
+      現在選択しているメモリに関する様々な情報を表示します。
+
+<strong>ファイル名</strong>:
+          選択中のメモリのファイル名<br />
+      <strong>作成者</strong>:
+        メモリを作成したユーザーの名前<br />
+      <strong>分野</strong>: メモリのフィールド（サブジェクト）<br />
+      <strong>作成日時</strong>: メモリが作成された日時<br />
+      <strong>原語</strong>: メモリの原文原語<br />
+      <strong>訳語</strong>: メモリの訳文原語<br />
+      <strong>クライアント</strong>: メモリを使用するクライアント<br />
+      <strong>エントリ数</strong>: メモリ内のエントリ数。<br />
+      <strong>ファイル・サイズ</strong>ディスク上のメモリファイルサイズ<br />
+      <strong>信頼度</strong>:
+        メモリのエントリの信頼度（最小、最大、平均）<br />
+      <strong>確認済み％</strong>:
+        検証済みのエントリの割合<br />
+      <strong>ロック</strong>: メモリのロックについては、下記を参照してください。
+    </td>
+  </tr>
+  <tr>
+    <th>情報の編集</th>
+    <td>メモリ情報を編集します。このボタンをクリックすると、情報エリアが編集可能になり、ボタン名が<strong>編集を終了</strong>に変わります。 太字の項目の値を変更することができます。編集を終えたら、[<strong>編集を終了</strong>] ボタンをクリックします。 </td>
+  </tr>
+  <tr>
+    <th>OK</th>
+    <td>設定を適用してダイアログを閉じます。</td>
+  </tr>
+  <tr>
+    <th>キャンセル</th>
+    <td>設定を取り消してダイアログを終了します。</td>
+  </tr>
+</table>
+
+<p>[<u><font color="#0000ff">詳細設定...</font></u>] ボタンをクリックして、信頼度や確定フラグを一括設定したり、特定のメモリをロック/アンロックすることもできます。</p>
+
+<img alt="[メモリの詳細設定] ダイアログボックス"
+   class="screenshot"
+    src="img/advanced_mem_settings_dlg.png" />
+
+<table cellspacing="1" cellpadding="1" width="100%" border="1">
+  <tr>
+    <td>信頼度の一括設定</td>
+    <td>メモリ内の全エントリの信頼度を一括して設定します。</td></tr>
+  <tr>
+    <td>一括確定</td>
+    <td>メモリ内の全エントリを一括して確定/未確定にします。</td></tr>
+  <tr>
+    <td>ロック</td>
+    <td>
+      <p>メモリをロック/アンロックします。メモリの作成者だけが、そのメモリをロック/アンロックすることができます。ロックされているメモリは検索できますが、そのメモリのエントリを追加、編集、削除することはできません。自分が作成しなかったメモリのロックを解除する場合は、そのメモリを [<strong>別の名前で保存...</strong> ] 機能を用いて異なるファイルに保存する必要があります。これで、この新しいファイルの作成者になり、そのメモリのロックを解除することが可能になります。</p>
+      <p>たとえばクライアントから受け取った参照メモリなので編集を望まない場合や編集できない場合など、あるいは複数の翻訳者が参照する共通の翻訳メモリが個々の翻訳者によって変更されるのを避けたい場合は、この [別の名前で保存... ] 機能を使用すると便利です。</p></td>
+  </tr>
+</table>
+
+<a href="3_2_11.html">前に戻る(ユーザ設定)</a> |
+<a href="3_2_13.html">次へ進む(ネットワーク)</a>
+            </div>
+            <div id="r">
+                <ul>
+        <li><a href="index.html">目 次</a></li>
+        <li><a href="1.html">1. 概要</a></li>
+        <li><a href="2.html">2. システムの要件およびインストール</a></li>
+        <li><a href="3.html">3. Felixの使い方</a>
+            <ul>
+                <li><a href="3.html">3.1 はじめに</a></li>
+                <li><a href="3_2.html"><strong>3.2 翻訳メモリウィンドウ</strong></a></li>
+                <li><a href="3_3.html">3.3 グロサリ ウィンドウ</a></li>
+                <li><a href="3_4.html">3.4 編集モード</a></li>
+            </ul>
+        </li>
+        <li><a href="4.html">4. Felixのメニュー</a></li>
+        <li><a href="5.html">5. Word で Felix を使用する</a></li>
+        <li><a href="6.html">6. Excelで使用する</a></li>
+        <li><a href="7.html">7. PowerPointでFelixを使用する</a></li>
+        <li><a href="8.html">8. よく聞かれる質問</a></li>
+
+<li><a href="appendix_a.html">付録：Felix ソフトウェアとスクリプト</a></li>
+
+</ul>
+            </div>
+
+        </div>
+<br clear="all"/></div>
+
+    <div id="footer"><div><div>
+        Copyright &copy; 2008 Ginstrom IT Solutions (GITS).
+        | <a href="../../../../index.html" title="Felixウェブサイトを参照">Felixウェブサイト</a>
+        | <a href="mailto:&#115;&#117;&#112;&#112;&#111;&#114;&#116;&#64;&#102;&#101;&#108;&#105;&#120;&#45;&#99;&#97;&#116;&#46;&#99;&#111;&#109;" title="Felixに関するお問い合わせ">お問い合わせ</a>
+    
+    </div></div></div>
+</body>
+</html>
+
+
+
+
+
+
+
+

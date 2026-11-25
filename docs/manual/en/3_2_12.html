@@ -1,0 +1,203 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>
+    Manage Your Memories :: Felix Manual
+</title>
+    <link rel="shortcut icon" href="../../../favicon.ico" type="image/vnd.microsoft.icon" />
+    <link rel="icon" href="../../../favicon.ico" type="image/vnd.microsoft.icon" />
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+
+    <meta name="resource-type" content="document" />
+
+    <meta name="classification" content="Software" />
+    <meta name="description" content="User Guide for the Felix computer aided translation (CAT) solution. Managing Felix memories." />
+    <meta name="MSSmartTagsPreventParsing" content="TRUE" />
+    <meta name="keywords" content="CAT, translation memory, computer aided translation, software, help, manual" />
+    <meta name="robots" content="ALL" />
+    <meta name="distribution" content="Global" />
+    <meta name="rating" content="Safe For Kids" />
+    <meta name="copyright" content="Copyright Ginstrom IT Solutions (GITS)" />
+    <meta name="author" content="Ryan Ginstrom" />
+
+    <meta name="language" content="English" />
+    <meta name="doc-class" content="Completed" />
+    <meta name="doc-rights" content="Copyrighted Work" />
+</head>
+
+<body>
+<div id="container">
+    <div id="header">
+        <div class="left">
+            <h1>Felix Manual</h1>
+        </div>
+    </div>
+
+	<div id="body">
+
+        
+            <div id="l">
+                <h1>3.2.12 Manage Your Memories</h1>
+
+<p>You can have any number of memories open at one time — the
+only limit is the physical memory and disk space available on your computer. Use
+the Memory Manager dialog to manage your various memories.</p>
+
+<p>To call up the Memory Manager dialog, from the
+<strong>Too<u>l</u>s</strong> menu, select <strong>Memory Manager&#8230; </strong></p>
+
+<img alt="Select Memory Manager from the Tools menu" hspace="0"
+   class="screenshot"
+    src="img/memory_manager_menu.png" />
+
+<p>The Memory Manager dialog appears:</p>
+
+<img alt="The Memory Manager dialog" hspace="0"
+   class="screenshot"
+    src="img/memory_manager_dlg.jpg" />
+
+<table cellspacing="1" cellpadding="1" width="100%" border="1">
+
+<tr>
+    <th>Memory List</th>
+    <td>The list of currently loaded memories. Memories whose checkboxes are
+      selected are "active"; only active memories are included in searches and
+      the like.
+    </td>
+  </tr>
+  <tr>
+    <th>Move Up</th>
+    <td>Move the selected memory up in the list. The top memory in the list is
+      the "active" memory; new entries are added to this memory.</td></tr>
+  <tr>
+    <th>Move Down</th>
+    <td>Move the selected memory down in the list. The top memory in the list
+      is the "active" memory; new entries are added to this memory.</td></tr>
+  <tr>
+    <th>Add...</th>
+    <td>Add (load) a memory into <strong>Felix</strong>.</td></tr>
+  <tr>
+    <th>Remove</th>
+    <td>Remove (unload) a memory from <strong>Felix</strong>. This
+      <u>does not</u> delete the memory from your hard disk.</td>
+  </tr>
+  <tr>
+    <th>Memory Info View</th>
+    <td>
+      Displays various information about the currently selected memory.
+
+<strong>File Name</strong>:
+          The file name of the currently selected memory.<br />
+      <strong>Creator</strong>:
+        The name of the user who created the memory.<br />
+      <strong>Field</strong>: The field (subject) of the memory.<br />
+      <strong>Created</strong>: The date that the memory was created.<br />
+      <strong>Source Language</strong>: The source language of the memory.<br />
+      <strong>Target Language</strong>: The target language of the memory.<br />
+      <strong>Client</strong>: The client for whom the memory is used.<br />
+      <strong>Num. Entries</strong>: The number of entries in the memory.<br />
+      <strong>File Size</strong>: The size of the memory file on disk.<br />
+      <strong>Reliability</strong>:
+        The minimum, maximum, and average reliability of the memory's entries.<br />
+      <strong>Validated %</strong>:
+        The percentage of the records that have been validated.<br />
+      <strong>Locked</strong>: Whether the memory is locked. See below for details.
+    </td>
+  </tr>
+  <tr>
+    <th>Edit Info</th>
+    <td>Edit the memory information. When you click the button, the
+      Information area becomes editable, and the button text changes to
+      <strong>End Edit</strong>; you can change the values of the bold items.
+      When you are done with your edits, click <strong>End Edit</strong>. </td>
+  </tr>
+  <tr>
+    <th>OK</th>
+    <td>Accept your settings and close the dialog.</td>
+  </tr>
+  <tr>
+    <th>Cancel</th>
+    <td>Discard your settings and quit the dialog.</td>
+  </tr>
+</table>
+
+<p>You can also batch-set the reliability and validated flag, or lock/unlock a
+memory by clicking on <u><font color="#0000ff">Advanced&#8230;</font></u></p>
+
+<img alt="Advanced memory settings dialog"
+   class="screenshot"
+    src="img/advanced_mem_settings_dlg.jpg" />
+
+<table cellspacing="1" cellpadding="1" width="100%" border="1">
+  <tr>
+    <td>Batch Set Reliability</td>
+    <td>Set the reliability of all entries in the memory.</td></tr>
+  <tr>
+    <td>Batch Validate</td>
+    <td>Validate/unvalidate every entry in the memory.</td></tr>
+  <tr>
+    <td>Locked</td>
+    <td>
+      <p>Lock/unlock the memory. Only the creator of a memory can lock or unlock
+      that memory. A locked memory can be searched, but it is not possible to
+      add, edit, or delete the entries of a locked memory. If you wish to unlock
+      a memory that you did not create, you must use the <strong>Save
+      As...</strong> feature to save it as a different file. That will make you
+      the creator of the new file, and allow you to unlock the memory. </p>
+      <p>This feature is useful if you have a reference memory (e.g. from a
+      client) that you do not wish to/may not edit, or if you want to have a
+      common translation memory to be&nbsp;referred to&nbsp;by multiple
+      translators, but you do not want individual translators changing that
+      memory.</p></td>
+  </tr>
+</table>
+
+<a href="3_2_11.html">Back (Set User Preferences)</a> |
+<a href="3_2_13.html">Next (Connect to a Memory on the Server)</a>
+            </div>
+            <div id="r">
+                <ul>
+        <li><a href="index.html">Contents</a></li>
+        <li><a href="1.html">1. Overview</a></li>
+        <li><a href="2.html">2. Getting Started</a></li>
+        <li><a href="3.html">3. Using Felix</a>
+            <ul>
+                <li><a href="3.html">3.1 Getting Started</a></li>
+                <li><a href="3_2.html"><strong>3.2 The Memory Window</strong></a></li>
+                <li><a href="3_3.html">3.3 The Glossary Windows</a></li>
+                <li><a href="3_4.html">3.4 Edit Mode</a></li>
+                <li><a href="3_5-searching.html">3.5 Search &amp; Replace</a></li>
+            </ul>
+        </li>
+        <li><a href="4.html">4. The Menus</a></li>
+        <li><a href="5.html">5. Using from Word</a></li>
+        <li><a href="6.html">6. Using from Excel</a></li>
+        <li><a href="7.html">7. Using from PowerPoint</a></li>
+        <li><a href="8.html">8. FAQ</a></li>
+
+<li><a href="appendix_a.html">Appendix A. Scripting Felix</a></li>
+        <li><a href="template-engine.html">Appendix B. Customizing Felix Templates</a></li>
+
+</ul>
+            </div>
+
+        </div>
+<br clear="all"/></div>
+
+    <div id="footer"><div><div>
+        Copyright &copy; 2008 Ginstrom IT Solutions (GITS).
+        | <a href="../../../index.html" title="Visit the Felix Website">Felix Website</a>
+        | <a href="mailto:&#115;&#117;&#112;&#112;&#111;&#114;&#116;&#64;&#102;&#101;&#108;&#105;&#120;&#45;&#99;&#97;&#116;&#46;&#99;&#111;&#109;" title="Contact information for Felix developers">Contact</a>
+    
+    </div></div></div>
+</body>
+</html>
+
+
+
+
+
+
+
+

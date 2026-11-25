@@ -1,0 +1,154 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>
+    Felix :: 翻訳者のための翻訳メモリ :: 翻訳メモリを検索する
+</title>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+
+    <meta name="resource-type" content="document" />
+
+    <meta name="classification" content="Software" />
+    <meta name="description" content="メモリ型翻訳ツールFelixの利用者マニュアル。翻訳メモリを検索する。" />
+    <meta name="MSSmartTagsPreventParsing" content="TRUE" />
+    <meta name="keywords" content="検索,メモリ型翻訳ツール,Felix,ヘルプ,ガイド,マニュアル,翻訳" />
+    <meta name="robots" content="ALL" />
+    <meta name="distribution" content="Global" />
+    <meta name="rating" content="Safe For Kids" />
+    <meta name="copyright" content="Copyright Ginstrom IT Solutions (GITS)" />
+    <meta name="author" content="Ryan Ginstrom" />
+
+    <meta name="language" content="Japanese" />
+    <meta name="doc-class" content="Completed" />
+    <meta name="doc-rights" content="Copyrighted Work" />
+</head>
+
+<body>
+<div id="container">
+    <div id="header">
+        <div class="left">
+            <h1>Felix マニュアル</h1>
+        </div>
+    </div>
+
+	<div id="body">
+
+        
+            <div id="l">
+                <h1>3.2.2 翻訳メモリを検索する</h1>
+
+<p>Felixでは、TMを検索するため、有用な機能が用意されています。原文や訳文、文脈、信頼度、その他の情報でも検索できます。正規表現式も対応されています。</p>
+
+<p>普段、原文は訳文のフィールドに入力した文字列がエントリの原文・訳文のどこかにある場合、一致として検索結果に出力されます。原文・訳文の始まりや終わりが一致したエントリのみを検索したいような場合、次のようにします。</p>
+
+<dl>
+        <dt>フィールドの始まり：<strong>"^"</strong></dt>
+        <dd><strong>^</strong><em>検索したい文字列</em></dd>
+
+<dt>フィールドの終わり：<strong>"$"</strong></dt>
+        <dd><em>検索したい文字列</em><strong>$</strong></dd>
+    </dl>
+
+<p>検索を行うには以下のとおりにします。</p>
+
+<ol>
+
+<li>[<strong>編集(<u>E</u>)</strong>] メニューから [<strong>検索(<u>F</u>)</strong>] > [<strong>メモリの検索(<u>M</u>)</strong>  ] を選択します。
+  または、キーボード ショートカット <code>Ctrl + F</code> を押します。
+
+<img alt="メモリの検索" src="img/search_mem_menu.png" />
+  </li>
+
+<li>[<strong>メモリエントリの検索</strong>] ダイアログ ボックスが表示されます。
+
+<img alt="メモリエントリの検索" 
+    src="img/find_mem_entry_dlg.png" />  </li>
+
+<li>検索条件を入力して、[<strong>検索</strong>] ボタンをクリックします。
+
+<table>
+
+<tr>
+    <td><strong>原文:</strong> </td>
+    <td>検索対象の原文</td></tr>
+  <tr>
+    <td><strong>訳文:</strong> </td>
+    <td>検索対象の訳文</td></tr>
+  <tr>
+    <td><strong>文脈:</strong> </td>
+    <td>検索対象の文脈（コンテキスト）</td></tr>
+  <tr>
+    <td><strong>大文字と小文字を区別しない(<u>I</u>):</strong></td>
+    <td>検索時に大文字と小文字を区別しない場合は、このボックスにチェックマークを付けます。</td></tr>
+  <tr>
+    <td><strong>正規表現を使用する(<u>R</u>):</strong></td>
+    <td>検索時に正規表現式を使用する場合は、このボックスにチェックマークを付けます。正規表現式とは、Microsoft VBScript のフォーマットに従った式です。正規表現式の詳細については、MSDN Online Columns「<a href="http://www.microsoft.com/japan/msdn/columns/scripting/scripting051099.asp">正規表現による Visual Basic Scripting Edition (VBScript) の機能強化</a>」を参照してください。</td></tr>
+  <tr>
+    <td><strong>確認済みのエントリのみを検索する(<u>V</u>):</strong></td>
+    <td>確定された（[確認済み]ボックスがチェックされた）翻訳エントリのみを検索対象とする場合は、このボックスにチェックマークを付けます。</td></tr>
+  <tr>
+    <td><strong>信頼度：</strong> </td>
+    <td>最小信頼度:  最小または最大の信頼度を指定してエントリを検索します。</td></tr></table>
+
+<p><br>何も入力されていないフィールドは、すべてのエントリと一致します。したがって、すべてのフィールドを空白にすると、翻訳メモリ内のすべてのエントリが検索結果として表示されることになります。[<STRONG>原文</STRONG>]、[<STRONG>訳文</STRONG>]、[<STRONG>文脈</STRONG> ] の各フィールドに入力された検索条件（文字列など）に一致した文字列は黄色で強調表示されます（正規表現式を使用した場合は、強調表示されません）。</p>
+
+<img alt="検索結果では一致部分がハイライトされます" hspace="0" 
+  src="img/search_results_highlighted.png" align="bottom" border="0" />         
+
+</li>
+  </ol>
+
+<p>また、簡便な検索手段として、コンコーダンス（一致）検索機能（[<strong>編集(<u>E</u>)</strong>] > [<strong>検索(<u>F</u>)</strong>] > [<strong>コンコーダンス(一致)検索(<u>C</u>)</strong>]）を使用することができます。コンコーダンス(一致)検索機能では、翻訳エントリの「原文」フィールドのみが大文字と小文字の区別なしで検索されます。</p>
+
+<img alt="コンコーダンス（一致）ダイアログ" hspace="0" 
+  src="img/concordance_dlg.png" align="bottom" border="0" />
+
+<p>また、メモリウィンドウから自動的に原文は訳文の一部のコンコーダンス(一致)を検索することもできます。</p>
+
+<p>原文のコンコーダンス(一致)を検索するには、任意の文字列を選択した後、
+<code>Alt + C</code>を押します。</p>
+
+<p>訳文のコンコーダンス(一致)を検索するには、任意の文字列を選択した後、
+<code>Ctrl + Alt + C</code>を押します。</p>
+
+<p>このように、コンコーダンス（一致）検索機能は、様々な方法で簡単に使用することができます。使用例については「<a href="5_2.html#section_9" >5.9 コンコーダンス（一致）検索</a>」を参照してください。</p>
+
+<a href="3_2_1.html">前に戻る（翻訳エントリを追加する）</a> |
+<a href="3_2_3.html">次へ進む（翻訳エントリを編集する）</a>
+            </div>
+            <div id="r">
+                <ul>
+        <li><a href="index.html">目 次</a></li>
+        <li><a href="1.html">1. 概要</a></li>
+        <li><a href="2.html">2. システムの要件およびインストール</a></li>
+        <li><a href="3.html">3. Felixの使い方</a>
+            <ul>
+                <li><a href="3.html">3.1 はじめに</a></li>
+                <li><a href="3_2.html"><strong>3.2 翻訳メモリウィンドウ</strong></a></li>
+                <li><a href="3_3.html">3.3 グロサリ ウィンドウ</a></li>
+                <li><a href="3_4.html">3.4 編集モード</a></li>
+            </ul>
+        </li>
+        <li><a href="4.html">4. Felixのメニュー</a></li>
+        <li><a href="5.html">5. Word で Felix を使用する</a></li>
+        <li><a href="6.html">6. Excelで使用する</a></li>
+        <li><a href="7.html">7. PowerPointでFelixを使用する</a></li>
+        <li><a href="8.html">8. よく聞かれる質問</a></li>
+
+<li><a href="appendix_a.html">付録：Felix ソフトウェアとスクリプト</a></li>
+
+</ul>
+            </div>
+
+        </div>
+<br clear="all"/></div>
+
+    <div id="footer"><div><div>
+        Copyright &copy; 2008 Ginstrom IT Solutions (GITS).
+        | <a href="../../../../index.html" title="Felixウェブサイトを参照">Felixウェブサイト</a>
+        | <a href="mailto:&#115;&#117;&#112;&#112;&#111;&#114;&#116;&#64;&#102;&#101;&#108;&#105;&#120;&#45;&#99;&#97;&#116;&#46;&#99;&#111;&#109;" title="Felixに関するお問い合わせ">お問い合わせ</a>
+    
+    </div></div></div>
+</body>
+</html>

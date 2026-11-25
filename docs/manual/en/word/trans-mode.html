@@ -1,0 +1,252 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta content="document" name="resource-type" />
+<meta content="Software" name="classification" />
+<meta content="User Guide for the Felix computer aided translation (CAT) solution. Introduction to Felix." name="description" />
+<meta content="CAT, translation memory, computer aided translation, software, help, manual" name="keywords" />
+<meta content="ALL" name="robots" />
+<meta content="Global" name="distribution" />
+<meta content="Safe For Kids" name="rating" />
+<meta content="Copyright Ginstrom IT Solutions (GITS)" name="copyright" />
+<meta content="Ryan Ginstrom" name="author" />
+<meta content="English" name="language" />
+<meta content="Completed" name="doc-class" />
+<meta content="Creative Commons" name="doc-rights" />
+
+    <title>7.1. Translation Mode &mdash; Felix Manual 1.7.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/agogo.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.7.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="Felix Manual 1.7.1.1 documentation" href="../index.html" />
+    <link rel="up" title="7. Using Felix from Word" href="../word.html" />
+    <link rel="next" title="7.2. Review Mode" href="review-mode.html" />
+    <link rel="prev" title="7. Using Felix from Word" href="../word.html" /> 
+  </head>
+  <body>
+    <div class="header-wrapper">
+      <div class="header">
+        <div class="headertitle"><a
+          href="../index.html">Felix Manual 1.7.1.1 documentation</a></div>
+        <div class="rel">
+          <a href="../word.html" title="7. Using Felix from Word"
+             accesskey="P">previous</a> |
+          <a href="review-mode.html" title="7.2. Review Mode"
+             accesskey="N">next</a> |
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a>
+        </div>
+       </div>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="translation-mode">
+<span id="word-trans-mode"></span><span id="index-0"></span><h1>7.1. Translation Mode<a class="headerlink" href="#translation-mode" title="Permalink to this headline">¶</a></h1>
+<p>Translation Mode is probably where you will spend most of your time with Felix. This mode is for translating documents, as opposed to Review Mode (see <a class="reference internal" href="review-mode.html#word-review-mode"><em>Review Mode</em></a>), which is for reviewing translations.</p>
+<p>Each of the Translation Mode functions is described below.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">In Word 2007 and 2010, the menu and toolbar appear on the Add-Ins tab.</p>
+</div>
+<div class="section" id="look-up-a-sentence">
+<span id="word-trans-lookup"></span><h2>7.1.1. Look up a Sentence<a class="headerlink" href="#look-up-a-sentence" title="Permalink to this headline">¶</a></h2>
+<p>To have the suite automatically select the next sentence to look up, place the cursor in front of the sentence, and select <em class="menuselection">Felix ‣ Look up Next Setence</em> (or press <tt class="docutils literal"><span class="pre">ALT</span> <span class="pre">+</span> <span class="pre">→</span></tt>). The Felix interface will skip any whitespace before the next sentence, and select all the text up to the next tab, line break, or end-of-sentence marker (e.g. period). The Felix interface will then send the sentence to Felix for lookup.</p>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">You can configure which characters to count as the end of a segment. See <a class="reference internal" href="preferences.html#word-preferences"><em>Setting Preferences</em></a> for details.</p>
+</div>
+<p>Most text formatting information (e.g. bold, italic, font, text color) is preserved in the query. Some formatting information, however, such as highlight color and centered text, is not preserved.</p>
+<div class="section" id="extend-the-lookup-segment">
+<h3>7.1.1.1. Extend the lookup segment<a class="headerlink" href="#extend-the-lookup-segment" title="Permalink to this headline">¶</a></h3>
+<p>If you would like to extend the lookup segment beyond the current selection, then with the current lookup scope selected, select <em class="menuselection">Felix ‣ Extend Lookup Sentence</em> (or press <tt class="docutils literal"><span class="pre">Ctrl</span> <span class="pre">+</span> <span class="pre">→</span></tt>).</p>
+</div>
+<div class="section" id="select-to-the-next-period">
+<h3>7.1.1.2. Select to the next period<a class="headerlink" href="#select-to-the-next-period" title="Permalink to this headline">¶</a></h3>
+<p>To select all text to the next end-of-sentence marker (e.g. full stop or question mark), press <tt class="docutils literal"><span class="pre">Alt</span> <span class="pre">+</span> <span class="pre">.</span> <span class="pre">(period)</span></tt>. This will select all the text up to the marker, regardless of intervening carriage returns or the like. This is handy when a sentence you need to translate has been formatted using hard breaks, or when you’ve copied and pasted text from a PDF file.</p>
+</div>
+<div class="section" id="select-your-own-segment">
+<h3>7.1.1.3. Select your own segment<a class="headerlink" href="#select-your-own-segment" title="Permalink to this headline">¶</a></h3>
+<p>You can also select any text as the lookup segment. Simply select a segment of text, then select <em class="menuselection">Felix ‣ Look up Current Selection</em> (or press <tt class="docutils literal"><span class="pre">ALT</span> <span class="pre">+</span> <span class="pre">L</span></tt>).</p>
+</div>
+</div>
+<div class="section" id="navigate-through-the-matches">
+<span id="word-trans-nav"></span><h2>7.1.2. Navigate through the Matches<a class="headerlink" href="#navigate-through-the-matches" title="Permalink to this headline">¶</a></h2>
+<p>Sometimes when you look up a sentence in your memory, Felix will have more than one suggestion. The number of suggestions, and the number of the current suggestion, will be shown at the bottom right of the suggestion:</p>
+<div class="figure">
+<img alt="Fuzzy match view in Felix" src="../_images/felix_fuzzy2.png" />
+<p class="caption">Fuzzy match view in Felix</p>
+</div>
+<p>In this example, the first of two suggestions (1/2) is being shown.</p>
+<p>To view the next suggestion, click on Next in the Memory window, or from Word, select <em class="menuselection">Felix ‣ Next Translation</em> (or press <tt class="docutils literal"><span class="pre">Alt</span> <span class="pre">+</span> <span class="pre">N</span></tt>).</p>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">The score for the next translation (in this example 68%) is shown next to the Next link.</p>
+</div>
+<p>To view the previous suggestion, click on Prev in the Memory window, or from Word, select <em class="menuselection">Felix ‣ Previous Translation</em> (or press <tt class="docutils literal"><span class="pre">Alt</span> <span class="pre">+</span> <span class="pre">P</span></tt>).</p>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">The score for the previous translation (in this example 68%) is shown next to the Prev link.</p>
+</div>
+<p>Matches will cycle: If you press Next while on the last suggestion, the first suggestion will be shown; likewise, pressing Prev while on the first suggestion will show the last suggestion.</p>
+</div>
+<div class="section" id="register-a-translation">
+<span id="word-trans-set"></span><h2>7.1.3. Register a Translation<a class="headerlink" href="#register-a-translation" title="Permalink to this headline">¶</a></h2>
+<p>While a query is shown in the Memory window (see <a class="reference internal" href="#word-trans-lookup"><em>Look up a Sentence</em></a>), place the cursor at the end of your translation, and select <em class="menuselection">Felix ‣ Register Current Translation</em> (or press <tt class="docutils literal"><span class="pre">Alt</span> <span class="pre">+</span> <span class="pre">↑</span></tt>). The segment from the start of the original sentence to the current cursor position is registered as the translation.</p>
+<p>To manually select the segment to register as the translation, select a segment of text, then select <em class="menuselection">Felix ‣ Register Current Translation</em> (or press <tt class="docutils literal"><span class="pre">Alt</span> <span class="pre">+</span> <span class="pre">↑</span></tt>). The current selection is registered as the translation.</p>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">Select <em class="menuselection">Felix ‣ Set And Next</em> (or press <tt class="docutils literal"><span class="pre">Alt</span> <span class="pre">+</span> <span class="pre">S</span></tt>) to register the current translation, then automatically select and look up the next sentence. This is equivalent to pressing <tt class="docutils literal"><span class="pre">Alt</span> <span class="pre">+</span> <span class="pre">↑</span></tt>, then <tt class="docutils literal"><span class="pre">Alt</span> <span class="pre">+</span> <span class="pre">→</span></tt>.</p>
+</div>
+</div>
+<div class="section" id="add-a-glossary-entry">
+<span id="word-trans-add-gloss"></span><h2>7.1.4. Add a Glossary Entry<a class="headerlink" href="#add-a-glossary-entry" title="Permalink to this headline">¶</a></h2>
+<p>While you are translating, you may want to add terms to your glossary. You can do this easily from inside Word. Simply select the source text of your glossary term, and select <em class="menuselection">Felix ‣ Add to Glossary</em>. Alternatively, you can press <tt class="docutils literal"><span class="pre">ALT</span> <span class="pre">+</span> <span class="pre">M,</span> <span class="pre">G</span></tt>.</p>
+<p>The Add to Glossary dialog box appears. Type in a translation, and click Add. The entry is added to the Felix glossary.</p>
+<p>See <a class="reference internal" href="../memwindow/register-gloss-entry.html#reg-gloss-entry"><em>Add Glossary Entries from a Translation</em></a> for details.</p>
+</div>
+<div class="section" id="get-a-translation-from-memory">
+<span id="word-trans-get"></span><h2>7.1.5. Get a Translation from Memory<a class="headerlink" href="#get-a-translation-from-memory" title="Permalink to this headline">¶</a></h2>
+<p>While a suggestion is being shown in the Memory window (see <a class="reference internal" href="#word-trans-lookup"><em>Look up a Sentence</em></a>, above), select <em class="menuselection">Felix ‣ Get Current Translation</em> (or press <tt class="docutils literal"><span class="pre">Alt</span> <span class="pre">+</span> <span class="pre">↓</span></tt>). The current selection is replaced by the suggestion.</p>
+<p>If you edit the translation and wish to register your new translation, select <em class="menuselection">Felix ‣ Register Current Translation</em> (or press <tt class="docutils literal"><span class="pre">Alt</span> <span class="pre">+</span> <span class="pre">↑</span></tt>). See <a class="reference internal" href="#word-trans-set"><em>Register a Translation</em></a> for details.</p>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">Select <em class="menuselection">Felix ‣ Get And Next</em> (or press <tt class="docutils literal"><span class="pre">Alt</span> <span class="pre">+</span> <span class="pre">G</span></tt>) to get the current translation, then register this source/translation pair and automatically select and look up the next sentence. This is equivalent to pressing <tt class="docutils literal"><span class="pre">Alt</span> <span class="pre">+</span> <span class="pre">↓</span></tt>, <tt class="docutils literal"><span class="pre">Alt</span> <span class="pre">+</span> <span class="pre">↑</span></tt>, then <tt class="docutils literal"><span class="pre">Alt</span> <span class="pre">+</span> <span class="pre">→</span></tt>.</p>
+</div>
+</div>
+<div class="section" id="delete-a-translation">
+<span id="word-trans-delete"></span><span id="index-1"></span><h2>7.1.6. Delete a Translation<a class="headerlink" href="#delete-a-translation" title="Permalink to this headline">¶</a></h2>
+<p>While a suggestion is being shown in the Memory window (see <a class="reference internal" href="#word-trans-lookup"><em>Look up a Sentence</em></a>, above), select <em class="menuselection">Felix ‣ Delete Translation</em> (or press <tt class="docutils literal"><span class="pre">Alt</span> <span class="pre">+</span> <span class="pre">D</span></tt>), or in the Felix window, press the Delete link.</p>
+<p>A message box will appear, asking if you really want to delete this translation. To delete the translation, click Yes. The currently displayed entry is deleted. If you change your mind, click No . The entry will not be deleted.</p>
+</div>
+<div class="section" id="get-a-glossary-entry">
+<span id="word-trans-gloss"></span><h2>7.1.7. Get a Glossary Entry<a class="headerlink" href="#get-a-glossary-entry" title="Permalink to this headline">¶</a></h2>
+<p>Every time you look up a sentence in the memory, the sentence is also searched for matches in all open glossaries. Any matches are displayed in the corresponding Glossary window. Using the glossary for technical terms helps you keep your translations consistent, saves you typing, and saves time looking up paper or electronic reference materials.</p>
+<div class="figure">
+<img alt="Glossary Search Results View" src="../_images/glosssearchresultsview1.jpg" />
+<p class="caption">Glossary Search Results View</p>
+</div>
+<p>As you are typing, you can retrieve any matches shown in the Main Glossary window via hot keys. Select <em class="menuselection">Felix ‣ Get Glossary Entry ‣ Entry {N}</em> (or press <tt class="docutils literal"><span class="pre">ALT</span> <span class="pre">+</span> <span class="pre">{N}</span></tt>), where {N} is a number between 0 and 9, to retrieve that glossary entry. If the number of the entry you wish to retrieve is higher than 9, then press <tt class="docutils literal"><span class="pre">ALT</span> <span class="pre">+</span> <span class="pre">M,</span> <span class="pre">H</span></tt> (note: the keyboard shortcut will not function if the IME is turned on). An input box appears; enter the entry number and press Return to retrieve the corresponding entry.</p>
+</div>
+<div class="section" id="search-for-concordance">
+<span id="word-trans-concordance"></span><span id="index-2"></span><h2>7.1.8. Search for Concordance<a class="headerlink" href="#search-for-concordance" title="Permalink to this headline">¶</a></h2>
+<p>Oftentimes while you translate, you will wonder how you handled a particular term in previous translations. This is what the Concordance feature is for. Select the term you wish to investigate, then select <em class="menuselection">Felix ‣ Find Concordance</em>, or press <tt class="docutils literal"><span class="pre">Alt</span> <span class="pre">+</span> <span class="pre">M,</span> <span class="pre">C</span></tt> (note: this will not function if the IME is turned on).</p>
+<p>Any entries in the memory containing that term in the Source field appear in the Memory window:
+Concordance Results View</p>
+</div>
+<div class="section" id="save-the-memory">
+<span id="word-trans-save"></span><h2>7.1.9. Save the Memory<a class="headerlink" href="#save-the-memory" title="Permalink to this headline">¶</a></h2>
+<p>A prudent backup strategy will save you future headaches in any computing situation, and Felix is no exception. In order to facilitate saving the memory and glossaries, you can perform this from Word via a keyboard shortcut: Just press <tt class="docutils literal"><span class="pre">Alt</span> <span class="pre">+</span> <span class="pre">M,</span> <span class="pre">S</span></tt> to save your current memory and glossaries (note: this will not function if the IME is turned on). You can also do this from the menu, by selecting <em class="menuselection">Felix ‣ Save Memory</em>.</p>
+</div>
+<div class="section" id="auto-translate-the-current-selection">
+<span id="word-trans-auto"></span><span id="index-3"></span><h2>7.1.10. Auto Translate the Current Selection<a class="headerlink" href="#auto-translate-the-current-selection" title="Permalink to this headline">¶</a></h2>
+<p>Sometimes, such as when translating a table or a list, you just know that most of the items are going to have 100% matches in your translation memory, and manually going through and checking each entry would be too tedious. If so, then you can use the Auto Translate function to look up every sentence/segment in the current selection, and automatically replace items having a 100% match in the memory with their translations.</p>
+<p>To use this function, select the range of text you wish to auto translate, then select <em class="menuselection">Felix ‣ Auto Translate Selection</em> (or press <tt class="docutils literal"><span class="pre">ALT</span> <span class="pre">+</span> <span class="pre">M,</span> <span class="pre">A</span></tt> – note that this will not function if the IME is turned on).</p>
+</div>
+<div class="section" id="auto-translate-until-the-next-fuzzy-match">
+<span id="word-trans-fuzzy"></span><span id="index-4"></span><h2>7.1.11. Auto Translate until the Next Fuzzy Match<a class="headerlink" href="#auto-translate-until-the-next-fuzzy-match" title="Permalink to this headline">¶</a></h2>
+<p>You can also auto translate from the current cursor position. Felix will automatically translate each sentence, until it reaches a sentence without a perfect match in the memory.</p>
+<p>To use this function, select <em class="menuselection">Felix ‣ Translate to Fuzzy</em> (or press <tt class="docutils literal"><span class="pre">ALT</span> <span class="pre">+</span> <span class="pre">Z</span></tt>).</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="sidebar">
+          <h3>Table Of Contents</h3>
+          <ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial-word.html">Quick-start Tutorial Using MS Word</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial-ppt.html">Quick-start Tutorial Using MS PowerPoint</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../about.html">1. About Felix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started.html">2. Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../first-time.html">3. Using Felix for the First Time</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting-around.html">4. Getting around in Felix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../menus.html">5. The Menus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../placement.html">6. The Placement Feature</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../word.html">7. Using Felix from Word</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="">7.1. Translation Mode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="review-mode.html">7.2. Review Mode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preferences.html">7.3. Setting Preferences</a></li>
+<li class="toctree-l2"><a class="reference internal" href="trans-history.html">7.4. Translation History</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../excel.html">8. Using Felix from Excel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../powerpoint.html">9. Using Felix from PowerPoint</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">10. FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../scripting-felix.html">11. Scripting Felix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../customizing-templates.html">12. Customizing Felix Templates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../troubleshooting.html">13. Troubleshooting Felix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../whats-new.html">14. What&#8217;s New in Felix</a></li>
+</ul>
+
+          <h3 style="margin-top: 1.5em;">Search</h3>
+          <form class="search" action="../search.html" method="get">
+            <input type="text" name="q" />
+            <input type="submit" value="Go" />
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+          </form>
+          <p class="searchtip" style="font-size: 90%">
+            Enter search terms or a module, class or function name.
+          </p>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <a href="../word.html" title="7. Using Felix from Word"
+             >previous</a> |
+          <a href="review-mode.html" title="7.2. Review Mode"
+             >next</a> |
+          <a href="../genindex.html" title="General Index"
+             >index</a>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer">
+        &copy; Copyright 2012, Ryan Ginstrom.
+      Last updated on Jan 02, 2015.
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+  </body>
+</html>

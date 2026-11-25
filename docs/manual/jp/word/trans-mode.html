@@ -1,0 +1,245 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta content="document" name="resource-type" />
+<meta content="Software" name="classification" />
+<meta content="User Guide for the Felix computer aided translation (CAT) solution. Introduction to Felix." name="description" />
+<meta content="CAT, translation memory, computer aided translation, software, help, manual" name="keywords" />
+<meta content="ALL" name="robots" />
+<meta content="Global" name="distribution" />
+<meta content="Safe For Kids" name="rating" />
+<meta content="Copyright Ginstrom IT Solutions (GITS)" name="copyright" />
+<meta content="Ryan Ginstrom" name="author" />
+<meta content="Japanese" name="language" />
+<meta content="Completed" name="doc-class" />
+<meta content="Creative Commons" name="doc-rights" />
+
+    <title>6.1. 翻訳モード &mdash; Felix v. 1.7.1 マニュアル</title>
+    
+    <link rel="stylesheet" href="../_static/agogo.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.7.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="author" title="このドキュメントについて" href="../about.html" />
+    <link rel="top" title="Felix v. 1.7.1 マニュアル" href="../index.html" />
+    <link rel="up" title="6. Word で Felix を使用する" href="../word.html" />
+    <link rel="next" title="6.2. 校正モード" href="review-mode.html" />
+    <link rel="prev" title="6. Word で Felix を使用する" href="../word.html" /> 
+  </head>
+  <body>
+    <div class="header-wrapper">
+      <div class="header">
+        <div class="headertitle"><a
+          href="../index.html">Felix v. 1.7.1 マニュアル</a></div>
+        <div class="rel">
+          <a href="../word.html" title="6. Word で Felix を使用する"
+             accesskey="P">前へ</a> |
+          <a href="review-mode.html" title="6.2. 校正モード"
+             accesskey="N">次へ</a> |
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a>
+        </div>
+       </div>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="word-trans-mode">
+<span id="index-0"></span><span id="id1"></span><h1>6.1. 翻訳モード<a class="headerlink" href="#word-trans-mode" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>Felix  による作業の大半は、翻訳モードで行われるはずです。このモードでは、原文を翻訳します。一方、校正モードでは(<a class="reference internal" href="review-mode.html#word-review-mode"><em>校正モード</em></a> を参照)訳文の見直しをします。</p>
+<p>以下､翻訳モードの各機能を説明します。</p>
+<div class="section" id="word-trans-lookup">
+<span id="id2"></span><h2>6.1.1. 分節を検索する<a class="headerlink" href="#word-trans-lookup" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>翻訳対象の次の分節（文や段落）を自動的に選択して翻訳メモリを検索するには、翻訳する分節の先頭文字の前にカーソルを置き、ショートカット ALT + → を押します（または、[Felix] メニューから [次の文の検索] を選択します）。校正対象のテキストが始まるまでの空白文字がスキップされた後、次の終止符（ピリオドなど）、Tab、改行文字、セグメント終了記号に至るまでのすべてのテキスト（これを「分節」と呼びます）が自動的に選択されます。選択された分節は Felix 翻訳メモリ ウィンドウの [照会] フィールドに転送され、その分節に類似した翻訳エントリ（原文と訳文の分節ペア）が翻訳メモリ内で検索されます。</p>
+<div class="admonition tip">
+<p class="first admonition-title">ちなみに</p>
+<p class="last">文末文字も設定できます。詳細について、「 <a class="reference internal" href="preferences.html#word-preferences"><em>Felix のユーザ設定</em></a> 」を参照してください。</p>
+</div>
+<p>翻訳メモリでは、テキストのほとんどの書式情報（テキストのフォント、色、太字、斜体など）が保持されています。ただし、強調表示や配置（中央揃えなど）のような一部の書式情報は失われます。</p>
+<div class="section" id="id3">
+<h3>6.1.1.1. 検索対象範囲を拡張する<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>現在選択中の分節を拡張し、次の分節までを１つの分節としてとめる場合は、ショートカット Ctrl + → を押します（または、[Felix] メニューから [検索対象範囲の拡張] を選択します）。</p>
+</div>
+<div class="section" id="id4">
+<h3>6.1.1.2. 次の文末文字まで選択を拡張する<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>ショートカット ALT + “.”（ピリオド）を押すと､次の文末文字（ピリオド(.)、まる(。)､疑問符(?)など）までのセグメント（文節）が選択されます。この場合､途中に改行が含まれていても、終了記号（ピリオド､疑問符など）まで選択されます。分節に強制改行が含まれている場合に便利です。</p>
+</div>
+<div class="section" id="id5">
+<h3>6.1.1.3. 文節を自由に指定する<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>文節を自由に指定することもできます。翻訳メモリ内で検索する翻訳対象の分節を手作業で指定する場合は、任意のテキスト セグメントを選択した後、ショートカット ALT + L を押します（または、[Felix] メニューから [選択範囲の検索] を選択します）。</p>
+</div>
+</div>
+<div class="section" id="word-trans-nav">
+<span id="id6"></span><h2>6.1.2. 複数の翻訳候補を操作する<a class="headerlink" href="#word-trans-nav" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>翻訳対象の分節を Felix の翻訳メモリを検索すると、最小一致スコア以上の翻訳エントリがすべて取り出されるため、複数の翻訳候補が提示される可能性があります。翻訳候補の数、および表示中の翻訳候補の番号は、翻訳メモリ ウィンドウの右下に表示されます。</p>
+<div class="figure">
+<img alt="Felixのウィンドウでファジーの一致が表示される" src="../_images/felix_fuzzy2.png" />
+<p class="caption">Felixのウィンドウでファジーの一致が表示される</p>
+</div>
+<p>この例（1/2）では、2つの翻訳候補のうち、最初の１つが表示されています。</p>
+<p>次の候補を表示するには、翻訳メモリ ウィンドウ内の [次へ] をクリックするか、Wordからショートカット Alt + N を押します（または、[Felix] メニューから [次の訳文へ] を選択します）。</p>
+<div class="admonition tip">
+<p class="first admonition-title">ちなみに</p>
+<p class="last">次の訳文候補のスコア（この例では68%）が [次へ] の右側のカッコ内に表示されます。</p>
+</div>
+<p>前の候補を表示するには、翻訳メモリ ウィンドウ内の [戻る] をクリックするか、Word 内部からショートカット Alt + P を押します（また、[Felix] メニューから [前の訳文へ] を選択します）。</p>
+<div class="admonition tip">
+<p class="first admonition-title">ちなみに</p>
+<p class="last">前の訳文候補のスコア（この例では68%）が [ 戻る] の右側のカッコ内に表示されます。</p>
+</div>
+<p>候補は循環的に表示されます。最後の候補が表示されているときに [次へ] をクリックすると、最初の候補が表示されます。 同様に、最初の候補が表示されているときに [戻る] をクリックすると、最後の候補が表示されます。</p>
+</div>
+<div class="section" id="word-trans-set">
+<span id="id7"></span><h2>6.1.3. 訳文を登録する<a class="headerlink" href="#word-trans-set" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>翻訳対象の分節に対応する訳文を翻訳メモリに登録するには、翻訳対象分節（原文）を選択・検索して翻訳メモリ ウィンドウの [照会] フィールドにその原文を表示した状態で（上記の「 <a class="reference internal" href="#word-trans-lookup"><em>分節を検索する</em></a> 」を参照)、訳文を(上書き)入力し、訳文の末尾にカーソルを置いて、ショートカット Alt + ↑ を押します（または、[Felix] メニューから [訳文の登録 ] を選択します）。選択されていた元の分節の先頭からカーソルの現在位置までのセグメントが訳文として翻訳メモリに登録されます。</p>
+<p>訳文として登録するセグメントを手作業で指定する場合は、目的のテキスト セグメントを選択した後、ショートカット Alt + ↑ を押します（または、[Felix] メニューから [訳文の登録 ] を選択します）。現在選択中のセグメントが訳文として翻訳メモリに登録されます。</p>
+<div class="admonition tip">
+<p class="first admonition-title">ちなみに</p>
+<p class="last">現在の訳文を翻訳メモリに登録した後、次の文を自動的に選択して翻訳メモリを検索するには、ショートカット Alt + S)（S=Setの意味）を押します（または、[Felix] メニューから [登録して次へ] を選択します）。これは、ショートカット Alt + ↑（訳文の登録）を押した後、Alt + →（次の文の検索）を押すのと同じです。</p>
+</div>
+</div>
+<div class="section" id="word-trans-add-gloss">
+<span id="id8"></span><h2>6.1.4. グロサリエントリの追加<a class="headerlink" href="#word-trans-add-gloss" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>翻訳の途中に、用語の登録もできます。この操作は、Word内から簡単にできます。用語の原語を選択して、Felixメニューから「用語の登録」を選択します。あるいは、「Alt + M, G」を押します。</p>
+<p>[Felix用語の登録] ダイアログボックスが表示されます。訳語を入力して、「登録」ボタンをクリックします。エントリ（原語と訳語のペア）がＦｅｌｉｘのグロサリに追加されます。
+詳細について、 <a class="reference internal" href="../memwindow/register-gloss-entry.html#reg-gloss-entry"><em>訳文から用語を追加する</em></a> を参照してください。</p>
+</div>
+<div class="section" id="word-trans-get">
+<span id="id9"></span><h2>6.1.5. 翻訳メモリから訳文を取得する<a class="headerlink" href="#word-trans-get" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>翻訳メモリ ウィンドウに訳文の候補が表示された状態で(<a class="reference internal" href="#word-trans-lookup"><em>分節を検索する</em></a> を参照)、「Felix」のメニューから「訳文の取得（T）」を選択します。(あるいは、「Alt + ↓」を押します。)現在選択中のテキストが翻訳メモリ ウィンドウ内の訳文で置き換えられます。</p>
+<p>訳文の編集時訳文として登録するセグメントを手作業で指定する場合は、目的のテキスト セグメントを選択した後、ショートカット Alt + ↑ を押します（または、[Felix ] メニューから [訳語の登録] を選択します）。詳細について、 <a class="reference internal" href="#word-trans-set"><em>訳文を登録する</em></a> を参照してください。</p>
+<div class="admonition tip">
+<p class="first admonition-title">ちなみに</p>
+<p class="last">翻訳メモリから現在の訳文を取得した後、次の分節を自動的に選択して翻訳メモリを検索するには、ショートカット Alt + G（G=Getの意味）を押します（または、[Felix] メニューから [取得して次へ] を選択します）。これは、ショートカット 「Alt + ↓」、「Alt + ↑」（訳文の登録）を押した後、Alt + →（次の文の検索）を押すのと同じです。</p>
+</div>
+</div>
+<div class="section" id="word-trans-delete">
+<span id="index-1"></span><span id="id10"></span><h2>6.1.6. 翻訳エントリを削除する<a class="headerlink" href="#word-trans-delete" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>文節を選択・検索して翻訳メモリ ウィンドウに目的のエントリを表示した状態で（上記の「:ref:<cite>word-trans-lookup</cite> 」を参照)、Word からショートカット Alt + D（D=Deleteの意味）を押します（または、[Felix] メニューから [エントリの削除] を選択するか、[Felix] ウィンドウ内の [削除] リンクをクリックします）。</p>
+<p>翻訳エントリを削除してよいかどうかを確認するメッセージが表示されます。翻訳エントリを本当に削除してよい場合は、[はい] をクリックします。翻訳メモリ ウィンドウに現在表示されている翻訳エントリが削除されます。翻訳エントリの削除を中止する場合は、[いいえ] をクリックします。翻訳エントリは削除されずに残ります。</p>
+</div>
+<div class="section" id="word-trans-gloss">
+<span id="id11"></span><h2>6.1.7. グロサリ エントリを取得する<a class="headerlink" href="#word-trans-gloss" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>翻訳対象の分節を翻訳メモリ内で検索するときは、その翻訳対象分節に含まれる個々の用語（単語）が、現在開かれているすべてのグロサリ ファイル内で検索されます。グロサリ ファイル内のエントリに完全(100%)一致した用語は、各グロサリ ファイルに対応するグロサリ ウィンドウに表示されます。技術用語の専門用語集などを使用すれば、印刷物の辞書や電子マニュアルを参照する必要がないため、翻訳作業全体が効率化され、作業時間が短縮されるほか、翻訳の品質も向上します。</p>
+<div class="figure">
+<img alt="用語検索結果の表示" src="../_images/glosssearchresultsview1.jpg" />
+<p class="caption">用語検索結果の表示</p>
+</div>
+<p>訳文を入力するときなどは、キーボード ショートカットまたは [Felix] メニューを使用して、メイン グロサリ ウィンドウからグロサリ エントリを取得することができます。メイン グロサリ ウィンドウから用語（訳語）を取得するには、ショートカット ALT + （は0～9の数字でグロサリ エントリの番号を示す、フルキーにのみ対応）を押します（または、[Felix] メニューから [グロサリエントリの取得...] &gt; [エントリ ] を選択します）。エントリ番号が9以上の用語を取得する場合は、ショートカット ALT + M, H （IMEがオンになっている場合、このショートカットは使用できません）を押します。入力ボックスが表示されますので、エントリ番号を入力して Enter キーを押します ([Felix] メニューを使用する場合は、[グロサリ エントリの取得...] &gt; [エントリ番号の指定... ] を選択し、表示されるテキストボックスに任意のエントリ番号を入力します）。</p>
+</div>
+<div class="section" id="word-trans-concordance">
+<span id="index-2"></span><span id="id12"></span><h2>6.1.8. コンコーダンス（一致）検索<a class="headerlink" href="#word-trans-concordance" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>翻訳作業を進めていくときに、以前の訳文で特定の単語やフレーズ（原文）をどのように翻訳したのかを確認したい場合があります。そのような場合のために、コンコーダンス（一致）検索機能が用意されています。この機能を使用するには、確認する用語やフレーズ（原文）を選択して、ショートカット Alt + M, C （IMEがオンになっている場合、このショートカットは使用できません）を押します（または、[Felix] メニューから [コンコーダンス（一致）検索 ] を選択します)。</p>
+<p>翻訳メモリが検索され、指定された用語やフレーズを [原文] フィールドに含むエントリが翻訳メモリ ウィンドウに表示されます（一致した文字列は黄色で強調表示されます）。
+コンコーダンス(一致)検索の結果</p>
+</div>
+<div class="section" id="word-trans-save">
+<span id="id13"></span><h2>6.1.9. メモリの保存<a class="headerlink" href="#word-trans-save" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>どのようなアプリケーションでも、データの整合性や安全性を維持して将来の悩みの種を摘むためには、適正なバックアップ戦略を確立することが重要です。Felix も例外ではありません。現在開いている翻訳メモリとグロサリ ファイルを保存するには、ショートカット Alt + M, Sを押します（IMEがオンになっている場合、このショートカットは使用できません）。または、[Felix] メニューから [メモリの保存] を選択します。</p>
+</div>
+<div class="section" id="word-trans-auto">
+<span id="index-3"></span><span id="id14"></span><h2>6.1.10. 選択したセクションを自動翻訳する<a class="headerlink" href="#word-trans-auto" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>表やリストの短い項目を翻訳するときなどは、ほとんどの項目が翻訳メモリと100%一致することが分かっているため、数多くの項目を手作業で検索して逐次チェックするのは非常に退屈な作業です。そのような場合に Felix の自動翻訳機能を使用すれば、現在選択されている項目（分節や単語など）を連続的に検索し、翻訳メモリと完全（100%）一致する項目については、それらの項目を翻訳メモリ内の訳文で自動的に置き換えることができます。</p>
+<p>自動翻訳機能を使用するには、翻訳対象のセクションを選択して、ショートカット ALT + M, A （IMEがオンになっている場合、このショートカットは使用できません）を押します（または、[Felix] メニューから [選択範囲の自動翻訳] を選択します)。</p>
+</div>
+<div class="section" id="word-trans-fuzzy">
+<span id="index-4"></span><span id="id15"></span><h2>6.1.11. 次のファジー マッチまでの範囲を自動翻訳する<a class="headerlink" href="#word-trans-fuzzy" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>カーソルの現在位置から次のファジー マッチ（あいまい一致）までの範囲を自動翻訳することもできます。この機能では、翻訳メモリ内で完全一致ではない（スコアが100%ではない）分節に到達するまで、個々の原文（スコア=100%の分節）が自動翻訳されます。</p>
+<p>この機能を使用するには、自動翻訳の開始位置にカーソルを置いて、ショートカット ALT + Z を押します（または、[Felix] メニューから [ファジーマッチまで自動翻訳] を選択します)。</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="sidebar">
+          <h3>目次</h3>
+          <ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial-word.html">Felixチュートリアル：MSワードで使う</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial-ppt.html">Felixチュートリアル：MS パワーポイントで使う</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../about.html">1. Felixについて</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started.html">2. はじめに</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting-around.html">3. Felixの基本操作</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../menus.html">4. Felixのメニュー</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../placement.html">5. 置換機能</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../word.html">6. Word で Felix を使用する</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="">6.1. 翻訳モード</a></li>
+<li class="toctree-l2"><a class="reference internal" href="review-mode.html">6.2. 校正モード</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preferences.html">6.3. Felix のユーザ設定</a></li>
+<li class="toctree-l2"><a class="reference internal" href="trans-history.html">6.4. 翻訳歴</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../excel.html">7. Excel でFelix を使用する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../powerpoint.html">8. PowerPointでFelixを使用する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">9. よく聞かれる質問</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../whats-new.html">10. Felixの変更点</a></li>
+</ul>
+
+          <h3 style="margin-top: 1.5em;">検索</h3>
+          <form class="search" action="../search.html" method="get">
+            <input type="text" name="q" />
+            <input type="submit" value="検索" />
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+          </form>
+          <p class="searchtip" style="font-size: 90%">
+            モジュール、クラス、または関数名を入力してください
+          </p>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <a href="../word.html" title="6. Word で Felix を使用する"
+             >前へ</a> |
+          <a href="review-mode.html" title="6.2. 校正モード"
+             >次へ</a> |
+          <a href="../genindex.html" title="総合索引"
+             >索引</a>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer">
+        &copy; Copyright 2012, Ryan Ginstrom.
+      最終更新: May 15, 2013
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+  </body>
+</html>

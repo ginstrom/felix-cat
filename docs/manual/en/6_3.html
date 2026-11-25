@@ -1,0 +1,363 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>
+    Review Mode for Excel :: Felix Manual
+</title>
+    <link rel="shortcut icon" href="../../../favicon.ico" type="image/vnd.microsoft.icon" />
+    <link rel="icon" href="../../../favicon.ico" type="image/vnd.microsoft.icon" />
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+
+    <meta name="resource-type" content="document" />
+
+    <meta name="classification" content="Software" />
+    <meta name="description" content="User Guide for the Felix computer aided translation (CAT) solution. Using review mode from MS Excel." />
+    <meta name="MSSmartTagsPreventParsing" content="TRUE" />
+    <meta name="keywords" content="Excel, review, mode, CAT, translation memory, computer aided translation, software, help, manual" />
+    <meta name="robots" content="ALL" />
+    <meta name="distribution" content="Global" />
+    <meta name="rating" content="Safe For Kids" />
+    <meta name="copyright" content="Copyright Ginstrom IT Solutions (GITS)" />
+    <meta name="author" content="Ryan Ginstrom" />
+
+    <meta name="language" content="English" />
+    <meta name="doc-class" content="Completed" />
+    <meta name="doc-rights" content="Copyrighted Work" />
+</head>
+
+<body>
+<div id="container">
+    <div id="header">
+        <div class="left">
+            <h1>Felix Manual</h1>
+        </div>
+    </div>
+
+	<div id="body">
+
+        
+            <div id="l">
+                <a name="top"></a>
+<h1>6.2 Review Mode</h1>
+
+<p>Section contents:</p>
+
+<blockquote dir="ltr">
+    <a href="#section_1">6.3.1 Getting Started</a><br />
+    <a href="#section_2">6.3.2 Look up a Translation</a><br />
+    <a href="#section_3">6.3.3 Navigate through the Matches</a><br />
+    <a href="#section_4">6.3.4 Correct a Translation</a><br />
+    <a href="#section_5">6.3.5 Look up the Next Translation</a><br />
+    <a href="#section_6">6.3.6 Restore a Translation from the Memory</a><br />
+    <a href="#section_7">6.3.7 Auto Reflect Edits</a><br />
+</blockquote>
+
+<a name="section_1"></a>
+
+<h2>6.3.1 Getting Started</h2>
+
+<p>Use review mode to review and correct your translations. In review mode, you
+look up cells just like in translation mode, except in this case you&#8217;re looking
+up translations instead of source segments.</p>
+
+<p>If you make a correction to the translation in a cell (or textbox), add the
+translation to Felix by pressing Alt + ↑. This will correct the original translation
+unit (TU) in your translation memory.</p>
+
+<div style="float: left; border: 1px dotted; border-color: #090; margin-right: 5px; padding: 5px;">
+    <img src="img/switch_t.png" alt="Switch to review mode button" />
+</div>
+
+<p>To enter review mode, click on the half-green, half-white button on the right-hand
+side of the toolbar. To switch back to translation mode, click this button again.</p>
+
+<p>When you&#8217;re in translation mode, an asterisk (*) appears next to the menu, and the
+colors of the toolbar buttons are inverted.</p>
+
+<img src="img/excel_toolbar_review.png" alt="Excel review mode toolbar" /><br />
+   <em>Excel toolbar in review mode</em>
+
+<p><a href="#top">Back to Top</a></p>
+
+<a name="section_2"></a>
+
+<h2>6.3.2 Look up a Translation</h2>
+
+<p>Select the cell you wish to look up. Then from the <strong>Felix</strong>
+menu, select <strong>Lookup</strong>, or press <code>Alt + L</code>. The
+translation in your TM matching the cell&#8217;s contents will appear in Felix.</p>
+
+<p>Note that unlike Word, formatting information is not preserved for Excel queries.</p>
+
+<p>If a text box is selected, then the contents of the text box will be looked up.</p>
+
+<table cellspacing="1" cellpadding="1" width="100%" border="1">
+  <tr>
+    <td>Toolbar button</td>
+    <td><img alt="Look up current selection" hspace="0"
+      src="img/lookup_trans.png"
+      align="bottom" border="0" /></td></tr>
+  <tr>
+    <td>Menu command</td>
+    <td>Lookup</td></tr>
+  <tr>
+    <td>Keyboard shortcut</td>
+    <td><code>Alt + L</code></td>
+  </tr>
+</table>
+
+<p><a href="#top">Back to Top</a></p>
+
+<a name="section_3"></a>
+
+<h2>6.3.3 Navigate through the Matches</h2>
+
+<p>Sometimes when you look up a translation in your memory,
+<strong>Felix</strong> will have more than one suggestion (if you
+enable the Translation History feature (see <a href="6_5.html">6.5 Translation History</a>),
+however, it will show the exact translation you used for the cell or textbox in question).</p>
+
+<p>The number of suggestions, and the number of the current suggestion,
+will be shown at the bottom right of the suggestion:</p>
+
+<img src="img/felix_fuzzy.png"
+     alt="Fuzzy matching in Felix window"
+     class="screenshot" />
+
+<p>In this example, the first of three suggestions (1/2) is being shown.</p>
+
+<p>To view the next suggestion, click on
+<span style="color: blue"><u>Next</u></span> in the Memory window, or from Excel,
+select <strong>Felix &gt;&gt; Next Translation</strong> (or press Alt + N).</p>
+
+<p><strong>Tip</strong>: The score for the next translation (in this example 68%) is shown next to the
+<span style="color: blue"><u>Next</u></span> link.</p>
+
+<p>To view the previous suggestion, click on
+<span style="color: blue"><u>Prev</u></span> in the Memory window, or from Excel,
+select <strong>Felix &gt;&gt; Prev Translation</strong> (or press Alt + P).</p>
+
+<p><strong>Tip</strong>: The score for the previous translation (in this
+example 68%) is shown next to the <span style="color: blue"><u>Prev</u></span>
+link.</p>
+
+<p>Matches will cycle: If you press <span style="color: blue"><u>Next</u></span>
+while on the last suggestion, the first suggestion will be shown; likewise,
+pressing <span style="color: blue"><u>Prev</u></span> while on the first
+suggestion will show the last suggestion.</p>
+
+<p><a href="#top">Back to Top</a></p>
+
+<a name="section_4"></a>
+
+<h2>6.3.4 Correct a Translation</h2>
+
+<ol>
+  <li>If the translation needs to be changed, make any corrections, then
+  navigate to another cell (e.g. by pressing the Enter key), and navigate back to
+  the cell you wish to correct
+    (this is because what you type isn't finalized until the cell loses focus).
+  </li>
+
+<li>From the <strong>Felix</strong> menu,
+  select <strong>Set</strong> (or press <code>Alt + ↑</code>).
+  <p>
+  Alternatively, you can select
+  <strong>Set and Next</strong> (or press <code>Alt + S</code>); this will
+  register the current cell, and look up the next one
+  (scanning left-to-right, top-to-bottom until a cell with
+  text is found or a maximum number of cells has been searched). </p>
+  </li>
+</ol>
+
+<h3>Correct translation and look up next cell</h3>
+
+<table cellspacing="1" cellpadding="1" width="100%" border="1">
+  <tr>
+    <td>Toolbar button</td>
+    <td>
+        <img alt="Correct the translation and look up the next cell"
+           hspace="0" src="img/set_trans_and_next.png"
+           align="bottom" border="0" />
+    </td>
+  </tr>
+  <tr>
+    <td>Menu command</td>
+    <td>Set And Next</td></tr>
+  <tr>
+    <td>Keyboard shortcut</td>
+    <td><code>Alt + S</code></td>
+  </tr>
+</table>
+
+<h3>Correct the translation of the current cell</h3>
+
+<table cellspacing="1" cellpadding="1" width="100%" border="1">
+  <tr>
+    <td>Toolbar button</td>
+    <td><img alt="Set the translation" hspace="0"
+      src="img/set_trans.png"
+      align="bottom" border="0" />
+    </td>
+  </tr>
+  <tr>
+    <td>Menu command</td>
+    <td>Set</td>
+  </tr>
+  <tr>
+    <td>Keyboard shortcut</td>
+    <td><code>Alt + ↑</code></td>
+  </tr>
+</table>
+
+<p><a href="#top">Back to Top</a></p>
+
+<a  name="section_5"></a>
+
+<h2>6.3.5 Look up the Next Translation</h2>
+
+<p>From the <strong>Felix</strong> menu, select
+<strong>Lookup Next</strong>, or press <code><span class="caps">ALT</span> + →</code>.</p>
+
+<table cellspacing="1" cellpadding="1" width="100%" border="1">
+  <tr>
+    <td>Toolbar button</td>
+    <td><img alt="Look up next translation" hspace="0"
+      src="img/lookup_next_trans.png"
+      align="bottom" border="0" /></td>
+   </tr>
+  <tr>
+    <td>Menu command</td>
+    <td>Lookup Next</td>
+  </tr>
+  <tr>
+    <td>Keyboard shortcut</td>
+    <td><code>ALT + →</code></td>
+  </tr>
+</table>
+
+<p><a href="#top">Back to Top</a></p>
+
+<a name="section_6"></a>
+
+<h2>6.3.6 Restore a Translation from the Memory</h2>
+<ol>
+  <li>Select the cell into which you wish to retrieve the current suggestion
+  from <strong>Felix</strong>.</li>
+
+<li>From the <strong>Felix</strong> menu, select
+  <strong>Get</strong> (or press <code>Alt + ↓</code>).
+  <p>
+  Alternatively, you can select
+  <strong>Get and Next</strong> (or press <code>Alt + G</code>);
+  this will restore the current translation, and look up the
+  next one (scanning left-to-right, top-to-bottom until a cell
+  with text is found or a maximum number of cells has been searched).</p>
+  </li>
+</ol>
+
+<h3>Restore the translation, and look up the next cell</h3>
+
+<table cellspacing="1" cellpadding="1" width="100%" border="1">
+  <tr>
+    <td>Toolbar button</td>
+    <td><img
+      alt="Restore the translation and look up the next sentence" hspace="0"
+      src="img/get_trans_and_next.png"
+      align="bottom" border="0" /></td></tr>
+  <tr>
+    <td>Menu command</td>
+    <td>Get And Next</td></tr>
+  <tr>
+    <td>Keyboard shortcut</td>
+    <td><code>Alt + G</code></td>
+  </tr>
+</table>
+
+<h3>Restore the translation</h3>
+
+<table cellspacing="1" cellpadding="1" width="100%" border="1">
+  <tr>
+    <td>Toolbar button</td>
+    <td><img alt="Restore the translation" hspace="0"
+      src="img/restore.png"
+      align="bottom" border="0" /></td></tr>
+  <tr>
+    <td>Menu command</td>
+    <td>Get</td></tr>
+  <tr>
+    <td>Keyboard shortcut</td>
+    <td><code>Alt + ↓</code></td>
+  </tr>
+</table>
+
+<p><a href="#top">Back to Top</a></p>
+
+<a name="section_7"></a>
+
+<h2>6.3.7 Auto Reflect Edits</h2>
+
+<p>If you&#8217;re using the Translation History feature (see <a href="6_5.html">6.5 Translation History</a>),
+you can make edits to your translation, and then automatically reflect
+all your edits with a single operation.</p>
+
+<p>To use this function, select
+<strong>Felix</strong> &gt;&gt; <strong>Auto Reflect Edits&#8230;</strong>:</p>
+
+<dl>
+    <dt>Sheet</dt><dd>The current worksheet</dd>
+    <dt>All Workbooks</dt><dd>All open workbooks</dd>
+</dl>
+
+<p>
+    <a href="#top">Top</a> |
+    <a href="6_2.html">Back (Translation Mode)</a> |
+    <a href="6_4.html">Next (Preferences)</a>
+</p>
+            </div>
+            <div id="r">
+                <ul>
+        <li><a href="index.html">Contents</a></li>
+        <li><a href="1.html">1. Overview</a></li>
+        <li><a href="2.html">2. Getting Started</a></li>
+        <li><a href="3.html">3. Using Felix</a></li>
+        <li><a href="4.html">4. The Menus</a></li>
+        <li><a href="5.html">5. Using from Word</a></li>
+        <li><strong>6. Using from Excel</strong>
+            <ul>
+            <li><a href="6.html#section_1">6.1 Getting Started</a></li>
+            <li><a href="6_2.html">6.2 Translation Mode</a></li>
+            <li><strong>6.3 Review Mode</strong></li>
+            <li><a href="6_4.html">6.4 Setting Preferences</a></li>
+            <li><a href="6_5.html">6.5 Translation History</a></li>
+            </ul>
+        </li>
+        <li><a href="7.html">7. Using from PowerPoint</a></li>
+        <li><a href="8.html">8. FAQ</a></li>
+
+<li><a href="appendix_a.html">Appendix A. Scripting Felix</a></li>
+        <li><a href="template-engine.html">Appendix B. Customizing Felix Templates</a></li>
+
+</ul>
+            </div>
+
+        </div>
+<br clear="all"/></div>
+
+    <div id="footer"><div><div>
+        Copyright &copy; 2008 Ginstrom IT Solutions (GITS).
+        | <a href="../../../index.html" title="Visit the Felix Website">Felix Website</a>
+        | <a href="mailto:&#115;&#117;&#112;&#112;&#111;&#114;&#116;&#64;&#102;&#101;&#108;&#105;&#120;&#45;&#99;&#97;&#116;&#46;&#99;&#111;&#109;" title="Contact information for Felix developers">Contact</a>
+    
+    </div></div></div>
+</body>
+</html>
+
+
+
+
+
+
+
+

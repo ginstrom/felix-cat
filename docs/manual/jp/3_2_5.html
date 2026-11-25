@@ -1,0 +1,120 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>
+    Felix :: 翻訳者のための翻訳メモリ :: 用語を登録する
+</title>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+
+    <meta name="resource-type" content="document" />
+
+    <meta name="classification" content="Software" />
+    <meta name="description" content="メモリ型翻訳ツールFelixの利用者マニュアル。メモリ ウィンドウから用語の追加。" />
+    <meta name="MSSmartTagsPreventParsing" content="TRUE" />
+    <meta name="keywords" content="メモリ型翻訳ツール,Felix,ヘルプ,ガイド,マニュアル,翻訳,用語,登録" />
+    <meta name="robots" content="ALL" />
+    <meta name="distribution" content="Global" />
+    <meta name="rating" content="Safe For Kids" />
+    <meta name="copyright" content="Copyright Ginstrom IT Solutions (GITS)" />
+    <meta name="author" content="Ryan Ginstrom" />
+
+    <meta name="language" content="Japanese" />
+    <meta name="doc-class" content="Completed" />
+    <meta name="doc-rights" content="Copyrighted Work" />
+</head>
+
+<body>
+<div id="container">
+    <div id="header">
+        <div class="left">
+            <h1>Felix マニュアル</h1>
+        </div>
+    </div>
+
+	<div id="body">
+
+        
+            <div id="l">
+                <h1>3.2.5 グロサリ エントリを登録する</h1>
+
+<p>翻訳作業中に翻訳メモリ内のエントリの全体または一部をグロサリ（用語集）に登録する必要の生じる場合があります。 <strong>Felix</strong> には、このような用語登録処理を簡単かつ効率的に実行する機能が用意されています。</p>
+
+<p>翻訳エントリを編集または削除する場合と同様に、単一の翻訳エントリまたは複数の翻訳エントリをグロサリに登録することができます(画面の例については、「<a  href="3_2_4.html">3.2.4 翻訳エントリを削除する</a>」を参照)。</p>
+
+<p>さらに、翻訳エントリ（原文と訳文）の全体を登録するか、原文と訳文の一部分（技術用語や頻出用語など）を選択して登録することができます。つまり、「単一のエントリまたは複数のエントリ」×「エントリの全体または一部分」で、4通りの登録方法があります。 それぞれの登録方法で使用するコマンドについては、下記の表を参照してください。 なお、翻訳メモリ ウィンドウの [ツール]->[プロパティ..]->[グロサリ] タブで指定する「自動グロサリ登録の最大文長」（デフォルトは15文字）よりも原文の文字数が少ない翻訳エントリを翻訳メモリに登録すると、その翻訳エントリが自動的にグロサリ ファイルにも登録されます。 そのような翻訳エントリを手作業で登録する必要はありません。 翻訳エントリがグロサリファイルに登録されると、そのエントリが即座にグロサリウィンドウに表示されるため、エントリが実際に登録されたかどうかを目で確認することができます。（グロサリに自動的に登録されるエントリの長さを指定する方法については、「<a href="3_2_11.html" >3.2.11 ユーザ設定を定義する</a>  」を参照してください。）</p>
+
+<table border="1">
+  <tr>
+    <td>-- </td>
+    <td align="center"><strong>単一のエントリを登録する</strong></td>
+    <td align="center"><strong>複数のエントリを登録する</strong></td></tr>
+  <tr>
+    <td><strong>エントリの一部分を選択してグロサリに登録する：</strong> </td>
+    <td align="center"><font color="blue"><u>グロサリエントリの登録
+      </u></font></td>
+    <td align="center"><font color="blue"><u>[R]</u></font> </td></tr>
+  <tr>
+    <td><strong>グロサリ エントリをグロサリ ファイルに追加します：</strong></td>
+    <td align="center"><font color="blue"><u>グロサリに登録
+      </u></font></td>
+    <td align="center"><font color="blue"><u>[G]</u></font></td>
+  </tr>
+</table>
+
+<p>エントリの全体をグロサリに登録する場合は、上記のコマンド（[グロサリに登録] または [G]）を１回クリックするだけで用語の登録が完了します。（登録内容はグロサリウィンドウに表示されます。）エントリの一部分をグロサリに登録するために [グロサリ エントリの登録] または [R] をクリックすると、翻訳メモリ ウィンドウが次の図のように変わります。</p>
+
+<img alt="Add Glossary Entries" 
+    src="img/add_gloss_dlg.png" />
+
+<p>なお、このダイアログのサイズは調整来ます。サイズを調整するには、ウィンドウの端をマウスでドラッグします。</p>
+
+<ol>
+  <li>登録したい用語の原文をマウスで選択し、<strong>原語 &gt;</strong> ボタンをクリックすると、原語フィールドにその用語が表示されます。</li>
+  <li>登録したい用語の訳文をマウスで選択し、<strong>訳語 &gt;</strong> ボタンをクリックすると、訳語フィールドにその用語が表示されます。
+
+<em>メモ:上記の１と２は逆の順序で実行してもかまいません。</em>
+  </li>
+
+<li><strong>登録</strong>ボタンをクリックすると、グロサリにエントリが登録されます。</li>
+  <li>検索が終了したら、[<strong>閉じる</strong>] をクリックします。</li>
+</ol>
+
+<a href="3_2_4.html">前に戻る（削除）</a> |
+<a href="3_2_6.html">次へ進む（開く）</a>
+            </div>
+            <div id="r">
+                <ul>
+        <li><a href="index.html">目 次</a></li>
+        <li><a href="1.html">1. 概要</a></li>
+        <li><a href="2.html">2. システムの要件およびインストール</a></li>
+        <li><a href="3.html">3. Felixの使い方</a>
+            <ul>
+                <li><a href="3.html">3.1 はじめに</a></li>
+                <li><a href="3_2.html"><strong>3.2 翻訳メモリウィンドウ</strong></a></li>
+                <li><a href="3_3.html">3.3 グロサリ ウィンドウ</a></li>
+                <li><a href="3_4.html">3.4 編集モード</a></li>
+            </ul>
+        </li>
+        <li><a href="4.html">4. Felixのメニュー</a></li>
+        <li><a href="5.html">5. Word で Felix を使用する</a></li>
+        <li><a href="6.html">6. Excelで使用する</a></li>
+        <li><a href="7.html">7. PowerPointでFelixを使用する</a></li>
+        <li><a href="8.html">8. よく聞かれる質問</a></li>
+
+<li><a href="appendix_a.html">付録：Felix ソフトウェアとスクリプト</a></li>
+
+</ul>
+            </div>
+
+        </div>
+<br clear="all"/></div>
+
+    <div id="footer"><div><div>
+        Copyright &copy; 2008 Ginstrom IT Solutions (GITS).
+        | <a href="../../../../index.html" title="Felixウェブサイトを参照">Felixウェブサイト</a>
+        | <a href="mailto:&#115;&#117;&#112;&#112;&#111;&#114;&#116;&#64;&#102;&#101;&#108;&#105;&#120;&#45;&#99;&#97;&#116;&#46;&#99;&#111;&#109;" title="Felixに関するお問い合わせ">お問い合わせ</a>
+    
+    </div></div></div>
+</body>
+</html>

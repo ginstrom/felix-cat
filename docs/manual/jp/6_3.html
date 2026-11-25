@@ -1,0 +1,313 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>
+    Felix :: 翻訳者のための翻訳メモリ :: 6.3 Excelでの校正モード
+</title>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+
+    <meta name="resource-type" content="document" />
+
+    <meta name="classification" content="Software" />
+    <meta name="description" content="メモリ型翻訳ツールFelixの利用者マニュアル。MS Excel で校正モードを使用する。" />
+    <meta name="MSSmartTagsPreventParsing" content="TRUE" />
+    <meta name="keywords" content="エクセル,Excel, 校正,メモリ型翻訳ツール,Felix,ヘルプ,ガイド,マニュアル,翻訳" />
+    <meta name="robots" content="ALL" />
+    <meta name="distribution" content="Global" />
+    <meta name="rating" content="Safe For Kids" />
+    <meta name="copyright" content="Copyright Ginstrom IT Solutions (GITS)" />
+    <meta name="author" content="Ryan Ginstrom" />
+
+    <meta name="language" content="Japanese" />
+    <meta name="doc-class" content="Completed" />
+    <meta name="doc-rights" content="Copyrighted Work" />
+</head>
+
+<body>
+<div id="container">
+    <div id="header">
+        <div class="left">
+            <h1>Felix マニュアル</h1>
+        </div>
+    </div>
+
+	<div id="body">
+
+        
+            <div id="l">
+                <a name="top"></a>
+<h1>6.3 校正モード</h1> 
+
+<p>このセクションの目次は以下のとおりです。</p>
+
+<blockquote dir="ltr">
+    <a href="#section_1">6.3.1 はじめに</a><br />
+    <a href="#section_2">6.3.2 訳文を検索する</a><br />
+    <a href="#section_3">6.3.3 複数の翻訳済み候補を操作する</a><br />
+    <a href="#section_4">6.3.4 訳文を訂正する</a><br />
+    <a href="#section_5">6.3.5 次の訳文を検索する</a><br />
+    <a href="#section_6">6.3.6 翻訳メモリから訳文を取得する</a><br />
+    <a href="#section_7">6.3.7 編集の自動反映</a><br />
+</blockquote>
+
+<a name="section_1"></a>
+
+<h2>6.3.1 はじめに</h2>
+
+<p><strong>Felix</strong>には、翻訳を校正するための校正モードが用意されています。校正モードでは、翻訳モードと似た操作でセルの内容を検索していきますが、この場合は原文ではなく訳文の検索が行われます。</p>
+
+<p>検索対象（セルまたはテキストボックス）の訳文を訂正した場合、Alt + ↑を押して、FelixのTMの中の訳文を訂正します。これで、TM中の翻訳単位(TU)が訂正されます。</p>
+
+<div style="float: left; border: 1px dotted; border-color: #090; margin-right: 5px; padding: 5px;">
+    <img src="img/switch_t.png" alt="校正モードのボタン" />
+</div>
+
+<p>校正モードに切り替えるには、左のボタンをクリックします。翻訳モードに戻るには、もう一度クリックします。</p>
+
+<p>校正モード中は、括弧で囲まれたアスタリスク (*) がメニュー項目の右側に表示されます。そしてツールバーのボタンの色が逆転されます。</p>
+
+<img src="img/excel_toolbar_review.png" alt="MS Excelでの校正モードのツールバー" /><br />
+   <em>校正モードでのエクセルのツール バー</em>
+
+<p><a href="#top">目次に戻る</a></p>
+
+<a name="section_2"></a>
+
+<h2>6.3.2 訳文を検索する</h2>
+
+<p>翻訳メモリ内で検索するセルを選択します。Excelの [<strong>Felix</strong>] メニューから [<strong>選択の検索</strong>] を選択するか、ショートカット<strong>Alt + L</strong>を押します。対象のセルと一致した訳文がFelix上で表示されます。</p>
+
+<p>Wordと異なり、Excelでは書式情報が保持されないことに注意してください。</p>
+
+<p>テキストボックスが選択しているとき、その中の文字が検索されます。</p>
+
+<table cellspacing="1" cellpadding="1" width="100%" border="1">
+  <tr>
+    <td>ツールバーのボタン</td>
+    <td><img alt="選択中の分節を翻訳メモリ内で検索する" hspace="0" 
+      src="img/lookup_trans.png" 
+      align="bottom" border="0" /></td></tr>
+  <tr>
+    <td>メニューコマンド</td>
+    <td>選択範囲の検索</td></tr>
+  <tr>
+    <td>キーボード ショートカット</td>
+    <td><code>Alt + L</code></td>
+  </tr>
+</table>
+
+<p><a href="#top">目次に戻る</a></p>
+
+<a name="section_3"></a>
+
+<h2>6.3.3 複数の翻訳済み候補を操作する</h2>
+
+<p>Felix の翻訳メモリ内で分節を検索すると、翻訳メモリ ウィンドウの [ツール] メニューから [プロパティ...] > [メモリ ] タブで指定された最小一致スコア以上の翻訳エントリがすべて取り出されるため、複数の翻訳候補が提示されることがあります。（翻訳歴の機能（<a href="6_5.html">6.5 翻訳歴</a>を参照）を有効にした場合、完全に一致した訳文が表示されます。）</p>
+
+<p>翻訳候補の数、および表示中の翻訳候補の番号は、翻訳メモリ ウィンドウの右下に表示されます。</p>
+
+<img src="img/felix_fuzzy.png"
+     alt="Felixのウィンドウでファジーの一致が表示される"
+     class="screenshot" />
+
+<p>この例1つの翻訳候補しかなく、これが表示されています。</p>
+
+<p>次の候補を表示するには、翻訳メモリ ウィンドウ内の [<span  style="color: blue"><u>次へ</u></span>] をクリックするか、Excel 内部からショートカット <strong>Alt + N</strong> を押します（または、[<strong>Felix</strong>] メニューから [<strong>次の訳文へ</strong>] を選択します）。</p>
+
+<p><strong>ヒント：</strong>次の訳文候補のスコア（この例では68%）が [<span  style="color: blue"><u>次へ</u></span>] の右側のカッコ内に表示されます。</p>
+
+<p>前の候補を表示するには、翻訳メモリ ウィンドウ内の [<span  style="color: blue"><u>戻る</u></span>] をクリックするか、Word 内部からショートカット <strong>Alt + P </strong>を押します（または、[<strong>Felix</strong>] メニューから [<strong>前の訳文へ</strong>] を選択します）。</p>
+
+<p><strong>ヒント：</strong>前の訳文候補のスコア（この例では68%）が [ <span  style="color: blue"><u>戻る</u></span>] の右側のカッコ内に表示されます。</p>
+
+<p>候補は循環的に表示されます。最後の候補が表示されているときに [<span style="color: blue"><u>次へ</u></span>] をクリックすると、最初の候補が表示されます。 同様に、最初の候補が表示されているときに [<span style="color: blue"><u>戻る</u></span>] をクリックすると、最後の候補が表示されます。</p>
+
+<p><a href="#top">目次に戻る</a></p>
+
+<a name="section_4"></a>
+
+<h2>6.3.4 訳文を訂正する</h2>
+
+<ol>
+  <li>訳文の訂正が必要な場合、修正してから一旦他のセルに移動して（たとえば、EnterキーやTabキーを押して） 、訂正録対象のセルにカーソルを戻す必要があります。（フォーカスが移動しないと入力した文字が認識されないため）</li>
+
+<li>Excelの [<strong>Felix</strong>] メニューから [<strong>訳文の登録</strong>] を選択するか、ショートカット<strong>Alt + ↑</strong>を押します。
+  <br />
+  あるいは、[<strong>登録して次へ</strong>] を選択する（または、ショートカット<strong>Alt + S</strong>を押す）こともできます。こうすると、訳文が翻訳メモリに登録された後、次のセルが自動的に選択されると同時に、そのセルの内容が翻訳メモリ内で検索されます。セルのスキャン方向は、左から右、上から下の順です。スキャンはテキストが入力された最初のセルが見つかるか、スキャンの最大範囲（左右上下に5セル×5セルの範囲）に達するまで続けられます。</li>
+</ol>
+
+<h3>翻訳エントリを訂正して、次のセルを検索する</h3>
+
+<table cellspacing="1" cellpadding="1" width="100%" border="1">
+  <tr>
+    <td>ツールバーのボタン</td>
+    <td>
+        <img alt="翻訳エントリを訂正して、次のセルを検索する"
+           hspace="0" src="img/set_trans_and_next.png"
+           align="bottom" border="0" />
+    </td>
+  </tr>
+  <tr>
+    <td>メニューコマンド</td>
+    <td>登録して次へ (<u>S</u>)</td></tr>
+  <tr>
+    <td>キーボード ショートカット</td>
+    <td><code>ALT + S</code></td>
+  </tr>
+</table>
+
+<h3>現在のセルの訳文を訂正する</h3>
+
+<table cellspacing="1" cellpadding="1" width="100%" border="1">
+  <tr>
+    <td>ツールバーのボタン</td>
+    <td><img alt="訳文を登録する" hspace="0" 
+      src="img/set_trans.png" 
+      align="bottom" border="0" />
+    </td>
+  </tr>
+  <tr>
+    <td>メニューコマンド</td>
+    <td>訳文の登録</td>
+  </tr>
+  <tr>
+    <td>キーボード ショートカット</td>
+    <td><code>Alt + ↑</code></td>
+  </tr>
+</table>
+
+<p><a href="#top">目次に戻る</a></p>
+
+<a  name="section_5"></a>
+
+<h2>6.3.5 次の訳文を検索する</h2>
+
+<p>Excelの [<strong>Felix</strong>] メニューから [<strong>選択の検索</strong>] を選択するか、ショートカット<strong>Alt + L</strong>を押します。</p>
+
+<table cellspacing="1" cellpadding="1" width="100%" border="1">
+  <tr>
+    <td>ツールバーのボタン</td>
+    <td><img alt="次の訳文を検索する" hspace="0" 
+      src="img/lookup_next_trans.png" 
+      align="bottom" border="0" /></td>
+   </tr>
+  <tr>
+    <td>メニューコマンド</td>
+    <td>次の文の検索</td>
+  </tr>
+  <tr>
+    <td>キーボード ショートカット</td>
+    <td><code>ALT + →</code></td>
+  </tr>
+</table>
+
+<p><a href="#top">目次に戻る</a></p>
+
+<a name="section_6"></a>
+
+<h2>6.3.6 翻訳メモリから訳文を取得する</h2>
+<ol>
+  <li><strong>Felix</strong>の翻訳メモリ（「訳文」フィールド）から訳文候補を取り込む宛先のセルを選択します。</li>
+
+<li>Excelの [<strong>Felix</strong>] メニューから [<strong>訳文の取得</strong>] を選択するか、ショートカット<strong>Alt + ↓</strong>を押します。
+  <br />
+  あるいは、[<strong>取得して次へ</strong>] を選択する（または、ショートカット<strong>Alt + G</strong>を押す）こともできます。こうすると、訳文候補が翻訳メモリからセルに取り込まれた後、（テキストが入力された）次のセルが自動的に選択されると同時に、そのセルの内容が翻訳メモリ内で検索されます。セルのスキャン方向は、左から右、上から下の順です。スキャンはテキストが入力された最初のセルが見つかるか、スキャンの最大範囲（左右上下に5セル×5セルの範囲）に達するまで続けられます。</li>
+</ol>
+
+<h3>もとの訳文を戻して、次のセルを検索する</h3>
+
+<table cellspacing="1" cellpadding="1" width="100%" border="1">
+  <tr>
+    <td>ツールバーのボタン</td>
+    <td><img 
+      alt="翻訳エントリを戻して、次の文を検索する" hspace="0" 
+      src="img/get_trans_and_next.png" 
+      align="bottom" border="0" /></td></tr>
+  <tr>
+    <td>メニューコマンド</td>
+    <td>取得して次へ (<u>G</u>)</td></tr>
+  <tr>
+    <td>キーボード ショートカット</td>
+    <td><code>Alt + G</code></td>
+  </tr>
+</table>       
+
+<h3>訳文を元に戻す</h3>
+
+<table cellspacing="1" cellpadding="1" width="100%" border="1">
+  <tr>
+    <td>ツールバーのボタン</td>
+    <td><img alt="Restore the translation" hspace="0" 
+      src="img/restore.png" 
+      align="bottom" border="0" /></td></tr>
+  <tr>
+    <td>メニューコマンド</td>
+    <td>訳文の取得</td></tr>
+  <tr>
+    <td>キーボード ショートカット</td>
+    <td><code>Alt + ↓</code></td>
+  </tr>
+</table>
+
+<p><a href="#top">目次に戻る</a></p>
+
+<a name="section_7"></a>
+
+<h2>6.3.7 編集の自動反映</h2>
+
+<p>翻訳歴を利用している場合、（<a href="6_5.html">6.5 翻訳歴</a>を参照）エクセルのシート（またはワークブック）の訳文を編集して、一つの操作でその編集を一括反映できます。</p>
+
+<p>この機能を使用するには、
+<strong>Felix</strong> &gt;&gt; <strong>編集の反映...</strong>を選択して、</p>
+
+<dl>
+    <dt>シート</dt><dd>表示中のワークシート</dd>
+    <dt>すべてのワークブック</dt><dd>開いているワークブックすべて</dd>
+</dl>
+
+<p>を選択します。</p>
+
+
+<p>
+    <a href="#top">先頭に戻る</a> |
+    <a href="6_2.html">前に戻る(翻訳モード)</a> |
+    <a href="6_4.html">次へ進む(パラメータの設定)</a>
+</p>
+            </div>
+            <div id="r">
+                <ul>
+        <li><a href="index.html">目 次</a></li>
+        <li><a href="1.html">1. 概要</a></li>
+        <li><a href="2.html">2. システムの要件およびインストール</a></li>
+        <li><a href="3.html">3. Felixの使い方</a></li>
+        <li><a href="4.html">4. Felixのメニュー</a></li>
+        <li><a href="5.html">5. Word で Felix を使用する</a></li>
+        <li><strong>6. Excelで使用する</strong>
+            <ul>
+            <li><a href="6.html#section_1">6.1 はじめに</a></li>
+            <li><a href="6_2.html">6.2 翻訳モード</a></li>
+            <li><strong>6.3 校正モード</strong></li>
+            <li><a href="6_4.html">6.4 Felix のユーザ設定</a></li>
+            <li><a href="6_5.html">6.5 翻訳歴</a></li>
+            </ul>
+        </li>
+        <li><a href="7.html">7. PowerPointでFelixを使用する</a></li>
+        <li><a href="8.html">8. よく聞かれる質問</a></li>
+
+<li><a href="appendix_a.html">付録：Felix ソフトウェアとスクリプト</a></li>
+
+</ul>
+            </div>
+
+        </div>
+<br clear="all"/></div>
+
+    <div id="footer"><div><div>
+        Copyright &copy; 2008 Ginstrom IT Solutions (GITS).
+        | <a href="../../../../index.html" title="Felixウェブサイトを参照">Felixウェブサイト</a>
+        | <a href="mailto:&#115;&#117;&#112;&#112;&#111;&#114;&#116;&#64;&#102;&#101;&#108;&#105;&#120;&#45;&#99;&#97;&#116;&#46;&#99;&#111;&#109;" title="Felixに関するお問い合わせ">お問い合わせ</a>
+    
+    </div></div></div>
+</body>
+</html>

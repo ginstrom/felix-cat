@@ -1,0 +1,191 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>
+    FAQ :: Felix Manual 
+</title>
+    <link rel="shortcut icon" href="../../../favicon.ico" type="image/vnd.microsoft.icon" />
+    <link rel="icon" href="../../../favicon.ico" type="image/vnd.microsoft.icon" />
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+
+    <meta name="resource-type" content="document" />
+
+    <meta name="classification" content="Software" />
+    <meta name="description" content="User Guide for the Felix computer aided translation (CAT) solution. FAQ." />
+    <meta name="MSSmartTagsPreventParsing" content="TRUE" />
+    <meta name="keywords" content="FAQ, CAT, translation memory, computer aided translation, software, help, manual" />
+    <meta name="robots" content="ALL" />
+    <meta name="distribution" content="Global" />
+    <meta name="rating" content="Safe For Kids" />
+    <meta name="copyright" content="Copyright Ginstrom IT Solutions (GITS)" />
+    <meta name="author" content="Ryan Ginstrom" />
+
+    <meta name="language" content="English" />
+    <meta name="doc-class" content="Completed" />
+    <meta name="doc-rights" content="Copyrighted Work" />
+</head>
+
+<body>
+<div id="container">
+    <div id="header">
+        <div class="left">
+            <h1>Felix Manual</h1>
+        </div>
+    </div>
+
+	<div id="body">
+
+        
+            <div id="l">
+                
+<h1>8. Felix FAQ</h1>
+
+<a name="top"></a>
+<!-- FAQ Contents -->
+<ol>
+<li><a href="#item_1">What is the difference between the trial and  registered versions?</a></li>
+<li><a href="#item_2">Can I use the interface with Microsoft Word 97?</a></li>
+<li><a href="#item_3">What is the difference between  a memory and a glossary?</a></li>
+<li><a href="#item_4">I have a glossary in Excel format. How can I convert it to a Felix glossary?</a></li>
+<li><a href="#item_5">Is it possible to install Felix and Trados side by side?</a></li>
+<li><a href="#item_6">How do I search and replace terms in the memory/glossary?</a></li>
+<li><a href="#item_7">How do I review my translation?</a></li>
+</ol>
+<hr />
+<!-- FAQ Items Start Here -->
+<a id="item_1"></a>
+<h2>1. What is the difference between the trial and  registered versions?</h2>
+<p>The size of memories and glossaries is limited to 500
+entries in the trial version of <strong>Felix</strong>.</p>
+
+<p>With this exception, the trial version is fully functional.
+Two other minor differences are that in the trial version,
+a Register screen appears on application launch, and
+&#8220;DEMO&#8221; appears in the title bar of the application.
+After registration, the Register screen and &#8220;DEMO&#8221; identifier
+are removed, and&nbsp;there is no limit on the size
+of the memories/glossaries.</p>
+<p><a href="#top">Back to top</a></p>
+<a id="item_2"></a>
+<h2>2. Can I use the interface with Microsoft Word 97?</h2>
+<p>Microsoft Word 97 is no longer supported.</p>
+<p><a href="#top">Back to top</a></p>
+<a id="item_3"></a>
+<h2>3. What is the difference between  a memory and a glossary?</h2>
+<p>The only difference between a memory and a glossary is
+conceptual. Both memories and glossaries are saved in the same xml file format,
+with the same schema. This means that you can freely interchange memory and
+glossary files, as it suits your purposes.</p>
+<p><a href="#top">Back to top</a></p>
+<a id="item_4"></a>
+<h2>4. I have a glossary in Excel format. How can I convert it to a Felix glossary?</h2>
+<ul>
+<li>Make sure that the source terms are in one column, the translations are in the column to the right of it, and optionally context   fields are in the column to the right of that.</li>
+<li>Select the cell of the first source term.</li>
+<li>From the <strong>Felix</strong> menu, select <strong>Batch Add Glossary</strong>.</li>
+</ul>
+
+<p>See <a href="6_2.html#section_8">6.8 Register a Glossary</a> for details.</p>
+<p><a href="#top">Back to top</a></p>
+<a id="item_5"></a>
+<h2>5. Is it possible to install Felix and Trados side by side?</h2>
+<p>It is possible to install <strong>Felix</strong> and Trados on the same machine, but the
+compatibility of the two programs has not been extensively tested.
+It is therefore not recommended that you install them side by side if this is
+avoidable.</p>
+<p><a href="#top">Back to top</a></p>
+<a id="item_6"></a>
+<h2>6. How do I search and replace terms in the memory/glossary?</h2>
+<p>Here, we will assume that you want to replace all occurrences of &#8220;aaa&#8221; in
+translation fields with &#8220;bbb.&#8221;</p>
+
+<ol>
+<li>In the Memory window, select <strong>Edit</strong> &gt;&gt; <strong>Find</strong> &gt;&gt; <strong>Search Memory</strong>, or in the Glossary window, select <strong>Edit</strong> &gt;&gt; <strong>Find</strong>.<br />
+    (Alternatively, use the <code>Ctrl + F</code> keyboard shortcut.)<br />
+    The <strong>Find Memory/Glossary Entry</strong> dialog appears.</li>
+<li>In the Trans field, type &#8220;aaa&#8221; (without the quotes).</li>
+<li>Click <strong>Search</strong>.<br />
+  All entries with &#8220;aaa&#8221; in the translation field appear in the Memory/Glossary window.<br />
+    <strong>Tip:</strong> You could also enter strings in the Source or other fields, in order to restrict your search even further (for instance, if you are only concerned about cases where &#8220;XXX&#8221; was translated as &#8220;aaa,&#8221; you could specify &#8220;XXX&#8221; in the Source field).</li>
+<li>Click <strong>Close</strong>.<br />
+  The <strong>Find Memory/Glossary Entry</strong> dialog closes.</li>
+<li>Select <strong>View</strong> &gt;&gt; <strong>Edit Mode</strong>.<br />
+    (Or use the <code>Ctrl + E</code> keyboard shortcut.)<br />
+    The window enters Edit Mode.</li>
+<li>Select <strong>Edit</strong> &gt;&gt; <strong>Replace</strong>.<br />
+  (Or use the <code>Ctrl + H</code> keyboard shortcut.)<br />
+  The <strong>Replace Text</strong> dialog appears.</li>
+<li>Set the fields of the <strong>Replace Text</strong> dialog as follows:<br />
+    <strong>Text to Find:</strong> aaa<br />
+    <strong>Replacement Text:</strong> bbb<br />
+    <strong>Fields to search:</strong> Trans Fields</li>
+<li>Click <strong>Replace All</strong>.<br />
+    All occurrences of &#8220;aaa&#8221; in translation fields are replaced with &#8220;bbb.&#8221;</li>
+<li>Select <strong>View</strong> &gt;&gt; <strong>Edit Mode</strong>.<br />
+     (Or use the <code>Ctrl + E</code> keyboard shortcut.)<br />
+     The window returns to browse mode, and your edits are reflected in the translation memory.</li>
+</ol>
+<p><a href="#top">Back to top</a></p>
+<a id="item_7"></a>
+<h2>7. How do I review my translation?</h2>
+<p>Here, we will assume you are working from Microsoft Word.</p>
+
+<p>The easiest way to review your translation is to switch
+to Review mode. See <a href="5_3.html">5.3 Review Mode</a> for details.</p>
+
+<p>You can also review your translation from the classic interface.</p>
+
+<ol>
+<li>Position the cursor at the beginning of the document or passage you wish to review.</li>
+<li>From the <strong>Felix</strong> menu, select <strong>Find Next Translation</strong>(or press <code>Ctl + Alt + &#8594;</code>).</li>
+<li>The translation and its corresponding source sentence appear in the <strong>Felix</strong> Memory window. If you wish to revise the translation, make your edits, place the cursor at the end of the translation, and select <strong>Felix</strong> &gt;&gt; <strong>Correct Translation</strong> (or press <code><span class="caps">CTL</span> + <span class="caps">ALT</span> + &#8593;</code>). The translation is corrected in the Memory window.</li>
+<li>When you are ready to review the next sentence, return to step 2.</li>
+</ol>
+<p><a href="#top">Back to top</a></p>
+<!-- FAQ Items End Here -->
+
+
+<p>
+<a href="7.html">Back (PowerPoint)</a> |
+<a href="appendix_a.html">Next (Appendix)</a>
+</p>
+
+
+            </div>
+            <div id="r">
+                <ul>
+        <li><a href="index.html">Contents</a></li>
+        <li><a href="1.html">1. Overview</a></li>
+        <li><a href="2.html">2. Getting Started</a></li>
+        <li><a href="3.html">3. Using Felix</a></li>
+        <li><a href="4.html">4. The Menus</a></li>
+        <li><a href="5.html">5. Using from Word</a></li>
+        <li><a href="6.html">6. Using from Excel</a></li>
+        <li><a href="7.html">7. Using from PowerPoint</a></li>
+        <li><strong>8. FAQ</strong></li>
+        <li><a href="appendix_a.html">Appendix A. Scripting Felix</a></li>
+        <li><a href="template-engine.html">Appendix B. Customizing Felix Templates</a></li>
+
+</ul>
+            </div>
+
+        </div>
+<br clear="all"/></div>
+
+    <div id="footer"><div><div>
+        Copyright &copy; 2008 Ginstrom IT Solutions (GITS).
+        | <a href="../../../index.html" title="Visit the Felix Website">Felix Website</a>
+        | <a href="mailto:&#115;&#117;&#112;&#112;&#111;&#114;&#116;&#64;&#102;&#101;&#108;&#105;&#120;&#45;&#99;&#97;&#116;&#46;&#99;&#111;&#109;" title="Contact information for Felix developers">Contact</a>
+    
+    </div></div></div>
+</body>
+</html>
+
+
+
+
+
+
+
+

@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Felix – translation memory for Windows</title>
+<meta name="description" content="Felix is a free, open-source translation memory (CAT) tool for Windows, with add-ins for Microsoft Word, Excel and PowerPoint.">
+<style>
+  :root { --fg: #1d2330; --muted: #5a6273; --accent: #3a7d1e; --bg: #ffffff; --card: #f4f6f2; --border: #dfe3da; }
+  @media (prefers-color-scheme: dark) { :root { --fg: #e6e8ec; --muted: #a5acb8; --accent: #8fd16a; --bg: #15181d; --card: #1e2229; --border: #2e343d; } }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--fg); font: 16px/1.55 "Segoe UI", system-ui, -apple-system, sans-serif; }
+  main { max-width: 760px; margin: 0 auto; padding: 48px 20px 64px; }
+  h1 { font-size: 2.2rem; margin: 0 0 .25em; }
+  h2 { font-size: 1.15rem; margin: 2em 0 .6em; }
+  p.lead { font-size: 1.1rem; color: var(--muted); margin: 0 0 1.8em; }
+  a { color: var(--accent); }
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+  .card { display: block; padding: 18px 20px; background: var(--card); border: 1px solid var(--border); border-radius: 10px; text-decoration: none; color: var(--fg); }
+  .card:hover { border-color: var(--accent); }
+  .card strong { display: block; font-size: 1.05rem; margin-bottom: 4px; color: var(--accent); }
+  .card span { color: var(--muted); font-size: .95rem; }
+  footer { margin-top: 3em; color: var(--muted); font-size: .9rem; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Felix</h1>
+  <p class="lead">A free, open-source translation memory (CAT) tool for Windows, with add-ins for Microsoft Word, Excel and PowerPoint.</p>
+
+  <div class="cards">
+    <a class="card" href="https://github.com/ginstrom/felix-cat/releases/latest"><strong>Download</strong><span>Latest installer for 64-bit Windows and 64-bit Office</span></a>
+    <a class="card" href="manual/en/"><strong>User manual</strong><span>English</span></a>
+    <a class="card" href="manual/jp/" lang="ja"><strong>ユーザー マニュアル</strong><span>日本語</span></a>
+    <a class="card" href="https://github.com/ginstrom/felix-cat"><strong>Source code</strong><span>GitHub repository (MIT license)</span></a>
+  </div>
+
+  <h2>About the manual</h2>
+  <p>These are the Felix user manuals as last published on felix-cat.com (English: version 1.7.1.1). They describe the memory and glossary windows, the Office add-ins and scripting. A few details, such as installation, purchasing and update checks, refer to the original commercial releases and no longer apply: Felix is now free, and new versions are published on <a href="https://github.com/ginstrom/felix-cat/releases">GitHub</a>.</p>
+
+  <footer>Felix © 1999–2026 Ryan Ginstrom. Released under the MIT License.</footer>
+</main>
+</body>
+</html>

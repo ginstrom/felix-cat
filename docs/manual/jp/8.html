@@ -1,0 +1,286 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<META HTTP-EQUIV="content-type" CONTENT="text/html; charset=Shift_JIS">
+
+    <title>
+Felix - 翻訳者のための翻訳メモリ ::8. よく聞かれる質問
+</title>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+
+    <meta name="resource-type" content="document" />
+
+    <meta name="classification" content="Software" />
+    <meta name="description" content="User Guide for the Felix computer aided translation (CAT) solution. Translation memory made by translators, for translators." />
+    <meta name="MSSmartTagsPreventParsing" content="TRUE" />
+    <meta name="keywords" content="CAT, translation memory, computer aided translation, software" />
+    <meta name="robots" content="ALL" />
+    <meta name="distribution" content="Global" />
+    <meta name="rating" content="Safe For Kids" />
+    <meta name="copyright" content="Copyright Ginstrom IT Solutions (GITS)" />
+    <meta name="author" content="Ryan Ginstrom" />
+
+    <meta name="language" content="Japanese" />
+    <meta name="doc-class" content="Completed" />
+    <meta name="doc-rights" content="Copyrighted Work" />
+</head>
+
+<body>
+<div id="container">
+    <div id="header">
+        <div class="left">
+<h1>Felixマニュアル</h1>
+        </div>
+    </div>
+
+	<div id="body">
+
+        
+            <div id="l">
+                       <div clas="item">
+
+<h1>8. Felixに関するよくある質問</h1>
+
+<a name="1"></a> 
+<h2>
+8.1 Felix 体験版とユーザー登録版の違いは何ですか？
+</h2>
+
+
+<p>
+
+体験版の <strong>Felix</strong> では、翻訳メモリとグロサリメモリに登録できるセグメント数が500ペアまでに制限されています。 
+
+これ以外の機能制限はなく、ユーザー登録版とまったく同じ機能を体験版でお使いいただけます。これ以外の相違点は、体験版の場合、起動時にユーザー登録をお勧めするメッセージが表示され、タイトルバーに「DEMO」と表示されることです。ユーザー登録が完了すると、このメッセージと「DEMO」表示が消えて、翻訳メモリとグロサリのサイズ制限が解除されます。 
+
+<p><a href="#top">目次に戻る</a></p>
+
+<a name="2"></a>
+<h2>8.2 FelixをMicrosoft Word 97で使用できますか?</h2>
+
+<p>
+Microsoft Word 97には対応しておりません。</p>
+
+
+<p><a href="#top">目次に戻る</a></p>
+
+<a name="3"></a>
+<h2>8.3 「メモリ」と「グロサリ」はどう違うのですか？</h2>
+
+
+<p>
+
+翻訳メモリとグロサリメモリの違いとは、単に概念的なものです。翻訳メモリもグロサリも、データ表現/格納手段として幅広く認知された XML フォーマットで保存され、同じスキーマが使用されています。さまざまな目的に応じて、グロサリをメモリとして使用したり、逆にメモリをグロサリとして使用することも可能です。
+
+</p>
+
+
+<p><a href="#top">目次に戻る</a></p>
+
+<a name="4"></a>
+<h2>
+		8.4 Excel 形式の用語集を持っていますが、この用語集をどのような方法で Felix のグロサリに変換できますか？
+</h2>
+	
+<ol>
+  <li>
+
+
+<div>
+
+Excel シート上で、1つのカラム（例：A列）に用語の原語、その右隣のカラム（例：B列）に用語の訳語が入力されていることを確認します。
+
+</div>
+  <li>
+
+
+<div>
+
+登録範囲の開始セルとして、原語カラムの一番上のセルを選択します。
+
+</div>
+  <li>
+
+
+<div>
+
+Excel メニューバーの [<strong>Felix</strong>] メニューから [<strong>グロサリへの一括登録</strong>] を選択します。
+
+</div></li></ol>
+<p>詳細については、「<a href="6.html#8">6.8&nbsp;グロサリエントリを一括登録する</a>」を参照してください。</p>
+
+
+<p><a href="#top">目次に戻る</a></p>
+
+	<a name="5"></a>
+
+<h2>
+	8.5 Felix と TRADOS(R) を同じコンピュータにインストールすることは可能ですか？&nbsp;
+</h2>
+	
+
+
+<p>
+
+<strong>Felix</strong>とTrados(R)を同じコンピュータにインストールすることは可能ですが、プログラムの競合性については検証中です。同一コンピュータへのインストールはできるだけ避けてください。
+
+</p>
+
+
+<p><a href="#top">目次に戻る</a></p>
+
+	<a name="6"></a>
+
+<h2>
+		 8.6 翻訳メモリ内およびグロサリ内でテキストを検索/置換する方法を教えてください。
+</h2>
+	
+<p>ここでは、翻訳メモリ ウィンドウ内の訳文フィールドに含まれる &quot;aaa&quot; という単語を &quot;bbb&quot; で置き換える場合を想定します。</p>
+<ol>
+  <li>
+
+
+<div>
+
+メモリ ウィンドウ内で、<strong>[編集] &gt; [検索] &gt; [メモリの検索]</strong> を選択します。 グロサリ ウィンドウ内では、<strong>[編集] &gt; [検索]</strong> を選択します。 <br />&nbsp;&nbsp;&nbsp;&nbsp; → または、キーボード ショートカット<STRONG>Ctrl + F </STRONG>を押します。<br /><strong>［メモリエントリの検索/グロサリエントリの検索]</strong> ダイアログ ボックスが表示されます。
+
+</div>
+  <li>
+
+
+<div>
+
+[訳文] フィールドに &quot;aaa&quot;（実際の入力時には引用符を付けません）と入力します。
+
+</div>
+  <li>
+
+
+<div>
+
+[<strong>検索</strong>] をクリックします。<br />訳文に&quot;aaa&quot;という語句を含むすべてのエントリがメモリ/グロサリウィンドウに表示されます。<br /><strong>ヒント：</strong>[原文] フィールドや他のフィールドに文字列を入力して、検索対象を細かく絞り込むこともできます。
+
+</div>
+  <li>
+
+
+<div>
+
+[<strong>閉じる</strong>] をクリックします。<br />[<strong>メモリエントリの検索/グロサリエントリの検索</strong>] ダイアログ ボックスが閉じます。
+
+</div>
+  <li>
+
+
+<div>
+
+<strong>[表示] &gt; [編集モード]</strong>を選択します。<br /> &nbsp;&nbsp;&nbsp;&nbsp;→ または、キーボード ショートカット <STRONG>Ctrl + E </STRONG> を押します。<br /> 翻訳メモリ ウィンドウが編集モード画面に変わります。
+
+</div>
+  <li>
+
+
+<div>
+
+<strong>[編集] &gt; [置換]</strong> を選択します。<br /> &nbsp;&nbsp;&nbsp;&nbsp; → または、キーボード ショートカット <strong>Ctrl +&nbsp;H</strong> を押します。<br />［<strong>置換</strong>] ダイアログ ボックスが表示されます。
+
+</div>
+  <li>
+
+
+<div>
+
+［<strong>置換</strong>] ダイアログ ボックスの各フィールドを次のように設定します。<br /><strong> 検索する文字列：</strong>aaa<br /><strong>置換する文字列：</strong>bbb<br /><strong>検索するフィールド：</strong>訳文のフィールド
+
+</div>
+  <li>
+
+
+<div>
+
+［<strong>すべてを置換</strong>] をクリックします。<br /> 訳文フィールド内の &quot;aaa&quot; がすべて &quot;bbb&quot; で置換されます。
+
+</div>
+  <li>
+
+
+<div>
+
+
+<div>
+
+<strong>[表示] &gt; [編集モード]</strong>を選択します。<br />→ または、キーボード ショートカット <STRONG>Ctrl + E </STRONG> を押します。<br /> ウィンドウが表示（ブラウズ）モードに戻り、編集内容が翻訳メモリ/グロサリに反映されます。
+
+</div> 
+           
+
+
+</div></li></ol>
+
+
+<p><a href="#top">目次に戻る</a></p>
+
+	<a name="7"></a>
+
+<h2>
+		8.7 訳文をチェック/訂正する方法を教えてください。
+</h2>
+	
+
+<p>         ここでは、文書作成プログラムとして Microsoft Word を使用している場合を想定します。 
+
+<p>         校正モードで操作すると、いったん翻訳した文を簡単にチェック・訂正することができます。詳細については、「<a href="5_3.html">5.3 校正モード</a>  」を参照してください。
+
+<p>         訳文のチェックは、通常のウィンドウ画面でも行えます。
+<ol>
+<li>訳文をチェックしたい文の先頭にカーソルを置きます。 <br />
+<li>                 Word の [<b>Felix</b>] メニューから [<b>次の訳文の検索</b>] を選択します（または、ショートカット <code>Ctrl + Alt + →</code> を押します）。 <br />        
+<li>カーソルの右側の訳文、およびその訳文に対応する原文が翻訳メモリ内で検索され、見つかった原文/訳文ペアが <b>Felix</b> の翻訳メモリ ウィンドウに表示されます。訳文を読み返し、適宜修正を加えたら、訳文の最後にカーソルを置きます。［[<b>Felix</b>] メニューから[<b>訳文の訂正</b>]を選択します（または、ショートカット キー <code>CTL + ALT + ↑</code> を押します）。翻訳メモリ ウィンドウ内の訳文が変更後の訳文で置き換えられます。 <br />               
+<li> 別の訳文をチェック/訂正する場合は、目的の訳文に移動して、上記のステップ2に戻ります。</li>             
+</ol>
+
+
+<p><a href="#top">先頭に戻る</a> |<a href="7.html">前に戻る</a> |<a href="appendix_a.html">次へ：付録</a>
+</p>
+
+
+        </div>
+
+            </div>
+            <div id="r">
+                       <div clas="item">
+
+    <ul>
+<li><a href="index.html">目 次&nbsp;</a></li>
+<li><a href="1.html">1.&nbsp;概要</a></li>
+<li><a href="2.html">2. システム要件およびインストール</a></li>
+<li><a href="3.html">3.Felixの使い方</a></li>
+<li><a href="4.html">4. Felixのメニュー</a></li>
+<li><a href="5.html">5. Wordで使用する</a></li>
+<li><a href="6.html">6. Excelで使用する</a></li>
+<li><a href="7.html">7. PowerPointで使用する</a></li>
+<li><strong>8. よく聞かれる質問</strong></li>
+<li><a href="appendix_a.html">付録 A：Felix ソフトウェアとスクリプト</a></li>
+        
+    </ul>
+        </div>
+
+            </div>
+
+        </div>
+<br clear="all"/></div>
+
+    <div id="footer"><div><div>
+Copyright &copy; 2008 Ginstrom IT Solutions (GITS).| <a href="../../../../index.html" title="Visit the Felix Website">Felix ウェブサイト</a> | <a href="mailto:&#115;&#117;&#112;&#112;&#111;&#114;&#116;&#64;&#102;&#101;&#108;&#105;&#120;&#45;&#99;&#97;&#116;&#46;&#99;&#111;&#109;" title="Contact information for Felix developers">お問い合わせ</a>
+
+    </div></div></div>
+</div>
+</body>
+</html>
+
+
+
+
+
+

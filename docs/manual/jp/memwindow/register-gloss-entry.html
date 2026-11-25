@@ -1,0 +1,176 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta content="document" name="resource-type" />
+<meta content="Software" name="classification" />
+<meta content="User Guide for the Felix computer aided translation (CAT) solution. Introduction to Felix." name="description" />
+<meta content="CAT, translation memory, computer aided translation, software, help, manual" name="keywords" />
+<meta content="ALL" name="robots" />
+<meta content="Global" name="distribution" />
+<meta content="Safe For Kids" name="rating" />
+<meta content="Copyright Ginstrom IT Solutions (GITS)" name="copyright" />
+<meta content="Ryan Ginstrom" name="author" />
+<meta content="Japanese" name="language" />
+<meta content="Completed" name="doc-class" />
+<meta content="Creative Commons" name="doc-rights" />
+
+    <title>3.2.5. 訳文から用語を追加する &mdash; Felix v. 1.7.1 マニュアル</title>
+    
+    <link rel="stylesheet" href="../_static/agogo.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.7.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="author" title="このドキュメントについて" href="../about.html" />
+    <link rel="top" title="Felix v. 1.7.1 マニュアル" href="../index.html" />
+    <link rel="up" title="3. Felixの基本操作" href="../getting-around.html" />
+    <link rel="next" title="3.2.6. 翻訳メモリの開き方" href="open-memory.html" />
+    <link rel="prev" title="3.2.4. 翻訳エントリを削除する" href="delete-entry.html" /> 
+  </head>
+  <body>
+    <div class="header-wrapper">
+      <div class="header">
+        <div class="headertitle"><a
+          href="../index.html">Felix v. 1.7.1 マニュアル</a></div>
+        <div class="rel">
+          <a href="delete-entry.html" title="3.2.4. 翻訳エントリを削除する"
+             accesskey="P">前へ</a> |
+          <a href="open-memory.html" title="3.2.6. 翻訳メモリの開き方"
+             accesskey="N">次へ</a> |
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a>
+        </div>
+       </div>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="reg-gloss-entry">
+<span id="index-0"></span><span id="id1"></span><h1>3.2.5. 訳文から用語を追加する<a class="headerlink" href="#reg-gloss-entry" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>翻訳作業中に翻訳メモリ内のエントリの全体または一部をグロサリ（用語集）に登録する必要の生じる場合があります。Felix には、このような用語登録処理を簡単かつ効率的に実行する機能が用意されています。</p>
+<p>翻訳エントリを編集または削除する場合と同様に、単一の翻訳エントリまたは複数の翻訳エントリをグロサリに登録することができます(画面の例については、「 <a class="reference internal" href="delete-entry.html#delete-trans-entry"><em>翻訳エントリを削除する</em></a> 」を参照)。</p>
+<p>さらに、翻訳エントリ（原文と訳文）の全体を登録するか、原文と訳文の一部分（技術用語や頻出用語など）を選択して登録することができます。なお、文字数の少ない翻訳エントリは自動的に用語集に追加されるので、これらを登録する必要がありません。（用語を追加すると、グロサリウィンドウにてメッセージが表示されますので、追加されたことが確認できます。（グロサリに自動的に登録されるエントリの長さを指定する方法については、「 <a class="reference internal" href="preferences.html#mem-props"><em>[メモリ] タブ</em></a> 」を参照してください。）</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">&#8211;</th>
+<th class="head">単体表示</th>
+<th class="head">一覧表示</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>訳文から用語の追加</td>
+<td>グロサリエントリの登録</td>
+<td><strong>[R]</strong></td>
+</tr>
+<tr class="row-odd"><td>訳文ごとを用語として追加:</td>
+<td>グロサリに登録</td>
+<td><strong>[G]</strong></td>
+</tr>
+</tbody>
+</table>
+<p>エントリの全体をグロサリに登録する場合は、上記のコマンド（[グロサリに登録] または [G]）を１回クリックするだけで用語の登録が完了します。（登録内容はグロサリウィンドウに表示されます。）エントリの一部分をグロサリに登録するために [グロサリ エントリの登録] または [R] をクリックすると、翻訳メモリ ウィンドウが次の図のように変わります。</p>
+<img alt="用語に追加" src="../_images/add_gloss_dlg.png" />
+<div class="admonition note">
+<p class="first admonition-title">ノート</p>
+<p class="last">この画面の大きさは、調整できます。サイズを調整するには、ウィンドウの端をマウスでドラッグします。</p>
+</div>
+<ol class="arabic simple">
+<li>登録したい用語の原文をマウスで選択し、「原語 &gt;」ボタンをクリックすると、原語フィールドにその用語が表示されます。</li>
+<li>登録したい用語の訳文をマウスで選択し、「訳語 &gt;」ボタンをクリックすると、訳語フィールドにその用語が表示されます。メモ:上記の１と２は逆の順序で実行してもかまいません。</li>
+<li>「登録」ボタンをクリックすると、グロサリにエントリが登録されます。</li>
+<li>検索が終了したら、「閉じる」ボタンをクリックします。</li>
+</ol>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="sidebar">
+          <h3>目次</h3>
+          <ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial-word.html">Felixチュートリアル：MSワードで使う</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial-ppt.html">Felixチュートリアル：MS パワーポイントで使う</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../about.html">1. Felixについて</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started.html">2. はじめに</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting-around.html">3. Felixの基本操作</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../menus.html">4. Felixのメニュー</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../placement.html">5. 置換機能</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../word.html">6. Word で Felix を使用する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../excel.html">7. Excel でFelix を使用する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../powerpoint.html">8. PowerPointでFelixを使用する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">9. よく聞かれる質問</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../whats-new.html">10. Felixの変更点</a></li>
+</ul>
+
+          <h3 style="margin-top: 1.5em;">検索</h3>
+          <form class="search" action="../search.html" method="get">
+            <input type="text" name="q" />
+            <input type="submit" value="検索" />
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+          </form>
+          <p class="searchtip" style="font-size: 90%">
+            モジュール、クラス、または関数名を入力してください
+          </p>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <a href="delete-entry.html" title="3.2.4. 翻訳エントリを削除する"
+             >前へ</a> |
+          <a href="open-memory.html" title="3.2.6. 翻訳メモリの開き方"
+             >次へ</a> |
+          <a href="../genindex.html" title="総合索引"
+             >索引</a>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer">
+        &copy; Copyright 2012, Ryan Ginstrom.
+      最終更新: May 15, 2013
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+  </body>
+</html>

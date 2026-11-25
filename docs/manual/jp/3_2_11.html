@@ -1,0 +1,296 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>
+    Felix :: 翻訳者のための翻訳メモリ :: ユーザ設定を定義する
+</title>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+
+    <meta name="resource-type" content="document" />
+
+    <meta name="classification" content="Software" />
+    <meta name="description" content="メモリ型翻訳ツールFelixの利用者マニュアル。Felixのユーザ設定。" />
+    <meta name="MSSmartTagsPreventParsing" content="TRUE" />
+    <meta name="keywords" content="メモリ型翻訳ツール,Felix,ヘルプ,ガイド,マニュアル,翻訳,ユーザ設定" />
+    <meta name="robots" content="ALL" />
+    <meta name="distribution" content="Global" />
+    <meta name="rating" content="Safe For Kids" />
+    <meta name="copyright" content="Copyright Ginstrom IT Solutions (GITS)" />
+    <meta name="author" content="Ryan Ginstrom" />
+
+    <meta name="language" content="Japanese" />
+    <meta name="doc-class" content="Completed" />
+    <meta name="doc-rights" content="Copyrighted Work" />
+</head>
+
+<body>
+<div id="container">
+    <div id="header">
+        <div class="left">
+            <h1>Felix マニュアル</h1>
+        </div>
+    </div>
+
+	<div id="body">
+
+        
+            <div id="l">
+                <h1>3.2.11 ユーザ設定を定義する</h1>
+
+<p><strong>Felix</strong> の翻訳メモリとグロサリに関する複数の動作特性を「ユーザ設定」として定義することができます。つまり、<strong>Felix</strong> を一度終了してから再開すると、最後のセッションで定義したユーザ設定が適用されます。</p>
+
+<p>ユーザ設定を定義するには、翻訳メモリ ウィンドウの [<strong>ツール(<u>T</u>)</strong>] メニューから [<strong>プロパティ(<u>P</u>)</strong>] を選択します。</p>
+
+<img alt="The Preferences Menu" hspace="20" 
+    class="screenshot"
+    src="img/felix_menu_preferences.png" />
+
+<p>［<strong>ユーザ設定</strong>］ダイアログ ボックスが表示されます。このダイアログボックスは4つの属性タブからなります。</p>
+
+<ul>
+  <li><a href="#general">全般</a>タブ</li>
+  <li><a href="#view">表示</a>タブ</li>
+  <li><a href="#memory">メモリ</a>タブ</li>
+  <li><a href="#glossary">グロサリ（用語）</a>タブ</li>
+  <li><a href="#algorithms">アルゴリズム</a>タブ</li>
+</ul>
+
+<a name="general"></a>
+<h2>［全般］タブ</h2>
+
+<img alt="The General Preferences Page" hspace="20" 
+    src="img/preferences_screen_general.png" 
+    class="screenshot"
+    align="bottom" />
+
+<strong>前回のファイルの取り込み</strong>
+
+<ul>
+<li>起動時、前回使っていたメモリを取り込みます。<br />
+  終了時取り込まれていたメモリが起動時に取り込まれます。</li>
+<li>起動時、前回使っていたグロサリを取り込みます。<br />
+  終了時取り込まれていたグロサリ（用語集）が起動時に取り込まれます。</li>
+</ul>
+
+<a name="view"></a>
+<h2>[表示] タブ</h2>
+
+<img alt="The View Preferences Page" hspace="20" 
+    src="img/preferences_screen_view.png" 
+    class="screenshot"
+    align="bottom" />
+
+<table cellspacing="1" cellpadding="1" width="100%" border="1">
+  <tr>
+    <td><strong>1画面上の訳文マッチ </strong></td>
+    <td colspan="2">グロサリマッチの場合と同様に、すべての訳文マッチを一覧表示
+    </td>
+  </tr>
+
+<tr>
+    <td><strong>背景色</strong></td>
+    <td colspan="2">翻訳メモリウィンドウの表示エリアに背景色を設定します。白いテキストまたは明るい色のテキストを翻訳する場合に便利で、自分の好みに合わせることができます。
+    </td>
+  </tr>
+
+<tr>
+    <td><strong>照会色</strong></td>
+    <td colspan="2">
+	マッチビューに照会のテキストカラーを設定します。照会、原文、訳文の各フィールドを一目で見分ける場合に便利です。 
+    </td>
+  </tr>
+
+<tr>
+    <td><strong>原文色</strong></td>
+    <td colspan="2">
+       マッチビューに原文のテキストカラーを設定します。照会、原文、訳文の各フィールドを一目で見分ける場合に便利です。 
+    </td>
+  </tr>
+
+<tr>
+    <td><strong>訳文色</strong></td>
+    <td> 
+      マッチビューも訳文のテキストカラーを設定します。照会、原文、訳文の各フィールドを一目で見分ける場合に便利です。 
+    </td>
+  </tr>
+</table>
+
+<a name="memory"></a>
+<h2>[メモリ] タブ</h2>
+
+<img alt="The Memory Preferences Page" hspace="20" 
+    src="img/preferences_screen_memory.png" 
+    class="screenshot" />
+
+<table cellspacing="1" cellpadding="1" width="100%" border="1">
+  <tr>
+    <td><strong>最小一致スコア</strong></td>
+    <td colspan="2">翻訳対象の原文と翻訳メモリ内の分節（原文）が一致するかどうかを判断するときの最小スコア。 分節の一致率がこの最小スコア以上であれば、翻訳メモリから訳文候補が取得されます。</td>
+  </tr>
+
+<tr>
+    <td><strong>大文字と小文字を区別しない(<u>I</u>)</strong></td>
+    <td colspan="2">訳文一致のスコアを計算するときに大文字と小文字が区別されません。</td>
+  </tr>
+
+<tr>
+    <td><strong>全角と半角を区別しない(<u>W</u>)</strong></td>
+    <td colspan="2">訳文一致のスコアを計算するときに、全角/半角を区別しません。</td>
+  </tr>
+
+<tr>
+    <td><strong>ひらがなとカタカナを区別しない(<u>H</u> )</strong></td>
+    <td colspan="2">訳文一致のスコアを計算するときに大文字と小文字が区別されません。</td>
+  </tr>
+
+<tr>
+    <td><strong>エントリをテキスト形式として取得(<u>p</u> )</strong></td>
+    <td colspan="2">
+	書式情報なしに、訳文をプレーンテキスト形式で取得します。
+    </td>
+  </tr>
+
+<tr>
+    <td><strong>書式が一致しない場合ペナルティを採点する(<u>f</u> )</strong></td>
+    <td colspan="2">
+	照会とエントリ原文セグメントのテキスト書式（太字、イタリック体など）が一致しないときに、マッチスコアから僅かなペナルティ（通常1～5%）を減算します。 
+    </td>
+  </tr>
+
+<tr>
+    <td><strong>自動置換え(<u>N</u>)</strong></td>
+    <td colspan="2">
+	訳文の中の数字を自動的に置き換えます。例えば、「I have 3 pencils＝鉛筆3本あります」という翻訳エントリがあれば、「I have 5 pencils」という照会に対して、自動置換え機能が働いて、「鉛筆5本あります」という候補が表示されます。このように置き換えられた数字は、マッチウィンドウに青く太字で表示されます。
+    </td>
+  </tr>
+</table>
+
+<a name="glossary"></a>
+<h2>[グロサリ] タブ</h2>
+
+<img alt="The Glossary Preferences Page" hspace="20" 
+    src="img/preferences_screen_glossary.png" 
+    class="screenshot" />
+
+<table cellspacing="1" cellpadding="1" width="100%" border="1">
+  <tr>
+    <td><strong>自動グロサリ登録の最大文字長</strong></td>
+    <td>翻訳メモリにエントリを登録するときに、「<strong>原文</strong> 」フィールドの長さがここで指定された文字数以下であるエントリは自動的にグロサリにも追加（登録）されます。ここでゼロ（0）を指定すると、自動グロサリ登録機能がオフになります。</td></tr>
+
+<tr>
+    <td><strong>大文字と小文字を区別しない(<u>I</u>)</strong></td>
+    <td colspan="2">グロサリマッチのスコアを計算するときに大文字と小文字を区別しません。
+    </td>
+  </tr>
+
+<tr>
+    <td><strong>全角と半角を区別しない(<u>W</u>)</strong></td>
+    <td colspan="2">グロッサリマッチのスコアを計算するときに全角/半角を区別しません。</td>
+  </tr>
+
+<tr>
+    <td><strong>ひらがなとカタカナを区別しない(<u>H</u> )</strong></td>
+    <td colspan="2">グロサリマッチのスコアを計算するときに大文字と小文字を区別しません。</td>
+  </tr>
+
+<tr>
+    <td><strong>エントリをテキスト形式として取得(<u>p</u> )</strong></td>
+    <td>書式情報なしにグロサリの訳文をプレーンテキスト形式で取得します。</td>
+  </tr>
+
+<tr>
+    <td><strong>エントリを全て小文字として獲得（<u>C</u>）</strong></td>
+    <td>グロサリ内のエントリをすべて小文字に変換して取り出します。たとえば、グロサリ内のエントリが "File" である場合は、"file" が取り出されます。
+    </td>
+  </tr>
+
+<tr>
+    <td><strong>ファジーマッチの最小一致スコア（<u>f</u>）</strong></td>
+    <td>グロサリ検索のファジーマッチングを有効にします。
+      スコアを0～100の範囲内に設定します。 ファジーマッチングを無効にするには、スコアを100に設定してください。
+    </td>
+  </tr>
+</table>
+
+<a name="algorithms"></a>
+<h2>[アルゴリズム] タブ</h2>
+
+<img alt="The Algorithms Preferences Page" hspace="20" 
+    src="img/preferences_screen_algorithms.png"
+    class="screenshot" />
+
+<strong>メモリ一致採点のアルゴリズム</strong>
+
+<table cellspacing="1" cellpadding="1" width="100%" border="1">
+  <tr>
+    <th valign="top"><strong>自動認識(<u>A</u>)</strong></th>
+    <td>最適のアルゴリズムを自動的に認識します（初期設定）。</td>
+  </tr>
+
+<tr>
+    <th valign="top">文字ベース(<u>C</u>)</th>
+    <td>
+      マッチングは個々の文字を基にして行われます。このアルゴリズムは各用語が空白で区切られていない日本語などの言語に最適です。
+    </td>
+  </tr>
+
+<tr>
+    <th valign="top">単語ベース(<u>W</u>)</th>
+    <td>
+      マッチングは用語を基にして行われます。このアルゴリズムは、各用語がカンマで区切ることができるヨーロッパなど他の言語に適しています。
+    </td>
+  </tr>
+
+</table>
+
+<p>ユーザ設定の定義が完了したら、[<strong>OK</strong>] をクリックしてください。</p>
+
+<p>
+<a href="3_2_10.html">前に戻る（新しいグロサリ）</a> |
+<a href="3_2_12.html">次へ進む（管理）</a>
+</p>
+            </div>
+            <div id="r">
+                <ul>
+        <li><a href="index.html">目 次</a></li>
+        <li><a href="1.html">1. 概要</a></li>
+        <li><a href="2.html">2. システムの要件およびインストール</a></li>
+        <li><a href="3.html">3. Felixの使い方</a>
+            <ul>
+                <li><a href="3.html">3.1 はじめに</a></li>
+                <li><a href="3_2.html"><strong>3.2 翻訳メモリウィンドウ</strong></a></li>
+                <li><a href="3_3.html">3.3 グロサリ ウィンドウ</a></li>
+                <li><a href="3_4.html">3.4 編集モード</a></li>
+            </ul>
+        </li>
+        <li><a href="4.html">4. Felixのメニュー</a></li>
+        <li><a href="5.html">5. Word で Felix を使用する</a></li>
+        <li><a href="6.html">6. Excelで使用する</a></li>
+        <li><a href="7.html">7. PowerPointでFelixを使用する</a></li>
+        <li><a href="8.html">8. よく聞かれる質問</a></li>
+
+<li><a href="appendix_a.html">付録：Felix ソフトウェアとスクリプト</a></li>
+
+</ul>
+            </div>
+
+        </div>
+<br clear="all"/></div>
+
+    <div id="footer"><div><div>
+        Copyright &copy; 2008 Ginstrom IT Solutions (GITS).
+        | <a href="../../../../index.html" title="Felixウェブサイトを参照"></a>
+        | <a href="mailto:&#115;&#117;&#112;&#112;&#111;&#114;&#116;&#64;&#102;&#101;&#108;&#105;&#120;&#45;&#99;&#97;&#116;&#46;&#99;&#111;&#109;" title="Felixに関するお問い合わせ"></a>
+    
+    </div></div></div>
+</body>
+</html>
+
+
+
+
+
+
+
+

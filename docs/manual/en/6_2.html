@@ -1,0 +1,430 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>
+    Translation Mode for Excel :: Felix Manual
+</title>
+    <link rel="shortcut icon" href="../../../favicon.ico" type="image/vnd.microsoft.icon" />
+    <link rel="icon" href="../../../favicon.ico" type="image/vnd.microsoft.icon" />
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+
+    <meta name="resource-type" content="document" />
+
+    <meta name="classification" content="Software" />
+    <meta name="description" content="User Guide for the Felix computer aided translation (CAT) solution. Using translation mode from MS Excel." />
+    <meta name="MSSmartTagsPreventParsing" content="TRUE" />
+    <meta name="keywords" content="Excel, translation, mode, CAT, translation memory, computer aided translation, software, help, manual" />
+    <meta name="robots" content="ALL" />
+    <meta name="distribution" content="Global" />
+    <meta name="rating" content="Safe For Kids" />
+    <meta name="copyright" content="Copyright Ginstrom IT Solutions (GITS)" />
+    <meta name="author" content="Ryan Ginstrom" />
+
+    <meta name="language" content="English" />
+    <meta name="doc-class" content="Completed" />
+    <meta name="doc-rights" content="Copyrighted Work" />
+</head>
+
+<body>
+<div id="container">
+    <div id="header">
+        <div class="left">
+            <h1>Felix Manual</h1>
+        </div>
+    </div>
+
+	<div id="body">
+
+        
+            <div id="l">
+                <a name="top"></a>
+<h1>6.2 Translation Mode</h1>
+
+<p>Section contents:</p>
+
+<blockquote dir="ltr">
+    <a href="#section_1">6.2.1 Getting Started</a><br />
+    <a href="#section_2">6.2.2 Look up a Cell</a><br />
+    <a href="#section_3">6.2.3 Navigate through the Matches</a><br />
+    <a href="#section_4">6.2.4 Register a Translation</a><br />
+    <a href="#section_5">6.2.5 Look up the Next Cell</a><br />
+    <a href="#section_6">6.2.6 Get a Translation from Memory</a><br />
+    <a href="#section_7">6.2.7 Auto Translate</a><br />
+    <a href="#section_8">6.2.8 Register a Glossary</a><br />
+    <a href="#section_9">6.2.9 Register a Memory</a><br />
+</blockquote>
+
+<a name="section_1"></a>
+
+<h2>6.2.1 Getting Started</h2>
+
+<p>Translation mode is the normal mode for translating Excel worksheets. This is the
+mode that you will spend the most time in.</p>
+
+<p>There are a few things to keep in mind when translating in Excel. Firstly, everything
+is done at the cell level. Even if a cell contains multiple sentences, it&#8217;s currently not
+possible to translate at lower than the cell (or textbox) level. If you have a very long
+segment of text in a cell/textbox, you might want to consider copying and pasting that
+text into Word and translating it there.</p>
+
+<p>Secondly, in order for edits you&#8217;ve made to cell to take effect, you first have to navigate
+out of that cell. So after you&#8217;ve translated a cell, first press Enter or Tab to go to a
+different cell, then go back to the translated cell, and press Alt + ↑ or the equivalent toolbar
+button/menu command to add that translation.</p>
+
+<p><a href="#top">Back to Top</a></p>
+
+<a name="section_2"></a>
+
+<h2>6.2.2 Look up a Cell</h2>
+
+<p>Select the cell you wish to look up. Then from the <strong>Felix</strong>
+menu, select <strong>Lookup</strong>, or press <code>Alt + L</code>.</p>
+
+<p>Note that unlike Word, formatting information is not preserved for Excel queries.</p>
+
+<p>If a text box is selected, then the contents of the text box will be looked up.</p>
+
+<table cellspacing="1" cellpadding="1" width="100%" border="1">
+  <tr>
+    <td>Toolbar button</td>
+    <td><img alt="Look up current selection" hspace="0"
+      src="img/lookup.png"
+      align="bottom" border="0" /></td></tr>
+  <tr>
+    <td>Menu command</td>
+    <td>Lookup</td></tr>
+  <tr>
+    <td>Keyboard shortcut</td>
+    <td><code>Alt + L</code></td>
+  </tr>
+</table>
+
+<p><a href="#top">Back to Top</a></p>
+
+<a name="section_3"></a>
+
+<h2>6.2.3 Navigate through the Matches</h2>
+
+<p>Sometimes when you look up a sentence in your memory,
+<strong>Felix</strong> will have more than one suggestion.</p>
+
+<p>The number of suggestions, and the number of the current suggestion,
+will be shown at the bottom right of the suggestion:</p>
+
+<img src="img/felix_fuzzy.png"
+     alt="Fuzzy matching in Felix window"
+     class="screenshot" />
+
+<p>In this example, the first of three suggestions (1/2) is being shown.</p>
+
+<p>To view the next suggestion, click on
+<span style="color: blue"><u>Next</u></span> in the Memory window, or from Excel,
+select <strong>Felix &gt;&gt; Next Translation</strong> (or press Alt + N).</p>
+
+<p><strong>Tip</strong>: The score for the next translation (in this example 68%) is shown next to the
+<span style="color: blue"><u>Next</u></span> link.</p>
+
+<p>To view the previous suggestion, click on
+<span style="color: blue"><u>Prev</u></span> in the Memory window, or from Excel,
+select <strong>Felix &gt;&gt; Prev Translation</strong> (or press Alt + P).</p>
+
+<p><strong>Tip</strong>: The score for the previous translation (in this
+example 68%) is shown next to the <span style="color: blue"><u>Prev</u></span>
+link.</p>
+
+<p>Matches will cycle: If you press <span style="color: blue"><u>Next</u></span>
+while on the last suggestion, the first suggestion will be shown; likewise,
+pressing <span style="color: blue"><u>Prev</u></span> while on the first
+suggestion will show the last suggestion.</p>
+
+<p><a href="#top">Back to Top</a></p>
+
+<a name="section_4"></a>
+
+<h2>6.2.4 Register a Translation</h2>
+
+<ol>
+  <li>After you've typed your translation, you must navigate to another cell
+  (e.g. by pressing the Enter key), and then navigate back to
+  the cell you wish to register
+    (this is because what you type isn't finalized until the cell loses focus).</li>
+
+<li>From the <strong>Felix</strong> menu,
+  select <strong>Set</strong> (or press <code>Alt + ↑</code>).
+  <br />
+  Alternatively, you can select
+  <strong>Set and Next</strong> (or press <code>Alt + S</code>); this will
+  register the current cell, and look up the next one
+  (scanning left-to-right, top-to-bottom until a cell with
+  text is found or a maximum number of cells has been searched). </li>
+</ol>
+
+<h3>Register translation and look up next cell</h3>
+
+<table cellspacing="1" cellpadding="1" width="100%" border="1">
+  <tr>
+    <td>Toolbar button</td>
+    <td>
+        <img alt="Get the translation and look up the next cell"
+           hspace="0" src="img/set_and_next.png"
+           align="bottom" border="0" />
+    </td>
+  </tr>
+  <tr>
+    <td>Menu command</td>
+    <td>Set And Next</td></tr>
+  <tr>
+    <td>Keyboard shortcut</td>
+    <td><code>Alt + S</code></td>
+  </tr>
+</table>
+
+<h3>Register the current cell as the translation</h3>
+
+<table cellspacing="1" cellpadding="1" width="100%" border="1">
+  <tr>
+    <td>Toolbar button</td>
+    <td><img alt="Set the translation" hspace="0"
+      src="img/set.png"
+      align="bottom" border="0" />
+    </td>
+  </tr>
+  <tr>
+    <td>Menu command</td>
+    <td>Set</td>
+  </tr>
+  <tr>
+    <td>Keyboard shortcut</td>
+    <td><code>Alt + ↑</code></td>
+  </tr>
+</table>
+
+<p><a href="#top">Back to Top</a></p>
+
+<a  name="section_5"></a>
+
+<h2>6.2.5 Look up the Next Cell</h2>
+
+<p>From the <strong>Felix</strong> menu, select
+<strong>Select Next Sentence</strong>, or press <code><span class="caps">ALT</span> + →</code>.</p>
+
+<table cellspacing="1" cellpadding="1" width="100%" border="1">
+  <tr>
+    <td>Toolbar button</td>
+    <td><img alt="Look up next cell" hspace="0"
+      src="img/lookup_next.png"
+      align="bottom" border="0" /></td>
+   </tr>
+  <tr>
+    <td>Menu command</td>
+    <td>Lookup Next</td>
+  </tr>
+  <tr>
+    <td>Keyboard shortcut</td>
+    <td><code>ALT + →</code></td>
+  </tr>
+</table>
+
+<p><a href="#top">Back to Top</a></p>
+
+<a name="section_6"></a>
+
+<h2>6.2.6 Get a Translation from Memory</h2>
+<ol>
+  <li>Select the cell into which you wish to retrieve the current suggestion
+  from <strong>Felix</strong>.</li>
+
+<li>From the <strong>Felix</strong> menu, select
+  <strong>Get Trans</strong> (or press <code>Alt + ↓</code>).
+  <br />
+  Alternatively, you can select
+  <strong>Get and Next</strong> (or press <code>Alt + G</code>);
+  this will retrieve the current translation, and look up the
+  next one (scanning left-to-right, top-to-bottom until a cell
+  with text is found or a maximum number of cells has been searched).</li>
+</ol>
+
+<h3>Get the translation, and look up the next cell</h3>
+
+<table cellspacing="1" cellpadding="1" width="100%" border="1">
+  <tr>
+    <td>Toolbar button</td>
+    <td><img
+      alt="Get the translation and look up the next sentence" hspace="0"
+      src="img/get_and_next.png"
+      align="bottom" border="0" /></td></tr>
+  <tr>
+    <td>Menu command</td>
+    <td>Get And Next</td></tr>
+  <tr>
+    <td>Keyboard shortcut</td>
+    <td><code>Alt + G</code></td>
+  </tr>
+</table>
+
+<h3>Get the translation</h3>
+
+<table cellspacing="1" cellpadding="1" width="100%" border="1">
+  <tr>
+    <td>Toolbar button</td>
+    <td><img alt="Get the translation" hspace="0"
+      src="img/get.png"
+      align="bottom" border="0" /></td></tr>
+  <tr>
+    <td>Menu command</td>
+    <td>Get</td></tr>
+  <tr>
+    <td>Keyboard shortcut</td>
+    <td><code>Alt + ↓</code></td>
+  </tr>
+</table>
+
+<p><a href="#top">Back to Top</a></p>
+
+<a name="section_7"></a>
+
+<h2>6.2.7 Auto Translate</h2>
+
+<p>Sometimes, such as when translating a table or a list, you just know that
+most of the items are going to have 100% matches in your translation memory, and
+manually going through and checking each cell would be too tedious. If so, then
+you can use the Auto Translate function to look up every cell in the current
+selection, and automatically replace cells having a 100% match in the memory
+with their translations.</p>
+
+<p>To use this function, select the range of text you wish to auto translate,
+then select <strong>Felix &gt;&gt; Auto Translate&#8230;</strong>:</p>
+
+<dl>
+    <dt>Selection</dt><dd>The current selection</dd>
+    <dt>Sheet</dt><dd>The current worksheet</dd>
+    <dt>All Workbooks</dt><dd>All open workbooks</dd>
+</dl>
+
+<blockquote><strong>Tip: </strong>If you hold down the Shift key while
+  selecting one of the commands above, all cells that are not translated
+  (because there was no 100% match) will be given a different background color.
+  When you later translate those cells, the original background color will be
+  restored. This lets you quickly spot and translate all the cells that
+  were not translated by this function.</blockquote>
+
+<p><a href="#top">Back to Top</a></p>
+
+<a name="section_8"></a>
+
+<h2>6.2.8 Register a Glossary</h2>
+
+<ol>
+  <li>Create a glossary in Excel consisting of two columns, with an optional
+  third one; the first column containing the source segments, the second column
+  containing the translation segments, and the third (optional) column
+  containing context strings.
+
+<blockquote><strong>Tip:</strong> There can be other columns, and the columns do
+    not have to be in any particular location. For instance, the sources might
+    be located in column B, the translations in column C, and the contexts in
+    column D, with other information in columns A and E. That doesn't matter, as
+    long as the two columns described here are present. If you do not include
+    context, make sure that the third column is blank.
+  </blockquote>
+
+</li>
+
+<li>Select the upper-left cell of the glossary table.
+	<img alt="Excel Auto Register Glossary"
+    	src="img/excelglossreg.jpg" class="screenshot" />
+  </li>
+
+<li>From the <strong>Felix</strong> menu, select <strong>Add Glossary</strong>. </li>
+
+<li>The glossary is automatically added to the MAIN Glossary window of
+  <strong>Felix</strong>.</li>
+
+</ol>
+
+<blockquote><strong>Tip:</strong> If either the source or translation column
+  is empty, then that row is skipped. If three rows in a row are skipped, then
+  <strong>Felix</strong> assumes that the end of the glossary has been reached,
+  and stops adding entries.</blockquote>
+
+<p><a href="#top">Back to Top</a></p>
+
+<a name="section_9"></a>
+
+<h2>6.2.9 Register a Memory</h2>
+
+<p>The procedure for registering a memory is similar to that for registering a
+glossary, the main difference being the lack of an optional extra column for
+context.</p>
+
+<ol>
+  <li>Create a memory in Excel consisting of two columns; the first column
+  containing the sources, and the second column their translations.
+
+<p><strong>Tip: </strong>There can be other columns, and the columns do not
+    have to be in any particular location. For instance, the sources might be
+    located in column B, and the translations in column C, with other
+    information in columns A and D. That doesn't matter, as long as the two
+    columns described here are present. </p>
+  </li>
+
+<li>Select the upper-left cell of the memory table.</li>
+
+<li>From the <strong>Felix </strong>menu, select <strong>Add Memory</strong>. </li>
+
+<li>The memory is automatically added to the Memory window of <strong>Felix</strong>.</li>
+</ol>
+
+<p>
+    <a href="#top">Top</a> |
+    <a href="6.html">Back (Getting Started)</a> |
+    <a href="6_3.html">Next (Review Mode)</a>
+</p>
+            </div>
+            <div id="r">
+                <ul>
+        <li><a href="index.html">Contents</a></li>
+        <li><a href="1.html">1. Overview</a></li>
+        <li><a href="2.html">2. Getting Started</a></li>
+        <li><a href="3.html">3. Using Felix</a></li>
+        <li><a href="4.html">4. The Menus</a></li>
+        <li><a href="5.html">5. Using from Word</a></li>
+        <li><strong>6. Using from Excel</strong>
+            <ul>
+            <li><a href="6.html#section_1">6.1 Getting Started</a></li>
+            <li><strong>6.2 Translation Mode</strong></li>
+            <li><a href="6_3.html">6.3 Review Mode</a></li>
+            <li><a href="6_4.html">6.4 Setting Preferences</a></li>
+            <li><a href="6_5.html">6.5 Translation History</a></li>
+            </ul>
+        </li>
+        <li><a href="7.html">7. Using from PowerPoint</a></li>
+        <li><a href="8.html">8. FAQ</a></li>
+
+<li><a href="appendix_a.html">Appendix A. Scripting Felix</a></li>
+        <li><a href="template-engine.html">Appendix B. Customizing Felix Templates</a></li>
+
+</ul>
+            </div>
+
+        </div>
+<br clear="all"/></div>
+
+    <div id="footer"><div><div>
+        Copyright &copy; 2008 Ginstrom IT Solutions (GITS).
+        | <a href="../../../index.html" title="Visit the Felix Website">Felix Website</a>
+        | <a href="mailto:&#115;&#117;&#112;&#112;&#111;&#114;&#116;&#64;&#102;&#101;&#108;&#105;&#120;&#45;&#99;&#97;&#116;&#46;&#99;&#111;&#109;" title="Contact information for Felix developers">Contact</a>
+    
+    </div></div></div>
+</body>
+</html>
+
+
+
+
+
+
+
+

@@ -1,0 +1,145 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>
+    Felix :: 翻訳者のための翻訳メモリ :: Felixについて
+</title>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+
+    <meta name="resource-type" content="document" />
+
+    <meta name="classification" content="Software" />
+    <meta name="description" content="メモリ型翻訳ツールFelixの利用者マニュアル。Felixの仕組み" />
+    <meta name="MSSmartTagsPreventParsing" content="TRUE" />
+    <meta name="keywords" content="メモリ型翻訳ツール,Felix,ヘルプ,ガイド,マニュアル,翻訳" />
+    <meta name="robots" content="ALL" />
+    <meta name="distribution" content="Global" />
+    <meta name="rating" content="Safe For Kids" />
+    <meta name="copyright" content="Copyright Ginstrom IT Solutions (GITS)" />
+    <meta name="author" content="Ryan Ginstrom" />
+
+    <meta name="language" content="Japanese" />
+    <meta name="doc-class" content="Completed" />
+    <meta name="doc-rights" content="Copyrighted Work" />
+</head>
+
+<body>
+<div id="container">
+    <div id="header">
+        <div class="left">
+            <h1>Felix マニュアル</h1>
+        </div>
+    </div>
+
+	<div id="body">
+
+        
+            <div id="l">
+                <h1>1.2 Felixについて</h1>
+
+<p><strong>Felix</strong>ソフトウェアは、メモリ コンポーネントおよびグロサリ（用語集）コンポーネントという2つの主要なコンポーネントから構成されています。これら2つのコンポーネントは同様の直感的なユーザー インターフェイスを持っていますが、それぞれ異なる機能があり、相互に補足し合う役割を果たします。</p>        
+
+<h2>画面の例</h2>
+
+<p><strong>翻訳メモリ ウィンドウ</strong> 
+<img alt="Main Window" src="img/felix.png" />
+</p>
+
+<p><strong>グロサリ ウィンドウ</strong> 
+</p>
+
+<blockquote><img alt="Glossary Window" src="img/gloss_window.png" /></blockquote>
+
+<h3>動作の仕組み</h3>
+
+<p>翻訳者が文書を翻訳していくと、<strong>Felix</strong>は翻訳対象の個々の原文と、原文に対応する訳文（およびその他の関連情報）を｢翻訳メモリ｣と呼ばれるデータベースのエントリとして記録します。翻訳者が新しい原文を翻訳するたびに、<strong>Felix</strong> はその原文を翻訳メモリ（データベース）内のエントリと比較します。翻訳対象の現在の原文と一致するエントリ（完全一致）または類似するエントリ（あいまい一致）が見つかった場合は、そのエントリの訳文（および関連情報）が翻訳者に提示されます。
+</p>
+
+<blockquote>
+    <img alt="メモリ検索結果の表示" src="img/felix_fuzzy.png" />
+</blockquote>
+
+<p>
+上の画面例で、<strong>[照会]</strong> フィールドは、現在翻訳対象となっている文節であり、この文節に類似した文節ペアが翻訳メモリ内で検索されます。 <strong>[原文]</strong> フィールドは翻訳メモリ内で見つかった文節（原文）であり、<strong>[訳文]</strong>フィールドがその原文に対する訳文の候補です。<strong>スコア</strong>] の値は、翻訳対象の分節（[照会] フィールド）と翻訳メモリ内の原文（[原文] フィールド）の一致率を表します。現在の翻訳対象と翻訳メモリの異なる部分は、その違いが良くわかるように、赤塗りの文字でハイライト表示されます。..翻訳者は、訳文候補をそのまま使用するか、訳文候補を 取得して編集するか、訳文候補を無視して独自の訳文を新たに入力することができます。 
+</p>
+
+<p>完全一致がある場合、簡単に分かるよう背景色がグリーンになり、チェックマークが表示されます。
+</p>
+
+<blockquote>
+    <img alt="メモリ検索結果の表示" src="img/felix.png" />
+</blockquote>
+
+<p>
+<strong>Felix</strong> によって翻訳対象文節が翻訳メモ内で検索されるときは、その文節に含まれる用語がグロサリ ファイル内で同時に検索され、一致したグロサリ エントリがグロサリ ウィンドウに表示されます。用語集（グロサリ ファイル）は、翻訳に必要な技術用語や頻出用語について、その原語と訳語のペアをXMLファイルに登録したものであり、翻訳作業中に必要に応じて機動的に参照されます。 
+</p>
+
+<p>
+<img alt="用語検索結果の表示" hspace="20" src="img/gloss_search_results.png" border="0" />
+</p>
+
+<p>      
+訳文の入力中に、グロサリ エントリの訳文を文書にインポートすることができます。付属の <strong>Tag Assist</strong> アプリケーションでは、グロサリ エントリの訳文が「自動入力」ウィンドウに示されるため、検索と入力がさらに効率化されます。
+また、<strong>Felix</strong> による翻訳作業の実行中には、短い文、単語、フレーズなどがグロサリに自動的に追加されます[<a href="#note1">1</a>]。その他にも、<strong>Felix</strong> 自身の内部から、または付属するさまざまなインターフェイスを通じて、効率的かつ迅速にグロサリを作成する手段がいくつか用意されています。
+</p>
+
+<p>翻訳メモリとグロサリは、データ表現/格納手段として幅広く認知された XML フォーマットで保存されます。翻訳メモリとグロサリは両方とも同じ XML スキーマで保存されるため、翻訳メモリとグロサリ間で極めて簡単にデータを交換することができます。また、<strong>Felix</strong> には、TRADOS テキスト形式ファイルと Microsoft Excel スプレッドシートなど翻訳メモリとグロサリをインポートする機能、および翻訳メモリとグロサリを TRADOS テキスト形式ファイルにエクスポートする機能があります。  
+</p>
+
+<p><strong>Felix</strong> では内部的に Unicode が使用されています。したがって、1バイト文字および2バイト文字を問わず、ほとんどすべての言語を処理・表示できるほか、ほとんどの数学記号や特殊文字を問題なく取り扱うことができます。
+</p>
+
+<p><strong>Felix</strong> には、翻訳メモリとグロサリの作成、編集、管理を容易にするさまざまな機能があります。<strong>Felix</strong> の翻訳メモリは、単独で直接編集（追加、変更、削除）できるほか、Microsoft Word 専用のインターフェイス、Microsoft Excel 専用のインターフェイス、および <strong>TagAssist</strong> アプリケーション[<a href="#note2">2</a> ]を通じて操作することができます。 さらに、オートメーションを使用するカスタム アプリケーションを通じて、翻訳メモリを操作することもできます。 
+</p>
+
+<p>また、<strong>Felix</strong> のユーザー インターフェイスは日本語と英語の両方に対応しています。簡単なメニュー コマンドまたはキーボード ショートカットを使用して、ユーザー インターフェイスの言語を英語または日本語に簡単に切り替えることができます。 
+</p>
+
+<blockquote>
+    <img alt="Japanese-language view" hspace="0" src="img/felix_j.png" border="0" />    
+</blockquote>
+
+<h4>注記</h4>
+<p>[<a name="note1">1</a>] 翻訳メモリのエントリのうち「原文」フィールドの長さが指定の文字数以下であるエントリは自動的にグロサリに追加されます。この文字数は [ユーザ設定] ウィンドウ（[ツール] -> [プロパティ...]）で指定します。詳細については「<a href="3_2_11.html">3.2.11 ユーザ設定を定義する</a> 」を参照してください。<br />
+[<a name="note2">2</a>] <strong>TagAssist</strong> は WYSIWYG(What You See Is What You Get) 表示方式で直感的に使用できる HTML エディタであり、<strong>Felix</strong> との完全なインターフェイスを備えています。<strong>Felix</strong>の<a href="../../../../index.html">公式サイト</a>にて入手できます。詳しく<strong>TagAssist</strong>の<a href="../../tagassist/index.html">マニュアル</a>を参照してください。
+</p>
+
+<p>
+<a href="1_1.html">前に戻る</a> |
+<a href="2.html">次へ進む</a>
+</p>
+            </div>
+            <div id="r">
+                <ul>
+        <li><a href="index.html">目 次</a></li>
+        <li><a href="1.html">1. 概要</a>
+            <ul>
+                <li><a href="1_1.html">1.1 Felixの変更点</a></li>
+                <li><strong>1.2 Felixについて</strong></li>
+            </ul>
+        </li>
+        <li><a href="2.html">2. システムの要件およびインストール</a></li>
+        <li><a href="3.html">3. Felixの使い方</a></li>
+        <li><a href="4.html">4. Felixのメニュー</a></li>
+        <li><a href="5.html">5. Word で Felix を使用する</a></li>
+        <li><a href="6.html">6. Excelで使用する</a></li>
+        <li><a href="7.html">7. PowerPointでFelixを使用する</a></li>
+        <li><a href="8.html">8. よく聞かれる質問</a></li>
+
+<li><a href="appendix_a.html">付録：Felix ソフトウェアとスクリプト</a></li>
+
+</ul>
+            </div>
+
+        </div>
+<br clear="all"/></div>
+
+    <div id="footer"><div><div>
+        Copyright &copy; 2008 Ginstrom IT Solutions (GITS).
+        | <a href="../../../../index.html" title="Felixウェブサイトを参照">Felixウェブサイト</a>
+        | <a href="mailto:&#115;&#117;&#112;&#112;&#111;&#114;&#116;&#64;&#102;&#101;&#108;&#105;&#120;&#45;&#99;&#97;&#116;&#46;&#99;&#111;&#109;" title="Felixに関するお問い合わせ">お問い合わせ</a>
+    
+    </div></div></div>
+</body>
+</html>

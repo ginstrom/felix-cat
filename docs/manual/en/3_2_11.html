@@ -1,0 +1,337 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>
+    Set User Preferences :: Felix Manual
+</title>
+    <link rel="shortcut icon" href="../../../favicon.ico" type="image/vnd.microsoft.icon" />
+    <link rel="icon" href="../../../favicon.ico" type="image/vnd.microsoft.icon" />
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+
+    <meta name="resource-type" content="document" />
+
+    <meta name="classification" content="Software" />
+    <meta name="description" content="User Guide for the Felix computer aided translation (CAT) solution. Configuring the preferences for Felix." />
+    <meta name="MSSmartTagsPreventParsing" content="TRUE" />
+    <meta name="keywords" content="CAT, translation memory, computer aided translation, software, help, manual" />
+    <meta name="robots" content="ALL" />
+    <meta name="distribution" content="Global" />
+    <meta name="rating" content="Safe For Kids" />
+    <meta name="copyright" content="Copyright Ginstrom IT Solutions (GITS)" />
+    <meta name="author" content="Ryan Ginstrom" />
+
+    <meta name="language" content="English" />
+    <meta name="doc-class" content="Completed" />
+    <meta name="doc-rights" content="Copyrighted Work" />
+</head>
+
+<body>
+<div id="container">
+    <div id="header">
+        <div class="left">
+            <h1>Felix Manual</h1>
+        </div>
+    </div>
+
+	<div id="body">
+
+        
+            <div id="l">
+                <h1>3.2.11 Set User Preferences </h1>
+
+<p>You can configure the behavior of
+<strong>Felix</strong> in a number of ways. Preferences are saved across
+sessions; if you quit <strong>Felix</strong> and start it up again, the
+preferences from your last session will be set.</p>
+
+<p>To set the user preferences, from the
+<strong><u>T</u>ools</strong> menu, select
+<strong><u>P</u>references</strong>.</p>
+
+<img alt="The Preferences Menu" hspace="20"
+    class="screenshot"
+    src="img/preferences_menu.png" />
+
+<p>The <strong>User Preferences</strong> dialog appears.
+There are four property pages:</p>
+
+<ul>
+  <li>The <a href="#general">General</a> page;</li>
+  <li>The <a href="#view">View</a> page;</li>
+  <li>The <a href="#memory">Memory</a> page;</li>
+  <li>The <a href="#glossary">Glossary</a> page; and</li>
+  <li>The <a href="#algorithms">Algorithms</a> page.</li>
+</ul>
+
+<a name="general"></a>
+<h2>General Page</h2>
+
+<img alt="The General Preferences Page" hspace="20"
+    src="img/preferences_screen_general.png"
+    class="screenshot"
+    align="bottom" />
+
+<strong>Load previous files</strong>
+
+<ul>
+<li>Load previous memories on startup<br />
+  The currently loaded TMs will be loaded the next time that Felix starts.</li>
+<li>Load previous glossaries on startup<br />
+  The currently loaded glossaries will be loaded the next time that Felix starts.</li>
+</ul>
+
+<a name="view"></a>
+<h2>View Page</h2>
+
+<img alt="The View Preferences Page" hspace="20"
+    src="img/preferences_screen_view.jpg"
+    class="screenshot"
+    align="bottom" />
+
+<table cellspacing="1" cellpadding="1" width="100%" border="1">
+  <tr>
+    <td><strong>Translation matches on
+      <u>s</u>ingle screen</strong></td>
+    <td colspan="2">Show all translation matches on a single
+      screen, much like how glossary search results are displayed.
+    </td>
+  </tr>
+
+<tr>
+    <td><strong>  Background color</strong></td>
+    <td colspan="2">Set the background color for the Memory
+      window display area. This is useful when you are translating white or
+      other light-color text, or to suit your own preferences.
+    </td>
+  </tr>
+
+<tr>
+    <td><strong>Query color</strong></td>
+    <td colspan="2">
+	Set the query text color in the match
+        view. This is useful for telling
+	the query, source and translation apart at a glance.
+    </td>
+  </tr>
+
+<tr>
+    <td><strong>Source color</strong></td>
+    <td colspan="2">
+       Set the source text color in the match view. This is useful for
+      telling the query, source and translation apart at a glance.
+    </td>
+  </tr>
+
+<tr>
+    <td><strong>Trans color</strong></td>
+    <td>
+      Set the translation text color in the match view. This is
+      useful for
+      telling the query, source and translation apart at a glance.
+    </td>
+  </tr>
+</table>
+
+<a name="memory"></a>
+<h2>Memory Page</h2>
+
+<img alt="The Memory Preferences Page" hspace="20"
+    src="img/preferences_screen_memory.png"
+    class="screenshot" />
+
+<table cellspacing="1" cellpadding="1" width="100%" border="1">
+  <tr>
+    <td><strong>Minimum Match Score</strong></td>
+    <td colspan="2">The minimum score to use for matches.</td>
+  </tr>
+
+<tr>
+    <td><strong><u>I</u>gnore case</strong></td>
+    <td colspan="2">Ignore case when calculating the scores for translation matches.</td>
+  </tr>
+
+<tr>
+    <td><strong>Ignore <u>w</u>idth</strong></td>
+    <td colspan="2">Ignore full\half width distinctions when calculating
+    the scores for translation matches.</td>
+  </tr>
+
+<tr>
+    <td><strong>Ignore <u>H</u>iragana &amp; Katakana</strong></td>
+    <td colspan="2">Ignore case when calculating the scores for
+    translation matches.</td>
+  </tr>
+
+<tr>
+    <td><strong>Get entries as <u>p</u>lain text</strong></td>
+    <td colspan="2">
+	Retrieve translations as plain text, without any formatting information.
+    </td>
+  </tr>
+
+<tr>
+    <td><strong>Assess penalty for <u>f</u>ormatting mismatches</strong></td>
+    <td colspan="2">
+	Subtract a small penalty (usually about
+      1 to 5%) from the match score if the text formatting (bold, italic, etc.)
+      of the query and entry source segment do not match.
+    </td>
+  </tr>
+
+<tr>
+    <td><strong>Placements (<u>N</u>umbers)</strong></td>
+    <td colspan="2">
+	Automatically replace numbers in the translation. For example, if you
+    already have an entry in your memory that says "5 de Mayo" is translated
+    as "May 5," then if you later get a source segment "10 de Mayo,"
+    <strong>Felix</strong> will suggest "May 10" as the translation, even
+    though you don't have that entry in your memory. Numbers "placed" in this way are shown in blue in the
+    match window.
+    </td>
+  </tr>
+</table>
+
+<a name="glossary"></a>
+<h2>Glossary Page</h2>
+
+<img alt="The Glossary Preferences Page" hspace="20"
+    src="img/preferences_screen_glossary.jpg"
+    class="screenshot" />
+
+<table cellspacing="1" cellpadding="1" width="100%" border="1">
+  <tr>
+    <td><strong>Maximum length for auto glossary add</strong></td>
+    <td>When you register an entry in the memory, if the
+      <strong>Source</strong> field is this number of characters or fewer, it is
+      automatically added to the glossary as well. Set to 0 to disable auto
+      glossary registration.</td></tr>
+
+<tr>
+    <td><strong><u>I</u>gnore case</strong></td>
+    <td colspan="2">Ignore case when calculating the scores for glossary matches.
+    </td>
+  </tr>
+
+<tr>
+    <td><strong>Ignore <u>w</u>idth</strong></td>
+    <td colspan="2">Ignore full\half width distinctions when calculating the scores
+    for glossary matches.</td>
+  </tr>
+
+<tr>
+    <td><strong>Ignore <u>H</u>iragana &amp; Katakana</strong></td>
+    <td colspan="2">Ignore case when calculating the scores for
+    glossary matches.</td>
+  </tr>
+
+<tr>
+    <td><strong>Get entries as <u>p</u>lain text</strong></td>
+    <td>Retrieve glossary translations as plain text, without any formatting
+      information.</td>
+  </tr>
+
+<tr>
+    <td><strong>Get entries as <u>l</u>ower case</strong></td>
+    <td>Retrieve glossary translations as all lower case. For instance, if the
+      translation in the glossary is "File," it will be retrieved as "file."
+    </td>
+  </tr>
+
+<tr>
+    <td><strong>Minimum score for <u>f</u>uzzy matches</strong></td>
+    <td>Use this feature to enable fuzzy matching for glossary searches.
+      Set to a score between 0 and 100. Set the score to 100 to disable
+      fuzzy matching.
+    </td>
+  </tr>
+</table>
+
+<a name="algorithms"></a>
+<h2>Algorithms Page</h2>
+
+<img alt="The Algorithms Preferences Page" hspace="20"
+    src="img/preferences_screen_algorithms.png"
+    class="screenshot" />
+
+<strong>Memory Matching Algorithm</strong>
+
+<table cellspacing="1" cellpadding="1" width="100%" border="1">
+  <tr>
+    <th valign="top"><strong><u>A</u>uto detect:</strong></th>
+    <td>Felix automatically detects the matching algorithm (Default).</td>
+  </tr>
+
+<tr>
+    <th valign="top"><u>C</u>haracter-based:</th>
+    <td>
+      Matching is based on individual characters. This algorithm is best suited to
+      languages like Japanese, in which individual words
+      are not separated by spaces.
+    </td>
+  </tr>
+
+<tr>
+    <th valign="top"><u>W</u>ord-based:</th>
+    <td>
+      Matching is based on words. This
+      algorithm may be better suited to European and other languages where words
+      are separated by commas.
+    </td>
+  </tr>
+
+</table>
+
+<p>When you are finished making your settings, click
+<strong>OK</strong>.</p>
+
+<p>
+<a href="3_2_10.html">Back (Open a New Glossary Window)</a> |
+<a href="3_2_12.html">Next (Manage Your Memories)</a>
+</p>
+            </div>
+            <div id="r">
+                <ul>
+        <li><a href="index.html">Contents</a></li>
+        <li><a href="1.html">1. Overview</a></li>
+        <li><a href="2.html">2. Getting Started</a></li>
+        <li><a href="3.html">3. Using Felix</a>
+            <ul>
+                <li><a href="3.html">3.1 Getting Started</a></li>
+                <li><a href="3_2.html"><strong>3.2 The Memory Window</strong></a></li>
+                <li><a href="3_3.html">3.3 The Glossary Windows</a></li>
+                <li><a href="3_4.html">3.4 Edit Mode</a></li>
+                <li><a href="3_5-searching.html">3.5 Search &amp; Replace</a></li>
+            </ul>
+        </li>
+        <li><a href="4.html">4. The Menus</a></li>
+        <li><a href="5.html">5. Using from Word</a></li>
+        <li><a href="6.html">6. Using from Excel</a></li>
+        <li><a href="7.html">7. Using from PowerPoint</a></li>
+        <li><a href="8.html">8. FAQ</a></li>
+
+<li><a href="appendix_a.html">Appendix A. Scripting Felix</a></li>
+        <li><a href="template-engine.html">Appendix B. Customizing Felix Templates</a></li>
+
+</ul>
+            </div>
+
+        </div>
+<br clear="all"/></div>
+
+    <div id="footer"><div><div>
+        Copyright &copy; 2008 Ginstrom IT Solutions (GITS).
+        | <a href="../../../index.html" title="Visit the Felix Website">Felix Website</a>
+        | <a href="mailto:&#115;&#117;&#112;&#112;&#111;&#114;&#116;&#64;&#102;&#101;&#108;&#105;&#120;&#45;&#99;&#97;&#116;&#46;&#99;&#111;&#109;" title="Contact information for Felix developers">Contact</a>
+    
+    </div></div></div>
+</body>
+</html>
+
+
+
+
+
+
+
+

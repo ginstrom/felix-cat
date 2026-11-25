@@ -1,0 +1,228 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta content="document" name="resource-type" />
+<meta content="Software" name="classification" />
+<meta content="User Guide for the Felix computer aided translation (CAT) solution. Introduction to Felix." name="description" />
+<meta content="CAT, translation memory, computer aided translation, software, help, manual" name="keywords" />
+<meta content="ALL" name="robots" />
+<meta content="Global" name="distribution" />
+<meta content="Safe For Kids" name="rating" />
+<meta content="Copyright Ginstrom IT Solutions (GITS)" name="copyright" />
+<meta content="Ryan Ginstrom" name="author" />
+<meta content="Japanese" name="language" />
+<meta content="Completed" name="doc-class" />
+<meta content="Creative Commons" name="doc-rights" />
+
+    <title>3.2.3. 簡易検索 &mdash; Felix v. 1.7.1 マニュアル</title>
+    
+    <link rel="stylesheet" href="../_static/agogo.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.7.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="author" title="このドキュメントについて" href="../about.html" />
+    <link rel="top" title="Felix v. 1.7.1 マニュアル" href="../index.html" />
+    <link rel="up" title="3. Felixの基本操作" href="../getting-around.html" />
+    <link rel="next" title="3.2.4. 翻訳エントリを削除する" href="delete-entry.html" />
+    <link rel="prev" title="3.2.2. エントリの編集" href="edit-entry.html" /> 
+  </head>
+  <body>
+    <div class="header-wrapper">
+      <div class="header">
+        <div class="headertitle"><a
+          href="../index.html">Felix v. 1.7.1 マニュアル</a></div>
+        <div class="rel">
+          <a href="edit-entry.html" title="3.2.2. エントリの編集"
+             accesskey="P">前へ</a> |
+          <a href="delete-entry.html" title="3.2.4. 翻訳エントリを削除する"
+             accesskey="N">次へ</a> |
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a>
+        </div>
+       </div>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="quick-search">
+<span id="index-0"></span><span id="id1"></span><h1>3.2.3. 簡易検索<a class="headerlink" href="#quick-search" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>Felixでは、TMを検索するため、有用な機能が用意されています。Felixバージョン1.5から、:ref:<cite>検索ウィンドウ &lt;search-replace&gt;</cite> という機能は新規追加され、翻訳メモリや用語集内の検索がよりスピーディでパワフルになりました。</p>
+<p>Felixの従来の検索機能は、「簡易検索」として利用できます。簡易検索では、原文や訳文、文脈、信頼度、その他の情報でも検索できます。正規表現式も対応されています。</p>
+<div class="admonition tip" id="index-1">
+<p class="first admonition-title">ちなみに</p>
+<p>普段、原文は訳文のフィールドに入力した文字列がエントリの原文・訳文のどこかにある場合、一致として検索結果に出力されます。原文・訳文の始まりや終わりが一致したエントリのみを検索したいような場合、次のようにします。</p>
+<dl class="last docutils">
+<dt>フィールドの始まり：&#8221;^&#8221;</dt>
+<dd><tt class="docutils literal"><span class="pre">検索した文字列</span></tt></dd>
+<dt>フィールドの終わり：&#8221;$&#8221;</dt>
+<dd><tt class="docutils literal"><span class="pre">検索した文字列$</span></tt></dd>
+</dl>
+</div>
+<p>検索を行うには以下のとおりにします。</p>
+<ol class="arabic">
+<li><p class="first">Felixのメニューから、「編集(E)」→「検索(F)」→「簡易検索(Q)」を選択します。</p>
+</li>
+<li><p class="first">[メモリエントリの検索] ダイアログ ボックスが表示されます。</p>
+<blockquote>
+<div><img alt="翻訳メモリ内の検索" src="../_images/find_mem_entry_dlg.png" />
+</div></blockquote>
+</li>
+<li><p class="first">検索条件を入力して、[検索] ボタンをクリックします。</p>
+<blockquote>
+<div><blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head"><p class="first last">項目</p>
+</th>
+<th class="head"><p class="first last">説明</p>
+</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><p class="first last">原語(S)</p>
+</td>
+<td><p class="first last">検索対象の原文</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p class="first last">訳語(T)</p>
+</td>
+<td><p class="first last">検索対象の訳文</p>
+</td>
+</tr>
+<tr class="row-even"><td><p class="first last">文脈(X)</p>
+</td>
+<td><p class="first last">検索対象の文脈（コンテキスト）</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p class="first last">大文字と小文字を区別しない(I)</p>
+</td>
+<td><p class="first last">検索時に大文字と小文字を区別しない場合は、このボックスにチェックマークを付けます。</p>
+</td>
+</tr>
+<tr class="row-even"><td><p class="first last">正規表現式を使用する(R)</p>
+</td>
+<td><p class="first last">検索時に正規表現式を使用する場合は、このボックスにチェックマークを付けます。正規表現式とは、Microsoft VBScript のフォーマットに従った式です。正規表現式の詳細については、MSDN Online Columns「正規表現による Visual Basic Scripting Edition (VBScript) の機能強化」を参照してください。</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p class="first last">確定済みのエントリのみを検索する(V)</p>
+</td>
+<td><p class="first last">確定された（[確認済み]ボックスがチェックされた）翻訳エントリのみを検索対象とする場合は、このボックスにチェックマークを付けます。</p>
+</td>
+</tr>
+<tr class="row-even"><td><p class="first last">最小信頼度(M)</p>
+</td>
+<td><p class="first last">最小信頼度:  最小または最大の信頼度を指定してエントリを検索します。</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p>何も入力されていないフィールドは、すべてのエントリと一致します。したがって、すべてのフィールドを空白にすると、翻訳メモリ内のすべてのエントリが検索結果として表示されることになります。[原文]、[訳文]、[文脈 ] の各フィールドに入力された検索条件（文字列など）に一致した文字列は黄色で強調表示されます（正規表現式を使用した場合は、強調表示されません）。</p>
+<blockquote>
+<div><img alt="検索結果では一致部分がハイライトされます" src="../_images/searchresultshighlighted.jpg" />
+</div></blockquote>
+</div></blockquote>
+</li>
+</ol>
+<p>また、簡便な検索手段として、コンコーダンス（一致）検索機能（[編集(E)] &gt; [検索(F)] &gt; [コンコーダンス(一致)検索(C)]）を使用することができます。コンコーダンス(一致)検索機能では、翻訳エントリの「原文」フィールドのみが大文字と小文字の区別なしで検索されます。</p>
+<img alt="コンコーダンス（一致）ダイアログ" src="../_images/concordance_dlg.jpg" />
+<p>また、メモリウィンドウから自動的に原文は訳文の一部のコンコーダンス(一致)を検索することもできます。</p>
+<p>原文のコンコーダンス(一致)を検索するには、任意の文字列を選択した後、
+Alt + Cを押します。</p>
+<p>訳文のコンコーダンス(一致)を検索するには、任意の文字列を選択した後、
+Ctrl + Alt + Cを押します。</p>
+<p>このように、コンコーダンス（一致）検索機能は、様々な方法で簡単に使用することができます。 <a class="reference internal" href="../word/trans-mode.html#word-trans-concordance"><em>コンコーダンス（一致）検索</em></a> では、例が挙げられています。</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="sidebar">
+          <h3>目次</h3>
+          <ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial-word.html">Felixチュートリアル：MSワードで使う</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial-ppt.html">Felixチュートリアル：MS パワーポイントで使う</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../about.html">1. Felixについて</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started.html">2. はじめに</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting-around.html">3. Felixの基本操作</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../menus.html">4. Felixのメニュー</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../placement.html">5. 置換機能</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../word.html">6. Word で Felix を使用する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../excel.html">7. Excel でFelix を使用する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../powerpoint.html">8. PowerPointでFelixを使用する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">9. よく聞かれる質問</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../whats-new.html">10. Felixの変更点</a></li>
+</ul>
+
+          <h3 style="margin-top: 1.5em;">検索</h3>
+          <form class="search" action="../search.html" method="get">
+            <input type="text" name="q" />
+            <input type="submit" value="検索" />
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+          </form>
+          <p class="searchtip" style="font-size: 90%">
+            モジュール、クラス、または関数名を入力してください
+          </p>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <a href="edit-entry.html" title="3.2.2. エントリの編集"
+             >前へ</a> |
+          <a href="delete-entry.html" title="3.2.4. 翻訳エントリを削除する"
+             >次へ</a> |
+          <a href="../genindex.html" title="総合索引"
+             >索引</a>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer">
+        &copy; Copyright 2012, Ryan Ginstrom.
+      最終更新: May 15, 2013
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+  </body>
+</html>

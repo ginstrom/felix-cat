@@ -1,0 +1,363 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>
+    Translation Mode for Word :: Felix Manual
+</title>
+    <link rel="shortcut icon" href="../../../favicon.ico" type="image/vnd.microsoft.icon" />
+    <link rel="icon" href="../../../favicon.ico" type="image/vnd.microsoft.icon" />
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+
+    <meta name="resource-type" content="document" />
+
+    <meta name="classification" content="Software" />
+    <meta name="description" content="User Guide for the Felix computer aided translation (CAT) solution. Using Felix from MS Word." />
+    <meta name="MSSmartTagsPreventParsing" content="TRUE" />
+    <meta name="keywords" content="word, felix, CAT, translation memory, computer aided translation, software, help, manual" />
+    <meta name="robots" content="ALL" />
+    <meta name="distribution" content="Global" />
+    <meta name="rating" content="Safe For Kids" />
+    <meta name="copyright" content="Copyright Ginstrom IT Solutions (GITS)" />
+    <meta name="author" content="Ryan Ginstrom" />
+
+    <meta name="language" content="English" />
+    <meta name="doc-class" content="Completed" />
+    <meta name="doc-rights" content="Copyrighted Work" />
+</head>
+
+<body>
+<div id="container">
+    <div id="header">
+        <div class="left">
+            <h1>Felix Manual</h1>
+        </div>
+    </div>
+
+	<div id="body">
+
+        
+            <div id="l">
+                <a name="top"></a>
+<h1>5.2 Translation Mode</h1>
+
+<p>Section contents:</p>
+
+<blockquote dir="ltr">
+	<a href="#section_1">5.2.1 Getting Started</a><br />
+	<a href="#section_2">5.2.2 Look up a Sentence </a><br />
+	<a href="#section_3">5.2.3 Navigate through the Matches </a><br />
+	<a href="#section_4">5.2.4 Register a Translation </a><br />
+	<a href="#section_5">5.2.5 Add a Glossary Entry </a><br />
+	<a href="#section_6">5.2.6 Delete a Translation </a><br />
+	<a href="#section_7">5.2.7 Get a Translation from Memory </a><br />
+	<a href="#section_8">5.2.8 Get a Glossary Entry </a><br />
+	<a href="#section_9">5.2.9 Search for Concordance </a><br />
+	<a href="#section_10">5.2.10 Save the Memory </a><br />
+	<a href="#section_11">5.2.11 Auto Translate the Current Selection </a><br />
+	<a href="#section_12">5.2.12 Auto Translate until the Next Fuzzy Match </a>
+</blockquote>
+
+<a name="section_1"></a>
+
+<h2>5.2.1 Getting Started</h2>
+
+<p>Translation Mode is probably where you will spend
+most of your time with <strong>Felix</strong>. In Translation Mode,
+the toolbar looks like this:</p>
+
+<img alt="The Translation Mode Toolbar for Word" hspace="20"
+src="img/word_if_trans_toolbar.jpg" align="bottom" border="0" />
+
+<p>And the menu looks like this:</p>
+
+<img alt="The Translation Mode Menu for Word" hspace="20"
+src="img/word_if_trans_menu.jpg" align="bottom" border="0" />
+
+<p>Each of the Translation Mode functions is described
+below.</p>
+
+<p><a href="#top">Back to Top</a></p>
+
+<a name="section_2"></a>
+
+<h2>5.2.2 Look up a Sentence</h2>
+
+<p>To have the suite automatically select the next sentence to look up, place
+the cursor in front of the sentence, and select <strong>Felix</strong> &gt;&gt;
+<strong>Look up Next Setence</strong> (or press <code><span class="caps">ALT</span> + →</code>).
+The Felix interface will skip any whitespace before the next sentence,
+and select all the text up to the next tab, line break, or end-of-sentence marker
+(e.g. period). The Felix interface will then send the sentence to
+<strong>Felix</strong> for lookup.</p>
+
+<p><strong>Tip:</strong> You can configure which characters to count as the end of
+a segment. See <a href="5_5.html">5.5 Setting Preferences for Word</a> for details.</p>
+
+<p>Most text formatting information (e.g. bold, italic, font, text color) is
+preserved in the query. Some formatting information, however, such as highlight
+color and centered text, is not preserved.</p>
+
+<h3>Extend the lookup segment</h3>
+
+<p>If you would like to extend the lookup segment beyond the current selection,
+then with the current lookup scope selected, select <strong>Felix &gt;&gt;
+Extend Lookup Sentence</strong> (or press <code>Ctrl + →</code>).</p>
+
+<h3>Select to the next period</h3>
+
+<p>To select all text to the next end-of-sentence marker (e.g. full stop or
+question mark),  press <code>Alt + &#8217;.&#8217; (period)</code>. This will select
+all the text up to the marker, regardless of intervening carriage returns
+or the like. This is handy when a sentence you need to translate has been
+formatted using hard breaks, or when you&#8217;ve copied and pasted text from
+a <span class="caps">PDF</span> file.</p>
+
+<h3>Select your own segment</h3>
+
+<p>You can also select any text as the lookup segment. Simply select a segment of text,
+then select <strong>Felix</strong> &gt;&gt; <strong>Look up Current Selection</strong>
+(or press <code><span class="caps">ALT</span> + L</code>).</p>
+
+<p><a href="#top">Back to Top</a></p>
+
+<a name="section_3"></a>
+
+<h2>5.2.3 Navigate through the Matches</h2>
+
+<p>Sometimes when you look up a sentence in your memory,
+<strong>Felix</strong> will have more than one suggestion.
+The number of suggestions, and the number of the current
+suggestion, will be shown at the bottom right of the suggestion:</p>
+
+<img src="img/felix_fuzzy.png" alt="Fuzzy match view in Felix" />
+
+<p>In this example, the first of two suggestions (1/2) is being shown.</p>
+
+<p>To view the next suggestion, click on
+<span style="color: blue"><u>Next</u></span> in the Memory window,
+or from Word, select <strong>Felix</strong> &gt;&gt; <strong>Next Translation</strong>
+(or press <code>Alt + N</code>).</p>
+
+<p><strong>Tip</strong>: The score for the next translation (in this example
+68%) is shown next to the <span style="color: blue"><u>Next</u></span> link.</p>
+
+<p>To view the previous suggestion, click on
+<span style="color: blue"><u>Prev</u></span>
+in the Memory window, or from Word, select <strong>Felix &gt;&gt; Previous
+Translation</strong> (or press <code>Alt + P</code>).</p>
+
+<p><strong>Tip</strong>: The score for the previous translation (in this
+example 68%) is shown next to the <span style="color: blue"><u>Prev</u></span>
+link.</p>
+
+<p>Matches will cycle: If you press <span style="color: blue"><u>Next</u></span>
+while on the last suggestion, the first suggestion will be shown; likewise,
+pressing <span style="color: blue"><u>Prev</u></span> while on the first
+suggestion will show the last suggestion.</p>
+
+<p><a href="#top">Back to Top</a></p>
+
+<a name="section_4"></a>
+
+<h2>5.2.4 Register a Translation</h2>
+
+<p>While a query is shown in the Memory window (see <a href="#section_2">5.2 Look up a
+Sentence</a>, above), place the cursor at the end of your translation, and
+select <strong>Felix &gt;&gt; Register Current
+Translation</strong> (or press <code>Alt + ↑</code>). The segment from
+the start of the original sentence to the current cursor position is registered
+as the translation.</p>
+
+<p>To manually select the segment to register as the translation, select a
+segment of text, then select <strong>Felix &gt;&gt; Register
+Current Translation</strong> (or press <code>Alt + ↑</code>). The current
+selection is registered as the translation.</p>
+
+<p><strong>Tip:</strong> Select <strong>Felix &gt;&gt; Set And
+Next</strong> (or press <code>Alt + S</code>) to register the current
+translation, then automatically select and look up the next sentence. This is
+equivalent to pressing <code>Alt + ↑</code>, then <code>Alt + →</code>.</p>
+
+<p><a href="#top">Back to Top</a></p>
+
+<a name="section_5"></a>
+
+<h2>5.2.5 Add a Glossary Entry</h2>
+
+<p>While you are translating, you may want to add terms to your glossary. You can do this easily from inside Word. Simply select the source text of your glossary term, and from the Felix menu, select &#8220;Add to Glossary&#8221;. Alternatively, you can press <span class="caps">ALT</span> + M, then G.</p>
+
+<p>The Add to Glossary dialog box appears. Type in a translation, and click <strong>Add</strong>. The entry is added to the Felix glossary.</p>
+
+<p>You can <a href="word-add-gloss.html">find more detailed instructions, including screen shots, here</a>.</p>
+
+<p><a href="#top">Back to Top</a></p>
+
+<a name="section_6"></a>
+
+<h2>5.2.6 Delete a  Translation</h2>
+
+<p>While a suggestion is being shown in the Memory window (see <a href="#section_2">5.2.2 Look up a Sentence</a>, above),
+select <strong> Felix &gt;&gt; Delete Translation </strong> (or press <code>Alt + D</code>), or in the <strong>Felix</strong> window, press the
+<u><font color="#0000ff">Delete</font></u> link.</p>
+
+<p>A message box will appear, asking if you really want to delete this
+translation. To delete the translation, click <strong>Yes</strong>. The
+currently displayed entry is deleted. If you change your mind, click
+<strong>No</strong> . The entry will not be deleted.</p>
+
+<p><a href="#top">Back to Top</a></p>
+
+<a name="section_7"></a>
+
+<h2>5.2.7 Get a Translation from Memory</h2>
+
+<p>While a suggestion is being shown in the Memory window
+(see <a href="#section_2">5.2.2 Look up a Sentence</a>, above), select
+<strong>Felix &gt;&gt; Get Current Translation</strong>
+(or press <code>Alt + ↓</code>). The current selection is replaced by the suggestion.</p>
+
+<p>If you edit the translation and wish to register your new translation, select <strong>Felix &gt;&gt; Register Current Translation</strong>
+(or press <code>Alt + ↑</code>).
+See <a href="#section_4">5.2.4 Register a Translation</a> for details.</p>
+
+<p><strong>Tip:</strong> Select <strong>Felix &gt;&gt; Get And
+Next</strong> (or press <code>Alt + G</code>) to
+get the current translation, then register this source/translation
+pair and automatically select and look up the next sentence. This is
+equivalent to pressing  <code>Alt + ↓</code>,  <code>Alt + ↑</code>,
+then  <code>Alt + →</code>.</p>
+
+<p><a href="#top">Back to Top</a></p>
+
+<a name="section_8"></a>
+
+<h2>5.2.8 Get a Glossary Entry</h2>
+
+<p>Every time you look up a sentence in the memory, the sentence is also
+searched for matches in all open glossaries. Any matches are displayed in the
+corresponding Glossary window. Using the glossary for technical terms helps you keep your translations consistent, saves you typing, and saves time looking up paper or electronic reference materials.</p>
+
+<img alt="Glossary Search Results View"
+  src="img/glosssearchresultsview.jpg" />
+
+<p>As you are typing, you can retrieve any matches shown in
+the Main Glossary window via hot keys. Select <strong>Felix
+&gt;&gt; Get Glossary Entry &gt;&gt; Entry {N}</strong>
+(or press <code><span class="caps">ALT</span> + {N}</code>), where {N} is a number between 0 and 9,
+to retrieve that glossary entry. If the number of the entry you wish to retrieve is higher than 9, then press <code><span class="caps">ALT</span> + M, H</code>
+(Note that this will not function if the <span class="caps">IME</span> is turned on).
+An input box appears; enter the entry number and press Return
+to retrieve the corresponding entry.</p>
+
+<p><a href="#top">Back to Top</a></p>
+
+<a name="section_9"></a>
+
+<h2>5.2.9 Search for Concordance</h2>
+
+<p>Oftentimes while you translate, you will wonder how you handled a particular
+term in previous translations.
+This is what the Concordance feature is for. Select the term you wish to investigate,
+then select <strong>Felix &gt;&gt; Find Concordance</strong>
+(or press <code>Alt + M, C</code> – Note that this will not function if the <span class="caps">IME</span>
+is turned on).</p>
+
+<p>Any entries in the memory containing that term in the Source field appear in the Memory window:</p>
+
+<img alt="Concordance Results View" hspace="20"
+src="img/concordance_results.jpg" />
+
+<p><a href="#top">Back to Top</a></p>
+
+<a name="section_10"></a>
+
+<h2>5.2.10   Save the Memory</h2>
+
+<p>A prudent backup strategy will save you future headaches
+in any computing situation, and <strong>Felix</strong> is no exception. In order to facilitate saving the memory and glossaries, you can perform this from Word via a keyboard shortcut: Just press <code>Alt + M, S</code> to save your current memory and glossaries (Note that this will not function if the <span class="caps">IME</span> is turned on). You can also do this from the menu, by selecting
+<strong>Felix</strong> &gt;&gt; <strong>Save Memory</strong>.</p>
+
+<p><a href="#top">Back to Top</a></p>
+
+<a name="section_11"></a>
+
+<h2>5.2.11 Auto Translate the Current Selection</h2>
+
+<p>Sometimes, such as when translating a table or a list, you just know that
+most of the items are going to have 100% matches in your translation memory,
+and manually going through and checking each entry would be too tedious. If so,
+then you can use the Auto Translate function to look up every sentence/segment in
+the current selection, and automatically replace items having a 100% match in the
+memory with their translations.</p>
+
+<p>To use this function, select the range of text you wish to auto translate,
+then select <strong> Felix &gt;&gt; Auto Translate Selection</strong>
+(or press <code><span class="caps">ALT</span> + M, A</code> – note that this will not function
+if the <span class="caps">IME</span> is turned on).</p>
+
+<p><a href="#top">Back to Top</a></p>
+
+<a name="section_12"></a>
+
+<h2>5.2.12 Auto Translate until the Next Fuzzy Match</h2>
+
+<p>You can also auto translate from the current cursor position. Felix will automatically
+translate each sentence, until it reaches a sentence without a perfect match in the
+memory.</p>
+
+<p>To use this function, select <strong> Felix &gt;&gt; Translate to Fuzzy</strong>
+(or press <code><span class="caps">ALT</span> + Z</code>).</p>
+
+<p>
+    <a href="#top">Top</a> |
+    <a href="5.html">Back (Word Interface)</a> |
+    <a href="5_3.html">Next (Revision Mode)</a>
+</p>
+            </div>
+            <div id="r">
+                <ul>
+        <li><a href="index.html">Contents</a></li>
+        <li><a href="1.html">1. Overview</a></li>
+        <li><a href="2.html">2. Getting Started</a></li>
+        <li><a href="3.html">3. Using Felix</a></li>
+        <li><a href="4.html">4. The Menus</a></li>
+        <li><a href="5.html">5. Using from Word</a>
+            <ul>
+            <li><a href="5.html#section_1">5.1 Getting Started</a></li>
+            <li><strong>5.2 Translation Mode</strong></li>
+            <li><a href="5_3.html">5.3 Review Mode</a></li>
+            <li><a href="5_4.html">5.4 The Classic Interface</a></li>
+            <li><a href="5_5.html">5.5 Setting Preferences</a></li>
+            <li><a href="5_6.html">5.6 Translation History</a></li>
+            </ul>
+        </li>
+        <li><a href="6.html">6. Using from Excel</a></li>
+        <li><a href="7.html">7. Using from PowerPoint</a></li>
+        <li><a href="8.html">8. FAQ</a></li>
+
+<li><a href="appendix_a.html">Appendix A. Scripting Felix</a></li>
+        <li><a href="template-engine.html">Appendix B. Customizing Felix Templates</a></li>
+
+</ul>
+            </div>
+
+        </div>
+<br clear="all"/></div>
+
+    <div id="footer"><div><div>
+        Copyright &copy; 2008 Ginstrom IT Solutions (GITS).
+        | <a href="../../../index.html" title="Visit the Felix Website">Felix Website</a>
+        | <a href="mailto:&#115;&#117;&#112;&#112;&#111;&#114;&#116;&#64;&#102;&#101;&#108;&#105;&#120;&#45;&#99;&#97;&#116;&#46;&#99;&#111;&#109;" title="Contact information for Felix developers">Contact</a>
+    
+    </div></div></div>
+</body>
+</html>
+
+
+
+
+
+
+
+

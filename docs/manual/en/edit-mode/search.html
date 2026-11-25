@@ -1,0 +1,273 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta content="document" name="resource-type" />
+<meta content="Software" name="classification" />
+<meta content="User Guide for the Felix computer aided translation (CAT) solution. Introduction to Felix." name="description" />
+<meta content="CAT, translation memory, computer aided translation, software, help, manual" name="keywords" />
+<meta content="ALL" name="robots" />
+<meta content="Global" name="distribution" />
+<meta content="Safe For Kids" name="rating" />
+<meta content="Copyright Ginstrom IT Solutions (GITS)" name="copyright" />
+<meta content="Ryan Ginstrom" name="author" />
+<meta content="English" name="language" />
+<meta content="Completed" name="doc-class" />
+<meta content="Creative Commons" name="doc-rights" />
+
+    <title>4.4.3. Search and Replace &mdash; Felix Manual 1.7.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/agogo.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.7.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="Felix Manual 1.7.1.1 documentation" href="../index.html" />
+    <link rel="up" title="4. Getting around in Felix" href="../getting-around.html" />
+    <link rel="next" title="5. The Menus" href="../menus.html" />
+    <link rel="prev" title="4.4.2. Editing and Formatting Text" href="edit.html" /> 
+  </head>
+  <body>
+    <div class="header-wrapper">
+      <div class="header">
+        <div class="headertitle"><a
+          href="../index.html">Felix Manual 1.7.1.1 documentation</a></div>
+        <div class="rel">
+          <a href="edit.html" title="4.4.2. Editing and Formatting Text"
+             accesskey="P">previous</a> |
+          <a href="../menus.html" title="5. The Menus"
+             accesskey="N">next</a> |
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a>
+        </div>
+       </div>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="search-and-replace">
+<h1>4.4.3. Search and Replace<a class="headerlink" href="#search-and-replace" title="Permalink to this headline">¶</a></h1>
+<p>You can search and replace text while in Edit Mode.</p>
+<div class="section" id="find-text">
+<h2>4.4.3.1. Find Text<a class="headerlink" href="#find-text" title="Permalink to this headline">¶</a></h2>
+<p>While in Edit Mode, select <em class="menuselection">Edit ‣ Search ‣ Quick Search</em> from the menu. Alternately, use the <tt class="docutils literal"><span class="pre">Ctrl+F</span></tt> keyboard shortcut.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The <tt class="docutils literal"><span class="pre">Ctrl+F</span></tt> keyboard shortcut is context-sensitive; when you are not in Edit Mode, it will call up the Find Memory/Glossary Entry dialog.</p>
+</div>
+<p>The Find Text dialog appears:</p>
+<div class="figure">
+<img alt="Find Text Dialog" src="../_images/findtext.jpg" />
+<p class="caption">Find Text Dialog</p>
+</div>
+<p>Fill in the appropriate search conditions.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="23%" />
+<col width="77%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Field</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Text to Find:</td>
+<td>The text you wish to find</td>
+</tr>
+<tr class="row-odd"><td>Fields to search:</td>
+<td><p class="first">The fields you wish to search.</p>
+<dl class="last docutils">
+<dt>All Fields</dt>
+<dd>Search all text in the window</dd>
+<dt>Context Fields</dt>
+<dd>Limit your search to text in Context fields</dd>
+<dt>Source Fields</dt>
+<dd>Limit your search to text in Source fields</dd>
+<dt>Trans Fields</dt>
+<dd>Limit your search to text in Trans fields&#8221;</dd>
+</dl>
+</td>
+</tr>
+<tr class="row-even"><td>Ignore case:</td>
+<td>Ignore case for your search</td>
+</tr>
+<tr class="row-odd"><td>Whole words only:</td>
+<td>Only match whole words. For instance, if you entered &#8220;bet&#8221;
+in Text to Find, the search will retrieve &#8220;bet&#8221; but not
+&#8220;better&#8221;.</td>
+</tr>
+<tr class="row-even"><td><strong>Find</strong></td>
+<td>Execute the search</td>
+</tr>
+<tr class="row-odd"><td><strong>Close</strong></td>
+<td>Close the Find Text dialog window.</td>
+</tr>
+</tbody>
+</table>
+<p>When you are finished setting up your search parameters, click <strong>Find</strong>. If the search found a match, clicking <strong>Find</strong> again will find the next occurrence of your search term.</p>
+<p>When you are finished searching, click <strong>Close</strong>.</p>
+</div>
+<div class="section" id="replace-text">
+<h2>4.4.3.2. Replace Text<a class="headerlink" href="#replace-text" title="Permalink to this headline">¶</a></h2>
+<p>While in Edit Mode, select <em class="menuselection">Edit ‣ Replace</em> from the menu. Alternately, use the <tt class="docutils literal"><span class="pre">Ctrl+H</span></tt> keyboard shortcut.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The replace command is context-sensitive. When you are not in Edit Mode, it will call up the Replace Text dialog box. Otherwise, it calls up the Search window in Replace mode. See <a class="reference internal" href="../getting-around.html#search-replace"><em>Search &amp; Replace</em></a> for details.</p>
+</div>
+<p>The Replace Text dialog appears:</p>
+<div class="figure">
+<img alt="Replace Text Dialog" src="../_images/replacetext.jpg" />
+<p class="caption">Replace Text Dialog</p>
+</div>
+<p>Fill in the appropriate search conditions.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="23%" />
+<col width="77%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Field</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Text to Find:</td>
+<td>The text you wish to find</td>
+</tr>
+<tr class="row-odd"><td>Replacement Text:</td>
+<td>The text you want to replace it with</td>
+</tr>
+<tr class="row-even"><td>Fields to search:</td>
+<td><p class="first">The fields you wish to search.</p>
+<dl class="last docutils">
+<dt>All Fields</dt>
+<dd>Search all text in the window</dd>
+<dt>Context Fields</dt>
+<dd>Limit your search to text in Context fields</dd>
+<dt>Source Fields</dt>
+<dd>Limit your search to text in Source fields</dd>
+<dt>Trans Fields</dt>
+<dd>Limit your search to text in Trans fields&#8221;</dd>
+</dl>
+</td>
+</tr>
+<tr class="row-odd"><td>Ignore case:</td>
+<td>Ignore case for your search</td>
+</tr>
+<tr class="row-even"><td>Whole words only:</td>
+<td>Only match whole words. For instance, if you entered &#8220;bet&#8221;
+in Text to Find, the search will retrieve &#8220;bet&#8221; but not
+&#8220;better&#8221;.</td>
+</tr>
+<tr class="row-odd"><td><strong>Find Next</strong>:</td>
+<td>Find the next occurrence of the search term.</td>
+</tr>
+<tr class="row-even"><td><strong>Replace</strong>:</td>
+<td>Replace the current match with the replacement text.</td>
+</tr>
+<tr class="row-odd"><td><strong>Replace All</strong>:</td>
+<td>Replace all occurrences of Text to Find with Replacement
+Text in the search fields.</td>
+</tr>
+<tr class="row-even"><td><strong>Close</strong></td>
+<td>Close the Find Text dialog window.</td>
+</tr>
+</tbody>
+</table>
+<p>When you are finished setting up your search parameters, click <strong>Find Next</strong>. If the search found a match, clicking <strong>Find Next</strong> again will find the next occurrence of your search term. Clicking <strong>Replace</strong> will replace that match with the replacement text, and search for the next match.</p>
+<p>Click <strong>Replace All</strong> to replace all occurrences of Find Text with Replace Text in the search fields.</p>
+<p>When you are finished searching and replacing, click <strong>Close</strong>.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="sidebar">
+          <h3>Table Of Contents</h3>
+          <ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial-word.html">Quick-start Tutorial Using MS Word</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial-ppt.html">Quick-start Tutorial Using MS PowerPoint</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../about.html">1. About Felix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started.html">2. Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../first-time.html">3. Using Felix for the First Time</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting-around.html">4. Getting around in Felix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../menus.html">5. The Menus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../placement.html">6. The Placement Feature</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../word.html">7. Using Felix from Word</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../excel.html">8. Using Felix from Excel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../powerpoint.html">9. Using Felix from PowerPoint</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">10. FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../scripting-felix.html">11. Scripting Felix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../customizing-templates.html">12. Customizing Felix Templates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../troubleshooting.html">13. Troubleshooting Felix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../whats-new.html">14. What&#8217;s New in Felix</a></li>
+</ul>
+
+          <h3 style="margin-top: 1.5em;">Search</h3>
+          <form class="search" action="../search.html" method="get">
+            <input type="text" name="q" />
+            <input type="submit" value="Go" />
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+          </form>
+          <p class="searchtip" style="font-size: 90%">
+            Enter search terms or a module, class or function name.
+          </p>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <a href="edit.html" title="4.4.2. Editing and Formatting Text"
+             >previous</a> |
+          <a href="../menus.html" title="5. The Menus"
+             >next</a> |
+          <a href="../genindex.html" title="General Index"
+             >index</a>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer">
+        &copy; Copyright 2012, Ryan Ginstrom.
+      Last updated on Jan 02, 2015.
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+  </body>
+</html>

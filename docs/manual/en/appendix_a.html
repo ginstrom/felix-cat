@@ -1,0 +1,578 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title> Scripting Felix :: Felix Manual</title>
+    <link rel="shortcut icon" href="../../../favicon.ico" type="image/vnd.microsoft.icon" />
+    <link rel="icon" href="../../../favicon.ico" type="image/vnd.microsoft.icon" />
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+
+    <meta name="resource-type" content="document" />
+
+    <meta name="classification" content="Software" />
+    <meta name="description" content="User Guide for the Felix computer aided translation (CAT) solution. API specification." />
+    <meta name="MSSmartTagsPreventParsing" content="TRUE" />
+    <meta name="keywords" content="API, interface, COM, C++, VB, CAT, translation memory, computer aided translation, software, help, manual" />
+    <meta name="robots" content="ALL" />
+    <meta name="distribution" content="Global" />
+    <meta name="rating" content="Safe For Kids" />
+    <meta name="copyright" content="Copyright Ginstrom IT Solutions (GITS)" />
+    <meta name="author" content="Ryan Ginstrom" />
+
+    <meta name="language" content="English" />
+    <meta name="doc-class" content="Completed" />
+    <meta name="doc-rights" content="Copyrighted Work" />
+</head>
+
+<body>
+<div id="container">
+    <div id="header">
+        <div class="left">
+            <h1>Felix Manual</h1>
+        </div>
+    </div>
+
+	<div id="body">
+
+
+            <div id="l">
+
+
+<a name="top"></a>
+
+<div style="color:red"><strong>Note:</strong> There is a newer version of the scripting documentation.<br />
+<a href="../com-api/index.html">Go to the latest scripting documentation.</a></div>
+
+<h1>Appendix A: Scripting Felix</h1>
+
+<p>Most of the application's features can be scripted using Visual Basic (VB),
+Visual Basic for Applications (VBA), and other COM-aware languages (including
+C++). This makes <strong>Felix</strong> a flexible and powerful tool. You can
+build your own custom scripts to automatically perform various tasks,
+pre-process documents, and more. </p>
+
+<p>In fact, the various interfaces for Microsoft Word, PowerPoint, and Excel that come with
+this application, as well as <a href="../../../tagassist/index.html">the Tag Assist translator's HTML editor</a>, take advantage of this very feature to perform their magic. You can customize these scripts to your own purposes, or write new ones.
+You can also write VB or other applications that take advantage of
+these features. </p>
+
+<ul>
+    <li><a href="#properties" title="Automation properties">Properties</a></li>
+    <li><a href="#methods" title="Automation methods">Methods</a></li>
+    <li><a href="#app2" title="App2 interface">The App2 Interface</a></li>
+    <li><a href="#match" title="Match interface">The Match Object</a></li>
+    <li><a href="#record" title="Record interface">The Record Object</a></li>
+    <li><strong><a href="#samples" title="Automation sample code">Sample Code</a></strong></li>
+</ul>
+
+<a name="automation"></a>
+
+<h2>Automation Function Specification</h2>
+
+<a name="properties"></a>
+
+<h3>Properties</h3>
+
+<table border="1">
+  <tr>
+    <th>Name</th>
+    <th>Type </th>
+    <th>Read </th>
+    <th>Write </th>
+    <th>Description </th>
+  </tr>
+
+  <tr>
+    <td><code>Visible</code> </td>
+    <td><code>Boolean</code> </td>
+    <td align="center"><img src="img/yes.png" alt="YES" /> </td>
+    <td align="center"><img src="img/yes.png" alt="YES" /> </td>
+    <td>Show/hide the Memory window, and detect whether it is visible. </td>
+  </tr>
+
+  <tr>
+    <td><code>NumGlossMatches</code> </td>
+    <td><code>Integer</code> </td>
+    <td align="center"><img src="img/yes.png" alt="YES" /> </td>
+    <td align="center"><img src="img/no.png" alt="NO" /> </td>
+    <td>Get the number of matches in the Main glossary. </td>
+  </tr>
+
+  <tr>
+    <td><code>NumMatches</code> </td>
+    <td><code>Long</code> </td>
+    <td align="center"><img src="img/yes.png" alt="YES" /> </td>
+    <td align="center"><img src="img/no.png" alt="NO" /> </td>
+    <td>Get the number of matches in the memory. </td>
+  </tr>
+
+  <tr>
+    <td><code>Query</code> </td>
+    <td><code>String</code>  </td>
+    <td align="center"><img src="img/yes.png" alt="YES" /> </td>
+    <td align="center"><img src="img/yes.png" alt="YES" /> </td>
+    <td>Get or set the current query. Setting the query
+      causes the Memory window to search for matches in the current memory, and
+      the Glossary windows to look for matches in their glossaries. </td>
+  </tr>
+
+  <tr>
+    <td><code>Score</code> </td>
+    <td><code>Double</code> </td>
+    <td align="center"><img src="img/yes.png" alt="YES" /> </td>
+    <td align="center"><img src="img/no.png" alt="NO" /> </td>
+    <td>Get the score of the currently displayed match. </td>
+  </tr>
+
+  <tr>
+    <td><code>Trans</code> </td>
+    <td><code>String</code>  </td>
+    <td align="center"><img src="img/yes.png" alt="YES" /> </td>
+    <td align="center"><img src="img/yes.png" alt="YES" /> </td>
+    <td>Get or set the translation for the current query.
+      Setting the translation creates a new memory entry, with the
+      query as the source and the translation as the translation.
+    </td>
+  </tr>
+
+  <tr>
+    <td><code>App2</code> </td>
+    <td><code>Object</code> </td>
+    <td align="center"><img src="img/yes.png" alt="YES" /> </td>
+    <td align="center"><img src="img/no.png" alt="NO" /> </td>
+    <td>Retrieve the App2 interface, with several advanced features.
+    See <a href="#app2" title="App2 interface">The App2 Interface</a> for details.</td>
+  </tr>
+
+</table>
+
+<p><a href="#top">Top</a> |
+<a href="index.html">Contents</a>
+</p>
+
+
+<a name="methods"></a>
+
+<h3>Methods</h3>
+
+<table border="1">
+  <tr>
+    <th>Method Name </th>
+    <th>Parameters </th>
+    <th>Return Value </th>
+    <th>Action </th>
+  </tr>
+
+  <tr>
+    <td><code>AddGlossaryEntry</code> </td>
+    <td><code>String</code> Source,<br />
+    <code>String</code> Translation,<br />
+    <code>String</code> Context</td>
+    <td>None </td>
+    <td>Add an entry to the glossary. The source is the current query in the
+      Memory window. </td>
+  </tr>
+
+  <tr>
+    <td><code>AddMemoryEntry</code> </td>
+     <td><code>String</code>  Source,<br />
+    <code>String</code>  Translation,<br />
+    <code>String</code>  Context</td>
+    <td>None </td>
+    <td>Add an entry to the memory. </td>
+  </tr>
+
+  <tr>
+    <td><code>ClearGlossaries</code> </td>
+    <td>None </td>
+    <td>None </td>
+    <td>Clear the Main Glossary window memory.</td>
+  </tr>
+
+  <tr>
+    <td><code>ClearMemories</code> </td>
+    <td>None </td>
+    <td>None </td>
+    <td>Clear the Memory window memory.</td>
+  </tr>
+
+  <tr>
+    <td><code>Concordance</code> </td>
+    <td><code>String</code>  Query </td>
+    <td>None </td>
+    <td>Search the memory for concordances. </td>
+  </tr>
+
+  <tr>
+    <td><code>DeleteMemEntry</code> </td>
+    <td>None </td>
+    <td>None </td>
+    <td>Delete the currently displayed translation. </td>
+  </tr>
+
+  <tr>
+    <td><code>GlossMatch</code> </td>
+    <td><code>Integer</code> Index </td>
+    <td>String </td>
+    <td>Get the glossary entry at
+      position <em>Index</em> from the Main glossary.</td>
+  </tr>
+
+  <tr>
+    <td><code>NextTrans</code> </td>
+    <td>None </td>
+    <td>None </td>
+    <td>Show the next translation match.</td>
+  </tr>
+
+  <tr>
+    <td><code>PrevTrans</code> </td>
+    <td>None </td>
+    <td>None </td>
+    <td>Show the previous translation match.</td>
+  </tr>
+
+  <tr>
+    <td><code>Quit</code> </td>
+    <td>None </td>
+    <td>None </td>
+    <td>Quit <strong>Felix</strong>. </td>
+  </tr>
+
+  <tr>
+    <td><code>Save</code> </td>
+    <td>None </td>
+    <td>None </td>
+    <td>Save the memory and Main glossary. </td>
+  </tr>
+
+  <tr>
+    <td><code>TransConcordance</code></td>
+    <td><code>String </code>Query</td>
+    <td>None</td>
+    <td>Get translation concordance for <code>Query</code>.</td>
+  </tr>
+</table>
+
+<p><a href="#top">Top</a> |
+<a href="index.html">Contents</a>
+</p>
+
+<a name="app2"></a>
+
+<h2>The App2 Interface</h2>
+
+<p>The App2 object provides advanced features.</p>
+
+<dl>
+    <dt>CurrentMatch</dt>
+    <dd>The CurrentMatch property retrieves the current match for the lookup term. See the
+    <a href="#match" title="Match interface">Match Objects</a> specification for details.
+    </dd>
+
+    <dt>CurrentMatches</dt>
+    <dd>A collection of <a href="#match" title="Match interface">Match</a> objects
+    representing the current matches in Felix.
+    </dd>
+
+    <dt>CurrentGlossMatches</dt>
+    <dd>A collection of <a href="#match" title="Match interface">Match</a> objects
+    representing the current glossary matches in Felix.
+    </dd>
+
+
+    <dt>ReflectChanges(ULONG Id, String Source, String Trans)</dt>
+    <dd>Correct the source and translation of the record with id <code>Id</code></dd>
+
+    <dt>ReviewTranslation(ULONG Id, String Source, String Trans)</dt>
+    <dd>Review the translation unit (TU) with id <code>Id</code>, correcting the
+    source and translation as supplied if necessary.</dd>
+</dl>
+
+
+
+
+<p><a href="#top">Top</a> |
+<a href="index.html">Contents</a>
+</p>
+
+<a name="match"></a>
+
+<h3>Match Object</h3>
+
+<p>This represents a TM or glossary match in Felix. It has the following
+members.</p>
+
+<dl>
+    <dt>Record</dt>
+    <dd>The TM/glossary record for this match. See the
+    <a href="#record" title="Record interface">Record Objects</a> specification
+    for details.
+    </dd>
+
+    <dt>Score</dt>
+    <dd>The match score (0.0 to 1.0).
+    </dd>
+
+    <dt>MemoryName</dt>
+    <dd>The name of the memory/glossary that this match's record belongs to.
+    </dd>
+</dl>
+
+<p><a href="#top">Top</a> |
+<a href="index.html">Contents</a>
+</p>
+
+<a name="record"></a>
+
+<h3>Record Objects</h3>
+
+<p>This represents a Felix TM or glossary record. It has the following members.</p>
+
+<dl>
+    <dt>Source</dt>
+    <dd>The source segment.
+    </dd>
+
+    <dt>Trans</dt>
+    <dd>The translation segment.
+    </dd>
+
+    <dt>Context</dt>
+    <dd>The record context string.
+    </dd>
+
+    <dt>PlainSource</dt>
+    <dd>The source segment without any HTML markup.
+    </dd>
+
+    <dt>PlainTrans</dt>
+    <dd>The translation segment without any HTML markup.
+    </dd>
+
+    <dt>CreatedBy</dt>
+    <dd>The name of the user who created this record.
+    </dd>
+
+    <dt>ModifiedBy</dt>
+    <dd>The name of the last user to modify this record.
+    </dd>
+
+    <dt>DateCreated</dt>
+    <dd>The date this record was created.
+    </dd>
+
+    <dt>LastModified</dt>
+    <dd>The date this record was last modified.
+    </dd>
+
+    <dt>RefCount</dt>
+    <dd>The number of times this record has been retrieved as a match.
+    </dd>
+
+    <dt>Id</dt>
+    <dd>The ID value of this record.
+    </dd>
+
+
+</dl>
+
+<p><a href="#top">Top</a> |
+<a href="index.html">Contents</a>
+</p>
+
+<a name="samples"></a>
+
+<h2>Sample Code </h2>
+
+<h3>VBA/Visual Basic</h3>
+
+<p>
+<b>Add some memory and glossary entries</b>
+</p>
+
+<pre class="samplecode">
+' Create the Felix object
+Dim felix As Object
+Set felix = CreateObject("Felix.App")
+
+' Make it visible
+felix.Visible = True
+
+' source, translation, context
+felix.AddMemoryEntry "white", "blanco", "from VBA"
+felix.AddMemoryEntry "black", "negro", "from VBA"
+
+felix.AddGlossaryEntry "uno", "one", "VBA gloss entry"
+felix.AddGlossaryEntry "dos", "two", "VBA gloss entry"
+felix.AddGlossaryEntry "tres", "three", "VBA gloss entry"
+</pre>
+
+
+<p>
+<b>Clear the glossary and memory</b>
+</p>
+
+<pre class="samplecode">
+' You could also add the type library to the
+' references and declare:
+' Dim felix As New FelixLib.App
+Dim felix As Object
+Set felix = CreateObject("Felix.App")
+felix.Visible = True
+felix.ClearGlossaries
+felix.ClearMemories
+</pre>
+
+
+<p>
+<b>Set a translation entry</b>
+</p>
+
+<pre class="samplecode">
+Dim felix As Object
+Set felix = CreateObject("Felix.App")
+felix.Visible = True
+felix.Query = "Can I automate my TM tool?"
+felix.Trans = "Yes, if it's Felix!"
+</pre>
+
+<p>
+<b>Replace all glossary matches in a Word document with their translations</b>
+</p>
+
+<pre class="samplecode">
+Sub SubstituteGlossMatches()
+' Replace all the Felix glossary matches in the document
+' with their translations
+
+    ' Create the Felix object
+    Set felix = CreateObject("Felix.App")
+
+    ' Get the find object...
+    With Selection.Find
+        .ClearFormatting
+        .Replacement.ClearFormatting
+        .Wrap = wdFindStop
+
+        ' Go through each paragraph
+        For Each para In ActiveDocument.Paragraphs
+
+            ' Look up its text
+            para.Range.Select
+            felix.Query = para.Range.Text
+
+            ' Loop through each of the glossary matches
+            For Each match In felix.app2.CurrentGlossMatches
+
+                ' Set the source and replacement text
+                ' Use the "Plain" variants to get the text without HTML tags
+                .Text = match.record.PlainSource
+                .Replacement.Text = match.record.PlainTrans
+
+                ' Do the replacement
+                .Execute Replace:=wdReplaceAll
+            Next match
+        Next para
+
+    End With
+
+End Sub
+</pre>
+
+
+
+<h3>C++</h3>
+
+<p>
+
+<b>Set the query and translation</b>
+</p>
+
+<pre class="samplecode">
+#include &lt;string&gt; // for wstring
+
+// put this in your path or use the absolute path
+#import "Felix.tlb" no_auto_exclude
+
+// Note: obviously, these functions could live in a C++ object,
+// which would eliminate the need to call
+// CoCreateInstance every time.
+// This is the approach that TagAssist uses. However, the sample
+// has been condensed into two functions for brevity.
+
+// set the current query
+inline void set_query(  const std::wstring &amp;query )
+{
+	CComPtr&lt; FelixLib::IApp &gt; felix ;
+	// error handling omitted for brevity
+	felix.CoCreateInstance( L"Felix.App",
+		NULL,
+		CLSCTX_LOCAL_SERVER|CLSCTX_INPROC_SERVER ) ;
+
+	// make it visible
+	felix-&gt;Visible = VARIANT_TRUE ;
+
+	// put the query
+	// Felix will respond by showing a
+	// list of any matches
+	CComBSTR bQuery( query.c_str() );
+	felix-&gt;Query = bQuery ;
+}
+
+// set the translation for the current query
+inline void set_trans( const std::wstring  &amp;trans )
+{
+	CComPtr&lt;  FelixLib::IApp &gt; felix ;
+	// error handling omitted for brevity
+	felix.CoCreateInstance( L"Felix.App",
+		NULL,
+		CLSCTX_LOCAL_SERVER|CLSCTX_INPROC_SERVER ) ;
+
+	// make it visible
+	felix-&gt;Visible = VARIANT_TRUE ;
+
+	// put the translation
+	// If there is a current query, this will
+	// create a new entry, with the query as the
+	// source and the trans as the translation.
+	CComBSTR bTrans( trans.c_str() ) ;
+	felix-&gt;Trans = bTrans ;
+}
+</pre>
+
+<p><a href="#top">Top</a> |
+<a href="7.html">Back (FAQ)</a>
+</p>
+
+
+            </div>
+            <div id="r">
+                <ul>
+        <li><a href="index.html">Contents</a></li>
+        <li><a href="1.html">1. Overview</a></li>
+
+<li><a href="2.html">2. Getting Started</a></li>
+        <li><a href="3.html">3. Using Felix</a></li>
+        <li><a href="4.html">4. The Menus</a></li>
+        <li><a href="5.html">5. Using from Word</a></li>
+        <li><a href="6.html">6. Using from Excel</a></li>
+        <li><a href="7.html">7. Using from PowerPoint</a></li>
+
+<li><a href="8.html">8. FAQ</a></li>
+        <li><strong>Appendix A. Scripting Felix</strong></li>
+        <li><a href="template-engine.html">Appendix B. Customizing Felix Templates</a></li>
+    </ul>
+            </div>
+
+        </div>
+<br clear="all"/></div>
+
+    <div id="footer"><div><div>
+        Copyright &copy; 2008 Ginstrom IT Solutions (GITS).
+        | <a href="../../../index.html" title="Visit the Felix Website">Felix Website</a>
+        | <a href="mailto:&#115;&#117;&#112;&#112;&#111;&#114;&#116;&#64;&#102;&#101;&#108;&#105;&#120;&#45;&#99;&#97;&#116;&#46;&#99;&#111;&#109;" title="Contact information for Felix developers">Contact</a>
+
+    </div></div></div>
+</body>
+</html>
