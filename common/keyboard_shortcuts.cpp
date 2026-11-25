@@ -35,7 +35,7 @@ namespace shortcuts
 			return false ;
 		}
 		wchar_t class_name[256] = { 0 } ;
-		if (! ::GetClassNameW(root, class_name, 256))
+		if (! ::GetClassNameW(root, class_name, _countof(class_name)))
 		{
 			return false ;
 		}
