@@ -12,6 +12,29 @@ This package consists of the following tools:
 
 Felix was originally distributed at felix-cat.com, which is no longer online.
 
+Installing
+----------
+
+Download ``Felix_Setup_<version>.exe`` from the
+`latest release <https://github.com/ginstrom/felix-cat/releases/latest>`_ and
+run it. You need:
+
+- 64-bit Windows 10 or 11, and administrator rights to install
+- 64-bit Microsoft Office (Microsoft 365, Office 2021 or 2024) for the Word,
+  Excel and PowerPoint add-ins; this is the default edition of current Office
+
+The installer isn't code-signed, so Windows SmartScreen may warn that it comes
+from an unknown publisher: choose **More info**, then **Run anyway**.
+
+It installs Felix to ``C:\Program Files\Felix``, the Office add-ins (each
+optional) and the Visual C++ runtimes they need. In Word, Excel and
+PowerPoint, Felix's toolbar appears on the ribbon's **Add-ins** tab.
+
+**Upgrading from Felix 2.0:** uninstall 2.0 first, so Office doesn't keep
+starting the old version. Back up ``%LOCALAPPDATA%\Felix`` beforehand if you
+customized settings or templates, because the 2.0 uninstaller deletes that
+folder. Your memory and glossary files aren't affected.
+
 Building
 --------
 
