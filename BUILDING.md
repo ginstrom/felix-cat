@@ -274,8 +274,32 @@ Windows 10 or later, asks for admin rights, and:
 Uninstalling removes all of that, but leaves each user's
 `%LOCALAPPDATA%\Felix` (settings, customized templates, logs) and their
 memories and glossaries alone. (The 2015 installer's uninstaller deleted
-`%LOCALAPPDATA%\Felix`.) The installer isn't code-signed, so Windows
-SmartScreen warns when it's downloaded.
+`%LOCALAPPDATA%\Felix`.)
+
+**Code signing.** Unsigned installers make Windows SmartScreen warn about an
+"unknown publisher". To sign a release, get a code-signing certificate (an
+OV/individual certificate from a certificate authority, or Microsoft's Azure
+Artifact Signing service), then copy `tools\signing.example.json` to
+`signing.local.json` at the repo root and fill in one method:
+
+- `certificate`: a certificate in your Windows certificate store, by
+  thumbprint. This also covers hardware tokens and cloud signing services
+  that expose the certificate through Windows. List yours with
+  `Get-ChildItem Cert:\CurrentUser\My -CodeSigningCert`.
+- `artifact-signing`: Azure Artifact Signing (formerly Trusted Signing), via
+  its `signtool` plug-in DLL and a metadata JSON file (endpoint, account,
+  certificate profile).
+- `command`: any other signing tool; `{file}` becomes the quoted file path.
+
+`signing.local.json` is git-ignored. When it exists, `tools\build-installer.ps1`
+signs `Felix.exe`, the language DLLs and the add-ins (not `SciLexer.dll`,
+which is Scintilla's), and Inno Setup signs the installer and the
+uninstaller, all through `tools\sign-file.ps1` with SHA-256 and an RFC 3161
+timestamp. Each signature is verified, and Inno Setup refuses to build if a
+file comes back unsigned. Use `-Unsigned` to build without signing, or
+`-SigningConfig <file>` to use settings stored elsewhere. Signing shows your
+name as the publisher right away; SmartScreen's warning fades as signed
+releases build up download reputation.
 
 **Version number.** It's set in `Felix/stdafx.h` (`VERSION`, shown in the
 status bar and written into saved memories), the `VERSIONINFO` blocks of

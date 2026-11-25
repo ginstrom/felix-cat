@@ -1,0 +1,23 @@
+{
+    "_comment": "Copy to signing.local.json at the repo root (git-ignored), keep one method, and fill it in. See BUILDING.md, 'Code signing'.",
+
+    "method": "certificate",
+    "description": "Felix",
+    "url": "https://github.com/ginstrom/felix-cat",
+
+    "certificate": {
+        "_comment": "A code-signing certificate in your Windows certificate store (also hardware tokens and cloud HSMs that expose it there). Thumbprint from: Get-ChildItem Cert:\\CurrentUser\\My -CodeSigningCert",
+        "thumbprint": "0123456789ABCDEF0123456789ABCDEF01234567",
+        "timestampUrl": "http://timestamp.digicert.com"
+    },
+
+    "artifactSigning": {
+        "_comment": "For method 'artifact-signing' (Azure Artifact Signing, formerly Trusted Signing). dlib comes from Microsoft's signing client (Microsoft.ArtifactSigning.Client / Microsoft.Trusted.Signing.Client NuGet package); metadata is a JSON file with Endpoint, CodeSigningAccountName and CertificateProfileName.",
+        "dlib": "C:\\tools\\ArtifactSigning\\bin\\x64\\Azure.CodeSigning.Dlib.dll",
+        "metadata": "C:\\tools\\ArtifactSigning\\metadata.json",
+        "timestampUrl": "http://timestamp.acs.microsoft.com"
+    },
+
+    "_command_comment": "For method 'command': any other signing tool; {file} becomes the quoted path of the file to sign.",
+    "command": "C:\\tools\\mysigner.exe sign {file}"
+}

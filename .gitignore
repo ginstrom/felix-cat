@@ -75,3 +75,6 @@ Thumbs.db
 
 # Installer build output
 setup/Output/
+
+# Code-signing settings (certificate details): never commit
+signing.local.json

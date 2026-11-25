@@ -49,6 +49,14 @@ CloseApplications=yes
 
 OutputDir=Output
 OutputBaseFilename=Felix_Setup_{#AppVersion}
+
+#ifdef SIGN
+; Code signing: tools\build-installer.ps1 defines SIGN and the "felixsign"
+; sign tool (tools\sign-file.ps1) when signing.local.json exists. Inno Setup
+; then signs the installer and the uninstaller.
+SignTool=felixsign
+SignedUninstaller=yes
+#endif
 Compression=lzma2
 SolidCompression=yes
 WizardStyle=modern
