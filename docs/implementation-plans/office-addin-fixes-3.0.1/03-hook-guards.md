@@ -36,9 +36,15 @@ Edit only those three `KeyboardProc` functions. Leave Excel's commented-out lega
   If a probe cannot be automated reliably, record what was tried and mark that check not run; do not claim a pass.
 
 ## Completion criteria
-- [ ] Three guards added, identical in shape, correct class per app.
-- [ ] Builds green, three test programs pass, totals unchanged from step 02.
-- [ ] Manual AC5-AC8 outcomes in the Execution record (or stated reasons).
-- [ ] Committed; index row 03 updated.
+- [x] Three guards added, identical in shape, correct class per app.
+- [x] Builds green, three test programs pass, totals unchanged from step 02.
+- [x] Manual AC5-AC8 outcomes in the Execution record (or stated reasons): deferred to QA.
+- [x] Committed; index row 03 updated.
 
 ## Execution record
+- Red/green: the guard lives in the hook procs (`KeyboardProc`), which the test projects do not call (no hook is installed under test), so there is no unit test for the wiring; the helper itself is covered by step 02's 8 tests. Verification check defined first: grep for the guard in the three hooks (absent before, present after) plus clean builds.
+- Edits: one guard inserted per contract in `ExcelAssist/ExcelAssist/Hooker.cpp` (XLMAIN, after the VK_MENU/VK_CONTROL check, before the Ctrl+Alt+F9 toggle), `PowerPointAssist/PowerPointAssist/Hooker.cpp` (PPTFrameClass, same place), `WordAssist/WordAssist/hooker.cpp` (OpusApp, inside the existing try, before `new_keyboard_proc`). CRLF preserved; all three headers already include keyboard_shortcuts.h.
+- Builds (PowerShell, MSBuild by full path, /p:Configuration=Debug /p:Platform=x64): ExcelAssist.dll, WordAssist.dll, PowerPointAssist.dll built, no errors. Test_Excel, Test_PPT, Test_WordAssist built, no errors. Runlog not used (needs Python).
+- Tests (<exe> --report_level=short, exit 0): Test_Excel 57/57 cases, 160 assertions; Test_PPT 73/73, 201 assertions; Test_WordAssist 161/161, 492 assertions. Unchanged from step 02.
+- Manual AC5-AC8: not run, deferred to QA (needs the debug Felix and add-ins registered, which needs admin/UAC; Office not launched). Nothing was claimed as passed. Probe plan is in Verification above.
+- Deviations: none. Note for QA: PowerPoint shortcuts now do nothing in Slide Show (accepted consequence).

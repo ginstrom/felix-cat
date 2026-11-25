@@ -40,6 +40,12 @@ LRESULT __declspec(dllexport)__stdcall  CALLBACK KeyboardProc(int nCode,
 		return CallNextHookEx(hkb, nCode, wParam, lParam); 
 	}
 
+	// Only react when keyboard focus is in the main window (not a dialog or prompt)
+	if ( ! shortcuts::keystroke_target_is_main_window( ::GetFocus(), L"PPTFrameClass" ) )
+	{
+		return CallNextHookEx(hkb, nCode, wParam, lParam);
+	}
+
 	const bool control_key_pressed = control_key_is_pressed() ;
 	const bool alt_key_pressed = alt_key_is_pressed(wKeystrokeMsg) ;
 
