@@ -40,12 +40,12 @@ BOOST_AUTO_TEST_SUITE(test_text_template_locations)
 	BOOST_AUTO_TEST_CASE( start_file )
 	{
 		CStringA filename = get_template_filename(_T("start.html")) ;
-		BOOST_CHECK_EQUAL(test_paths::narrow(test_paths::felix_appdata(_T("html\\en\\start.html"))), string(filename)) ;
+		BOOST_CHECK_EQUAL(test_paths::narrow(test_paths::template_path(_T("start.html"))), string(filename)) ;
 	}
 	BOOST_AUTO_TEST_CASE( glossary_start )
 	{
 		CStringA filename = get_template_filename(_T("start_gloss.html")) ;
-		BOOST_CHECK_EQUAL(test_paths::narrow(test_paths::felix_appdata(_T("html\\en\\start_gloss.html"))), string(filename)) ;
+		BOOST_CHECK_EQUAL(test_paths::narrow(test_paths::template_path(_T("start_gloss.html"))), string(filename)) ;
 	}
 	BOOST_AUTO_TEST_CASE( get_template_text_match_none )
 	{

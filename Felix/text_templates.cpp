@@ -29,14 +29,25 @@ namespace cpptempl
 		return modpath.Path() ;
 	}
 
+	// Templates are looked up in %LOCALAPPDATA%\Felix\html first (where users can
+	// customize them), then in the html folder next to Felix.exe, which every
+	// build copies there. Without the fallback, a missing or emptied
+	// %LOCALAPPDATA%\Felix (a new machine, or an old version's uninstaller)
+	// left every Felix window showing "Can't reach this page".
 	CString get_template_filename(const CString filename)
 	{
 		const CString tpl_filename = calculate_template_filename(filename) ;
-		const file::CPath fullpath(tpl_filename) ;
-		if (! fullpath.FileExists())
+		if (file::CPath(tpl_filename).FileExists())
 		{
-			logging::log_warn("Template file not found: " + string(static_cast<LPCSTR>(CW2A(tpl_filename)))) ;
+			return tpl_filename ;
 		}
+		const CString module_filename = calculate_module_template_filename(filename) ;
+		if (file::CPath(module_filename).FileExists())
+		{
+			return module_filename ;
+		}
+		logging::log_warn("Template file not found: " + string(static_cast<LPCSTR>(CW2A(tpl_filename)))
+			+ " (or " + string(static_cast<LPCSTR>(CW2A(module_filename))) + ")") ;
 		return tpl_filename ;
 	}
 

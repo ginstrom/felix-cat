@@ -201,6 +201,9 @@ void file_logger::write_entry(const string level, const string msg)
 	}
 
 	out << level << "\t" << logging::get_datestring() << "\t" << msg << "\n" ;
+	// Flush every entry: otherwise nothing reaches the file until the program
+	// exits, so a running Felix or add-in shows an empty log, and a crash loses it.
+	out.flush() ;
 }
 
 void file_logger::send_report( const CString language, const CString filename )

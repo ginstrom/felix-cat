@@ -66,6 +66,18 @@ namespace test_paths
 		return CString(canonical) ;
 	}
 
+	//! Where Felix will find an English template: %LOCALAPPDATA%\Felix\html\en
+	//! if the file is there, otherwise the html folder next to the exe.
+	inline CString template_path(LPCTSTR relative)
+	{
+		const CString local = felix_appdata(CString(_T("html\\en\\")) + relative) ;
+		if (::PathFileExists(local))
+		{
+			return local ;
+		}
+		return exe_dir() + _T("\\html\\en\\") + relative ;
+	}
+
 	inline std::string narrow(const CString &text)
 	{
 		return std::string(CT2A(text)) ;

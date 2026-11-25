@@ -65,11 +65,10 @@ msbuild Felix\Felix.vcxproj /p:Configuration=Unicode_Debug /p:Platform=Win32 /m
 For Release, use `/p:Configuration=Unicode_Release` in all three commands. The
 output goes to `Felix\Unicode_Release\`.
 
-Every configuration copies `SciLexer.dll` next to the exe. The Debug build
-also copies `Felix\html\` to `%LOCALAPPDATA%\Felix\html\`, where the UI
-templates are loaded from at runtime. Release relies on that copy being there
-(an installer would normally put it there). Build Debug once first, or copy
-the folder yourself.
+Every configuration copies `SciLexer.dll` and the UI templates (`Felix\html\`)
+next to the exe. Felix looks for each template in `%LOCALAPPDATA%\Felix\html\`
+first, where users can customize them, then falls back to the copy next to the
+exe. The Debug build also refreshes the `%LOCALAPPDATA%` copy.
 
 ## 4. Run
 
@@ -79,14 +78,15 @@ Run `Felix\Unicode_Debug\Felix.exe` (or `Felix\Unicode_Release\Felix.exe`). It n
 - `lang\EngResource.dll` and `lang\JpnResource.dll` (from the two resource projects).
   Without them Felix stops with the assertion `localized_instance != 0`.
 
-Felix logs to `%LOCALAPPDATA%\Felix\logs\felix.log`.
-
 **COM registration.** Felix is also a COM server, which the Word, Excel and
 PowerPoint add-ins use. Registering it writes to the machine-wide registry, so
-it needs admin rights. The build's final step (`Felix.exe /RegServer`) fails
-without them, and so does the automatic re-registration that Debug builds do
-on every launch. That one is now only logged, and Felix runs normally. To
-register for real, run `Felix.exe /RegServer` once from an Administrator terminal.
+it needs admin rights, so the build doesn't do it. Register with
+`tools\register-felix.ps1` (section 6), which asks for admin rights, or run
+`Felix.exe /RegServer` from an Administrator terminal. Debug builds also try to
+re-register on every launch; without admin rights that fails and is only logged.
+
+Felix's log is `%LOCALAPPDATA%\Felix\logs\felix.log`. It's rewritten on every
+launch, and the `Testing` build writes to the same file.
 
 ## 5. Unit tests
 

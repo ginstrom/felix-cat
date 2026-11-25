@@ -89,13 +89,13 @@
       <Command>xcopy /E /I /Y /Q "$(ProjectDir)html" "%LOCALAPPDATA%\Felix\html\"
 if not exist "$(OutDir)" mkdir "$(OutDir)"
 copy /Y "$(ProjectDir)SciLexer.dll" "$(OutDir)"
+xcopy /E /I /Y /Q "$(ProjectDir)html" "$(OutDir)html\"
 </Command>
     </PreBuildEvent>
     <CustomBuildStep>
-      <Message>Performing registration</Message>
-      <Command>"$(TargetPath)" /RegServer
-echo regsvr32 exec. time &gt; "$(OutDir)regsvr32.trg"
-echo Server registration done!
+      <Message>COM registration is not done by the build</Message>
+      <Command>echo Felix is not registered by the build: registration writes to HKLM and needs admin. Run tools\register-felix.ps1 instead.
+echo build time &gt; "$(OutDir)regsvr32.trg"
 </Command>
       <Outputs>$(OutDir)regsvr32.trg;%(Outputs)</Outputs>
     </CustomBuildStep>
@@ -172,13 +172,13 @@ echo Server registration done!
     <PreBuildEvent>
       <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
 copy /Y "$(ProjectDir)SciLexer.dll" "$(OutDir)"
+xcopy /E /I /Y /Q "$(ProjectDir)html" "$(OutDir)html\"
 </Command>
     </PreBuildEvent>
     <CustomBuildStep>
-      <Message>Performing registration</Message>
-      <Command>"$(TargetPath)" /RegServer
-echo regsvr32 exec. time &gt; "$(OutDir)regsvr32.trg"
-echo Server registration done!
+      <Message>COM registration is not done by the build</Message>
+      <Command>echo Felix is not registered by the build: registration writes to HKLM and needs admin. Run tools\register-felix.ps1 instead.
+echo build time &gt; "$(OutDir)regsvr32.trg"
 </Command>
       <Outputs>$(OutDir)regsvr32.trg;%(Outputs)</Outputs>
     </CustomBuildStep>
@@ -251,6 +251,7 @@ echo Server registration done!
     <PreBuildEvent>
       <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
 copy /Y "$(ProjectDir)SciLexer.dll" "$(OutDir)"
+xcopy /E /I /Y /Q "$(ProjectDir)html" "$(OutDir)html\"
 if exist "$(ProjectDir)Unicode_Debug\lang\EngResource.dll" xcopy /I /Y /Q "$(ProjectDir)Unicode_Debug\lang\*Resource.dll" "$(OutDir)lang\"
 </Command>
     </PreBuildEvent>
