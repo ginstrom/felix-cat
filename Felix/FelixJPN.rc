@@ -1242,7 +1242,7 @@ BEGIN
     IDS_PROJNAME            "Felix"
     IDS_PREFERENCES_TITLE   "ユーザ設定"
     IDS_PDF_HELPFILE_NAME   "Felix Help.pdf"
-    IDS_ONLINE_HELPFILE_URL "http://felix-cat.com/media/manuals/felix/"
+    IDS_ONLINE_HELPFILE_URL "https://ginstrom.github.io/felix-cat/manual/jp/"
     IDS_START_EDIT          "情報を編集(&E)"
     IDS_END_EDIT            "編集の終了(&E)"
     IDS_SAVE_PREFS_TITLE    "ユーザ設定の保存"
@@ -1591,7 +1591,7 @@ BEGIN
     IDS_CORRECTED_TRANS     "訳文を訂正しました。"
     IDS_SHOW_REPORT_FAILED  "読み込みエラー:\r%1\rにあるエラー報告を表示することができませんでした。"
     IDS_TRANS_LOOKUP_FAILED "訳文の検索が失敗しました。"
-    IDS_FAQ_PATH            "http://felix-cat.com/media/manuals/felix/8.html"
+    IDS_FAQ_PATH            "https://ginstrom.github.io/felix-cat/manual/jp/8.html"
     IDS_REFCOUNT_TITLE      "採用カウント"
 END
 

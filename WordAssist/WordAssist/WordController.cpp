@@ -1581,7 +1581,7 @@ bool WordController::OnHelpAction()
 		app_state properties ;
 		properties.read_from_registry() ;
 
-		CString html_path(_T("http://felix-cat.com/media/manuals/felix/5.html")) ;
+		CString html_path(_T("https://ginstrom.github.io/felix-cat/manual/en/5.html")) ;
 		
 		CLEAR_WINERRORS ;
 		

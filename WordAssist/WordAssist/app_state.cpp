@@ -53,7 +53,7 @@ void app_state::setDefaults()
 	set_seg_defaults() ;
 
 	ZeroMemory(m_data.m_manual_url, MANUAL_URL_SIZE  * sizeof(TCHAR)) ;
-	_tcscpy_s( m_data.m_manual_url, _T("http://felix-cat.com/media/manuals/felix/5.html") ) ;
+	_tcscpy_s( m_data.m_manual_url, _T("https://ginstrom.github.io/felix-cat/manual/en/5.html") ) ;
 
 	// preferred GUI language
 	LANGID lid = ::GetUserDefaultLangID() ;

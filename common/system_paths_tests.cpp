@@ -21,7 +21,7 @@ BOOST_AUTO_TEST_SUITE( test_system_paths )
 		CString docs_path = "C:\\" ;
 		CString help_file_path = get_help_file_path(docs_path) ;
 		string actual = CT2A(help_file_path); 
-		string expected = "http://felix-cat.com/media/manuals/felix/" ;
+		string expected = "https://ginstrom.github.io/felix-cat/manual/en/" ;
 
 		BOOST_CHECK_EQUAL(expected, actual) ;
 	}

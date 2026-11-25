@@ -1251,7 +1251,7 @@ BEGIN
     IDS_PROJNAME            "Felix"
     IDS_PREFERENCES_TITLE   "User Preferences"
     IDS_PDF_HELPFILE_NAME   "Felix Help.pdf"
-    IDS_ONLINE_HELPFILE_URL "http://felix-cat.com/media/manuals/felix/"
+    IDS_ONLINE_HELPFILE_URL "https://ginstrom.github.io/felix-cat/manual/en/"
     IDS_START_EDIT          "&Edit Info"
     IDS_END_EDIT            "&End Edit"
     IDS_SAVE_PREFS_TITLE    "Save Preferences"
@@ -1563,7 +1563,7 @@ BEGIN
     IDS_CORRECTED_TRANS     "Corrected translation. "
     IDS_SHOW_REPORT_FAILED  "Failed to show error report located at\r %1."
     IDS_TRANS_LOOKUP_FAILED "Translation lookup failed."
-    IDS_FAQ_PATH            "http://felix-cat.com/media/manuals/felix/8.html"
+    IDS_FAQ_PATH            "https://ginstrom.github.io/felix-cat/manual/en/8.html"
     IDS_REFCOUNT_TITLE      "Reference Count"
 END
 

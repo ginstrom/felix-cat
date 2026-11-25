@@ -854,7 +854,7 @@ void __stdcall CConnect::OnHelp( IDispatch *, VARIANT_BOOL * )
 		file::CPath path ;
 		path.GetModulePath( _AtlModule.GetResourceInstance() ) ;
 
-		CString helpfile_name = _T("http://felix-cat.com/media/manuals/felix/7.html") ;
+		CString helpfile_name = _T("https://ginstrom.github.io/felix-cat/manual/en/7.html") ;
 
 		HINSTANCE result = ::ShellExecute(
 			::GetDesktopWindow(),	//	HWND hwnd, 

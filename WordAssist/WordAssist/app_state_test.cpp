@@ -33,7 +33,7 @@ BOOST_AUTO_TEST_CASE( initial_values_seg_chars )
 BOOST_AUTO_TEST_CASE( initial_values_manual_url )
 {
 	app_state state ;
-	CString expected = _T("http://felix-cat.com/media/manuals/felix/5.html") ;
+	CString expected = _T("https://ginstrom.github.io/felix-cat/manual/en/5.html") ;
 	CString actual(state.m_data.m_manual_url) ;
 	BOOST_CHECK_EQUAL( expected, actual) ;
 }
