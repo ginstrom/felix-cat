@@ -16,6 +16,7 @@ Matches the documented baseline (Word 134, PowerPoint 65, Excel 49).
 - Step 01: done, e8ace76 (record 53d0b8f). Engineer: sonnet. Reviewer: sonnet. Verdict: clean after 1 review round. Test_WordAssist 153/153 (reviewer rerun). Manual AC1-AC4 deferred to QA until Felix is registered.
 - Step 02: done, 95aa876 (record 5bf701e). Engineer: sonnet. Reviewer: sonnet. Verdict: clean after 2 review rounds (round 1: index row 03 wrongly marked done, fixed). Test_Excel 57/57, Test_PPT 73/73, Test_WordAssist 161/161.
 - Step 03: done, f1ea03f (record 3d77982). Engineer: sonnet. Reviewer: sonnet. Verdict: clean after 1 review round. Test_Excel 57/57, Test_PPT 73/73, Test_WordAssist 161/161 (reviewer rebuilt all three add-ins and test projects). Manual AC5-AC8 deferred to QA.
+- Step 04: done, a323bec (record 3ec98fe; review fix 01b35c5). Engineer: opus. Reviewer: opus. Verdict: clean after 2 review rounds (round 1: Test_Excel Release|x64 did not compile the new test, fixed by a Debug-only guard). Test_Excel Debug|x64 61/61, Release|x64 57/57; ExcelAssist Debug x64 and Win32 build. Manual AC9-AC10 deferred to QA.
 
 ## Step 04 notes
 - Test_Excel can take `ExcelImport.h` and `fake_excel.h`; it only needed `common\DispatchWrapper.cpp` added. No fallback used. Test_Excel 61/61 (57 + 4).
