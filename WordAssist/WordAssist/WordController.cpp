@@ -801,7 +801,7 @@ bool WordController::OnConcordanceAction( bool as_plaintext )
 			return OnTransConcordanceAction(as_plaintext) ;
 		}
 	
-		_bstr_t text = string2BSTR( trim_concordance_query( BSTR2wstring( get_selection_text( as_plaintext ) ) ) ) ;
+		_bstr_t text = get_concordance_query( as_plaintext ) ;
 
 		if ( text.length() == 0 )
 		{
@@ -1408,7 +1408,7 @@ bool WordController::OnTransConcordanceAction ( bool as_plaintext )
 	{
 		
 		Felix::IAppPtr app = getAssistant( ) ;
-		app->TransConcordance( string2BSTR( trim_concordance_query( BSTR2wstring( get_selection_text( as_plaintext ) ) ) ) ) ;
+		app->TransConcordance( get_concordance_query( as_plaintext ) ) ;
 
 	}
 	CATCH_ALL("Action: Getting translation concordance")
@@ -1662,6 +1662,11 @@ bool WordController::select_next_sentence()
  * \brief
  * Write brief comment for get_selection_text here.
   */
+_bstr_t WordController::get_concordance_query( bool as_plaintext )
+{
+	return string2BSTR( trim_concordance_query( BSTR2wstring( get_selection_text( as_plaintext ) ) ) ) ;
+}
+
 _bstr_t WordController::get_selection_text(bool as_plaintext )
 {
 	typedef std::shared_ptr<WordParser> parser_ptr ;
