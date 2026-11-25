@@ -435,6 +435,7 @@
     <ClInclude Include="excel_application.h" />
     <ClInclude Include="excel_characters.h" />
     <ClInclude Include="excel_range.h" />
+    <ClInclude Include="excel_selection_writer.h" />
     <ClInclude Include="excel_worksheet.h" />
     <ClInclude Include="ExcelImport.h" />
     <ClInclude Include="ExcelString.h" />

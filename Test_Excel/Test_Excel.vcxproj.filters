@@ -81,6 +81,12 @@
     <ClCompile Include="..\ExcelAssist\ExcelAssist\keyboard_shortcuts_excel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\common\DispatchWrapper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="excel_selection_writer_test.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="keyboard_shortcuts_excel_test.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -156,6 +162,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\common\keyboard_shortcuts.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ExcelAssist\ExcelAssist\excel_application.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ExcelAssist\ExcelAssist\excel_selection_writer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ExcelAssist\ExcelAssist\fake_excel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\ExcelAssist\ExcelAssist\keyboard_shortcuts_excel.h">

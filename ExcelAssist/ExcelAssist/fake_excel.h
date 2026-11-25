@@ -25,7 +25,7 @@ namespace excel
 		{
 			return this->text ;
 		}
-		void SetText( _variant_t text_to_set )
+		void SetText( const _variant_t text_to_set )
 		{
 			this->text = text_to_set ;
 		}
@@ -100,12 +100,25 @@ namespace excel
 		sheet_ptr active_sheet ;
 		chars_ptr chars ;
 		range_ptr active_cell ;
+		int refresh_count ;
+		bool refresh_throws ;
 
 		FakeApplication() :
-			active_sheet(new FakeWorksheet)
+			active_sheet(new FakeWorksheet),
+			refresh_count(0),
+			refresh_throws(false)
 			{
 
 			}
+
+		void RefreshActiveCell()
+		{
+			++refresh_count ;
+			if ( refresh_throws )
+			{
+				throw _com_error(E_FAIL) ;
+			}
+		}
 
 		sheet_ptr GetActiveSheet()
 		{

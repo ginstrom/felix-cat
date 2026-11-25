@@ -46,9 +46,34 @@ Exclusions: Auto Translate, `Select()`-based refresh, `Value2`/`Formula` writes,
   Record anything that cannot be automated, with what was tried; do not claim a pass.
 
 ## Completion criteria
-- [ ] New tests written first and passing (or the fallback recorded with its reason).
-- [ ] Production changes per contract; formula bar refreshed; literal semantics intact.
-- [ ] Manual AC9-AC10 outcomes in the Execution record.
-- [ ] Committed; index row 04 updated.
+- [x] New tests written first and passing (or the fallback recorded with its reason).
+- [x] Production changes per contract; formula bar refreshed; literal semantics intact.
+- [x] Manual AC9-AC10 outcomes in the Execution record (not run - deferred to QA).
+- [x] Committed; index row 04 updated.
 
 ## Execution record
+Engineer, 2026-11-26. Runlog not used (needs Python); commands run directly from PowerShell, MSBuild by full path (`C:\Program Files\Microsoft Visual Studio\18\Community\MSBuild\Current\Bin\MSBuild.exe <proj> /p:Configuration=Debug /p:Platform=x64 /m /v:minimal`).
+
+**Unit coverage: achieved, no fallback.** Test_Excel now compiles `ExcelImport.h` (Excel `#import` by libid works in the test project) through `excel_selection_writer.h` and `fake_excel.h`. The only extra source it needed was `common\DispatchWrapper.cpp` (for `application::GetSelectedChars`). Felix.tlb was not added.
+
+TDD sequence:
+- Baseline: Test_Excel built; `Test_Excel.exe --report_level=short` -> 57 test cases out of 57 passed, 160 assertions.
+- Red: `Test_Excel/excel_selection_writer_test.cpp` (4 cases) against a stub `write_selection_text` returning false. First build failed to link (unresolved `CDispatchWrapper`), fixed by adding `common\DispatchWrapper.cpp`. Then the chars-path, fallback and refresh-throws cases failed on their checks (`write_selection_text(...) has failed`, `refresh_count == 1 has failed [0 != 1]`); the empty-text case passed trivially against the stub.
+- Green: real writer -> 61 test cases out of 61 passed, 174 assertions. With `range::SetText` still non-virtual the fallback case aborted (`fatal error ... unknown type`: the base `range::SetText` was called on a NULL Excel pointer, because `FakeRange::SetText` only hid it). Making it virtual gave 61/61.
+- Final: ExcelAssist.vcxproj Debug|x64 -> `ExcelAssist.dll` built, exit 0, no warnings shown. Test_Excel.vcxproj Debug|x64 built, exit 0; `Test_Excel.exe --report_level=short` -> 61 test cases out of 61 passed, 174 assertions out of 174 passed (57 baseline + 4 new). Test_PPT and Test_WordAssist not rebuilt: no file they compile changed.
+
+Changes:
+- `excel_application.h`: `virtual void RefreshActiveCell()` per contract.
+- New `excel_selection_writer.h` (UTF-8 BOM, CRLF): `inline bool write_selection_text(excel::app_ptr, _bstr_t)` per contract; `set_cell_text` moved here as `inline` (its prototype removed from `FelixExcelIF.h`, its definition from `FelixExcelIF.cpp`; `FelixExcelIF.h` includes the new header). `AutoTransCell` still calls `set_cell_text` unchanged.
+- `FelixExcelIF.cpp`: `set_active_cell_text` calls `write_selection_text` and keeps its empty-text warning.
+- `fake_excel.h`: `FakeApplication::refresh_count`, `refresh_throws`, `RefreshActiveCell` override. The chars-write failure uses the existing behavior (`GetSelectedChars` throws when `chars` is NULL).
+- Deviation: `excel::range::SetText` made `virtual` (was non-virtual, so `FakeRange::SetText` never ran through a `range_ptr` and the fallback path could not be tested). `FakeRange::SetText`'s parameter became `const _variant_t` to match, because the ExcelAssist build treats warning C4373 as an error. No behavior change for the real `range`.
+- Project files: Test_Excel.vcxproj(+filters) add the test, `common\DispatchWrapper.cpp` and the three headers; ExcelAssist.vcxproj(+filters) add `excel_selection_writer.h`.
+
+**COM probe against real Excel** (64-bit Microsoft 365, out of process, C++ in the scratchpad compiled with `ExcelImport.h`; formula bar read through UI Automation, AutomationId `FormulaBar`; the probe's Excel was closed, 0 EXCEL processes before and after). It ran the same body as `RefreshActiveCell` after a `Selection.Characters.Text` write:
+- A1 single cell: formula bar before refresh `source text`, after refresh `translated text`; cell text `translated text`.
+- C1 written `001` through Characters then refreshed: `Value2` is VT_BSTR `001`, formula bar `001`.
+- A1:B3 selected, B2 active, refresh: `Selection` `$A$1:$B$3`, `ActiveCell` `$B$2`.
+- Text box (`Shapes.AddTextbox`, selected): `Selection` type `TextBox`; QI of that object into `Excel::RangePtr` gives NULL with no exception, so the contract's check is correct. Caveat: in the automated instance the text-box selection reverts to a Range by itself within milliseconds of `Shape.Select` (before any QI or refresh), so "text box stays selected after Get Translation" could not be observed here. A first probe version that re-read `Application.Selection` saw a Range and wrongly suggested the QI succeeds for text boxes; querying the captured TextBox object settled it.
+
+**Manual AC9-AC10 (in Excel with the add-in): not run - deferred to QA** (needs `tools\register-felix.ps1 -Configuration Debug`, admin/UAC, and a Felix memory). The probe above covers the refresh mechanism for AC9, AC10a and AC10b, not the add-in path; AC10c (text box stays selected) needs a real interactive check.

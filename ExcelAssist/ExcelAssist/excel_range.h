@@ -35,7 +35,7 @@ public:
 	{
 		return m_range->Text ;
 	}
-	void SetText(const _variant_t text)
+	virtual void SetText(const _variant_t text)
 	{
 		m_range->GetCharacters()->Text = text.bstrVal ;
 	}

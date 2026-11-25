@@ -77,6 +77,22 @@ public:
 		return excel_chars ;
 	}
 
+	/*!
+	 * \brief
+	 * If the selection is a worksheet range, re-activates the active cell so
+	 * Excel refreshes the formula bar. Keeps the selection and active cell.
+	 * No-op otherwise (for example, when a text box is selected).
+	 */
+	virtual void RefreshActiveCell()
+	{
+		// For a text box, QueryInterface fails with E_NOINTERFACE -> NULL, no throw
+		Excel::RangePtr selected_range = m_pApplication->Selection ;
+		if ( selected_range )
+		{
+			m_pApplication->ActiveCell->Activate() ;
+		}
+	}
+
 	virtual range_ptr GetSelectedCell()
 	{
 		Excel::RangePtr activeCell = m_pApplication->Selection ;
