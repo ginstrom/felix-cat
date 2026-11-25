@@ -208,6 +208,16 @@ Office first. In Word, Excel or PowerPoint, the add-in appears as **Felix
 Addin** (File > Options > Add-ins, "COM Add-ins"), and its buttons on the
 **Add-ins** ribbon tab.
 
+**An older installed Felix** (e.g. 2.0 under `C:\Program Files (x86)\Assistant
+Suite\Felix\`) registers the same `Felix.App` class, so the add-ins would start
+that Felix instead. Uninstall it *before* running the registration script: its
+uninstaller doesn't unregister `Felix.App`, and it deletes
+`%LOCALAPPDATA%\Felix`, which the new Felix shares (HTML templates, logs,
+preferences). Afterwards, restore the templates by building Debug or with
+`xcopy /E /I /Y Felix\html "%LOCALAPPDATA%\Felix\html\"`. To check what's
+registered: `HKLM\SOFTWARE\WOW6432Node\Classes\CLSID\{4948E973-2FE7-4E6b-914E-55417CCFDF22}\LocalServer32`
+should point to this repo's `Felix.exe`.
+
 **Tests.** `Test_WordAssist`, `Test_Excel` and `Test_PPT` are console apps
 built in the `Testing` configuration; each runs its tests after building.
 Latest run, 64-bit Debug: Word Assist 134/134, PowerPoint Assist 65/65,
