@@ -408,6 +408,13 @@ LRESULT MemoryWindowFrame::on_create( WindowsMessage &message  )
 	message ;
 	SENSE("on_create") ;
 
+#ifndef UNIT_TEST
+	// The main window keeps the COM server alive while it exists; on_destroy
+	// releases this lock. (The lock used to be taken at startup instead, so a
+	// Felix started over COM and never shown kept it forever and never exited.)
+	_Module.Lock() ;
+#endif
+
 	try
 	{
 		logging::log_debug("Creating mainframe window") ;

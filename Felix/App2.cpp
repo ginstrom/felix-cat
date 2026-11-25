@@ -285,4 +285,23 @@ void CApp2::FinalRelease()
 	{
 		m_active_glossary->Release() ;
 	}
+	// These four were created in FinalConstruct but never released, so each
+	// kept a COM server lock for good, and a Felix started over COM never
+	// exited once its clients let go.
+	if (m_memory_window)
+	{
+		m_memory_window->Release() ;
+	}
+	if (m_glossary_window)
+	{
+		m_glossary_window->Release() ;
+	}
+	if (m_glossaries)
+	{
+		m_glossaries->Release() ;
+	}
+	if (m_memories)
+	{
+		m_memories->Release() ;
+	}
 }

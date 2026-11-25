@@ -108,7 +108,7 @@ int Run(LPTSTR /*lpstrCmdLine*/ = NULL, int nCmdShow = SW_SHOWDEFAULT)
 
 	ATLASSERT( view.IsWindow() ) ;
 
-	_Module.Lock();
+	// (The main window takes the module lock in its WM_CREATE handler.)
 	view.put_visible(nCmdShow) ;
 
 	const int nRet = theLoop.Run();
@@ -236,9 +236,10 @@ int MainSub(HINSTANCE hInstance, LPTSTR lpstrCmdLine, int nCmdShow)
 			logging::log_debug("Running Felix via automation") ;
 			CMessageLoop theLoop;
 			_Module.AddMessageLoop(&theLoop);
-			
-			_Module.Lock();
-			
+
+			// No module lock here: Felix stays alive while COM clients hold
+			// its objects or its main window exists (that takes its own
+			// lock), and exits a few seconds after both are gone.
 			nRet = theLoop.Run();
 			
 			_Module.RemoveMessageLoop();
