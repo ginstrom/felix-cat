@@ -15,7 +15,7 @@ BOOST_AUTO_TEST_SUITE( test_symbol2unicode )
 		wchar_t expected = static_cast<wchar_t>(0x2200) ;
 		wchar_t actual = symbol2unicode(symbol) ;
 		TRACE(actual) ;
-		BOOST_MESSAGE("Testing symbol2unicode") ;
+		BOOST_TEST_MESSAGE("Testing symbol2unicode") ;
 		BOOST_CHECK_EQUAL(expected, actual) ;
 	}
 

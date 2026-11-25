@@ -734,8 +734,8 @@ bool WordController::OnLookupAction( bool as_plaintext )
 				{
 					logging::log_error("Failed to do deferred lookup") ;
 					logging::log_exception(e) ;
-					Felix::IAppPtr app = getAssistant( ) ;
-					app->Query = get_selection_text(as_plaintext) ;
+					Felix::IAppPtr fresh_app = getAssistant( ) ;
+					fresh_app->Query = get_selection_text(as_plaintext) ;
 				}
 			}
 		}
@@ -1585,18 +1585,19 @@ bool WordController::OnHelpAction()
 		
 		CLEAR_WINERRORS ;
 		
-		int res = (int)::ShellExecute(
+		// ShellExecute returns a pointer-sized value; an int truncates it in 64-bit builds.
+		const INT_PTR res = reinterpret_cast<INT_PTR>(::ShellExecute(
 			GetDesktopWindow(),		//	HWND hwnd, 
 			TEXT("open"),			// LPCTSTR lpOperation,
 			html_path,				// LPCTSTR lpFile, 
 			NULL,					// LPCTSTR lpParameters, 
 			NULL,					// LPCTSTR lpDirectory,
 			SW_SHOW					// INT nShowCmd
-			);	
-	
+			));
+
 		if ( res < 32 ) // error
 		{
-			TRACE_WINERR( res ) ;
+			TRACE_WINERR( static_cast<DWORD>(res) ) ;
 			ATLASSERT( FALSE && "ShellExecute failed" ) ;
 		}
 		CLEAR_WINERRORS ;
@@ -1617,9 +1618,9 @@ bool WordController::select_next_sentence()
 
 	CWordScreenUpdateLock screen_lock( m_word_object ) ;
 		
-	WordSelection selection = m_word_object.get_selection() ;
-		
-	parser_ptr parser = parser_ptr(new WordParser( selection, &m_properties, &m_abbreviations )) ;
+	WordSelection start_selection = m_word_object.get_selection() ;
+
+	parser_ptr parser = parser_ptr(new WordParser( start_selection, &m_properties, &m_abbreviations )) ;
 	while ( parser->select_next_sentence( ) )
 	{
 		WordSelection selection = m_word_object.get_selection() ;

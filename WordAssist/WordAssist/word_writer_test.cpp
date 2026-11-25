@@ -1,8 +1,6 @@
 #include "stdafx.h"
 #include "word_writer.h"
 
-#include <boost/test/unit_test.hpp>
-
 #ifdef UNIT_TEST
 #include <boost/test/unit_test.hpp>
 

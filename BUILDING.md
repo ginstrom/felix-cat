@@ -168,9 +168,10 @@ They talk to Felix.exe across processes, so Felix stays 32-bit either way.
 **Office must be installed to build them.** They `#import` the Office type
 libraries (MSO, VBA extensibility, Word, Excel, PowerPoint) by registry ID.
 Without Office the build stops at `error C3505: cannot load type library
-'{2DF8D04C-...}'`. That's the only remaining error: everything else compiles.
-They also `#import "Felix.tlb"`, which the Felix build produces
-(`FelixTlbDir` in `Dependencies.props`).
+'{2DF8D04C-...}'`. They also `#import "Felix.tlb"`, which the Felix build
+produces (`FelixTlbDir` in `Dependencies.props`). Built and tested against
+64-bit Microsoft 365 (Office 16.0): the newer type libraries needed no extra
+`rename()`s.
 
 **64-bit Boost.** The x64 builds need Boost.Filesystem and Boost.Test built for
 x64 in `<BoostDir>\lib64-msvc-14.5\`. Either install the prebuilt
@@ -188,22 +189,34 @@ move stage64\lib lib64-msvc-14.5
 (`set NoDefaultCurrentDirectoryInExePath=` matters only if that variable is set
 in your environment; it stops `cmd` finding Boost's own batch files.)
 
-**Registration.** Each add-in registers itself after it builds
-(`regsvr32`). Its registry script writes to
-`HKLM\Software\Microsoft\Office\<App>\Addins`, which needs an Administrator
-prompt. Without one, the build finishes with the warning `FELIXREG: Could not
-register ...`; run the `regsvr32` command it shows from an Administrator
-terminal. The add-ins also need Felix's COM server registered
-(`Felix.exe /RegServer`, section 4).
+**Registration.** Office finds the add-ins through
+`HKLM\Software\Microsoft\Office\<App>\Addins`, and the add-ins find Felix
+through its COM registration. Both need an Administrator prompt. Each add-in
+tries to register itself after it builds; without admin rights the build
+finishes with the warning `FELIXREG: Could not register ...`. To register
+Felix and all three add-ins in one go, from an **Administrator** PowerShell:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File tools\register-felix.ps1
+```
+
+It defaults to the Release builds and x64 (64-bit Office). Use `-Configuration
+Debug`, `-Platform Win32` (32-bit Office) or `-Unregister` as needed, and close
+Office first. In Word, Excel or PowerPoint, the add-in appears as **Felix
+Addin** (File > Options > Add-ins, "COM Add-ins"), and its buttons on the
+**Add-ins** ribbon tab.
 
 **Tests.** `Test_WordAssist`, `Test_Excel` and `Test_PPT` are console apps
 built in the `Testing` configuration; each runs its tests after building.
-`Test_Excel` doesn't need Office, and passes as 64-bit (49 tests, Debug and
-Release). Run one by hand with, for example:
+Latest run, 64-bit Debug: Word Assist 134/134, PowerPoint Assist 65/65,
+Excel Assist 49/49. Run one by hand with, for example:
 
 ```powershell
 Test_Excel\x64\Debug\Test_Excel.exe --report_level=short
 ```
+
+The post-build run uses `--result_code=no`, so a failing test doesn't fail the
+build; read its output, or run the exe by hand.
 
 What the migration changed:
 
@@ -268,10 +281,11 @@ the narrow-string encoding this also sets doesn't change any existing string.
 - `Unicode_Release` builds and runs, but with about 220 compiler warnings
   (mostly the newer-compiler warnings that `Testing` exempts). Worth cleaning up.
 - The 14 remote-memory tests are skipped unless the fake COM server in `python_tools\MemoryEngineFake.py` (Python 2 + pywin32) is registered. See section 5.
-- **Install Office, then finish the add-ins:** build them, fix whatever the
-  newer Office type libraries need (the code was written against Office 2000's,
-  so expect a few name clashes to `rename()`), run `Test_WordAssist` and
-  `Test_PPT`, and register and try them in Office. Then remove `FelixNoExcel`
-  from `Dependencies.local.props` to bring back Felix's Excel export.
+- **Try the add-ins in Office.** They build and their tests pass, but loading
+  them in Word, Excel and PowerPoint needs registering as admin
+  (`tools\register-felix.ps1`, section 6). Expect the old toolbar UI to show
+  on the ribbon's Add-ins tab.
+- The Win32 add-in builds (for 32-bit Office) haven't been built since the
+  migration; with 64-bit Office installed they can't be loaded here anyway.
 - Felix still uses the non-standard `/Zc:wchar_t-`. Switching to a built-in
   `wchar_t` is the long-term fix, but it touches all string and COM code.

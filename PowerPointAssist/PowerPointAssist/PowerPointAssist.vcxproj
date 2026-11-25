@@ -145,7 +145,7 @@
     </Link>
     <PostBuildEvent>
       <Message>Performing registration</Message>
-      <Command>regsvr32 /s "$(TargetPath)" || echo warning FELIXREG: Could not register $(TargetFileName) with Office (registration writes to HKLM and needs an Administrator prompt). Run as administrator: regsvr32 "$(TargetPath)"</Command>
+      <Command>regsvr32 /s "$(TargetPath)" || (echo warning FELIXREG: Could not register $(TargetFileName) with Office - registration writes to HKLM and needs an Administrator prompt. Run as administrator: regsvr32 "$(TargetPath)" &amp; cmd /c exit 0)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -196,7 +196,7 @@
     </Link>
     <PostBuildEvent>
       <Message>Performing registration</Message>
-      <Command>regsvr32 /s "$(TargetPath)" || echo warning FELIXREG: Could not register $(TargetFileName) with Office (registration writes to HKLM and needs an Administrator prompt). Run as administrator: regsvr32 "$(TargetPath)"</Command>
+      <Command>regsvr32 /s "$(TargetPath)" || (echo warning FELIXREG: Could not register $(TargetFileName) with Office - registration writes to HKLM and needs an Administrator prompt. Run as administrator: regsvr32 "$(TargetPath)" &amp; cmd /c exit 0)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -255,7 +255,7 @@
     </Link>
     <PostBuildEvent>
       <Message>Performing registration</Message>
-      <Command>regsvr32 /s "$(TargetPath)" || echo warning FELIXREG: Could not register $(TargetFileName) with Office (registration writes to HKLM and needs an Administrator prompt). Run as administrator: regsvr32 "$(TargetPath)"</Command>
+      <Command>regsvr32 /s "$(TargetPath)" || (echo warning FELIXREG: Could not register $(TargetFileName) with Office - registration writes to HKLM and needs an Administrator prompt. Run as administrator: regsvr32 "$(TargetPath)" &amp; cmd /c exit 0)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -314,7 +314,7 @@
     </Link>
     <PostBuildEvent>
       <Message>Performing registration</Message>
-      <Command>regsvr32 /s "$(TargetPath)" || echo warning FELIXREG: Could not register $(TargetFileName) with Office (registration writes to HKLM and needs an Administrator prompt). Run as administrator: regsvr32 "$(TargetPath)"</Command>
+      <Command>regsvr32 /s "$(TargetPath)" || (echo warning FELIXREG: Could not register $(TargetFileName) with Office - registration writes to HKLM and needs an Administrator prompt. Run as administrator: regsvr32 "$(TargetPath)" &amp; cmd /c exit 0)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
