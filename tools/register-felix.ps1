@@ -6,7 +6,7 @@ param(
 
 # Registers Felix's COM server and the Word, Excel and PowerPoint add-ins, so
 # Office loads the add-ins and they can reach Felix. Both write to HKLM, so run
-# this from an Administrator PowerShell:
+# this as administrator; from a normal PowerShell it asks to elevate (UAC):
 #
 #   powershell -ExecutionPolicy Bypass -File tools\register-felix.ps1
 #   powershell -ExecutionPolicy Bypass -File tools\register-felix.ps1 -Configuration Debug
@@ -20,7 +20,18 @@ $repo = Split-Path $PSScriptRoot -Parent
 
 $admin = ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole(
     [Security.Principal.WindowsBuiltInRole]::Administrator)
-if (-not $admin) { throw 'Registration writes to HKLM: run this from an Administrator PowerShell.' }
+if (-not $admin) {
+    # Relaunch elevated with the same options. Windows shows a UAC prompt; the
+    # elevated window stays open so you can read the result.
+    'Registration writes to HKLM, so it needs administrator rights. Asking Windows to elevate (UAC prompt)...'
+    $relaunch = @('-NoProfile', '-ExecutionPolicy', 'Bypass', '-NoExit', '-File', "`"$PSCommandPath`"",
+                  '-Configuration', $Configuration, '-Platform', $Platform)
+    if ($Unregister) { $relaunch += '-Unregister' }
+    try { Start-Process powershell.exe -Verb RunAs -ArgumentList $relaunch }
+    catch { throw 'Elevation was cancelled. Run this from an Administrator PowerShell instead.' }
+    'Continuing in the new administrator window.'
+    return
+}
 
 $felixDir = if ($Configuration -eq 'Release') { 'Unicode_Release' } else { 'Unicode_Debug' }
 $felix = Join-Path $repo "Felix\$felixDir\Felix.exe"

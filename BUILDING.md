@@ -194,7 +194,9 @@ in your environment; it stops `cmd` finding Boost's own batch files.)
 through its COM registration. Both need an Administrator prompt. Each add-in
 tries to register itself after it builds; without admin rights the build
 finishes with the warning `FELIXREG: Could not register ...`. To register
-Felix and all three add-ins in one go, from an **Administrator** PowerShell:
+Felix and all three add-ins in one go, run the following. If the terminal
+isn't elevated, the script asks Windows for administrator rights (a UAC
+prompt) and continues in a new window:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File tools\register-felix.ps1
