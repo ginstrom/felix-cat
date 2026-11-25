@@ -176,9 +176,20 @@ void logging::ensure_logger()
 
 // file_logger
 
-file_logger::file_logger() : m_logfile_name(get_logfile_name()), 
-	out(get_logfile_name())
+file_logger::file_logger() : m_logfile_name(get_logfile_name())
 {
+	// The logs folder may not exist (a new machine, or an uninstaller removed
+	// %LOCALAPPDATA%\Felix); std::ofstream won't create it, and every log
+	// entry would then be silently dropped.
+	try
+	{
+		boost::filesystem::create_directories(boost::filesystem::path(m_logfile_name).parent_path()) ;
+	}
+	catch (...)
+	{
+		ATLTRACE("Failed to create the logs folder\n") ;
+	}
+	out.open(m_logfile_name.c_str()) ;
 }
 
 void file_logger::write_entry(const string level, const string msg)
