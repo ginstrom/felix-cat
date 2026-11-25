@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+ï»¿#include "StdAfx.h"
 #include ".\reshtmlfile.h"
 
 #include "File.h"
@@ -14,7 +14,7 @@ BOOST_AUTO_TEST_SUITE( ResFileTestCase )
 	{
 		HINSTANCE hInst = _Module.GetResourceInstance() ;
 
-		HRSRC hrsrc = FindResource(hInst,R2T(IDS_OPENING_PAGE),RT_HTML);	// ƒŠƒ\[ƒX‚É‘g‚İ‚ñ‚¾‚Ì–¼‘O‚ªujpgv‚Ìê‡
+		HRSRC hrsrc = FindResource(hInst,R2T(IDS_OPENING_PAGE),RT_HTML);	// ãƒªã‚½ãƒ¼ã‚¹ã«çµ„ã¿è¾¼ã‚“ã æ™‚ã®åå‰ãŒã€Œjpgã€ã®å ´åˆ
 		//DWORD dwFileSize = SizeofResource(hInst, hrsrc);
 
 		HANDLE hres = LoadResource(hInst,hrsrc);
@@ -22,7 +22,7 @@ BOOST_AUTO_TEST_SUITE( ResFileTestCase )
 		BOOST_CHECK_EQUAL( 0, StrCmpNA(pcPos, "<html>\r\n<head>", strlen("<html>\r\n<head>") ) ) ;
 
 
-		HRSRC hrsrc2 = FindResource(hInst,R2T(IDS_OPENING_PAGE),RT_HTML);	// ƒŠƒ\[ƒX‚É‘g‚İ‚ñ‚¾‚Ì–¼‘O‚ªujpgv‚Ìê‡
+		HRSRC hrsrc2 = FindResource(hInst,R2T(IDS_OPENING_PAGE),RT_HTML);	// ãƒªã‚½ãƒ¼ã‚¹ã«çµ„ã¿è¾¼ã‚“ã æ™‚ã®åå‰ãŒã€Œjpgã€ã®å ´åˆ
 		//DWORD dwFileSize2 = SizeofResource(hInst, hrsrc2);
 
 		HANDLE hres2 = LoadResource(hInst,hrsrc2);

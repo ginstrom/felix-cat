@@ -110,16 +110,10 @@ It writes a report per suite, with failure details in `<suite>.debug.txt`, plus
 Tests that need real files use `common\test_temp_dir.h`, which makes a scratch
 folder under `%TEMP%` and deletes it afterwards.
 
-**Last run (VS 2026, Boost 1.91): 2237 tests ran, 57 failed or aborted, in 24 suites.**
+**Last run (VS 2026, Boost 1.91): 2248 tests ran, 46 failed or aborted, in 19 suites.**
 (An earlier note here said "2288 of 2294 passed". That was wrong: a crash early in
 the run meant most tests were never executed.) The causes are, roughly:
 
-- **Source encoding.** 17 source files are Shift-JIS. On an English-locale
-  machine MSVC reads them as code page 1252, so Japanese string literals are
-  silently garbled. This breaks the Japanese-text tests (`TestDistance`,
-  `TestCmpmaker`, `match_makerTestCase`, `test_search_match_tester`,
-  `test_get_gloss_fuzzy`, ...). It also affects the app: `common\ui.h` holds the
-  Japanese file-dialog labels.
 - **Hardcoded paths and test files** from the old development machine
   (`C:\test\...`, `D:\dev\...`, `L:\dev\Test Files\...`, `D:\Users\Ryan\...`):
   `test_text_template_locations`, `test_text_templates_*`, `AppTemplateTest`,
@@ -131,14 +125,36 @@ the run meant most tests were never executed.) The causes are, roughly:
   Felix COM server registered (see section 4).
 - Not yet diagnosed: `TestComMemories/test_load` ends in a **stack overflow**
   when its file is missing, and `test_library/get_proc_address`,
-  `TestMemoryFunctions/ensure_path_exists_nothrow`,
-  `TestCMainFrameMatchLookup/*eating_numbers_flipped*`.
+  `TestMemoryFunctions/ensure_path_exists_nothrow`.
 
-Fixed: the six machine-specific tests listed in the previous version of this
-file, and a real crash. If an export file couldn't be opened (for example, a
-MultiTerm export to a folder that doesn't exist), the exporter's destructor
-dereferenced a null pointer. It now reports the error instead. Regression tests:
-`export_gloss_mt55_bad_folder_throws`, `export_gloss_mt6_bad_folder_throws`.
+Fixed so far:
+
+- The six machine-specific tests listed in the previous version of this file.
+- A real crash. If an export file couldn't be opened (for example, a MultiTerm
+  export to a folder that doesn't exist), the exporter's destructor dereferenced
+  a null pointer. It now reports the error instead. Regression tests:
+  `export_gloss_mt55_bad_folder_throws`, `export_gloss_mt6_bad_folder_throws`.
+- **Source encoding** (11 tests). See "Source file encoding" below.
+
+## Source file encoding
+
+Source files are **UTF-8 with a byte order mark** (or, for three files,
+UTF-16). Save new files the same way; Visual Studio's "Save with Encoding" →
+"Unicode (UTF-8 with signature)" does it.
+
+Many files used to be Shift-JIS. VS 2013 on a Japanese-locale Windows read
+them correctly, but on any other locale MSVC reads them in the local code
+page (1252 on English Windows) and silently garbles every Japanese literal.
+That broke the Japanese-text tests and the Japanese labels in the file
+dialogs (`common\ui.h`). All 30 Shift-JIS files, including the ones in the
+add-ins, plus one Latin-1 file, were converted to UTF-8 with a BOM, so every
+project reads them correctly whatever the locale.
+
+The `.editorconfig` at the repo root makes Visual Studio save C++ files that way.
+
+Felix also compiles with `/utf-8`, so a UTF-8 file without a BOM is read
+correctly too. Every Japanese literal in Felix is a wide (`L"..."`) string, so
+the narrow-string encoding this also sets doesn't change any existing string.
 
 ## What changed from the original VS 2013 setup
 
@@ -155,6 +171,7 @@ dereferenced a null pointer. It now reports the error instead. Regression tests:
 - cpptempl is compiled through `Felix\cpptempl_build.cpp` so it can use the precompiled header.
 - The Armadillo/SoftwarePassport copy-protection step was removed from the Release build.
 - The unused Lua startup code was removed from Felix and Word Assist.
+- Source files converted from Shift-JIS to UTF-8 with a BOM, and Felix compiles with `/utf-8` (see "Source file encoding").
 - Test fixes for newer Boost/compiler: `BOOST_MESSAGE` → `BOOST_TEST_MESSAGE`,
   an `int`→`short` fill in `array_test.cpp`, and `GetVersionEx` replaced by
   `IsWindowsVistaOrGreater()`.
@@ -162,7 +179,7 @@ dereferenced a null pointer. It now reports the error instead. Regression tests:
 ## Not done yet
 
 - `Unicode_Release` hasn't been built.
-- The remaining failing tests (see section 5): fix the source encoding, then replace hardcoded paths with `test_temp_dir.h` or checked-in test data.
+- The remaining failing tests (see section 5): replace hardcoded paths with `test_temp_dir.h` or checked-in test data.
 - The Word/Excel/PowerPoint add-ins and their test projects are still on VS 2013 settings.
   (Word Assist's Lua has been removed already.)
 - Excel export needs Office installed; Word Assist will need Word's type library too.

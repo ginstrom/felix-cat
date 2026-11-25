@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+ï»¿#include "StdAfx.h"
 #include "text_templates.h"
 #include "ManagerViewQCSettings.h"
 
@@ -174,7 +174,7 @@ BOOST_AUTO_TEST_SUITE(test_text_templates_japanese)
 		BOOST_CHECK(full_text.find(allcaps) != wstring::npos) ;
 		BOOST_CHECK(full_text.find(gloss) != wstring::npos) ;
 		BOOST_CHECK(full_text.find(live) != wstring::npos) ;
-		BOOST_CHECK_EQUAL(full_text.find(L"ƒ`ƒFƒbƒN‚É—˜—p‚·‚é—pŒêW"), wstring::npos) ;
+		BOOST_CHECK_EQUAL(full_text.find(L"ãƒã‚§ãƒƒã‚¯ã«åˆ©ç”¨ã™ã‚‹ç”¨èªé›†"), wstring::npos) ;
 	}
 
 	BOOST_AUTO_TEST_CASE(qc_settings_glosses)

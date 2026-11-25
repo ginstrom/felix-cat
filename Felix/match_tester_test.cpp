@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+Ôªø#include "StdAfx.h"
 #include ".\match_tester.h"
 #include "record_local.h"
 #include "memory_local.h"
@@ -328,10 +328,10 @@ BOOST_AUTO_TEST_SUITE( test_search_match_tester )
 		params.m_ignore_hira_kata = true ;
 		search_match_tester tester(params) ;
 
-		wstring query = L"Ç†Ç¢Ç§Ç¶Ç®" ;
+		wstring query = L"„ÅÇ„ÅÑ„ÅÜ„Åà„Åä" ;
 		tester.normalize(query) ;
 
-		wstring expected = L"ÉAÉCÉEÉGÉI" ;
+		wstring expected = L"„Ç¢„Ç§„Ç¶„Ç®„Ç™" ;
 
 		BOOST_CHECK_EQUAL(expected, query) ;
 	}
@@ -342,7 +342,7 @@ BOOST_AUTO_TEST_SUITE( test_search_match_tester )
 		params.m_ignore_width = true ;
 		search_match_tester tester(params) ;
 
-		wstring query = L"ÇPÇQÇR" ;
+		wstring query = L"ÔºëÔºíÔºì" ;
 		tester.normalize(query) ;
 
 		wstring expected = L"123" ;

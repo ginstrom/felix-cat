@@ -1,0 +1,6 @@
+root = true
+
+# Keep C++ sources readable by MSVC on any Windows locale (see BUILDING.md,
+# "Source file encoding").
+[*.{cpp,h,hpp,c,inl}]
+charset = utf-8-bom

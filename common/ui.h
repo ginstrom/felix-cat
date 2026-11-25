@@ -1,4 +1,4 @@
-/*!
+ï»¿/*!
 	interface for open/save file dialogs
  */
 
@@ -34,12 +34,12 @@ inline filter_array get_gloss_save_filter()
 	};
 
 	static filter_array glossary_file_filter_japanese{
-		{ L"Felix —pŒêW", L"*.fgloss" },
-		{ L"XML ƒtƒ@ƒCƒ‹", L"*.xml" },
-		{ L"ƒ}ƒ‹ƒ`ƒ^[ƒ€(Multiterm) 5.5", L"*.txt" },
-		{ L"ƒ}ƒ‹ƒ`ƒ^[ƒ€(Multiterm) 6.0", L"*.txt" },
-		{ L"ƒGƒNƒZƒ‹ƒtƒ@ƒCƒ‹", L"*.xls" },
-		{ L"ƒ^ƒu‹æØ‚èƒeƒLƒXƒg", L"*.txt" }
+		{ L"Felix ç”¨èªé›†", L"*.fgloss" },
+		{ L"XML ãƒ•ã‚¡ã‚¤ãƒ«", L"*.xml" },
+		{ L"ãƒãƒ«ãƒã‚¿ãƒ¼ãƒ (Multiterm) 5.5", L"*.txt" },
+		{ L"ãƒãƒ«ãƒã‚¿ãƒ¼ãƒ (Multiterm) 6.0", L"*.txt" },
+		{ L"ã‚¨ã‚¯ã‚»ãƒ«ãƒ•ã‚¡ã‚¤ãƒ«", L"*.xls" },
+		{ L"ã‚¿ãƒ–åŒºåˆ‡ã‚Šãƒ†ã‚­ã‚¹ãƒˆ", L"*.txt" }
 	};
 
 #ifndef POWERPOINT_ASSIST_APP
@@ -61,10 +61,10 @@ inline filter_array get_gloss_open_filter()
 	};
 
 	static filter_array glossary_file_filter_japanese{
-		{ L"Felix —pŒêW", L"*.fgloss;*.xml" },
-		{ L"ƒ}ƒ‹ƒ`ƒ^[ƒ€(Multiterm)", L"*.txt" },
-		{ L"ƒ^ƒu‹æØ‚èƒeƒLƒXƒg", L"*.txt" },
-		{ L"‚·‚×‚Ä‚Ìƒtƒ@ƒCƒ‹", L"*.*" }
+		{ L"Felix ç”¨èªé›†", L"*.fgloss;*.xml" },
+		{ L"ãƒãƒ«ãƒã‚¿ãƒ¼ãƒ (Multiterm)", L"*.txt" },
+		{ L"ã‚¿ãƒ–åŒºåˆ‡ã‚Šãƒ†ã‚­ã‚¹ãƒˆ", L"*.txt" },
+		{ L"ã™ã¹ã¦ã®ãƒ•ã‚¡ã‚¤ãƒ«", L"*.*" }
 	};
 
 #ifndef POWERPOINT_ASSIST_APP
@@ -89,12 +89,12 @@ inline filter_array get_mem_save_filter()
 	};
 
 	static filter_array memory_file_filter_japanese{
-		{ L"Felix TMƒtƒ@ƒCƒ‹", L"*.ftm" },
-		{ L"XML ƒtƒ@ƒCƒ‹", L"*.xml" },
-		{ L"TMX ƒtƒ@ƒCƒ‹", L"*.tmx" },
-		{ L"ƒgƒ‰ƒhƒX(Trados)ƒeƒLƒXƒgƒtƒ@ƒCƒ‹", L"*.txt" },
-		{ L"ƒGƒNƒZƒ‹ƒtƒ@ƒCƒ‹", L"*.xls" },
-		{ L"ƒ^ƒu‹æØ‚èƒeƒLƒXƒg", L"*.txt" }
+		{ L"Felix TMãƒ•ã‚¡ã‚¤ãƒ«", L"*.ftm" },
+		{ L"XML ãƒ•ã‚¡ã‚¤ãƒ«", L"*.xml" },
+		{ L"TMX ãƒ•ã‚¡ã‚¤ãƒ«", L"*.tmx" },
+		{ L"ãƒˆãƒ©ãƒ‰ã‚¹(Trados)ãƒ†ã‚­ã‚¹ãƒˆãƒ•ã‚¡ã‚¤ãƒ«", L"*.txt" },
+		{ L"ã‚¨ã‚¯ã‚»ãƒ«ãƒ•ã‚¡ã‚¤ãƒ«", L"*.xls" },
+		{ L"ã‚¿ãƒ–åŒºåˆ‡ã‚Šãƒ†ã‚­ã‚¹ãƒˆ", L"*.txt" }
 
 	};
 
@@ -117,10 +117,10 @@ inline filter_array get_mem_open_filter()
 	};
 
 	static filter_array memory_file_filter_japanese{
-		{ L"Felix TMƒtƒ@ƒCƒ‹", L"*.xml;*.ftm" },
-		{ L"TMX ƒtƒ@ƒCƒ‹", L"*.tmx" },
-		{ L"ƒgƒ‰ƒhƒX(Trados)ƒtƒ@ƒCƒ‹", L"*.txt" },
-		{ L"‚·‚×‚Ä‚Ìƒtƒ@ƒCƒ‹", L"*.*" }
+		{ L"Felix TMãƒ•ã‚¡ã‚¤ãƒ«", L"*.xml;*.ftm" },
+		{ L"TMX ãƒ•ã‚¡ã‚¤ãƒ«", L"*.tmx" },
+		{ L"ãƒˆãƒ©ãƒ‰ã‚¹(Trados)ãƒ•ã‚¡ã‚¤ãƒ«", L"*.txt" },
+		{ L"ã™ã¹ã¦ã®ãƒ•ã‚¡ã‚¤ãƒ«", L"*.*" }
 	};
 
 #ifndef POWERPOINT_ASSIST_APP
@@ -139,7 +139,7 @@ inline filter_array get_prefs_filter()
 	};
 
 	static filter_array prefs_file_filter_japanese{
-		{ L"Felix İ’èƒtƒ@ƒCƒ‹", L"*.fprefx" }
+		{ L"Felix è¨­å®šãƒ•ã‚¡ã‚¤ãƒ«", L"*.fprefx" }
 	};
 
 #ifndef POWERPOINT_ASSIST_APP

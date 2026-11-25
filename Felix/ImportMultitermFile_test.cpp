@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+ï»¿#include "StdAfx.h"
 #include "ImportMultitermFile.h"
 #include "MockListener.h"
 #include "memory_local.h"
@@ -58,8 +58,8 @@ BOOST_AUTO_TEST_SUITE( TestCImportMultitermFile )
 		CMockListener listener ;
 		CImportMultitermFile importer(&listener, app_props::get_props()) ;
 		wstring text = L"Japanese\tEnglish\tNotes\r\n" ;
-		text += L"“K—p\tApply\tsyngo Basic\r\n" ;
-		text += L"ƒXƒLƒƒƒ“”\tNumber of Scans\tsyngo Basic\r\n" ;
+		text += L"é©ç”¨\tApply\tsyngo Basic\r\n" ;
+		text += L"ã‚¹ã‚­ãƒ£ãƒ³æ•°\tNumber of Scans\tsyngo Basic\r\n" ;
 
 		importer.import_multiterm_6_text(text.c_str()) ;
 		BOOST_CHECK_EQUAL(2u, importer.m_memory->size()) ;

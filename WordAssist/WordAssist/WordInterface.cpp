@@ -1,4 +1,4 @@
-/********************************************************************
+ï»¿/********************************************************************
 	Date:	    2004/11/09
 	Time:   	16:12:39
 	filename: 	C:\Programming\Programming Projects\TransAssist Interface for Word\WordInterface.cpp
@@ -1165,13 +1165,13 @@ bool CWordInterface::load_picture(command_button_ptr &button, int button_id)
 {
 	HINSTANCE hInst = _Module.GetResourceInstance() ;
 
-	HRSRC hrsrc = FindResource(hInst,MAKEINTRESOURCE(button_id),_T("IMAGE"));	// ƒŠƒ\[ƒX‚É‘g‚İ‚ñ‚¾‚Ì–¼‘O‚ªujpgv‚Ìê‡
+	HRSRC hrsrc = FindResource(hInst,MAKEINTRESOURCE(button_id),_T("IMAGE"));	// ãƒªã‚½ãƒ¼ã‚¹ã«çµ„ã¿è¾¼ã‚“ã æ™‚ã®åå‰ãŒã€Œjpgã€ã®å ´åˆ
 	DWORD dwFileSize = SizeofResource(hInst, hrsrc);
 	
 	HANDLE hres = LoadResource(hInst,hrsrc);
 	char* pcPos = (char*)LockResource(hres);
 	
-	HANDLE hGlobal = GlobalAlloc(GPTR, dwFileSize);	// ƒOƒ[ƒoƒ‹‚Éæ‚è’¼‚³‚È‚¢‚ÆˆÈ‰º‚ªs‚¦‚È‚¢
+	HANDLE hGlobal = GlobalAlloc(GPTR, dwFileSize);	// ã‚°ãƒ­ãƒ¼ãƒãƒ«ã«å–ã‚Šç›´ã•ãªã„ã¨ä»¥ä¸‹ãŒè¡Œãˆãªã„
 	memcpy(hGlobal,pcPos,dwFileSize);
 
 	HRESULT hr = S_OK ;

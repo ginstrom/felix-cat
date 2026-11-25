@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+ï»¿#include "StdAfx.h"
 #include "MemoryManagerDlg.h"
 #include "record_local.h"
 #include "memory_local.h"
@@ -382,9 +382,9 @@ BOOST_AUTO_TEST_SUITE( TestCMemoryManagerDlg )
 		CMemoryManagerDlg dialog (get_props()) ;
 		model_ptr model = get_model() ;
 		memory_pointer mem = model->create_memory() ;
-		mem->get_memory_info()->set_target_language(L"“ú–{Œê") ;
+		mem->get_memory_info()->set_target_language(L"æ—¥æœ¬èªž") ;
 		wstring actual = dialog.get_target_lang(mem->get_memory_info()) ;
-		wstring expected = L"“ú–{Œê" ;
+		wstring expected = L"æ—¥æœ¬èªž" ;
 		BOOST_CHECK(expected == actual) ;
 	}
 
@@ -404,9 +404,9 @@ BOOST_AUTO_TEST_SUITE( TestCMemoryManagerDlg )
 		CMemoryManagerDlg dialog (get_props()) ;
 		model_ptr model = get_model() ;
 		memory_pointer mem = model->create_memory() ;
-		mem->get_memory_info()->set_client(L"“ú–{Œê") ;
+		mem->get_memory_info()->set_client(L"æ—¥æœ¬èªž") ;
 		wstring actual = dialog.get_client_name(mem->get_memory_info()) ;
-		wstring expected = L"“ú–{Œê" ;
+		wstring expected = L"æ—¥æœ¬èªž" ;
 		BOOST_CHECK(expected == actual) ;
 	}
 

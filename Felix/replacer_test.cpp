@@ -1,4 +1,4 @@
-
+ï»¿
 #include "StdAfx.h"
 #include "replacer.h"
 #include "miscwrappers.h"
@@ -124,11 +124,11 @@ BOOST_AUTO_TEST_SUITE( replacer_tests )
 	BOOST_AUTO_TEST_CASE(source_japanese)
 	{
 		record_pointer rec(new record_local) ;
-		rec->set_source(L"‚Ð‚ç‚ª‚È") ;
+		rec->set_source(L"ã²ã‚‰ãŒãª") ;
 
-		replacer::source(rec, L"‚Ð‚ç‚ª‚È", L"ƒJƒ^ƒJƒi"); 
+		replacer::source(rec, L"ã²ã‚‰ãŒãª", L"ã‚«ã‚¿ã‚«ãƒŠ"); 
 
-		BOOST_CHECK_EQUAL(L"ƒJƒ^ƒJƒi", rec->get_source_rich()) ;
+		BOOST_CHECK_EQUAL(L"ã‚«ã‚¿ã‚«ãƒŠ", rec->get_source_rich()) ;
 	}
 	BOOST_AUTO_TEST_CASE(source_regex)
 	{

@@ -1,4 +1,4 @@
-/*!
+ï»¿/*!
 	@brief Unit tests for CMainFrame class
 	@author Ryan Ginstrom
  */
@@ -228,13 +228,13 @@ BOOST_AUTO_TEST_SUITE( TestCMainFrameMatchLookup )
 		frame->lookup_trans(query) ;
 		BOOST_CHECK_EQUAL(1u, frame->m_trans_matches.size()) ;
 	}
-	// MON[0]`MON[6] of ScheduleNo1`7
+	// MON[0]ã€œMON[6] of ScheduleNo1ã€œ7
 	BOOST_AUTO_TEST_CASE(lookup_naishi)
 	{
 		MAKE_TEST_FRAME(frame) ;
-		add_record(frame, L"MON[0]`MON[6] of ScheduleNo1`7", L"MON[0]`MON[6] of ScheduleNo1`7") ;
+		add_record(frame, L"MON[0]ã€œMON[6] of ScheduleNo1ã€œ7", L"MON[0]ã€œMON[6] of ScheduleNo1ã€œ7") ;
 
-		wstring query = L"MON[0]`MON[6] of ScheduleNo1`7" ;
+		wstring query = L"MON[0]ã€œMON[6] of ScheduleNo1ã€œ7" ;
 
 		frame->lookup(query) ;
 		BOOST_CHECK_EQUAL(1u, frame->m_trans_matches.size()) ;
@@ -375,11 +375,11 @@ BOOST_AUTO_TEST_SUITE( TestCMainFrameMatchLookup )
 	{
 		MAKE_TEST_FRAME(frame) ;
 
-		add_record(frame, L"‚TDIPŠ´‚¶", L"‚TDIPŠ´‚¶") ;
+		add_record(frame, L"ï¼•ï¼IPæ„Ÿã˜", L"ï¼•ï¼IPæ„Ÿã˜") ;
 
 		search_query_params params ;
-		params.m_rich_source = L"‚RDŠ´‚¶" ;
-		params.m_source = L"‚RDŠ´‚¶" ;
+		params.m_rich_source = L"ï¼“ï¼æ„Ÿã˜" ;
+		params.m_source = L"ï¼“ï¼æ„Ÿã˜" ;
 		params.m_place_numbers = true ;
 
 		trans_match_container matches ;
@@ -389,52 +389,52 @@ BOOST_AUTO_TEST_SUITE( TestCMainFrameMatchLookup )
 		search_match_ptr match = *matches.begin() ;
 
 		wstring actualtrans = match->get_record()->get_trans_plain() ;
-		wstring expectedtrans = L"‚RDIPŠ´‚¶" ;
+		wstring expectedtrans = L"ï¼“ï¼IPæ„Ÿã˜" ;
 		BOOST_CHECK_EQUAL(expectedtrans, actualtrans) ;
 	}
 	BOOST_AUTO_TEST_CASE( get_matches_placement_eating_numbers_flipped_source)
 	{
 		MAKE_TEST_FRAME(frame) ;
 
-		add_record(frame, L"‚TDIPŠ´‚¶", L"‚TDIPŠ´‚¶") ;
+		add_record(frame, L"ï¼•ï¼IPæ„Ÿã˜", L"ï¼•ï¼IPæ„Ÿã˜") ;
 
 		search_query_params params ;
-		params.m_rich_source = L"‚RDŠ´‚¶" ;
-		params.m_source = L"‚RDŠ´‚¶" ;
+		params.m_rich_source = L"ï¼“ï¼æ„Ÿã˜" ;
+		params.m_source = L"ï¼“ï¼æ„Ÿã˜" ;
 		params.m_place_numbers = true ;
 
 		search_match_ptr match = get_first_match(frame, params) ;
 
 		wstring actualsource = match->get_record()->get_source_plain() ;
-		wstring expectedsource = L"‚TDIPŠ´‚¶" ;
+		wstring expectedsource = L"ï¼•ï¼IPæ„Ÿã˜" ;
 		BOOST_CHECK_EQUAL(expectedsource, actualsource) ;
 	}
 	BOOST_AUTO_TEST_CASE( get_matches_placement_eating_numbers_flipped_marked_source)
 	{
 		MAKE_TEST_FRAME(frame) ;
 
-		add_record(frame, L"‚TDIPŠ´‚¶", L"‚TDIPŠ´‚¶") ;
+		add_record(frame, L"ï¼•ï¼IPæ„Ÿã˜", L"ï¼•ï¼IPæ„Ÿã˜") ;
 
 		search_query_params params ;
-		params.m_rich_source = L"‚RDŠ´‚¶" ;
-		params.m_source = L"‚RDŠ´‚¶" ;
+		params.m_rich_source = L"ï¼“ï¼æ„Ÿã˜" ;
+		params.m_source = L"ï¼“ï¼æ„Ÿã˜" ;
 		params.m_place_numbers = true ;
 
 		search_match_ptr match = get_first_match(frame, params) ;
 
 		wstring actualsource = match->get_markup()->GetSource() ;
-		wstring expectedsource = L"<span class=\"placement\">‚RD</span><span class=\"nomatch\">IP</span>Š´‚¶" ;
+		wstring expectedsource = L"<span class=\"placement\">ï¼“ï¼</span><span class=\"nomatch\">IP</span>æ„Ÿã˜" ;
 		BOOST_CHECK_EQUAL(expectedsource, actualsource) ;
 	}
 	BOOST_AUTO_TEST_CASE( get_matches_placement_eating_numbers_flipped_score)
 	{
 		MAKE_TEST_FRAME(frame) ;
 
-		add_record(frame, L"‚TDIPŠ´‚¶", L"‚TDIPŠ´‚¶") ;
+		add_record(frame, L"ï¼•ï¼IPæ„Ÿã˜", L"ï¼•ï¼IPæ„Ÿã˜") ;
 
 		search_query_params params ;
-		params.m_rich_source = L"‚RDŠ´‚¶" ;
-		params.m_source = L"‚RDŠ´‚¶" ;
+		params.m_rich_source = L"ï¼“ï¼æ„Ÿã˜" ;
+		params.m_source = L"ï¼“ï¼æ„Ÿã˜" ;
 		params.m_place_numbers = true ;
 
 		search_match_ptr match = get_first_match(frame, params) ;

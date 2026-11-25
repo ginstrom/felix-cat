@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+ï»¿#include "StdAfx.h"
 #include "distance.h"
 
 #ifdef UNIT_TEST
@@ -99,8 +99,8 @@ BOOST_AUTO_TEST_SUITE( TestDistance )
 	BOOST_AUTO_TEST_CASE( test_edist_nihon_nihongo )
 	{
 		Distance d ;
-		wstring nihon = L"“ú–{" ;
-		wstring nihongo = L"“ú–{Œê" ;
+		wstring nihon = L"æ—¥æœ¬" ;
+		wstring nihongo = L"æ—¥æœ¬èª" ;
 		BOOST_CHECK_EQUAL(d.edist(nihon, nihongo), 1u) ;
 		BOOST_CHECK_EQUAL(d.edist(nihongo, nihon), 1u) ;
 	}
@@ -139,8 +139,8 @@ BOOST_AUTO_TEST_SUITE( TestDistance )
 	BOOST_AUTO_TEST_CASE( test_subdist_weather )
 	{
 		Distance d ;
-		wstring needle = L"°“V‚¾" ;
-		wstring haystack = L"–{“ú‚Í°“V‚È‚èB" ;
+		wstring needle = L"æ™´å¤©ã " ;
+		wstring haystack = L"æœ¬æ—¥ã¯æ™´å¤©ãªã‚Šã€‚" ;
 		BOOST_CHECK_EQUAL(d.subdist(needle, haystack), 1u) ;
 	}
 	// subdist_score

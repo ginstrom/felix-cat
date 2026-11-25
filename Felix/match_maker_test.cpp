@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+ï»¿#include "StdAfx.h"
 #include "TranslationMemory.h"
 #include "StringEx.h"
 #include "record_local.h"
@@ -24,8 +24,8 @@ BOOST_AUTO_TEST_SUITE( match_makerTestCase )
 
 	BOOST_AUTO_TEST_CASE( test_has_asian_yes )
 	{
-		BOOST_CHECK(has_asian(L"©“®Ô‚Éæ‚é")) ;
-		BOOST_CHECK(has_asian(L"This has ˆê‚Â j-word")) ;
+		BOOST_CHECK(has_asian(L"è‡ªå‹•è»Šã«ä¹—ã‚‹")) ;
+		BOOST_CHECK(has_asian(L"This has ä¸€ã¤ j-word")) ;
 	}
 	BOOST_AUTO_TEST_CASE( test_has_asian_no )
 	{
@@ -45,7 +45,7 @@ BOOST_AUTO_TEST_SUITE( match_makerTestCase )
 	BOOST_AUTO_TEST_CASE( detect_match_algo_char_algo )
 	{
 		BOOST_CHECK(IDC_ALGO_CHAR == detect_match_algo(L"snurfle")) ;
-		BOOST_CHECK(IDC_ALGO_CHAR == detect_match_algo(L"©“®Ô‚Éæ‚é")) ;
+		BOOST_CHECK(IDC_ALGO_CHAR == detect_match_algo(L"è‡ªå‹•è»Šã«ä¹—ã‚‹")) ;
 	}
 	BOOST_AUTO_TEST_CASE( detect_match_algo_word_algo )
 	{
@@ -341,8 +341,8 @@ const static wstring nomatch_tag_close(L"</span>") ;
 	{
 		match_maker mm( 0.1f ) ;
 
-		Segment query; query.set_value(L"ƒx[ƒRƒ“") ;
-		Segment source; source.set_value(L"“Ø‚ªƒx[ƒRƒ“‚É‚È‚éB") ;
+		Segment query; query.set_value(L"ãƒ™ãƒ¼ã‚³ãƒ³") ;
+		Segment source; source.set_value(L"è±šãŒãƒ™ãƒ¼ã‚³ãƒ³ã«ãªã‚‹ã€‚") ;
 		DELCARE_MATCH(match, L"I love spam and eggs.", L"Nailed to the perch.") ;
 
 		BOOST_CHECK( mm.fuzzy_gloss_score(query, source, match)) ;
@@ -352,8 +352,8 @@ const static wstring nomatch_tag_close(L"</span>") ;
 	{
 		match_maker mm( 0.1f ) ;
 
-		Segment query; query.set_value(L"ƒx[ƒRƒ“") ;
-		Segment source; source.set_value(L"“Ø‚ªƒx[‚É‚È‚éB") ;
+		Segment query; query.set_value(L"ãƒ™ãƒ¼ã‚³ãƒ³") ;
+		Segment source; source.set_value(L"è±šãŒãƒ™ãƒ¼ã«ãªã‚‹ã€‚") ;
 		DELCARE_MATCH(match, L"I love spam and eggs.", L"Nailed to the perch.") ;
 
 		BOOST_CHECK(mm.fuzzy_gloss_score(query, source, match)) ;

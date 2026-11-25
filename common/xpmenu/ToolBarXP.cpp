@@ -1,4 +1,4 @@
-// ToolBarXP.cpp: implementation of the CToolBarXP class.
+﻿// ToolBarXP.cpp: implementation of the CToolBarXP class.
 //
 //////////////////////////////////////////////////////////////////////
 
@@ -145,7 +145,7 @@ HWND CToolBarXP::Create24BitToolBarCtrl( HWND hWndParent, std::vector< int > &co
 // - work also with 16-bit colored toolbar
 //
 // 12. July 2003 Version 1.0
-// - Thanks to Andreas Sch�rer for some hints
+// - Thanks to Andreas Schärer for some hints
 // - It works with IE 4.0 and above
 // - only a minimal implementation not supported all styles
 // - support more than 16 colors for toolbarbitmaps

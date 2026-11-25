@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+ï»¿#include "StdAfx.h"
 #include "StringConversions.h"
 
 #include <boost/test/unit_test.hpp>
@@ -82,10 +82,10 @@ BOOST_AUTO_TEST_CASE( string2wstring_from_string )
 }
 BOOST_AUTO_TEST_CASE( string2wstring_from_japanese )
 {
-	wstring original = L"“ú–{Œê" ;
+	wstring original = L"æ—¥æœ¬èªž" ;
 	string s = string2string(original) ;
 	wstring w = string2wstring( s ) ;
-	BOOST_CHECK_EQUAL( w, L"“ú–{Œê") ;
+	BOOST_CHECK_EQUAL( w, L"æ—¥æœ¬èªž") ;
 }
 BOOST_AUTO_TEST_CASE( string2wstring_from_wstring )
 {

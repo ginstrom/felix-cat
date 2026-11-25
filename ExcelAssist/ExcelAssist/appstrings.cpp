@@ -1,4 +1,4 @@
-/*!
+ï»¿/*!
  * <File comment goes here!!>
  * 
  * Copyright (c) 2005 by <your name/ organization here>
@@ -36,7 +36,7 @@ void CAppStrings::load(UINT lang_id )
 #endif
 
 
-	HRSRC hrsrc = FindResource(hInst, filename, RT_HTML);	// ƒŠƒ\[ƒX‚É‘g‚İ‚ñ‚¾‚Ì–¼‘O‚ªujpgv‚Ìê‡
+	HRSRC hrsrc = FindResource(hInst, filename, RT_HTML);	// ãƒªã‚½ãƒ¼ã‚¹ã«çµ„ã¿è¾¼ã‚“ã æ™‚ã®åå‰ãŒã€Œjpgã€ã®å ´åˆ
 	DWORD dwFileSize = SizeofResource(hInst, hrsrc);
 	HANDLE hres = LoadResource(hInst, hrsrc);
 

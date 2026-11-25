@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+ï»¿#include "StdAfx.h"
 #include ".\reshtmlfile.h"
 #include "logging.h"
 
@@ -6,7 +6,7 @@ CResHtmlFile::CResHtmlFile(LPCTSTR res_name, UINT codepage)
 {
 	HINSTANCE hInst = _Module.GetResourceInstance() ;
 
-	HRSRC hrsrc = FindResource(hInst,res_name,RT_HTML);	// ƒŠƒ\[ƒX‚É‘g‚İ‚ñ‚¾‚Ì–¼‘O‚ªujpgv‚Ìê‡
+	HRSRC hrsrc = FindResource(hInst,res_name,RT_HTML);	// ãƒªã‚½ãƒ¼ã‚¹ã«çµ„ã¿è¾¼ã‚“ã æ™‚ã®åå‰ãŒã€Œjpgã€ã®å ´åˆ
 	if (! hrsrc)
 	{
 		CString msg ;

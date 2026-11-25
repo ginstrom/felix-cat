@@ -1,8 +1,8 @@
-// ClipboardBackup.cpp: implementation of the CClipboardBackup class.
+﻿// ClipboardBackup.cpp: implementation of the CClipboardBackup class.
 //
 // Copyright 2006 (c) RegExLab.com
 //
-// Author: ʷ��ΰ (sswater shi)
+// Author: ﾊｷﾊﾙﾎｰ (sswater shi)
 //
 // 2006/05/20 02:03:04
 //

@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "Path.h"
 
 #ifdef UNIT_TEST
@@ -1286,15 +1286,15 @@ BOOST_AUTO_TEST_SUITE( test_get_gloss_fuzzy )
 	{
 		// create a local memory
 		memory_local mem(app_props::get_props(), 0.0f) ;
-		add_record(mem, L"ƒXƒpƒ€", L"ƒXƒpƒ€") ;
-		add_record(mem, L"“Ø“÷", L"“Ø“÷") ;
-		add_record(mem, L"‚è‚ñ‚²", L"‚è‚ñ‚²") ;
+		add_record(mem, L"ã‚¹ãƒ‘ãƒ ", L"ã‚¹ãƒ‘ãƒ ") ;
+		add_record(mem, L"è±šè‚‰", L"è±šè‚‰") ;
+		add_record(mem, L"ã‚Šã‚“ã”", L"ã‚Šã‚“ã”") ;
 
 		search_match_container matches ;
 		search_query_params params ;
 
-		params.m_rich_source = L"„‚Í<b>ƒXƒpƒ€</b>‚ª‘åD‚«‚¾B" ;
-		params.m_source = L"„‚ÍƒXƒpƒ€‚ª‘åD‚«‚¾B" ;
+		params.m_rich_source = L"ç§ã¯<b>ã‚¹ãƒ‘ãƒ </b>ãŒå¤§å¥½ãã ã€‚" ;
+		params.m_source = L"ç§ã¯ã‚¹ãƒ‘ãƒ ãŒå¤§å¥½ãã ã€‚" ;
 		params.m_ignore_case = true ;
 
 		app_props::properties_glossary glossprops ;
@@ -1308,15 +1308,15 @@ BOOST_AUTO_TEST_SUITE( test_get_gloss_fuzzy )
 	{
 		// create a local memory
 		memory_local mem(app_props::get_props(), 0.0f) ;
-		add_record(mem, L"ƒXƒpƒ€", L"ƒXƒpƒ€") ;
-		add_record(mem, L"“Ø“÷", L"“Ø“÷") ;
-		add_record(mem, L"‚è‚ñ‚²", L"‚è‚ñ‚²") ;
+		add_record(mem, L"ã‚¹ãƒ‘ãƒ ", L"ã‚¹ãƒ‘ãƒ ") ;
+		add_record(mem, L"è±šè‚‰", L"è±šè‚‰") ;
+		add_record(mem, L"ã‚Šã‚“ã”", L"ã‚Šã‚“ã”") ;
 
 		search_match_container matches ;
 		search_query_params params ;
 
-		params.m_rich_source = L"„‚Í<b>“Ø“÷</b>‚ª‘åD‚«‚¾B" ;
-		params.m_source = L"„‚Í“Ø“÷‚ª‘åD‚«‚¾B" ;
+		params.m_rich_source = L"ç§ã¯<b>è±šè‚‰</b>ãŒå¤§å¥½ãã ã€‚" ;
+		params.m_source = L"ç§ã¯è±šè‚‰ãŒå¤§å¥½ãã ã€‚" ;
 		params.m_ignore_case = true ;
 
 		app_props::properties_glossary glossprops ;
@@ -1330,15 +1330,15 @@ BOOST_AUTO_TEST_SUITE( test_get_gloss_fuzzy )
 	{
 		// create a local memory
 		memory_local mem(app_props::get_props(), 0.0f) ;
-		add_record(mem, L"ƒXƒpƒ€", L"ƒXƒpƒ€") ;
-		add_record(mem, L"“Ø“÷", L"“Ø“÷") ;
-		add_record(mem, L"‚è‚ñ‚²", L"‚è‚ñ‚²") ;
+		add_record(mem, L"ã‚¹ãƒ‘ãƒ ", L"ã‚¹ãƒ‘ãƒ ") ;
+		add_record(mem, L"è±šè‚‰", L"è±šè‚‰") ;
+		add_record(mem, L"ã‚Šã‚“ã”", L"ã‚Šã‚“ã”") ;
 
 		search_match_container matches ;
 		search_query_params params ;
 
-		params.m_rich_source = L"„‚Í<b>‚è‚ñ‚²ƒ€</b>‚ª‘åD‚«‚¾B" ;
-		params.m_source = L"„‚Í‚è‚ñ‚²‚ª‘åD‚«‚¾B" ;
+		params.m_rich_source = L"ç§ã¯<b>ã‚Šã‚“ã”ãƒ </b>ãŒå¤§å¥½ãã ã€‚" ;
+		params.m_source = L"ç§ã¯ã‚Šã‚“ã”ãŒå¤§å¥½ãã ã€‚" ;
 		params.m_ignore_case = true ;
 
 		app_props::properties_glossary glossprops ;
@@ -1352,13 +1352,13 @@ BOOST_AUTO_TEST_SUITE( test_get_gloss_fuzzy )
 	{
 		// create a local memory
 		memory_local mem(app_props::get_props(), 0.0f) ;
-		add_record(mem, L"ƒrƒjƒƒ“", L"ƒrƒjƒƒ“") ;
+		add_record(mem, L"ãƒ“ãƒ‹ãƒ­ãƒ³", L"ãƒ“ãƒ‹ãƒ­ãƒ³") ;
 
 		search_match_container matches ;
 		search_query_params params ;
 
-		params.m_rich_source = L"ƒrƒjƒƒ“" ;
-		params.m_source = L"ƒrƒjƒƒ“" ;
+		params.m_rich_source = L"ãƒ“ãƒ‹ãƒ­ãƒ³" ;
+		params.m_source = L"ãƒ“ãƒ‹ãƒ­ãƒ³" ;
 		params.m_ignore_case = true ;
 
 		app_props::properties_glossary glossprops ;
@@ -1375,15 +1375,15 @@ BOOST_AUTO_TEST_SUITE( test_get_gloss_fuzzy )
 	{
 		// create a local memory
 		memory_local mem(app_props::get_props(), 0.0f) ;
-		add_record(mem, L"ƒXƒpƒ€", L"ƒXƒpƒ€") ;
-		add_record(mem, L"ƒx[ƒRƒ“", L"ƒx[ƒRƒ“") ;
-		add_record(mem, L"‚è‚ñ‚²", L"‚è‚ñ‚²") ;
+		add_record(mem, L"ã‚¹ãƒ‘ãƒ ", L"ã‚¹ãƒ‘ãƒ ") ;
+		add_record(mem, L"ãƒ™ãƒ¼ã‚³ãƒ³", L"ãƒ™ãƒ¼ã‚³ãƒ³") ;
+		add_record(mem, L"ã‚Šã‚“ã”", L"ã‚Šã‚“ã”") ;
 
 		search_match_container matches ;
 		search_query_params params ;
 
-		params.m_rich_source = L"„‚Í<b>ƒx[</b>‚ª‘åD‚«‚¾B" ;
-		params.m_source = L"„‚Íƒx[‚ª‘åD‚«‚¾B" ;
+		params.m_rich_source = L"ç§ã¯<b>ãƒ™ãƒ¼</b>ãŒå¤§å¥½ãã ã€‚" ;
+		params.m_source = L"ç§ã¯ãƒ™ãƒ¼ãŒå¤§å¥½ãã ã€‚" ;
 		params.m_ignore_case = true ;
 
 		app_props::properties_glossary glossprops ;

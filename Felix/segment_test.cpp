@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+Ôªø#include "StdAfx.h"
 #include "segment.h"
 
 #include <boost/test/unit_test.hpp>
@@ -47,7 +47,7 @@ BOOST_AUTO_TEST_SUITE( TestCmpmaker )
 	{
 		CmpMaker maker ;
 		maker.m_ignore_width = true ;
-		wstring rich = L"<b>FOO</b>ÇPÇP<i>BAR</i>" ;
+		wstring rich = L"<b>FOO</b>ÔºëÔºë<i>BAR</i>" ;
 		wstring stripped = maker.make_cmp( rich ) ;
 		BOOST_CHECK_EQUAL( stripped, L"FOO11BAR" ) ;
 	}
@@ -55,9 +55,9 @@ BOOST_AUTO_TEST_SUITE( TestCmpmaker )
 	{
 		CmpMaker maker ;
 		maker.m_ignore_hira_kata = true ;
-		wstring rich = L"<b>FOO</b>Ç†ÇŒ<i>BAR</i>" ;
+		wstring rich = L"<b>FOO</b>„ÅÇ„Å∞<i>BAR</i>" ;
 		wstring stripped = maker.make_cmp( rich ) ;
-		BOOST_CHECK_EQUAL( stripped, L"FOOÉAÉoBAR" ) ;
+		BOOST_CHECK_EQUAL( stripped, L"FOO„Ç¢„ÉêBAR" ) ;
 	}
 	BOOST_AUTO_TEST_CASE( test_all_true )
 	{
@@ -65,9 +65,9 @@ BOOST_AUTO_TEST_SUITE( TestCmpmaker )
 		maker.m_ignore_case = true ;
 		maker.m_ignore_width = true ;
 		maker.m_ignore_hira_kata = true ;
-		wstring rich = L"ÇPÇP<b> FOO </b>Ç†ÇŒ<i> BAR </i>" ;
+		wstring rich = L"ÔºëÔºë<b> FOO </b>„ÅÇ„Å∞<i> BAR </i>" ;
 		wstring stripped = maker.make_cmp( rich ) ;
-		BOOST_CHECK_EQUAL( stripped, L"11 foo ÉAÉo bar " ) ;
+		BOOST_CHECK_EQUAL( stripped, L"11 foo „Ç¢„Éê bar " ) ;
 	}
 BOOST_AUTO_TEST_SUITE_END()
 	// Segment

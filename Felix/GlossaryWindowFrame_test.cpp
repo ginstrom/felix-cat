@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+ï»¿#include "StdAfx.h"
 #include "GlossaryWindowFrame.h"
 #include "record_local.h"
 #include "memory_local.h"
@@ -183,7 +183,7 @@ BOOST_AUTO_TEST_SUITE( TestGlossaryWindow )
 		app_props::props_ptr props(new app_props::properties) ;
 		GlossaryWindowFrame gloss_dlg(props) ;
 		InputDeviceFake *device = new InputDeviceFake ;
-		device->set_view(string2string(wstring(L"“ú–{Œê\tJapanese\n‰pŒê\tEnglish\n"))) ;
+		device->set_view(string2string(wstring(L"æ—¥æœ¬èª\tJapanese\nè‹±èª\tEnglish\n"))) ;
 		gloss_dlg.m_input_device = input_device_ptr(device) ;
 		CString filename = _T("c:\\test\\tabbed-text.txt") ;
 		gloss_dlg.import_tabbed_text(filename) ;
@@ -229,10 +229,10 @@ BOOST_AUTO_TEST_SUITE( TestGlossaryWindow )
 		mem_engine::memory_pointer mem = FelixFactory().make_memory() ;
 		record_pointer rec1(new record_local) ;
 		record_pointer rec2(new record_local) ;
-		rec1->set_source(L"‚è‚ñ‚²") ;
+		rec1->set_source(L"ã‚Šã‚“ã”") ;
 		rec1->set_trans(L"apple") ;
 
-		rec2->set_source(L"“ú–{Œê") ;
+		rec2->set_source(L"æ—¥æœ¬èª") ;
 		rec2->set_trans(L"Japanese") ;
 
 		mem->add_record(rec1) ;
@@ -273,10 +273,10 @@ BOOST_AUTO_TEST_SUITE( TestGlossaryWindow )
 		mem_engine::memory_pointer mem = FelixFactory().make_memory() ;
 		record_pointer rec1(new record_local) ;
 		record_pointer rec2(new record_local) ;
-		rec1->set_source(L"‚è‚ñ‚²") ;
+		rec1->set_source(L"ã‚Šã‚“ã”") ;
 		rec1->set_trans(L"apple") ;
 
-		rec2->set_source(L"“ú–{Œê") ;
+		rec2->set_source(L"æ—¥æœ¬èª") ;
 		rec2->set_trans(L"Japanese") ;
 
 		mem->add_record(rec1) ;
@@ -285,8 +285,8 @@ BOOST_AUTO_TEST_SUITE( TestGlossaryWindow )
 		gloss_dlg.export_multiterm_6_sub(source, target, filename, mem) ;
 
 		wstring fmt = L"Japanese\tEnglish\tNotes\n" ;
-		fmt += L"‚è‚ñ‚²\tapple\t-\n" ;
-		fmt += L"“ú–{Œê\tJapanese\t-\n" ;
+		fmt += L"ã‚Šã‚“ã”\tapple\t-\n" ;
+		fmt += L"æ—¥æœ¬èª\tJapanese\t-\n" ;
 		string expected = string2string(fmt) ;
 
 		file::view fview ;

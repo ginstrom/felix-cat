@@ -1,4 +1,4 @@
-// Properties.cpp: implementation of the CProperties class.
+Ôªø// Properties.cpp: implementation of the CProperties class.
 //
 //////////////////////////////////////////////////////////////////////
 
@@ -41,7 +41,7 @@ m_properties( props )
 {
 	m_psh.dwFlags |= PSH_NOAPPLYNOW  ;
 
-	m_title = CW2T(L"Felix ÉÜÅ[ÉUê›íË") ;
+	m_title = CW2T(L"Felix „É¶„Éº„Ç∂Ë®≠ÂÆö") ;
 	m_psh.pszCaption = (LPCTSTR)m_title ;
 
 	AddPage(m_page1) ;

@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "WordControllerWord.h"
 
 #ifdef UNIT_TEST
@@ -30,31 +30,31 @@ namespace easyunit
 		ASSERT_TRUE( ! controller.is_ignorable(text, false, SKIP_IF_J ) ) ;
 
 		// SKIP_IF_J
-		text = L"–ó•¶" ;
+		text = L"è¨³æ–‡" ;
 		ASSERT_TRUE( controller.is_ignorable(text, true, SKIP_IF_J ) ) ;
 		text = L"spam" ;
 		ASSERT_TRUE( ! controller.is_ignorable(text, true, SKIP_IF_J ) ) ;
-		text = L"–ó•¶" ;
+		text = L"è¨³æ–‡" ;
 		ASSERT_TRUE( controller.is_ignorable(text, false, SKIP_IF_J ) ) ;
 		text = L"spam" ;
 		ASSERT_TRUE( ! controller.is_ignorable(text, false, SKIP_IF_J ) ) ;
 
 		// SKIP_UNLESS_J
-		text = L"–ó•¶" ;
+		text = L"è¨³æ–‡" ;
 		ASSERT_TRUE( ! controller.is_ignorable(text, true, SKIP_UNLESS_J ) ) ;
 		text = L"spam" ;
 		ASSERT_TRUE( controller.is_ignorable(text, true, SKIP_UNLESS_J ) ) ;
-		text = L"–ó•¶" ;
+		text = L"è¨³æ–‡" ;
 		ASSERT_TRUE( ! controller.is_ignorable(text, false, SKIP_UNLESS_J ) ) ;
 		text = L"spam" ;
 		ASSERT_TRUE( controller.is_ignorable(text, false, SKIP_UNLESS_J ) ) ;
 
 		// NO_SKIP
-		text = L"–ó•¶" ;
+		text = L"è¨³æ–‡" ;
 		ASSERT_TRUE( ! controller.is_ignorable(text, true, NO_SKIP ) ) ;
 		text = L"spam" ;
 		ASSERT_TRUE( ! controller.is_ignorable(text, true, NO_SKIP ) ) ;
-		text = L"–ó•¶" ;
+		text = L"è¨³æ–‡" ;
 		ASSERT_TRUE( ! controller.is_ignorable(text, false, NO_SKIP ) ) ;
 		text = L"spam" ;
 		ASSERT_TRUE( ! controller.is_ignorable(text, false, NO_SKIP ) ) ;

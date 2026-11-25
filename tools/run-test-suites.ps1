@@ -61,7 +61,8 @@ $env:BOOST_TEST_LIST_CONTENT = 'HRF'
 $p = Start-Process $Exe -WorkingDirectory (Split-Path $Exe) -PassThru -Wait `
       -RedirectStandardOutput "$OutDir\list-out.txt" -RedirectStandardError "$OutDir\list.txt"
 Remove-Item Env:BOOST_TEST_LIST_CONTENT
-$suites = Get-Content "$OutDir\list.txt" | Where-Object { $_ -match '^\S' } | ForEach-Object { $_.TrimEnd('*') } | Select-Object -Unique
+# (The listing also picks up trace lines that Felix writes to stderr; skip those.)
+$suites = Get-Content "$OutDir\list.txt" | Where-Object { $_ -match '^\w+\*?$' } | ForEach-Object { $_.TrimEnd('*') } | Select-Object -Unique
 # "-File ... -Only A,B" arrives as the single string "A,B".
 if ($Only) { $Only = $Only -split ','; $suites = $suites | Where-Object { $Only -contains $_ } }
 "suites: $($suites.Count)"
@@ -97,5 +98,7 @@ Remove-Item Env:BOOST_TEST_RUN_FILTERS -ErrorAction SilentlyContinue
 $summary | Export-Csv "$OutDir\summary.csv" -NoTypeInformation
 "total ran (with assertions): " + ($summary | Measure-Object Ran -Sum).Sum
 "total bare passes:           " + ($summary | Measure-Object Bare -Sum).Sum
-"suites with failures/crashes/timeouts:"
-$summary | Where-Object { $_.Failed -or $_.Crash -or $_.Timeout } | Format-Table -AutoSize -Wrap | Out-String -Width 300
+$bad = @($summary | Where-Object { $_.Failed -or $_.Crash -or $_.Timeout })
+"suites with failures/crashes/timeouts: $($bad.Count)"
+$bad | Format-Table -AutoSize -Wrap | Out-String -Width 300
+if ($bad.Count) { exit 1 } else { exit 0 }

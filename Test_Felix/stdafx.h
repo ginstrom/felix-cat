@@ -1,4 +1,4 @@
-// stdafx.h : include file for standard system include files,
+ï»¿// stdafx.h : include file for standard system include files,
 // or project specific include files that are used frequently, but
 // are changed infrequently
 //
@@ -18,8 +18,8 @@
 #define _RICHEDIT_VER	0x0300  // richedit2 and above has the unicode version
 
 #pragma warning( disable : 4127 ) // #conditional expression is constant
-#pragma warning( disable : 4267 ) // 'size_t' ‚©‚ç 'DWORD' ‚É•ÏŠ·‚µ‚Ü‚µ‚½Bƒf[ƒ^‚ª¸‚í‚ê‚Ä‚¢‚é‚©‚à‚µ‚ê‚Ü‚¹‚ñB
-#pragma warning( disable : 4503 ) // ‘•ü‚³‚ê‚½–¼‘O‚Ì’·‚³‚ªŒÀŠE‚ğ’´‚¦‚Ü‚µ‚½B–¼‘O‚ÍØ‚èÌ‚Ä‚ç‚ê‚Ü‚·B
+#pragma warning( disable : 4267 ) // 'size_t' ã‹ã‚‰ 'DWORD' ã«å¤‰æ›ã—ã¾ã—ãŸã€‚ãƒ‡ãƒ¼ã‚¿ãŒå¤±ã‚ã‚Œã¦ã„ã‚‹ã‹ã‚‚ã—ã‚Œã¾ã›ã‚“ã€‚
+#pragma warning( disable : 4503 ) // è£…é£¾ã•ã‚ŒãŸåå‰ã®é•·ã•ãŒé™ç•Œã‚’è¶…ãˆã¾ã—ãŸã€‚åå‰ã¯åˆ‡ã‚Šæ¨ã¦ã‚‰ã‚Œã¾ã™ã€‚
 // #pragma warning( disable : 4995 ) // #pragma deprecated
 
 #pragma warning( disable : 4510 ) // 'class' : default constructor could not be generated
@@ -101,7 +101,7 @@ typedef boost::basic_format< TCHAR > tformat;
 using namespace boost::foreach ;
 #define foreach BOOST_FOREACH
 
-#pragma warning( disable : 4701 ) // ‰Šú‰»‚³‚ê‚Ä‚¢‚È‚¢‰Â”\«‚Ì‚ ‚éƒ[ƒJƒ‹•Ï” 'result' ‚ªg—p‚³‚ê‚Ü‚·
+#pragma warning( disable : 4701 ) // åˆæœŸåŒ–ã•ã‚Œã¦ã„ãªã„å¯èƒ½æ€§ã®ã‚ã‚‹ãƒ­ãƒ¼ã‚«ãƒ«å¤‰æ•° 'result' ãŒä½¿ç”¨ã•ã‚Œã¾ã™
 #include <boost/lexical_cast.hpp>
 #pragma warning( default : 4701 )
 

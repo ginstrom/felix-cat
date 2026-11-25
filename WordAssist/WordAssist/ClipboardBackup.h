@@ -1,8 +1,8 @@
-// ClipboardBackup.h: interface for the CClipboardBackup class.
+﻿// ClipboardBackup.h: interface for the CClipboardBackup class.
 //
 // Copyright 2006 (c) RegExLab.com
 //
-// Author: ʷ��ΰ (sswater shi)
+// Author: ﾊｷﾊﾙﾎｰ (sswater shi)
 //
 // 2006/05/17 01:21:10
 //

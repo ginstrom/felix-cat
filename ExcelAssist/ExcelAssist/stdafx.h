@@ -1,4 +1,4 @@
-/*!
+ï»¿/*!
  * <File comment goes here!!>
  * 
  * Copyright (c) 2005 by <your name/ organization here>
@@ -16,8 +16,8 @@
 #define WIN32_IE		0x0600  // we need 6 or higher...
 #define _RICHEDIT_VER	0x0300  // richedit2 and above has the unicode version
 
-#pragma warning( disable : 4267 ) // 'size_t' ‚©‚ç 'DWORD' ‚É•ÏŠ·‚µ‚Ü‚µ‚½Bƒf[ƒ^‚ª¸‚í‚ê‚Ä‚¢‚é‚©‚à‚µ‚ê‚Ü‚¹‚ñB
-#pragma warning( disable : 4312 ) // 'reinterpret_cast' : 'LONG' ‚©‚ç‚æ‚è‘å‚«‚¢ƒTƒCƒY‚Ì 'HINSTANCE' ‚Ö•ÏŠ·‚µ‚Ü‚·B
+#pragma warning( disable : 4267 ) // 'size_t' ã‹ã‚‰ 'DWORD' ã«å¤‰æ›ã—ã¾ã—ãŸã€‚ãƒ‡ãƒ¼ã‚¿ãŒå¤±ã‚ã‚Œã¦ã„ã‚‹ã‹ã‚‚ã—ã‚Œã¾ã›ã‚“ã€‚
+#pragma warning( disable : 4312 ) // 'reinterpret_cast' : 'LONG' ã‹ã‚‰ã‚ˆã‚Šå¤§ãã„ã‚µã‚¤ã‚ºã® 'HINSTANCE' ã¸å¤‰æ›ã—ã¾ã™ã€‚
 
 #ifndef STRICT
 #define STRICT
@@ -69,7 +69,7 @@ typedef boost::basic_format< TCHAR > tformat;
 #include <boost/bind.hpp>
 
 #pragma warning(push)
-#pragma warning( disable : 4701 ) // ‰Šú‰»‚³‚ê‚Ä‚¢‚È‚¢‰Â”\«‚Ì‚ ‚éƒ[ƒJƒ‹•Ï” 'result' ‚ªg—p‚³‚ê‚Ü‚·
+#pragma warning( disable : 4701 ) // åˆæœŸåŒ–ã•ã‚Œã¦ã„ãªã„å¯èƒ½æ€§ã®ã‚ã‚‹ãƒ­ãƒ¼ã‚«ãƒ«å¤‰æ•° 'result' ãŒä½¿ç”¨ã•ã‚Œã¾ã™
 #include <boost/lexical_cast.hpp>
 #pragma warning(pop)
 #include <boost/algorithm/string.hpp>
