@@ -77,3 +77,8 @@ Changes:
 - Text box (`Shapes.AddTextbox`, selected): `Selection` type `TextBox`; QI of that object into `Excel::RangePtr` gives NULL with no exception, so the contract's check is correct. Caveat: in the automated instance the text-box selection reverts to a Range by itself within milliseconds of `Shape.Select` (before any QI or refresh), so "text box stays selected after Get Translation" could not be observed here. A first probe version that re-read `Application.Selection` saw a Range and wrongly suggested the QI succeeds for text boxes; querying the captured TextBox object settled it.
 
 **Manual AC9-AC10 (in Excel with the add-in): not run - deferred to QA** (needs `tools\register-felix.ps1 -Configuration Debug`, admin/UAC, and a Felix memory). The probe above covers the refresh mechanism for AC9, AC10a and AC10b, not the add-in path; AC10c (text box stays selected) needs a real interactive check.
+
+**Review round 1** (1 finding, fixed):
+- Found: Test_Excel Release|x64 failed to compile (`excel_selection_writer_test.cpp(12,27): error C2039: 'FakeApplication': is not a member of 'excel'`), because the test was guarded only by `#ifdef UNIT_TEST` and `fake_excel.h` defines the fakes only under `_DEBUG`.
+- Fix: the test is now guarded by `#if defined(UNIT_TEST) && defined(_DEBUG)`, matching `fake_excel.h`. In Release the 4 new cases are compiled out.
+- Verified: Test_Excel.vcxproj Release|x64 built, exit 0; `x64\Release\Test_Excel.exe --report_level=short` -> 57 test cases out of 57 passed, 160 assertions. Debug|x64 rebuilt, exit 0; `Test_Excel.exe --report_level=short` -> 61 test cases out of 61 passed, 174 assertions.

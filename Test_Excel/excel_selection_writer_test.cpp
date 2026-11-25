@@ -2,7 +2,8 @@
 #include "../ExcelAssist/ExcelAssist/excel_selection_writer.h"
 #include "../ExcelAssist/ExcelAssist/fake_excel.h"
 
-#ifdef UNIT_TEST
+// The fakes in fake_excel.h exist only in Debug builds.
+#if defined(UNIT_TEST) && defined(_DEBUG)
 #include <boost/test/unit_test.hpp>
 
 BOOST_AUTO_TEST_SUITE( ExcelSelectionWriterTest )
