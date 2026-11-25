@@ -1,10 +1,10 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<META HTTP-EQUIV="content-type" CONTENT="text/html; charset=Shift_JIS">
+<META HTTP-EQUIV="content-type" CONTENT="text/html; charset=utf-8">
 
     <title>
-Felix - �|��҂̂��߂̖|�󃁃��� ::Felix �\�t�g�E�F�A�ƃX�N���v�g
+Felix - 翻訳者のための翻訳メモリ ::Felix ソフトウェアとスクリプト
 </title>
     <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
     <link href="css/style.css" rel="stylesheet" type="text/css" />
@@ -30,7 +30,7 @@ Felix - �|��҂̂��߂̖|�󃁃��� ::Felix �\�t�g�E�F�A�ƃX�N���v�g
 <div id="container">
     <div id="header">
         <div class="left">
-<h1>Felix �}�j���A��</h1>
+<h1>Felix マニュアル</h1>
         </div>
     </div>
 
@@ -41,93 +41,93 @@ Felix - �|��҂̂��߂̖|�󃁃��� ::Felix �\�t�g�E�F�A�ƃX�N���v�g
                        <div clas="item">
 
 
-<h1>Felix �\�t�g�E�F�A�ƃX�N���v�g</h1>
+<h1>Felix ソフトウェアとスクリプト</h1>
 
-<p>Felix �\�t�g�E�F�A�̂قƂ�ǂ̋@�\�́AVisual Basic (VB)�AVisual Basic for Applications (VBA)�A���� COM �Ή��v���O���~���O���� (C++ �Ȃ�) �̃X�N���v�g���g�p���ċL�q���邱�Ƃ��ł��܂��B���̂��߁A<strong>Felix</strong> �͔��ɏ_��ŋ��͂ȃc�[���ɂȂ��Ă��܂��B�Ǝ��̃J�X�^�� �X�N���v�g���J������΁A���܂��܂ȃ^�X�N�i�����̑O�����Ȃǁj�������I�Ɏ��s���邱�Ƃ��ł��܂��B </p>
+<p>Felix ソフトウェアのほとんどの機能は、Visual Basic (VB)、Visual Basic for Applications (VBA)、他の COM 対応プログラミング言語 (C++ など) のスクリプトを使用して記述することができます。そのため、<strong>Felix</strong> は非常に柔軟で強力なツールになっています。独自のカスタム スクリプトを開発すれば、さまざまなタスク（文書の前処理など）を自動的に実行することができます。 </p>
 
-<p>���ہAFelix �\�t�g�E�F�A�ɕt�������� Microsoft Word �}�N���� Microsoft Excel �}�N���́AVB �� VBA �Ȃǂ̃X�N���v�g�𗘗p���āA���ׂĂ̏��������s���Ă��܂��B�����̃X�N���v�g�����[�U�[�Ǝ��̖ړI�ɉ����ăJ�X�^�}�C�Y������A�V�����X�N���v�g���������肷�邱�Ƃ��ł��܂��B����ɁA<B>Felix</B> �̋@�\�𗘗p���鑼�� VB �X�N���v�g��A�v���P�[�V�������J�����邱�Ƃ��\�ł��B </p>
+<p>実際、Felix ソフトウェアに付属しいる Microsoft Word マクロと Microsoft Excel マクロは、VB や VBA などのスクリプトを利用して、すべての処理を実行しています。これらのスクリプトをユーザー独自の目的に応じてカスタマイズしたり、新しいスクリプトを書いたりすることができます。さらに、<B>Felix</B> の機能を利用する他の VB スクリプトやアプリケーションを開発することも可能です。 </p>
 
-<p>���Ƃ��΁A<strong>Felix</strong> �\�t�g�E�F�A�ɕt���� <strong>TagAssist</strong> �A�v���P�[�V�����iHTML �� XML �Ȃǂ̃^�O�t���t�@�C����ҏW����c�[���j�ł́A�I�[�g���[�V�����֐���ʂ��� <strong>Felix</strong> �̋@�\�𗘗p���A���܂��܂ȕҏW�^�X�N�����s���Ă��܂��B </p>
+<p>たとえば、<strong>Felix</strong> ソフトウェアに付属の <strong>TagAssist</strong> アプリケーション（HTML や XML などのタグ付きファイルを編集するツール）では、オートメーション関数を通じて <strong>Felix</strong> の機能を利用し、さまざまな編集タスクを実行しています。 </p>
 
 <a name = "1"></a>
-<h2>1. �I�[�g���[�V�����֐��̎d�l  </h2>
+<h2>1. オートメーション関数の仕様  </h2>
 
 
 
-<p><strong>�v���p�e�B�F</strong>
+<p><strong>プロパティ：</strong>
 <table border=1>
   
   <TR>
-<TH>���O 
-<TH>�^ 
-<TH>�ǎ�� 
-<TH>������ 
-<TH>���� 
+<TH>名前 
+<TH>型 
+<TH>読取り 
+<TH>書込み 
+<TH>説明 
   <TR>
 <TD><CODE>CorrectedTranslation</CODE> 
 <TD><CODE>String</CODE> 
 <TD>Yes 
 <TD>Yes 
-<TD>���ݕ\������Ă���󕶂��擾�܂��͒������܂��B</TD>
+<TD>現在表示されている訳文を取得または訂正します。</TD>
   <TR>
 <TD><CODE>GlossaryLocation</CODE> 
 <TD><CODE>String</CODE> 
 <TD>Yes 
 <TD>Yes 
-<TD>���C�� �O���T���iMain Glossary�j�t�@�C���̖��O���擾�܂��͐ݒ肵�܂��B </TD>
+<TD>メイン グロサリ（Main Glossary）ファイルの名前を取得または設定します。 </TD>
   <TR>
 <TD><CODE>GlossarySize</CODE> 
 <TD><CODE>Long</CODE> 
 <TD>Yes 
 <TD>No 
-<TD>���C�� �O���T���iMain Glossary�j�t�@�C���̃T�C�Y���擾���܂��B </TD>
+<TD>メイン グロサリ（Main Glossary）ファイルのサイズを取得します。 </TD>
   <TR>
 <TD><CODE>IsVisible</CODE> 
 <TD><CODE>Boolean</CODE> 
 <TD>Yes 
 <TD>Yes 
-<TD>�|�󃁃��� �E�B���h�E�̕\��/��\���̏�Ԃ𒲂ׂ܂�(�ǂݎ�莞)�B </TD>
+<TD>翻訳メモリ ウィンドウの表示/非表示の状態を調べます(読み取り時)。 </TD>
   <TR>
 <TD><CODE>MemoryLocation</CODE> 
 <TD><CODE>String</CODE> 
 <TD>Yes 
 <TD>Yes 
-<TD>�|�󃁃����̃t�@�C�������擾�܂��͐ݒ肵�܂��B </TD>
+<TD>翻訳メモリのファイル名を取得または設定します。 </TD>
   <TR>
 <TD><CODE>MemorySize</CODE> 
 <TD><CODE>Long</CODE> 
 <TD>Yes 
 <TD>No 
-<TD>�|�󃁃����̃T�C�Y���擾���܂��B </TD>
+<TD>翻訳メモリのサイズを取得します。 </TD>
   <TR>
 <TD><CODE>NumGlossaryMatches</CODE> 
 <TD><CODE>Integer</CODE> 
 <TD>Yes 
 <TD>No 
-<TD>���C�� �O���T���iMain Glossary�j�t�@�C�����ł̈�v�̌������擾���܂��B </TD>
+<TD>メイン グロサリ（Main Glossary）ファイル内での一致の件数を取得します。 </TD>
   <TR>
 <TD><CODE>NumMatches</CODE> 
 <TD><CODE>Long</CODE> 
 <TD>Yes 
 <TD>No 
-<TD>�|�󃁃������ł̈�v�̌������擾���܂��B </TD>
+<TD>翻訳メモリ内での一致の件数を取得します。 </TD>
   <TR>
 <TD><CODE>Query</CODE> 
 <TD><CODE>String</CODE> 
 <TD>Yes 
 <TD>Yes 
-<TD>�|�󃁃������Ō������镪�߁i�Ɖ�= �N�G���[�j���擾�܂��͐ݒ肵�܂��B�N�G���[��ݒ��ƁA�|�󃁃��� �E�B���h�E�́u�Ɖ�v�t�B�[���h�̕��߂��|�󃁃������Ō�������A(�����܂�) ��v��������/�󕶃y�A���|�󃁃��� �E�B���h�E�ɕ\������܂��B �܂��A�u�Ɖ�v�t�B�[���h�̕��߂Ɋ܂܂��P���t���[�Y���O���T�����Ō�������A��v�����O���T�� �G���g�����O���T�� �E�B���h�E�ɕ\������܂��B </TD>
+<TD>翻訳メモリ内で検索する分節（照会= クエリー）を取得または設定します。クエリーを設定ると、翻訳メモリ ウィンドウの「照会」フィールドの分節が翻訳メモリ内で検索され、(あいまい) 一致した原文/訳文ペアが翻訳メモリ ウィンドウに表示されます。 また、「照会」フィールドの分節に含まれる単語やフレーズがグロサリ内で検索され、一致したグロサリ エントリがグロサリ ウィンドウに表示されます。 </TD>
   <TR>
 <TD><CODE>RegistryValue</CODE> 
 <TD><CODE>String</CODE> 
 <TD>Yes 
 <TD>Yes 
     <TD>
-<p>���W�X�g�����̒l���擾�܂��͐ݒ肵�܂��B<strong>Felix</strong> �̊֐���ʂ��ă��W�X�g���𑀍삷�邱�Ƃ́A���[�U�[���g�����W�X�g���𒼐ڑ��삷�邱�ƂƔ�r���āA���̂悤�ȗ��_������܂��B</p>
+<p>レジストリ内の値を取得または設定します。<strong>Felix</strong> の関数を通じてレジストリを操作することは、ユーザー自身がレジストリを直接操作することと比較して、次のような利点があります。</p>
       <ol>
-<li>�قƂ�ǂ̃}�N�������X�N���v�g����ɂ́A���W�X�g���l��ݒ肷��@�\��������Ă��Ȃ����A���Ɍ���ꂽ�@�\��������܂���B 
-<li><strong>Felix</strong> ���A���C���X�g�[�������ꍇ�A<strong>Felix</strong> ��ʂ��Đݒ肳�ꂽ���W�X�g���l�͎����I�ɍ폜����܂��B ���[�U�[���g�����ڐݒ肵�����W�X�g���l�͍폜����܂���B</li></ol>
-<p>      RegistryValue �֐����Ăяo���Ƃ��́A2�̕���������i�A�v���P�[�V�������ƃL�[�j���w�肵�܂��B<br> ��F<br> MemoryLocation = oFelix.RegistryValue( &quot;Word&quot;, &quot;CurrentProjectMemory&quot; ) <br> oFelix.RegistryValue( &quot;Word&quot;, &quot;SourceWordCount&quot; ) 
+<li>ほとんどのマクロ言語やスクリプト言語には、レジストリ値を設定する機能が備わっていないか、非常に限られた機能しかありません。 
+<li><strong>Felix</strong> をアンインストールした場合、<strong>Felix</strong> を通じて設定されたレジストリ値は自動的に削除されます。 ユーザー自身が直接設定したレジストリ値は削除されません。</li></ol>
+<p>      RegistryValue 関数を呼び出すときは、2つの文字列引数（アプリケーション名とキー）を指定します。<br> 例：<br> MemoryLocation = oFelix.RegistryValue( &quot;Word&quot;, &quot;CurrentProjectMemory&quot; ) <br> oFelix.RegistryValue( &quot;Word&quot;, &quot;SourceWordCount&quot; ) 
         </div>
        <div clas="item">
       <h1></h1>
@@ -156,128 +156,128 @@ Felix - �|��҂̂��߂̖|�󃁃��� ::Felix �\�t�g�E�F�A�ƃX�N���v�g
 <TD><CODE>Double</CODE> 
 <TD>Yes 
 <TD>No 
-<TD>���ݕ\������Ă���G���g���̈�v��(%)���擾���܂��B </TD>
+<TD>現在表示されているエントリの一致率(%)を取得します。 </TD>
   <TR>
 <TD><CODE>Translation</CODE> 
 <TD><CODE>String</CODE> 
 <TD>Yes 
 <TD>Yes 
-<TD>���݂̃N�G���[�i�Ɖ�t�B�[���h�j�ɑΉ�����󕶂��擾�܂��͐ݒ肵�܂��B�󕶂�ݒ肷��ƁA�V�����|��G���g�����쐬����āA�|�󃁃����ɒǉ�����܂��i�܂��͖|�󃁃������̊����̃G���g�����u������܂��j�B �V�����|��G���g���ł́A�N�G���[�i�Ɖ�t�B�[���h�j�������Ƃ��Ďg�p����A�|��҂����͂������e���󕶂Ƃ��Ďg�p����܂��B </TD></TR>
+<TD>現在のクエリー（照会フィールド）に対応する訳文を取得または設定します。訳文を設定すると、新しい翻訳エントリが作成されて、翻訳メモリに追加されます（または翻訳メモリ内の既存のエントリが置換されます）。 新しい翻訳エントリでは、クエリー（照会フィールド）が原文として使用され、翻訳者が入力した内容が訳文として使用されます。 </TD></TR>
 
   <TR>
 <TD><CODE>TranslationForReview</CODE> 
 <TD><CODE>String</CODE> 
 <TD>Yes 
 <TD>Yes 
-<TD>�|�󃁃������Ŗ󕶂��������邩�A���݂̖󕶂����o���܂��B</TD></TR>
+<TD>翻訳メモリ内で訳文を検索するか、現在の訳文を取り出します。</TD></TR>
 
 </table>
-<p><strong>���\�b�h�F</strong>
+<p><strong>メソッド：</strong>
 <table border=1>
   
   <TR>
-<TH>���\�b�h�� 
-<TH>�p�����[�^ 
-<TH>���^�[���l 
-<TH>����̐��� 
+<TH>メソッド名 
+<TH>パラメータ 
+<TH>リターン値 
+<TH>操作の説明 
   <TR>
 <TD><CODE>AddEntryToGlossary</CODE> 
 <TD><CODE>String </CODE>Source, <CODE>String </CODE>Translation, <CODE>String </CODE>Context 
 <TD>None 
-<TD>�O���T�� �G���g�����O���T�� �t�@�C���ɒǉ����܂��B </TD>
+<TD>グロサリ エントリをグロサリ ファイルに追加します。 </TD>
   <TR>
 <TD><CODE>AddGlossaryEntry</CODE> 
 <TD><CODE>String </CODE>Translation 
 <TD>None 
-<TD>�O���T�� �G���g�����O���T�� �t�@�C���ɒǉ����܂��B�|�󃁃��� �E�B���h�E�Ɍ��ݕ\������Ă��錟���Ώە��߁i�u�Ɖ�v�t�B�[���h�j���O���T�� �G���g���̌����ɂȂ�܂��B </TD>
+<TD>グロサリ エントリをグロサリ ファイルに追加します。翻訳メモリ ウィンドウに現在表示されている検索対象分節（「照会」フィールド）がグロサリ エントリの原文になります。 </TD>
   <TR>
 <TD><CODE>AddMemoryEntry</CODE> 
 <TD><CODE>String </CODE>Source, <CODE>String </CODE>Translation 
 <TD>None 
-<TD>�|��G���g����|�󃁃����ɒǉ����܂��B </TD>
+<TD>翻訳エントリを翻訳メモリに追加します。 </TD>
   <TR>
 <TD><CODE>ClearGlossary</CODE> 
 <TD>None 
 <TD>None 
-<TD>���C�� �O���T�� �E�B���h�E���N���A���܂��B</TD>
+<TD>メイン グロサリ ウィンドウをクリアします。</TD>
   <TR>
 <TD><CODE>ClearMemory</CODE> 
 <TD>None 
 <TD>None 
-<TD>�|�󃁃��� �E�B���h�E���N���A���܂��B</TD>
+<TD>翻訳メモリ ウィンドウをクリアします。</TD>
   <TR>
 <TD><CODE>Concordance</CODE> 
 <TD><CODE>String </CODE>Query 
 <TD>None 
-<TD>�|�󃁃����́u�����v�t�B�[���h�ɑ΂��ăR���R�[�_���X�i��v�j���������s���܂��B </TD>
+<TD>翻訳メモリの「原文」フィールドに対してコンコーダンス（一致）検索を実行します。 </TD>
   <TR>
 <TD><CODE>DeleteTranslation</CODE> 
 <TD>None 
 <TD>None 
-<TD>�|�󃁃��� �E�B���h�E�Ɍ��ݕ\������Ă���|��G���g�����폜���܂��B </TD>
+<TD>翻訳メモリ ウィンドウに現在表示されている翻訳エントリを削除します。 </TD>
   <TR>
 <TD><CODE>EditCurrentMemory</CODE> 
 <TD>None 
 <TD>None 
-<TD>�|�󃁃��� �E�B���h�E�Ɍ��ݕ\������Ă��|��G���g����ҏW���܂��B[�G���g���̕ҏW] �_�C�A���O���\������܂��B</TD>
+<TD>翻訳メモリ ウィンドウに現在表示されてい翻訳エントリを編集します。[エントリの編集] ダイアログが表示されます。</TD>
   <TR>
 <TD><CODE>GlossMatch</CODE> 
 <TD><CODE>Integer</CODE> Index 
 <TD>String 
-<TD>�ʒu <EM>Index</EM> �ɂ���O���T�� �G���g�������C�� �O���T���iMain Glossary�j������o���܂��B</TD>
+<TD>位置 <EM>Index</EM> にあるグロサリ エントリをメイン グロサリ（Main Glossary）から取り出します。</TD>
   <TR>
 <TD><CODE>NextTranslation</CODE> 
 <TD>None 
 <TD>None 
-<TD>���̖󕶌���\�����܂��B</TD>
+<TD>次の訳文候補を表示します。</TD>
   <TR>
 <TD><CODE>PrevTranslation</CODE> 
 <TD>None 
 <TD>None 
-<TD>�O�̖󕶌���\�����܂��B</TD>
+<TD>前の訳文候補を表示します。</TD>
   <TR>
 <TD><CODE>Quit</CODE> 
 <TD>None 
 <TD>None 
-<TD><strong>Felix</strong> ���I�����܂��B </TD>
+<TD><strong>Felix</strong> を終了します。 </TD>
   <TR>
 <TD><CODE>QuitSilently</CODE> 
 <TD>None 
 <TD>None 
-<TD>�m�F�p�̃_�C�A���O �{�b�N�X�i�|�󃁃����ւ̕ύX��ۑ�����悤�Ɏw������_�C�A���O�Ȃǁj��\�����Ȃ��ŁA<strong>Felix</strong> ���I�����܂��B </TD>
+<TD>確認用のダイアログ ボックス（翻訳メモリへの変更を保存するように指示するダイアログなど）を表示しないで、<strong>Felix</strong> を終了します。 </TD>
   <TR>
 <TD><CODE>Save</CODE> 
 <TD>None 
 <TD>None 
-<TD>�|�󃁃����ƃ��C�� �O���T����ۑ����܂��B </TD>
+<TD>翻訳メモリとメイン グロサリを保存します。 </TD>
   <TR>
 <TD><CODE>ScoreAtIndex</CODE> 
 <TD><CODE>Integer</CODE> Index 
 <TD><CODE>Double</CODE> 
-<TD>�����ԍ��� <CODE>Index</CODE> �ł���G���g���̃X�R�A���擾���܂��B </TD>
+<TD>索引番号が <CODE>Index</CODE> であるエントリのスコアを取得します。 </TD>
   <TR>
 <TD><CODE>TranslationAtIndex</CODE> 
 <TD><CODE>Integer</CODE> Index 
 <TD><CODE>String</CODE> 
-<TD>�����ԍ��� <CODE>Index</CODE> �ł���G���g���̖󕶂��擾���܂��B 
+<TD>索引番号が <CODE>Index</CODE> であるエントリの訳文を取得します。 
   </TD></TR>
   <TR>
 <TD><CODE>TranslationConcordance</CODE> 
 <TD><CODE>String </CODE>Query 
 <TD>None 
-<TD>�|�󃁃����́u�󕶁v�t�B�[���h�ɑ΂��ăR���R�[�_���X�i��v�j���������s���܂��B</TD></TR> 
+<TD>翻訳メモリの「訳文」フィールドに対してコンコーダンス（一致）検索を実行します。</TD></TR> 
 
 
 </table></p>
 
 <a name = "2">
-<h2> 2. �R�[�h�̗� </h2>
+<h2> 2. コードの例 </h2>
 </a>
 
 <h3>VBA/Visual Basic</h3>
 
 <p>
-<b>�O���T���Ɩ|�󃁃����̃N���A</b>
+<b>グロサリと翻訳メモリのクリア</b>
 </p>
 
 <pre>    ' You could also add the type library to the references and declare
@@ -291,7 +291,7 @@ assistant.ClearMemory
 <h3>C++</h3>
 
 <p>
-<b>�N�G���[�i�Ɖ�j�Ɩ󕶂̐ݒ�</b>
+<b>クエリー（照会）と訳文の設定</b>
 </p>
 
 <pre>
@@ -348,16 +348,16 @@ inline void set_trans( const std::wstring  &amp;trans )
                        <div clas="item">
 
     <ul>
-<li><a href="index.html">�� ��&nbsp;</a></li>
-<li><a href="1.html">1.&nbsp;�T�v</a></li>
-<li><a href="2.html">2. �V�X�e���v������уC���X�g�[��</a></li>
-<li><a href="3.html">3. Felix�̎g����</a></li>
-<li><a href="4.html">4. Felix�̃��j���[</a></li>
-<li><a href="5.html">5. Word�Ŏg�p����</a></li>
-<li><a href="6.html">6. Excel�Ŏg�p����</a></li>
-<li><a href="7.html">7. PowerPoint�Ŏg�p����</a></li>
-<li><a href="8.html">8. �悭������鎿��</a></li>
-<li><strong>�t�^ A�FFelix �\�t�g�E�F�A�ƃX�N���v�g</strong></li>
+<li><a href="index.html">目 次&nbsp;</a></li>
+<li><a href="1.html">1.&nbsp;概要</a></li>
+<li><a href="2.html">2. システム要件およびインストール</a></li>
+<li><a href="3.html">3. Felixの使い方</a></li>
+<li><a href="4.html">4. Felixのメニュー</a></li>
+<li><a href="5.html">5. Wordで使用する</a></li>
+<li><a href="6.html">6. Excelで使用する</a></li>
+<li><a href="7.html">7. PowerPointで使用する</a></li>
+<li><a href="8.html">8. よく聞かれる質問</a></li>
+<li><strong>付録 A：Felix ソフトウェアとスクリプト</strong></li>
     </ul>
         </div>
 
@@ -367,7 +367,7 @@ inline void set_trans( const std::wstring  &amp;trans )
 <br clear="all"/></div>
 
     <div id="footer"><div><div>
-Copyright &copy; 2008 Ginstrom IT Solutions (GITS).| <a href="../../../../index.html" title="Visit the Felix Website">Felix�E�F�u�T�C�g</a> | <a href="mailto:&#115;&#117;&#112;&#112;&#111;&#114;&#116;&#64;&#102;&#101;&#108;&#105;&#120;&#45;&#99;&#97;&#116;&#46;&#99;&#111;&#109;" title="Contact information for Felix developers">���₢���킹</a>
+Copyright &copy; 2008 Ginstrom IT Solutions (GITS).| <a href="../../../../index.html" title="Visit the Felix Website">Felixウェブサイト</a> | <a href="mailto:&#115;&#117;&#112;&#112;&#111;&#114;&#116;&#64;&#102;&#101;&#108;&#105;&#120;&#45;&#99;&#97;&#116;&#46;&#99;&#111;&#109;" title="Contact information for Felix developers">お問い合わせ</a>
     
     </div></div></div>
 </div>

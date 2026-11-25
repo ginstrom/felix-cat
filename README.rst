@@ -30,6 +30,11 @@ It installs Felix to ``C:\Program Files\Felix``, the Office add-ins (each
 optional) and the Visual C++ runtimes they need. In Word, Excel and
 PowerPoint, Felix's toolbar appears on the ribbon's **Add-ins** tab.
 
+The user manual is online in
+`English <https://ginstrom.github.io/felix-cat/manual/en/>`_ and
+`Japanese <https://ginstrom.github.io/felix-cat/manual/jp/>`_ (Felix's Help menu
+opens it too).
+
 **Upgrading from Felix 2.0:** uninstall 2.0 first, so Office doesn't keep
 starting the old version. Back up ``%LOCALAPPDATA%\Felix`` beforehand if you
 customized settings or templates, because the 2.0 uninstaller deletes that
