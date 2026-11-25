@@ -248,7 +248,7 @@ void html_parser::parse_tag()
 	}
 	else
 	{
-		ATLTRACE( "*** Unknown tag name: %s\n", CW2A( tag_name.c_str() ) ) ;
+		ATLTRACE( "*** Unknown tag name: %s\n", static_cast<LPCSTR>(CW2A( tag_name.c_str() )) ) ;
 		ATLASSERT(FALSE && "Unknown tag name") ;
 	}
 }

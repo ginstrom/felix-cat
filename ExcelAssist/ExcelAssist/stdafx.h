@@ -10,8 +10,9 @@
 #pragma once
 
 // Change these values to use different versions
-#define WINVER			0x0500  // Windows 2000
-#define _WINVER			0x0500  // Windows 2000
+#define WINVER			0x0600  // Windows Vista (WTL 10 needs at least XP)
+#define _WINVER			0x0600
+#define _WIN32_WINNT	0x0600
 #define _WIN32_IE		0x0600  // we need 6 or higher...
 #define WIN32_IE		0x0600  // we need 6 or higher...
 #define _RICHEDIT_VER	0x0300  // richedit2 and above has the unicode version

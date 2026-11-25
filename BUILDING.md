@@ -1,8 +1,8 @@
 # Building Felix (Visual Studio 2026)
 
-This branch retargets the main **Felix** application from VS 2013 (`v120`) to
-VS 2026 (`v145`, MSVC 14.50). The Word/Excel/PowerPoint add-ins and the test projects are
-not migrated yet.
+This branch retargets Felix from VS 2013 (`v120`) to VS 2026 (`v145`, MSVC 14.50):
+the main **Felix** application (32-bit), and the **Word, Excel and PowerPoint
+add-ins**, which now also build as 64-bit for 64-bit Office (section 6).
 
 ## 1. Install the toolchain
 
@@ -21,14 +21,15 @@ other locations, copy `Dependencies.local.props.example` to
 
 | Library  | Put it at | Notes |
 |----------|-----------|-------|
-| Boost    | `third_party\boost\` (folder containing `boost\version.hpp`) | Felix needs compiled **Boost.Test, Filesystem and Regex** for 32-bit. The easiest route is the prebuilt installer `boost_1_91_0-msvc-14.5-32.exe`, which creates `lib32-msvc-14.5\`. |
+| Boost    | `third_party\boost\` (folder containing `boost\version.hpp`) | Felix needs compiled **Boost.Test, Filesystem and Regex** for 32-bit. The easiest route is the prebuilt installer `boost_1_91_0-msvc-14.5-32.exe`, which creates `lib32-msvc-14.5\`. The 64-bit add-ins need 64-bit libs in `lib64-msvc-14.5\` (see section 6). |
 | WTL      | `third_party\wtl\Include\` | WTL 10 (SourceForge or the `wtl` NuGet package). |
 | cpptempl | `third_party\cpptempl\` | **Already included in the repo.** Felix's HTML template engine, pinned to the last wide-string version (commit 4c5980c). See `third_party\cpptempl\SOURCE.txt`. |
 
 > **Boost and long paths:** the Boost installer fails with "MoveFile failed; code 3"
 > if its folder path is long, because some doc file names exceed the Windows
 > 260-character limit. Install it to a short path such as `C:\local\boost_1_91_0`
-> and set `BoostDir` and `BoostLibDir` in `Dependencies.local.props`.
+> and set `BoostDir` in `Dependencies.local.props`. (Leave `BoostLibDir` unset:
+> `Dependencies.props` picks `lib32-msvc-14.5` or `lib64-msvc-14.5` per platform.)
 
 Scintilla's headers are already in `common\`. The build copies `Felix\SciLexer.dll`
 next to `Felix.exe`.
@@ -43,13 +44,15 @@ LuaWrapper sources, have been removed from both projects.
 
 ## 3. Build
 
-1. Open `Felix\Felix.sln`. VS will offer to retarget the add-in and test
-   projects. You can **cancel** that for now.
-2. Choose the configuration: `Unicode_Debug|Win32` for development,
-   `Unicode_Release|Win32` for an optimized build, or `Testing|Win32`, which
-   builds the Boost.Test unit tests into the exe (and is the only one that
-   treats warnings as errors).
-3. Build **Felix English** and **Felix Japanese** (the UI resource DLLs), then **Felix**.
+1. Open `Felix\Felix.sln`. (The `.sln` files in the add-in folders are
+   obsolete VS 2005/2008 leftovers; use this one.)
+2. Choose the configuration: `Unicode_Debug` for development,
+   `Unicode_Release` for an optimized build, or `Testing`, which builds the
+   Boost.Test unit tests (Felix's are compiled into the exe; Felix's is the
+   only build that treats all warnings as errors).
+3. Choose the platform: **x64** for 64-bit Office, **Win32** for 32-bit Office.
+   It only affects the add-ins; Felix itself is always built 32-bit.
+4. Build the solution. Felix and its resource DLLs build first, then the add-ins.
 
 Or from a Developer PowerShell:
 
@@ -153,6 +156,73 @@ What it took to get here:
 - The "stack overflow" in `TestComMemories/test_load` was in the test: when the
   load failed it called through a null pointer. It now stops at a `BOOST_REQUIRE`.
 
+## 6. Office add-ins (Word Assist, Excel Assist, PowerPoint Assist)
+
+The add-ins are classic COM add-ins (`IDTExtensibility2`, toolbar buttons that
+Office 2007 and later shows on the ribbon's **Add-ins** tab). Current desktop
+Office for Windows (Microsoft 365, Office 2024) still loads them. They run
+inside Office, so **their bitness must match Office's**: build **x64** for
+64-bit Office (the default for current Office) and **Win32** for 32-bit Office.
+They talk to Felix.exe across processes, so Felix stays 32-bit either way.
+
+**Office must be installed to build them.** They `#import` the Office type
+libraries (MSO, VBA extensibility, Word, Excel, PowerPoint) by registry ID.
+Without Office the build stops at `error C3505: cannot load type library
+'{2DF8D04C-...}'`. That's the only remaining error: everything else compiles.
+They also `#import "Felix.tlb"`, which the Felix build produces
+(`FelixTlbDir` in `Dependencies.props`).
+
+**64-bit Boost.** The x64 builds need Boost.Filesystem and Boost.Test built for
+x64 in `<BoostDir>\lib64-msvc-14.5\`. Either install the prebuilt
+`boost_1_91_0-msvc-14.5-64.exe`, or build just those two from the Boost source
+in a "x64 Native Tools" prompt:
+
+```bat
+cd C:\local\boost_1_91_0
+set NoDefaultCurrentDirectoryInExePath=
+bootstrap.bat vc145
+b2 -j8 toolset=msvc-14.5 address-model=64 link=static runtime-link=static,shared variant=debug,release threading=multi --with-filesystem --with-test --build-dir=C:\local\b2tmp64 --stagedir=stage64 stage
+move stage64\lib lib64-msvc-14.5
+```
+
+(`set NoDefaultCurrentDirectoryInExePath=` matters only if that variable is set
+in your environment; it stops `cmd` finding Boost's own batch files.)
+
+**Registration.** Each add-in registers itself after it builds
+(`regsvr32`). Its registry script writes to
+`HKLM\Software\Microsoft\Office\<App>\Addins`, which needs an Administrator
+prompt. Without one, the build finishes with the warning `FELIXREG: Could not
+register ...`; run the `regsvr32` command it shows from an Administrator
+terminal. The add-ins also need Felix's COM server registered
+(`Felix.exe /RegServer`, section 4).
+
+**Tests.** `Test_WordAssist`, `Test_Excel` and `Test_PPT` are console apps
+built in the `Testing` configuration; each runs its tests after building.
+`Test_Excel` doesn't need Office, and passes as 64-bit (49 tests, Debug and
+Release). Run one by hand with, for example:
+
+```powershell
+Test_Excel\x64\Debug\Test_Excel.exe --report_level=short
+```
+
+What the migration changed:
+
+- Toolset v145 and SDK 10.0; x64 configurations next to Win32; `Dependencies.props`
+  for WTL, Boost and `common\` (the projects used to rely on per-user VS
+  include folders). Word Assist's empty `Release_64`, `Template` and
+  `Testing_64` configurations were removed.
+- Hardcoded `D:\dev\...` / `D:\Development\...` `#import` paths for the Office 2000
+  type libraries and `MSADDNDR.DLL` now use `libid:` lookups, as in Felix.
+- 64-bit fixes in shared code: `CFile::operator HFILE()` truncated the handle
+  (removed; unused), and Word Assist's clipboard backup stored `GlobalSize` in an `int`.
+- The add-ins exempt the same newer-compiler warnings as Felix's `Testing`
+  build, but not the 64-bit truncation warnings, which stay errors.
+- The test programs install a logger (`common\test_logging_fixture.h`); without
+  one, any code that logged tripped an assertion. Their Release configurations
+  now define `UNIT_TEST` (they had no tests before).
+- `Felix.sln` was regenerated: `Unicode_Debug`, `Unicode_Release` and `Testing`,
+  each for Win32 and x64, with the add-ins depending on Felix.
+
 ## Source file encoding
 
 Source files are **UTF-8 with a byte order mark** (or, for three files,
@@ -198,8 +268,10 @@ the narrow-string encoding this also sets doesn't change any existing string.
 - `Unicode_Release` builds and runs, but with about 220 compiler warnings
   (mostly the newer-compiler warnings that `Testing` exempts). Worth cleaning up.
 - The 14 remote-memory tests are skipped unless the fake COM server in `python_tools\MemoryEngineFake.py` (Python 2 + pywin32) is registered. See section 5.
-- The Word/Excel/PowerPoint add-ins and their test projects are still on VS 2013 settings.
-  (Word Assist's Lua has been removed already.)
-- Excel export needs Office installed; Word Assist will need Word's type library too.
+- **Install Office, then finish the add-ins:** build them, fix whatever the
+  newer Office type libraries need (the code was written against Office 2000's,
+  so expect a few name clashes to `rename()`), run `Test_WordAssist` and
+  `Test_PPT`, and register and try them in Office. Then remove `FelixNoExcel`
+  from `Dependencies.local.props` to bring back Felix's Excel export.
 - Felix still uses the non-standard `/Zc:wchar_t-`. Switching to a built-in
   `wchar_t` is the long-term fix, but it touches all string and COM code.

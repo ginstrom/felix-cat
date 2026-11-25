@@ -6,6 +6,7 @@
 
     third_party\boost\               Boost source tree (contains boost\version.hpp)
     third_party\boost\lib32-msvc-14.5\   32-bit compiled Boost libs (test, filesystem, regex)
+    third_party\boost\lib64-msvc-14.5\   64-bit compiled Boost libs (for the x64 Office add-ins)
     third_party\wtl\Include\         WTL headers (atlapp.h etc.)
     third_party\cpptempl\            cpptempl.h / cpptempl.cpp
 
@@ -27,8 +28,15 @@
          Boost.Test no longer auto-links, so the project names its library explicitly. -->
     <BoostLibToolset Condition="'$(BoostLibToolset)'==''">vc145</BoostLibToolset>
     <BoostLibVersion Condition="'$(BoostLibVersion)'==''">1_91</BoostLibVersion>
+    <BoostLibArch Condition="'$(Platform)'=='x64'">x64</BoostLibArch>
+    <BoostLibArch Condition="'$(Platform)'!='x64'">x32</BoostLibArch>
     <WtlDir Condition="'$(WtlDir)'==''">$(FelixThirdParty)wtl\Include</WtlDir>
     <CppTemplDir Condition="'$(CppTemplDir)'==''">$(FelixThirdParty)cpptempl</CppTemplDir>
+    <!-- Felix's type library, which the Office add-ins #import. MIDL writes
+         Felix.tlb into Felix's output folder; it's the same in every
+         configuration, so use whichever build has produced one. -->
+    <FelixTlbDir Condition="'$(FelixTlbDir)'=='' and Exists('$(FelixRoot)Felix\Unicode_Release\Felix.tlb')">$(FelixRoot)Felix\Unicode_Release</FelixTlbDir>
+    <FelixTlbDir Condition="'$(FelixTlbDir)'==''">$(FelixRoot)Felix\Unicode_Debug</FelixTlbDir>
   </PropertyGroup>
 
   <!--

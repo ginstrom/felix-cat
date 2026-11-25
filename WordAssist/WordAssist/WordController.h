@@ -13,7 +13,7 @@
 #include "app_state.h"
 #include "Word2HtmlParser.h"
 #include "logging.h"
-#import "D:\dev\cpp\Assistant Suite\Felix\Unicode_Release\Felix.tlb"\
+#import "Felix.tlb"\
 	rename("TranslateAccelerator", "FelixTranslateAccelerator")
 
 class WordController 

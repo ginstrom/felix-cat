@@ -89,11 +89,9 @@ public:
 	{ 
 		Close(); 
 	}
-	operator HFILE() const 
-	{ 
-		return (HFILE) m_hFile; 
-	}
-	operator HANDLE() const 
+	// (An operator HFILE() used to be here. HFILE is a 32-bit int, so it
+	// truncated the handle in 64-bit builds; nothing used it.)
+	operator HANDLE() const
 	{ 
 		return m_hFile; 
 	}

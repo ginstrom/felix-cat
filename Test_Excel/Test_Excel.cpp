@@ -5,4 +5,4 @@
 
 #define BOOST_TEST_MODULE ExcelAssistTests
 #include <boost/test/unit_test.hpp>
-
+#include "test_logging_fixture.h"

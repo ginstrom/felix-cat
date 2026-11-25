@@ -3,7 +3,10 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <!-- <BoostDir>C:\local\boost_1_91_0</BoostDir> -->
-    <!-- <BoostLibDir>C:\local\boost_1_91_0\lib32-msvc-14.5</BoostLibDir> -->
+    <!-- BoostLibDir defaults to <BoostDir>\lib32-msvc-14.5 or lib64-msvc-14.5 by
+         platform. Only set it if your libs are elsewhere, and then make it
+         platform-aware, or the 64-bit add-ins will link 32-bit libs. -->
+    <!-- <FelixTlbDir>...folder containing Felix.tlb, for the add-ins...</FelixTlbDir> -->
     <!-- <WtlDir>C:\dev\WTL10\Include</WtlDir> -->
     <!-- <CppTemplDir>C:\dev\cpptempl</CppTemplDir> -->
     <!-- Build without Microsoft Office (Excel export disabled): -->

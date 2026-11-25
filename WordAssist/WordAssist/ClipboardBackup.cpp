@@ -63,7 +63,7 @@ BOOL CClipboardBackup::Backup()
 
 		default:
 			{
-				int    size = ::GlobalSize(hMem);
+				SIZE_T size = ::GlobalSize(hMem);
 				LPVOID pMem = ::GlobalLock( hMem );
 
 				data.m_hData   = ::GlobalAlloc( GMEM_MOVEABLE | GMEM_DDESHARE, size );

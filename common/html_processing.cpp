@@ -48,7 +48,7 @@ unsigned int point_size_to_html_size( unsigned int point_size )
 
 	unsigned int min_index = 0 ;
 	unsigned int num_fonts = get_num_fonts() ;
-	for ( size_t i = 1 ; i < num_fonts ; ++i )
+	for ( unsigned int i = 1 ; i < num_fonts ; ++i )
 	{
 		unsigned int this_diff = get_font_point_diff(point_size, i) ;
 		if ( this_diff < min_diff )
