@@ -12,3 +12,5 @@ Matches the documented baseline (Word 134, PowerPoint 65, Excel 49).
 ## Environment notes
 - `runlog` needs Python, which is not installed, so runs are made directly.
 - `Felix.App` is registered to `C:\Program Files\Felix\Felix.exe`, not the repo's Debug build. Manual Office checks need `tools\register-felix.ps1 -Configuration Debug` (admin).
+## Step outcomes
+- Step 01: done, e8ace76 (record 53d0b8f). Engineer: sonnet. Reviewer: sonnet. Verdict: clean after 1 review round. Test_WordAssist 153/153 (reviewer rerun). Manual AC1-AC4 deferred to QA until Felix is registered.
