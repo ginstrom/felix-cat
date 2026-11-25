@@ -12,7 +12,13 @@
 - **Step tiers (engineer/reviewer):** 01 sonnet/sonnet; 02 sonnet/sonnet; 03 sonnet/sonnet; 04 opus/opus (COM fakes and Excel refresh); 05 sonnet/sonnet; overall review opus. Escalations: none.
 - **Manual checks:** Felix.App is registered to the installed `C:\Program Files\Felix\Felix.exe`. Engineers record manual Office checks as not run. At verification, ask the user to run `tools\register-felix.ps1 -Configuration Debug` (admin) and register the x64 Debug add-ins, then QA runs the manual ACs.
 - **runlog:** unavailable, because it needs Python and Python isn't installed. Agents run commands directly and quote the result lines, so gates record the command and the result instead of a run ID.
-- **Step progress:** 01 done (e8ace76, 53d0b8f), review clean in 1 round, Test_WordAssist 153/153.
+- **Step progress:**
+  - 01 done (e8ace76), review clean in 1 round.
+  - 02 done (95aa876), clean in 2 rounds; the second round fixed an index bookkeeping error.
+  - 03 done (f1ea03f), clean in 1 round.
+  - Tests: Test_Excel 57, Test_PPT 73, Test_WordAssist 161.
+  - Next: step 04 (opus).
+- **Out-of-scope finding:** in `WordAssist/WordAssist/hooker.cpp`, the `catch(CException&)` in `KeyboardProc` falls off the end without returning (pre-existing).
 - **Status thread:** none. The `recursive_slack` tools aren't available in this session, so this State section is the status.
 - **Environment:** VS Community 2026 is installed. Boost is at `C:\local\boost_1_91_0`. Only 64-bit Office is installed, so the x64 add-ins are the ones that can be tested. Test exes are Test_Excel, Test_WordAssist and Felix `Testing`. Python isn't installed.
 - **Open questions:** none.
