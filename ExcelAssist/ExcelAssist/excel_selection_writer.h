@@ -56,6 +56,11 @@ inline bool write_selection_text(excel::app_ptr app, _bstr_t text)
 	{
 		app->RefreshActiveCell() ;
 	}
+	catch ( _com_error &e )
+	{
+		logging::log_warn("Failed to refresh the formula bar after writing the cell") ;
+		logging::log_exception(e) ;
+	}
 	catch ( ... )
 	{
 		logging::log_warn("Failed to refresh the formula bar after writing the cell") ;
