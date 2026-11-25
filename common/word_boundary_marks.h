@@ -103,3 +103,37 @@ inline std::wstring trim_word_boundary_marks( const std::wstring &text )
 	}
 	return result ;
 }
+
+/*!
+ * True if the text has any character outside "<...>" tags. Entities such as
+ * "&lt;" and whitespace count as text. A "<" with no closing ">" is text.
+ */
+inline bool has_text_outside_tags( const std::wstring &text )
+{
+	std::wstring::size_type pos = 0 ;
+	while ( pos < text.size() )
+	{
+		if ( text[pos] == L'<' )
+		{
+			const std::wstring::size_type close = text.find( L'>', pos ) ;
+			if ( close != std::wstring::npos )
+			{
+				pos = close + 1 ;
+				continue ;
+			}
+		}
+		return true ;
+	}
+	return false ;
+}
+
+/*!
+ * Trim a concordance query (see trim_word_boundary_marks). A query left with
+ * no text outside tags, such as an empty paragraph's mark wrapped in a font
+ * tag, becomes the empty string.
+ */
+inline std::wstring trim_concordance_query( const std::wstring &text )
+{
+	const std::wstring trimmed = trim_word_boundary_marks( text ) ;
+	return has_text_outside_tags( trimmed ) ? trimmed : std::wstring() ;
+}

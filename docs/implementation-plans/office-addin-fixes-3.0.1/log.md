@@ -21,3 +21,4 @@ Matches the documented baseline (Word 134, PowerPoint 65, Excel 49).
 ## Step 04 notes
 - Test_Excel can take `ExcelImport.h` and `fake_excel.h`; it only needed `common\DispatchWrapper.cpp` added. No fallback used. Test_Excel 61/61 (57 + 4).
 - COM probe (64-bit Microsoft 365): `ActiveCell.Activate()` after a `Characters` write refreshes the formula bar; `001` stays a string; A1:B3 with B2 active is kept. A selected TextBox object QIs to `Excel::RangePtr` as NULL without throwing. In an automated Excel instance a text-box selection reverts to a Range by itself right after `Shape.Select`, so AC10c needs an interactive check.
+- Step 01 QA fix (AC4/R4): tags-only query after trim now treated as empty (`trim_concordance_query`). Test_WordAssist 166/166; WordAssist Debug|x64 rebuilt. Manual re-check left to QA.

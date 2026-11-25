@@ -107,6 +107,37 @@ BOOST_AUTO_TEST_SUITE( test_word_boundary_marks )
 		BOOST_CHECK_NO_THROW( trim_word_boundary_marks( L"<" + CR ) ) ;
 	}
 
+	BOOST_AUTO_TEST_CASE( has_text_outside_tags_plain_text )
+	{
+		BOOST_CHECK( has_text_outside_tags( L"x" ) ) ;
+		BOOST_CHECK( has_text_outside_tags( L" " ) ) ;
+		BOOST_CHECK( ! has_text_outside_tags( L"" ) ) ;
+	}
+	BOOST_AUTO_TEST_CASE( has_text_outside_tags_only_tags )
+	{
+		BOOST_CHECK( ! has_text_outside_tags( L"<FONT FACE=\"x\"></FONT>" ) ) ;
+		BOOST_CHECK( ! has_text_outside_tags( L"<b><i></i></b>" ) ) ;
+	}
+	BOOST_AUTO_TEST_CASE( has_text_outside_tags_text_between_tags )
+	{
+		BOOST_CHECK( has_text_outside_tags( L"<b><i>x</i></b>" ) ) ;
+		BOOST_CHECK( has_text_outside_tags( L"<b>&lt;</b>" ) ) ;
+		BOOST_CHECK( has_text_outside_tags( L"<b> </b>" ) ) ;
+	}
+	BOOST_AUTO_TEST_CASE( concordance_query_empty_paragraph_in_font_tag )
+	{
+		BOOST_CHECK( trim_concordance_query( L"<FONT FACE=\"x\">" + CR + L"</FONT>" ).empty() ) ;
+		BOOST_CHECK( trim_concordance_query( L"<b><i>" + CR + BEL + L"</i></b>" ).empty() ) ;
+		BOOST_CHECK( trim_concordance_query( CR ).empty() ) ;
+	}
+	BOOST_AUTO_TEST_CASE( concordance_query_keeps_text_and_tags )
+	{
+		BOOST_CHECK( trim_concordance_query( L"<FONT FACE=\"x\">blue lantern" + CR + L"</FONT>" )
+			== L"<FONT FACE=\"x\">blue lantern</FONT>" ) ;
+		BOOST_CHECK( trim_concordance_query( L"<b>&lt;" + CR + L"</b>" ) == L"<b>&lt;</b>" ) ;
+		BOOST_CHECK( trim_concordance_query( L"lantern " + CR ) == L"lantern " ) ;
+	}
+
 BOOST_AUTO_TEST_SUITE_END()
 
 #endif // #ifdef UNIT_TEST

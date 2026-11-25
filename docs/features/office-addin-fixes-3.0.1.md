@@ -17,7 +17,19 @@
   - 02 done (95aa876), clean in 2 rounds; the second round fixed an index bookkeeping error.
   - 03 done (f1ea03f), clean in 1 round.
   - Tests: Test_Excel 57, Test_PPT 73, Test_WordAssist 161.
-  - Next: step 04 (opus).
+  - 04 done (a323bec, plus fix 01b35c5), clean in 2 rounds (opus/opus).
+  - 05 done (655a95d, 9b8bf2a), with release notes and regression: Word 161, Excel 61 (Release 57), PPT 73. All add-ins build for Debug x64 and Win32. Its step review is folded into the overall review.
+- **Phase 5 (verification):**
+  - The overall review (opus) is running on 5a13d86..9b8bf2a.
+  - QA (sonnet) waits for the user to register the Debug Felix and add-ins; it runs the manual AC1–AC10.
+  - Overall review: clean (opus, run by hand). Notes: a formatted only-¶ selection leaves a tags-only string; step 05 log line missing; no newline at end of `excel_selection_writer.h`.
+  - QA round 1 (sonnet): FAIL.
+    - Passed: AC1–AC3, AC4 except formatted only-¶, AC5–AC10 in Excel and Word.
+    - Defect 1 (major): a formatted only-¶ selection sends a tags-only query to Felix, which matches every entry. Sent to the step 01 engineer to fix.
+    - Defect 2: Office disabled the Debug PowerPointAssist (it is in PowerPoint's Disabled Items list), so every PowerPoint check is not run. The user must re-enable it.
+    - Pre-existing, out of scope: an empty-selection concordance leaks the `C` keystroke into the document.
+    - Debug Felix shows a `Felix.Utilities` assert at every launch. It is pre-existing and harmless; dismiss it with Ignore.
+  - Simulated user: skipped. These are bug fixes with exact reproduction steps, and QA runs those reproductions in real Office.
 - **Out-of-scope finding:** in `WordAssist/WordAssist/hooker.cpp`, the `catch(CException&)` in `KeyboardProc` falls off the end without returning (pre-existing).
 - **Status thread:** none. The `recursive_slack` tools aren't available in this session, so this State section is the status.
 - **Environment:** VS Community 2026 is installed. Boost is at `C:\local\boost_1_91_0`. Only 64-bit Office is installed, so the x64 add-ins are the ones that can be tested. Test exes are Test_Excel, Test_WordAssist and Felix `Testing`. Python isn't installed.

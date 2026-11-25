@@ -801,7 +801,7 @@ bool WordController::OnConcordanceAction( bool as_plaintext )
 			return OnTransConcordanceAction(as_plaintext) ;
 		}
 	
-		_bstr_t text = string2BSTR( trim_word_boundary_marks( BSTR2wstring( get_selection_text( as_plaintext ) ) ) ) ;
+		_bstr_t text = string2BSTR( trim_concordance_query( BSTR2wstring( get_selection_text( as_plaintext ) ) ) ) ;
 
 		if ( text.length() == 0 )
 		{
@@ -1408,7 +1408,7 @@ bool WordController::OnTransConcordanceAction ( bool as_plaintext )
 	{
 		
 		Felix::IAppPtr app = getAssistant( ) ;
-		app->TransConcordance( string2BSTR( trim_word_boundary_marks( BSTR2wstring( get_selection_text( as_plaintext ) ) ) ) ) ;
+		app->TransConcordance( string2BSTR( trim_concordance_query( BSTR2wstring( get_selection_text( as_plaintext ) ) ) ) ) ;
 
 	}
 	CATCH_ALL("Action: Getting translation concordance")
