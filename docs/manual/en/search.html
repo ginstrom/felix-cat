@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Search &mdash; Felix Manual 1.7.1.1 documentation</title>
+    <title>Search &mdash; Felix User Manual</title>
     
     <link rel="stylesheet" href="_static/agogo.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -19,7 +19,7 @@
         VERSION:     '1.7.1.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  false
       };
     </script>
     <script type="text/javascript" src="_static/jquery.js"></script>
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="_static/searchtools.js"></script>
     <link rel="shortcut icon" href="_static/favicon.ico"/>
     <link rel="author" title="About these documents" href="about.html" />
-    <link rel="top" title="Felix Manual 1.7.1.1 documentation" href="index.html" />
+    <link rel="top" title="Felix User Manual" href="index.html" />
   <script type="text/javascript">
     jQuery(function() { Search.loadIndex("searchindex.js"); });
   </script>
@@ -39,7 +39,7 @@
     <div class="header-wrapper">
       <div class="header">
         <div class="headertitle"><a
-          href="index.html">Felix Manual 1.7.1.1 documentation</a></div>
+          href="index.html">Felix User Manual</a></div>
         <div class="rel">
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a>
@@ -69,8 +69,9 @@
     function will automatically search for all of the words. Pages
     containing fewer words won't appear in the result list.
   </p>
-  <form action="" method="get">
-    <input type="text" name="q" value="" />
+  <form action="search.html" method="get">
+    <label for="search-query">Search terms</label>
+    <input type="text" id="search-query" name="q" value="" />
     <input type="submit" value="search" />
     <span id="search-progress" style="padding-left: 10px"></span>
   </form>
@@ -107,8 +108,8 @@
 </ul>
 
           <h3 style="margin-top: 1.5em;">Search</h3>
-          <form class="search" action="#" method="get">
-            <input type="text" name="q" />
+          <form class="search" action="search.html" method="get">
+            <input type="text" name="q" aria-label="Search terms" />
             <input type="submit" value="Go" />
             <input type="hidden" name="check_keywords" value="yes" />
             <input type="hidden" name="area" value="default" />

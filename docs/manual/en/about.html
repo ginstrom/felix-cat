@@ -20,7 +20,7 @@
 <meta content="Completed" name="doc-class" />
 <meta content="Creative Commons" name="doc-rights" />
 
-    <title>1. About Felix &mdash; Felix Manual 1.7.1.1 documentation</title>
+    <title>1. About Felix &mdash; Felix User Manual</title>
     
     <link rel="stylesheet" href="_static/agogo.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -39,7 +39,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="shortcut icon" href="_static/favicon.ico"/>
     <link rel="author" title="About these documents" href="#" />
-    <link rel="top" title="Felix Manual 1.7.1.1 documentation" href="index.html" />
+    <link rel="top" title="Felix User Manual" href="index.html" />
     <link rel="next" title="2. Getting Started" href="getting-started.html" />
     <link rel="prev" title="Quick-start Tutorial Using MS PowerPoint" href="tutorial-ppt.html" /> 
   </head>
@@ -47,7 +47,7 @@
     <div class="header-wrapper">
       <div class="header">
         <div class="headertitle"><a
-          href="index.html">Felix Manual 1.7.1.1 documentation</a></div>
+          href="index.html">Felix User Manual</a></div>
         <div class="rel">
           <a href="tutorial-ppt.html" title="Quick-start Tutorial Using MS PowerPoint"
              accesskey="P">previous</a> |
@@ -78,31 +78,30 @@
 <li>No limit on the size of TMs or glossaries</li>
 <li>Work with as many language pairs as you like</li>
 <li>Any language that you can display on Windows is supported</li>
-<li>Use the free Memory Serves to share TMs and glossaries over your local network</li>
 </ul>
 <div class="section" id="quick-tour">
 <h2>1.1. Quick Tour<a class="headerlink" href="#quick-tour" title="Permalink to this headline">¶</a></h2>
 <p>Felix consists of two main components: a memory component and a glossary component. Both components feature a similar, intuitive user interface, but the two components have different and complementary roles.</p>
 <div class="section" id="screen-shots">
 <h3>1.1.1. Screen Shots<a class="headerlink" href="#screen-shots" title="Permalink to this headline">¶</a></h3>
-<p><strong>Memory Window Main Window</strong></p>
-<img alt="Felix main window" src="_images/felix.png" />
+<p><strong>Memory Window</strong></p>
+<a href="_images/felix-3-memory.jpg" title="Open the full-size screenshot"><img alt="Felix 3.0 Memory window" src="_images/felix-3-memory.jpg" style="max-width: 100%; height: auto" /></a>
 <p><strong>Glossary Window</strong></p>
-<img alt="Glossary Window" src="_images/gloss_window.png" />
+<img alt="Felix 3.0 MAIN Glossary showing one matching entry" src="_images/felix-3-glossary-match.jpg" style="max-width: 100%; height: auto" />
 </div>
 <div class="section" id="how-it-works">
 <h3>1.1.2. How it Works<a class="headerlink" href="#how-it-works" title="Permalink to this headline">¶</a></h3>
 <p>As you translate a document, Felix keeps a record of each source sentence you translate, along with the corresponding translation and other information, in translation memory entries. Each time you translate a new sentence, Felix compares it with the entries in its database. If it finds an entry matching or nearly matching the current sentence, it suggests the translation to you:</p>
 <img alt="Memory Search Results View" src="_images/felix_fuzzy.png" />
 <p>Where Query is the sentence you are currently translating, Source is the sentence in the memory, and Trans is the translation you gave for that sentence. Score shows the similarity score for the two sentences. The parts that are different are bold and highlighted in red, for ease of recognition. You can choose to use the suggestion as-is, retrieve the suggestion and edit it, or ignore the suggestion and write a new translation.</p>
-<p>If there is a perfect match, the search results will be shown with a green background and a check mark for easy recognition.</p>
-<img alt="Memory Search Results View" src="_images/felix.png" />
+<p>An exact match shows a green <strong>Score: 100%</strong> indicator.</p>
+<a href="_images/felix-3-word-exact-match.jpg" title="Open the full-size screenshot"><img alt="One 100% translation memory match in Felix 3.0" src="_images/felix-3-word-exact-match.jpg" style="max-width: 100%; height: auto" /></a>
 <p>Meanwhile, as Felix searches the translation memory for matches, it also looks for occurrences of your glossary entries in that sentence, and lists any matches it finds. A glossary is a list of technical or frequently occurring terms that you would like to refer to as you translate.</p>
 <img alt="Glossary Search Results View" src="_images/glosssearchresultsview.jpg" />
-<p>You can import the glossary entry translations into your document as you type. In the TagAssist application, glossary entry translations appear in an Autocomplete window, for even greater speed and ease of retrieval. Additionally, as you translate, Felix automatically adds short sentences and phrases to the glossary <a class="footnote-reference" href="#f1" id="id1">[1]</a>. There are also numerous tools to quickly and efficiently build glossaries, both from Felix itself and from its various interfaces.</p>
+<p>You can import the glossary entry translations into your document as you type. Additionally, as you translate, Felix automatically adds short sentences and phrases to the glossary <a class="footnote-reference" href="#f1" id="id1">[1]</a>. There are also numerous tools to quickly and efficiently build glossaries, both from Felix itself and from its various interfaces.</p>
 <p>Translation memories and glossaries are stored in XML format, a widely recognized standard for data storage. Both memories and glossaries are saved with the same xml schema, making them highly interchangeable. Additionally, Felix can import memories and glossaries in Trados text and Microsoft Excel formats, and export memories and glossaries into Trados text files as well.</p>
 <p id="index-0">Felix uses Unicode internally. This means it can process and display just about any language, as well as most mathematical and other special symbols.</p>
-<p>Felix includes a variety of features to help you edit, build, and manage your translation memories and glossaries. You can use Felix from Microsoft Word or Excel, as well as the TagAssist <a class="footnote-reference" href="#f2" id="id2">[2]</a> application, or even control it from a custom application using automation.</p>
+<p>Felix includes a variety of features to help you edit, build, and manage your translation memories and glossaries. You can use Felix from Microsoft Word, Excel or PowerPoint, or control it from a custom application using automation.</p>
 <p>Felix is also fully bilingual. A single shortcut key or menu command is all that is required to toggle the user interface between Japanese and English.</p>
 <img alt="Japanese-language view" src="_images/felix_j.png" />
 <table class="docutils footnote" frame="void" id="f1" rules="none">
@@ -111,39 +110,16 @@
 <tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>Translation memory entries with a source field whose length is below a specific number of characters are automatically added to the glossary. You can configure this length in the user preferences. See <a class="reference internal" href="memwindow/preferences.html#preferences"><em>Set User Preferences</em></a> for details.</td></tr>
 </tbody>
 </table>
-<table class="docutils footnote" frame="void" id="f2" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td><a class="reference external" href="../../../tagassist/index.html">TagAssist</a> is a what-you-see-is-what-you-get (WYSIWYG) HTML editor that includes a full Felix interface. It is included in the Felix product suite. See the <a class="reference external" href="../tagassist/index.html">TagAssist documentation</a> for details.</td></tr>
-</tbody>
-</table>
 </div>
 </div>
 <div class="section" id="system-requirements">
 <span id="index-1"></span><h2>1.2. System Requirements<a class="headerlink" href="#system-requirements" title="Permalink to this headline">¶</a></h2>
-<p>The following are the system requirements for installing and running Felix.</p>
-<p><strong>Minimum System Requirements</strong></p>
 <ul class="simple">
-<li>Internet Explorer 5.5 or higher</li>
-<li>256 MB RAM</li>
-<li>Microsoft Windows Vista/7/8/8.1 (32-bit or 64-bit)</li>
+<li>64-bit Windows 10 or 11.</li>
+<li>Administrator rights to run the installer.</li>
+<li>64-bit desktop Microsoft Office (Microsoft 365, Office 2021 or Office 2024) for the optional Word, Excel and PowerPoint add-ins.</li>
 </ul>
-<p><strong>Recommended System Requirements</strong></p>
-<ul class="simple">
-<li>Internet Explorer 9.0 or higher</li>
-<li>1 GB RAM</li>
-<li>Microsoft Windows Vista/7/8/8.1 (32-bit or 64-bit)</li>
-</ul>
-<p><strong>Supported Versions of Microsoft® Office</strong></p>
-<p><em>Only 32-bit versions of Office are supported</em></p>
-<ul class="simple">
-<li>Office 2003</li>
-<li>Office XP</li>
-<li>Office 2007</li>
-<li>Office 2010</li>
-<li>Office 2013</li>
-</ul>
-<p>Office 2007 or higher is recommended.</p>
+<p>See <a href="getting-started.html#installation">Installation</a> for setup instructions.</p>
 </div>
 </div>
 
