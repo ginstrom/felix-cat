@@ -10,8 +10,8 @@
  */
 #pragma once
 
-#ifdef UNIT_TEST
-
+// Not wrapped in #ifdef UNIT_TEST: some test files declare their suites
+// outside that guard, so this must compile in every configuration.
 #include <string>
 
 namespace test_paths
@@ -103,5 +103,3 @@ namespace test_paths
 	} ;
 }
 #endif // BOOST_TEST_DECORATOR
-
-#endif // UNIT_TEST

@@ -170,8 +170,9 @@ echo Server registration done!
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Unicode_Release|Win32'">
     <PreBuildEvent>
-      <Command>
-      </Command>
+      <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
+copy /Y "$(ProjectDir)SciLexer.dll" "$(OutDir)"
+</Command>
     </PreBuildEvent>
     <CustomBuildStep>
       <Message>Performing registration</Message>
@@ -248,8 +249,10 @@ echo Server registration done!
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Testing|Win32'">
     <PreBuildEvent>
-      <Command>
-      </Command>
+      <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
+copy /Y "$(ProjectDir)SciLexer.dll" "$(OutDir)"
+if exist "$(ProjectDir)Unicode_Debug\lang\EngResource.dll" xcopy /I /Y /Q "$(ProjectDir)Unicode_Debug\lang\*Resource.dll" "$(OutDir)lang\"
+</Command>
     </PreBuildEvent>
     <CustomBuildStep>
       <Message>

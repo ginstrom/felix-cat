@@ -45,8 +45,10 @@ LuaWrapper sources, have been removed from both projects.
 
 1. Open `Felix\Felix.sln`. VS will offer to retarget the add-in and test
    projects. You can **cancel** that for now.
-2. Choose the configuration `Unicode_Debug|Win32`. `Unicode_Release` treats
-   warnings as errors. `Testing` builds the Boost.Test unit tests into the exe.
+2. Choose the configuration: `Unicode_Debug|Win32` for development,
+   `Unicode_Release|Win32` for an optimized build, or `Testing|Win32`, which
+   builds the Boost.Test unit tests into the exe (and is the only one that
+   treats warnings as errors).
 3. Build **Felix English** and **Felix Japanese** (the UI resource DLLs), then **Felix**.
 
 Or from a Developer PowerShell:
@@ -57,12 +59,18 @@ msbuild "Felix\JpnResource\Felix Japanese.vcxproj" /p:Configuration=Unicode_Debu
 msbuild Felix\Felix.vcxproj /p:Configuration=Unicode_Debug /p:Platform=Win32 /m
 ```
 
-The pre-build step copies `Felix\html\` to `%LOCALAPPDATA%\Felix\html\`, where
-the UI templates are loaded from at runtime.
+For Release, use `/p:Configuration=Unicode_Release` in all three commands. The
+output goes to `Felix\Unicode_Release\`.
+
+Every configuration copies `SciLexer.dll` next to the exe. The Debug build
+also copies `Felix\html\` to `%LOCALAPPDATA%\Felix\html\`, where the UI
+templates are loaded from at runtime. Release relies on that copy being there
+(an installer would normally put it there). Build Debug once first, or copy
+the folder yourself.
 
 ## 4. Run
 
-Run `Felix\Unicode_Debug\Felix.exe`. It needs, next to it:
+Run `Felix\Unicode_Debug\Felix.exe` (or `Felix\Unicode_Release\Felix.exe`). It needs, next to it:
 
 - `SciLexer.dll` (copied by the build)
 - `lang\EngResource.dll` and `lang\JpnResource.dll` (from the two resource projects).
@@ -82,9 +90,10 @@ register for real, run `Felix.exe /RegServer` once from an Administrator termina
 The `Testing` configuration compiles Felix's ~2300 Boost.Test unit tests into
 `Felix\Testing\Felix.exe`. Running it executes the tests and exits; it shows no window.
 
-1. Build `Testing|Win32`.
-2. Copy `SciLexer.dll` and the `lang\` folder from `Felix\Unicode_Debug\` into
-   `Felix\Testing\` (the Testing configuration has no copy step yet).
+1. Build the two resource DLLs and Felix in `Unicode_Debug` once (section 3).
+   The Testing build copies `SciLexer.dll`, plus `lang\EngResource.dll` and
+   `lang\JpnResource.dll` from `Felix\Unicode_Debug\lang\`, next to its exe.
+2. Build `Testing|Win32`.
 3. Run `Felix\Testing\Felix.exe`. The summary report goes to standard error,
    for example `Felix.exe 2> results.txt`. Individual failures go to
    `OutputDebugString`, so you see them in the VS Output window when debugging,
@@ -186,7 +195,8 @@ the narrow-string encoding this also sets doesn't change any existing string.
 
 ## Not done yet
 
-- `Unicode_Release` hasn't been built.
+- `Unicode_Release` builds and runs, but with about 220 compiler warnings
+  (mostly the newer-compiler warnings that `Testing` exempts). Worth cleaning up.
 - The 14 remote-memory tests are skipped unless the fake COM server in `python_tools\MemoryEngineFake.py` (Python 2 + pywin32) is registered. See section 5.
 - The Word/Excel/PowerPoint add-ins and their test projects are still on VS 2013 settings.
   (Word Assist's Lua has been removed already.)
