@@ -5,6 +5,7 @@
 
 #include "StdAfx.h"
 #include "felix_cl_options.h"
+#include "command_line_token.h"
 
 
 #include <boost/test/unit_test.hpp>
@@ -364,6 +365,44 @@ BOOST_AUTO_TEST_SUITE( test_commandline_options )
 
 BOOST_AUTO_TEST_SUITE_END()
 
+// Matching /RegServer and friends on Felix's own command line.
+BOOST_AUTO_TEST_SUITE( test_command_line_token )
+
+	BOOST_AUTO_TEST_CASE( exact_word )
+	{
+		BOOST_CHECK(command_line_token_is(_T("RegServer"), _T("RegServer"))) ;
+	}
+	BOOST_AUTO_TEST_CASE( case_insensitive )
+	{
+		BOOST_CHECK(command_line_token_is(_T("regserver"), _T("RegServer"))) ;
+	}
+	// PowerShell's Start-Process passes "/RegServer " with a trailing space;
+	// Felix used to start normally instead of registering.
+	BOOST_AUTO_TEST_CASE( trailing_space )
+	{
+		BOOST_CHECK(command_line_token_is(_T("RegServer "), _T("RegServer"))) ;
+	}
+	BOOST_AUTO_TEST_CASE( followed_by_another_switch )
+	{
+		BOOST_CHECK(command_line_token_is(_T("Embedding -foo"), _T("Embedding"))) ;
+	}
+	BOOST_AUTO_TEST_CASE( followed_by_quote )
+	{
+		BOOST_CHECK(command_line_token_is(_T("Automation\""), _T("Automation"))) ;
+	}
+	BOOST_AUTO_TEST_CASE( longer_word_does_not_match )
+	{
+		BOOST_CHECK(! command_line_token_is(_T("RegServerX"), _T("RegServer"))) ;
+		BOOST_CHECK(! command_line_token_is(_T("UnregServer"), _T("RegServer"))) ;
+	}
+	// A dash inside the exe's path (e.g. ...\ginstrom-felix-0eb229b09823\...) is
+	// also a "token" start; it must not match anything.
+	BOOST_AUTO_TEST_CASE( path_fragment_does_not_match )
+	{
+		BOOST_CHECK(! command_line_token_is(_T("felix-0eb229b09823\\Felix.exe\" /RegServer"), _T("RegServer"))) ;
+	}
+
+BOOST_AUTO_TEST_SUITE_END()
 #endif 
 
 

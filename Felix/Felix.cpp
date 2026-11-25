@@ -10,6 +10,7 @@
 ****************************************************************/
 
 #include "StdAfx.h"
+#include "command_line_token.h"
 
 #include "resource.h"
 #include "ErrorTranslator.h"
@@ -167,7 +168,7 @@ int MainSub(HINSTANCE hInstance, LPTSTR lpstrCmdLine, int nCmdShow)
 	while(lpszToken != NULL)
 	{
 		// unregister COM component
-		if( ! _tcsicmp( lpszToken, _T("UnregServer") ) )
+		if( command_line_token_is( lpszToken, _T("UnregServer") ) )
 		{
 			logging::log_debug("Unregistering Felix COM server") ;
 			nRet = _Module.UnregisterServer();
@@ -175,7 +176,7 @@ int MainSub(HINSTANCE hInstance, LPTSTR lpstrCmdLine, int nCmdShow)
 			break;
 		}
 		// register COM component
-		else if( ! _tcsicmp( lpszToken, _T("RegServer") )  )
+		else if( command_line_token_is( lpszToken, _T("RegServer") )  )
 		{
 			bRegister = true ;
 			bExplicitRegister = true ;
@@ -183,8 +184,8 @@ int MainSub(HINSTANCE hInstance, LPTSTR lpstrCmdLine, int nCmdShow)
 			break;
 		}
 		// automation (run as COM server)
-		else if(! _tcsicmp( lpszToken, _T("Automation") ) ||
-			! _tcsicmp( lpszToken, _T("Embedding") ) )
+		else if(command_line_token_is( lpszToken, _T("Automation") ) ||
+			command_line_token_is( lpszToken, _T("Embedding") ) )
 		{
 			bAutomation = true;
 			break;
