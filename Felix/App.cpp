@@ -501,6 +501,7 @@ HRESULT CApp::FinalConstruct()
 	{
 		m_App2->AddRef() ;
 	}
+	logging::log_debug((format("App object created (COM server lock count %1%)") % _Module.GetLockCount()).str()) ;
 	return hr ;
 }
 
@@ -510,4 +511,5 @@ void CApp::FinalRelease()
 	{
 		m_App2->Release() ;
 	}
+	logging::log_debug((format("App object released (COM server lock count %1%)") % _Module.GetLockCount()).str()) ;
 }
