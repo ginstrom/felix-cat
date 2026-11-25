@@ -20,7 +20,7 @@
 <meta content="Completed" name="doc-class" />
 <meta content="Creative Commons" name="doc-rights" />
 
-    <title>2. Getting Started &mdash; Felix Manual 1.7.1.1 documentation</title>
+    <title>2. Getting Started &mdash; Felix User Manual</title>
     
     <link rel="stylesheet" href="_static/agogo.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -39,7 +39,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="shortcut icon" href="_static/favicon.ico"/>
     <link rel="author" title="About these documents" href="about.html" />
-    <link rel="top" title="Felix Manual 1.7.1.1 documentation" href="index.html" />
+    <link rel="top" title="Felix User Manual" href="index.html" />
     <link rel="next" title="3. Using Felix for the First Time" href="first-time.html" />
     <link rel="prev" title="1. About Felix" href="about.html" /> 
   </head>
@@ -47,7 +47,7 @@
     <div class="header-wrapper">
       <div class="header">
         <div class="headertitle"><a
-          href="index.html">Felix Manual 1.7.1.1 documentation</a></div>
+          href="index.html">Felix User Manual</a></div>
         <div class="rel">
           <a href="about.html" title="1. About Felix"
              accesskey="P">previous</a> |
@@ -72,37 +72,30 @@
 <p>This section describes how to download, install, and uninstall Felix.</p>
 <div class="section" id="downloading">
 <h2>2.1. Downloading<a class="headerlink" href="#downloading" title="Permalink to this headline">¶</a></h2>
-<p>The latest version of Felix can be downloaded from the <a class="reference external" href="../../../download/index.html">Felix download page</a>.</p>
-<p>The same installer is used for both the demo and full versions. Entering a license key (see <a class="reference internal" href="#register-felix"><em>Registering Felix</em></a>) in the demo version will convert it to the full version. If you upgrade Felix by installing the latest version, any license key you have already registered will be preserved.</p>
+<p>Download the <code>Felix_Setup_&lt;version&gt;.exe</code> asset from the <a href="https://github.com/ginstrom/felix-cat/releases/latest">latest release on GitHub</a>.</p>
 </div>
 <div class="section" id="installation">
 <span id="id1"></span><h2>2.2. Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
-<p>Once you have downloaded the latest version, double click on the installer, and follow the on-screen instructions.</p>
-<p>We recommended that you exit all other programs before proceeding, including resident anti-virus programs.</p>
+<p>Close Felix, Word, Excel and PowerPoint. Run the downloaded installer and follow the prompts. Windows may ask for administrator approval.</p>
+<p>If you are upgrading from Felix 2.0, back up <code>%LOCALAPPDATA%\Felix</code> before uninstalling 2.0. The 2.0 uninstaller removes that settings and templates folder. Install Felix 3 after removing 2.0 so Office starts the current version.</p>
 <div class="section" id="choosing-components">
 <h3>2.2.1. Choosing Components<a class="headerlink" href="#choosing-components" title="Permalink to this headline">¶</a></h3>
-<p>On the Select Components page of the installer, you can select to install the interfaces for MS Word, Excel, and PowerPoint (these are selected by default). This will enable you to use the Felix interface from these programs.</p>
-<div class="admonition tip">
-<p class="first admonition-title">Tip</p>
-<p class="last">It won&#8217;t cause an error if you select a component and that program isn&#8217;t installed. If you have multiple versions of Office installed, the component will be installed for all versions.</p>
-</div>
+<p>On <strong>Select Components</strong>, choose which optional add-ins to install for 64-bit Word, Excel and PowerPoint. The installer also sets up Felix and the required Visual C++ runtimes.</p>
+<p>After setup, open an Office document and choose the <strong>Add-ins</strong> tab to find the Felix menu and toolbar. See <a href="troubleshooting.html#word">Troubleshooting</a> if they do not appear.</p>
 </div>
 <div class="section" id="registering-felix">
-<span id="register-felix"></span><span id="index-0"></span><h3>2.2.2. Registering Felix<a class="headerlink" href="#registering-felix" title="Permalink to this headline">¶</a></h3>
-<p>When you first download and install Felix, it is in Demo mode. The only difference between Demo mode and Full mode is that Demo mode has a maximum TM and glossary size of 500 records. You can unlock Full mode by registering Felix.</p>
-<p>To register Felix, you must purchase a license key. Once you have received a license, from the Felix menu, select <em class="menuselection"><span class="accelerator">H</span>elp ‣ <span class="accelerator">R</span>egister</em>... Next, copy and paste the key into the text box, and click <strong>OK</strong>.</p>
+<span id="register-felix"></span><span id="index-0"></span><h3>2.2.2. Licensing<a class="headerlink" href="#registering-felix" title="Permalink to this headline">¶</a></h3>
+<p>Felix 3 is open source. It runs without a license key or a trial record limit.</p>
 </div>
 </div>
 <div class="section" id="uninstallation">
 <span id="index-1"></span><h2>2.3. Uninstallation<a class="headerlink" href="#uninstallation" title="Permalink to this headline">¶</a></h2>
-<p>The following instructions will walk you through the uninstallation process.</p>
 <ol class="arabic simple">
-<li>Quit out of Microsoft Word, Excel, and PowerPoint if they are running.</li>
-<li>From the Start menu, select Control Panel.</li>
-<li>Double click on the Add/Remove Programs or Add or Remove Programs icon.</li>
-<li>Select &#8220;Felix,&#8221; then click Add/Remove or Change/Remove.</li>
-<li>The uninstall program launches. Follow the on-screen instructions to complete the uninstallation.</li>
+<li>Close Felix and any running Office applications.</li>
+<li>In Windows 11, open <strong>Settings → Apps → Installed apps</strong>. In Windows 10, open <strong>Settings → Apps → Apps &amp; features</strong>.</li>
+<li>Find <strong>Felix</strong>, choose <strong>Uninstall</strong>, and follow the prompts.</li>
 </ol>
+<p>The Felix 3 uninstaller leaves your saved memories, glossaries and settings in place.</p>
 </div>
 </div>
 
