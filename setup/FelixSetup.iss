@@ -14,7 +14,7 @@
 ; each user's %LOCALAPPDATA%\Felix (settings, customized templates, logs) and
 ; their memories and glossaries alone.
 
-#define AppVersion "3.0"
+#define AppVersion "3.0.1"
 #define Root ".."
 #define FelixBin Root + "\Felix\Unicode_Release"
 #define VcRedist "C:\Program Files\Microsoft Visual Studio\18\Community\VC\Redist\MSVC\v145"
@@ -29,7 +29,7 @@ AppPublisherURL=https://github.com/ginstrom/felix-cat
 AppSupportURL=https://github.com/ginstrom/felix-cat/issues
 AppUpdatesURL=https://github.com/ginstrom/felix-cat/releases
 AppCopyright=Copyright (c) 1999-2026 Ryan Ginstrom
-VersionInfoVersion={#AppVersion}.0.0
+VersionInfoVersion={#AppVersion}.0
 VersionInfoDescription=Felix Setup
 
 ; Felix is 32-bit, but the Office add-ins are 64-bit, so this installs in
