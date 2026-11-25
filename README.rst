@@ -10,34 +10,40 @@ This package consists of the following tools:
 - Excel Assist (MS Excel add-in for Felix)
 - PowerPoint Assist (MS PowerPoint add-in for Felix)
 
-Felix is hosted at http://felix-cat.com/
+Felix was originally distributed at felix-cat.com, which is no longer online.
 
-Build Requirements
-------------------
+Building
+--------
 
-Felix is built using Visual Studio 2013 Community Edition. I plan to migrate to Visual Studio 2015.
+Felix and its add-ins build with **Visual Studio 2026** (toolset v145). Felix
+itself is 32-bit; the Office add-ins build as 64-bit (for 64-bit Office) or
+32-bit. See `BUILDING.md <BUILDING.md>`_ for the full setup: libraries,
+configurations, running Felix, registering it and the add-ins with Office, and
+the unit tests.
 
 Building Felix requires the following separate libraries:
 
-- Windows Template Library (WTL): http://sourceforge.net/projects/wtl/
-- Boost: http://www.boost.org/
-- Python: https://www.python.org/
+- Windows Template Library (WTL) 10: https://sourceforge.net/projects/wtl/
+- Boost (Test and Filesystem compiled): https://www.boost.org/
+- Microsoft Office, to build the add-ins (they import its type libraries)
 
-Felix also links to the following libraries:
+Felix also uses these, which are included in the repository:
 
-- SciLexer.dll, from http://www.scintilla.org/
-- DbgHelp.dll
+- cpptempl (``third_party/cpptempl``), its HTML template engine
+- SciLexer.dll, from https://www.scintilla.org/
 
-Distributing Felix requires the VS 2010 and VS 2013 redistributable packages. It also requires the MSVCP90 and MSVCR90 DLLs for the python components.
+The ``python_tools`` folder holds Python 2 tools from the original
+distribution; they are not part of the C++ build.
 
-Documentation
--------------
+History
+-------
 
-The code documentation can be found here (generated using doxygen):
-http://felix-cat.com/media/docs/
+Felix was developed with Visual Studio 2013 and kept in Mercurial. This
+repository starts from a snapshot of that code (see ``.hg_archival.txt``) and
+continues with its migration to Visual Studio 2026 and 64-bit Office.
 
-The user's manual can be found here:
-http://felix-cat.com/media/manuals/felix/
+License
+-------
 
-(Japanese translation)
-http://jp.felix-cat.com/media/manuals/jp/felix/
+MIT; see ``LICENSE.txt`` (Japanese: ``LICENSE_JP.txt``). Third-party code keeps
+its own license (for example ``third_party/cpptempl/LICENSE.txt``).

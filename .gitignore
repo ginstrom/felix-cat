@@ -64,3 +64,11 @@ Dependencies.local.props
 # Large third-party trees (cpptempl may be committed)
 third_party/boost/
 third_party/wtl/
+
+# Archive of the old felix-cat.com website: kept outside this repo (separate repository).
+felix-cat-archive/
+
+# Windows / old Visual Studio leftovers
+Thumbs.db
+*.sln.cache
+*.vcproj.*.old
