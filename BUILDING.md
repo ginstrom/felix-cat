@@ -248,6 +248,40 @@ What the migration changed:
 - `Felix.sln` was regenerated: `Unicode_Debug`, `Unicode_Release` and `Testing`,
   each for Win32 and x64, with the add-ins depending on Felix.
 
+## 7. Installer and releases
+
+The installer is an [Inno Setup 6](https://jrsoftware.org/isinfo.php) script,
+`setup\FelixSetup.iss`. To build the Release binaries and compile it in one go
+(close Felix and Office first):
+
+```powershell
+winget install --id JRSoftware.InnoSetup --source winget
+powershell -ExecutionPolicy Bypass -File tools\build-installer.ps1
+```
+
+The result is `setup\Output\Felix_Setup_<version>.exe`. It requires 64-bit
+Windows 10 or later, asks for admin rights, and:
+
+- installs Felix (32-bit) to `C:\Program Files\Felix`, with its language DLLs,
+  HTML templates and `Felix.tlb`;
+- installs the Word, Excel and PowerPoint add-ins (64-bit, each optional) and
+  registers them with Office;
+- installs the Visual C++ runtimes (x86 for Felix, x64 for the add-ins), taken
+  from the local Visual Studio (`VcRedist` in the script);
+- registers Felix's COM server (`Felix.exe /RegServer`), the `.ftm`, `.fgloss`
+  and `.fprefs` file types, and a Start menu shortcut.
+
+Uninstalling removes all of that, but leaves each user's
+`%LOCALAPPDATA%\Felix` (settings, customized templates, logs) and their
+memories and glossaries alone. (The 2015 installer's uninstaller deleted
+`%LOCALAPPDATA%\Felix`.) The installer isn't code-signed, so Windows
+SmartScreen warns when it's downloaded.
+
+**Version number.** It's set in `Felix/stdafx.h` (`VERSION`, shown in the
+status bar and written into saved memories), the `VERSIONINFO` blocks of
+`Felix/Felix.rc`, `Felix/FelixENG.rc`, `Felix/FelixJPN.rc` and the three
+add-ins' `AddIn.rc`, and `AppVersion` in `setup\FelixSetup.iss`.
+
 ## Source file encoding
 
 Source files are **UTF-8 with a byte order mark** (or, for three files,
@@ -293,10 +327,13 @@ the narrow-string encoding this also sets doesn't change any existing string.
 - `Unicode_Release` builds and runs, but with about 220 compiler warnings
   (mostly the newer-compiler warnings that `Testing` exempts). Worth cleaning up.
 - The 14 remote-memory tests are skipped unless the fake COM server in `python_tools\MemoryEngineFake.py` (Python 2 + pywin32) is registered. See section 5.
-- **Try the add-ins in Office.** They build and their tests pass, but loading
-  them in Word, Excel and PowerPoint needs registering as admin
-  (`tools\register-felix.ps1`, section 6). Expect the old toolbar UI to show
-  on the ribbon's Add-ins tab.
+- The Word add-in has been tried in Word (lookup works end to end); the Excel
+  and PowerPoint add-ins load-tested only through their test programs so far.
+- Help > Check for Updates, and Felix's automatic update check at startup,
+  relied on Python tools that aren't part of this repo. The automatic check
+  fails quietly (one line in `felix.log`); the menu item doesn't work.
+- The installer only offers the 64-bit add-ins; it could also offer the Win32
+  ones for 32-bit Office.
 - The Win32 add-in builds (for 32-bit Office) haven't been built since the
   migration; with 64-bit Office installed they can't be loaded here anyway.
 - Felix still uses the non-standard `/Zc:wchar_t-`. Switching to a built-in

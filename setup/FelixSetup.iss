@@ -1,206 +1,136 @@
-; Felix Setup
-; Builds installer
-; This setup file is generated from a jinja template (FelixSetup.tpl).
-; Do not edit it directly.
+﻿; Felix installer (Inno Setup 6)
+;
+; Installs Felix (32-bit) and its Word, Excel and PowerPoint add-ins (64-bit,
+; for 64-bit Office), the Visual C++ runtimes they need, and registers Felix's
+; COM server and the add-ins.
+;
+; Build the binaries first (tools\build-installer.ps1 does everything):
+;   Felix\Felix.vcxproj                       Unicode_Release | Win32
+;   Felix\EngResource, Felix\JpnResource      Unicode_Release | Win32
+;   <App>Assist\<App>Assist\<App>Assist.vcxproj  Release | x64
+; then compile this script:  ISCC setup\FelixSetup.iss
+;
+; The uninstaller removes only what this installer put in place. It leaves
+; each user's %LOCALAPPDATA%\Felix (settings, customized templates, logs) and
+; their memories and glossaries alone.
+
+#define AppVersion "3.0"
+#define Root ".."
+#define FelixBin Root + "\Felix\Unicode_Release"
+#define VcRedist "C:\Program Files\Microsoft Visual Studio\18\Community\VC\Redist\MSVC\v145"
 
 [Setup]
-AppCopyright=Copyright (c) 2008-2015 Ginstrom IT Solutions (GITS)
+AppId={{98802423-6787-4122-BCEC-08CC2E12F18E}
 AppName=Felix
-AppVerName=Felix version 2.0
-AppPublisher=Ginstrom IT Solutions (GITS)
-AppPublisherURL=http://www.ginstrom.com/
-AppSupportURL=http://www.felix-cat.com/
-AppVersion=2.0
-AppContact=support@felix-cat.com
+AppVersion={#AppVersion}
+AppVerName=Felix {#AppVersion}
+AppPublisher=Ryan Ginstrom
+AppPublisherURL=https://github.com/ginstrom/felix-cat
+AppSupportURL=https://github.com/ginstrom/felix-cat/issues
+AppUpdatesURL=https://github.com/ginstrom/felix-cat/releases
+AppCopyright=Copyright (c) 1999-2026 Ryan Ginstrom
+VersionInfoVersion={#AppVersion}.0.0
+VersionInfoDescription=Felix Setup
 
-VersionInfoVersion=2.0
-VersionInfoCompany=Ginstrom IT Solutions(GITS)
-VersionInfoDescription=Felix Setup Program
+; Felix is 32-bit, but the Office add-ins are 64-bit, so this installs in
+; 64-bit mode and requires 64-bit Windows.
+ArchitecturesAllowed=x64compatible
+ArchitecturesInstallIn64BitMode=x64compatible
+MinVersion=10.0
 
-DefaultDirName={pf}\Assistant Suite\Felix
-DefaultGroupName=Assistant Suite
+DefaultDirName={autopf}\Felix
+DefaultGroupName=Felix
 UninstallDisplayName=Felix
-UninstallDisplayIcon={app}\SkinHelper.exe
-UninstallFilesDir={app}
-ShowLanguageDialog=yes
-ShowComponentSizes=yes
-WizardSmallImageFile=compiler:WizModernSmallImage-IS.bmp
+UninstallDisplayIcon={app}\Felix.exe
 PrivilegesRequired=admin
+ShowLanguageDialog=yes
+; Close Felix and Office if they're running, so files can be replaced.
+CloseApplications=yes
 
-OutputDir=.\Felix
-OutputBaseFilename=Felix_Setup_2.0
-
-[Registry]
-Root: HKCU; Subkey: Software\AssistantSuite\Felix; Flags: uninsdeletekey
-Root: HKCU; Subkey: Software\AssistantSuite\FelixWordInterface; Flags: uninsdeletekey
-Root: HKCU; Subkey: Software\AssistantSuite\FelixExcelInterface; Flags: uninsdeletekey
-Root: HKCU; Subkey: Software\AssistantSuite\FelixPptInterface; Flags: uninsdeletekey
-Root: HKCU; Subkey: Software\AssistantSuite; Flags: uninsdeletekeyifempty
-
-; ftm
-Root: HKCR; Subkey: ".ftm"; ValueType: string; ValueName: ""; ValueData: "FelixTMFile"; Flags: uninsdeletevalue
-Root: HKCR; Subkey: "FelixTMFile"; ValueType: string; ValueName: ""; ValueData: "Felix TM File"; Flags: uninsdeletekey
-; Root: HKCR; Subkey: "FelixTMFile\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\FELIX.EXE,0"
-Root: HKCR; Subkey: "FelixTMFile\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\FELIX.EXE"" ""%%1"""
-
-; fgloss
-Root: HKCR; Subkey: ".fgloss"; ValueType: string; ValueName: ""; ValueData: "FelixGlossaryFile"; Flags: uninsdeletevalue
-Root: HKCR; Subkey: "FelixGlossaryFile"; ValueType: string; ValueName: ""; ValueData: "Felix Glossary File"; Flags: uninsdeletekey
-; Root: HKCR; Subkey: "FelixGlossaryFile\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\FELIX.EXE,0"
-Root: HKCR; Subkey: "FelixGlossaryFile\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\FELIX.EXE"" ""%%1"""
-
-; fprefs
-Root: HKCR; Subkey: ".fprefs"; ValueType: string; ValueName: ""; ValueData: "FelixPreferenceFile"; Flags: uninsdeletevalue
-Root: HKCR; Subkey: "FelixPreferenceFile"; ValueType: string; ValueName: ""; ValueData: "Felix Preference File"; Flags: uninsdeletekey
-; Root: HKCR; Subkey: "FelixPreferenceFile\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\FELIX.EXE,0"
-Root: HKCR; Subkey: "FelixPreferenceFile\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\FELIX.EXE"" ""%%1"""
+OutputDir=Output
+OutputBaseFilename=Felix_Setup_{#AppVersion}
+Compression=lzma2
+SolidCompression=yes
+WizardStyle=modern
 
 [Languages]
-Name: en; MessagesFile: compiler:English.isl; LicenseFile: "D:\dev\cpp\Assistant Suite\LICENSE.txt"
-Name: jp; MessagesFile: compiler:English.isl; LicenseFile: "D:\dev\cpp\Assistant Suite\LICENSE_JP.txt"
+Name: en; MessagesFile: compiler:Default.isl; LicenseFile: {#Root}\LICENSE.txt
+Name: jp; MessagesFile: compiler:Languages\Japanese.isl; LicenseFile: {#Root}\LICENSE_JP.txt
+
+[Types]
+Name: full; Description: {cm:TypeFull}
+Name: custom; Description: {cm:TypeCustom}; Flags: iscustom
+
+[Components]
+Name: main; Description: Felix; Types: full custom; Flags: fixed
+Name: word; Description: {cm:WordAddin}; Types: full
+Name: excel; Description: {cm:ExcelAddin}; Types: full
+Name: powerpoint; Description: {cm:PowerPointAddin}; Types: full
+
+[CustomMessages]
+en.TypeFull=Felix and all Office add-ins
+en.TypeCustom=Custom
+en.WordAddin=Word add-in (64-bit Office)
+en.ExcelAddin=Excel add-in (64-bit Office)
+en.PowerPointAddin=PowerPoint add-in (64-bit Office)
+en.InstallingRuntime=Installing the Visual C++ runtime...
+en.RegisteringFelix=Registering Felix...
+jp.TypeFull=Felix と Office アドイン (すべて)
+jp.TypeCustom=カスタム
+jp.WordAddin=Word アドイン (64 ビット Office)
+jp.ExcelAddin=Excel アドイン (64 ビット Office)
+jp.PowerPointAddin=PowerPoint アドイン (64 ビット Office)
+jp.InstallingRuntime=Visual C++ ランタイムをインストールしています...
+jp.RegisteringFelix=Felix を登録しています...
 
 [Files]
-; ===================
-; MAIN COMPONENT
-; ===================
-; Felix
-Source: D:\dev\cpp\Assistant Suite\Felix\Unicode_Release\Felix.exe; components: Main; DestDir: {app}; DestName: Felix.exe; Flags: ignoreversion
-Source: D:\dev\cpp\Assistant Suite\Felix\Unicode_Release\lang\EngResource.dll; components: Main; DestDir: {app}\lang; Flags: ignoreversion
-Source: D:\dev\cpp\Assistant Suite\Felix\Unicode_Release\lang\JpnResource.dll; components: Main; DestDir: {app}\lang; Flags: ignoreversion
-Source: D:\dev\cpp\Assistant Suite\Felix\Unicode_Release\Felix.tlb; components: Main; DestDir: {app}; DestName: Felix.tlb; Flags: ignoreversion
+; Felix (32-bit)
+Source: {#FelixBin}\Felix.exe; DestDir: {app}; Components: main; Flags: ignoreversion 32bit
+; Felix's type library: Felix /RegServer registers this file, next to the exe.
+Source: {#FelixBin}\Felix.tlb; DestDir: {app}; Components: main; Flags: ignoreversion
+Source: {#FelixBin}\lang\EngResource.dll; DestDir: {app}\lang; Components: main; Flags: ignoreversion 32bit
+Source: {#FelixBin}\lang\JpnResource.dll; DestDir: {app}\lang; Components: main; Flags: ignoreversion 32bit
+Source: {#FelixBin}\SciLexer.dll; DestDir: {app}; Components: main; Flags: ignoreversion 32bit
+; UI templates. Felix uses %LOCALAPPDATA%\Felix\html first (for customized
+; templates) and falls back to this copy.
+Source: {#FelixBin}\html\*; DestDir: {app}\html; Components: main; Flags: ignoreversion recursesubdirs; Excludes: "Thumbs.db,*.komodoproject,*.kpf"
+Source: {#Root}\LICENSE.txt; DestDir: {app}; Components: main; Flags: ignoreversion
+Source: {#Root}\LICENSE_JP.txt; DestDir: {app}; Components: main; Flags: ignoreversion
 
-; Memory Engine
-Source: D:\dev\python\FelixMemoryServes\MemoryEngine\*; DestDir: {app}\pytools; Flags: ignoreversion recursesubdirs
+; Office add-ins (64-bit). regserver registers them with the 64-bit regsvr32
+; and unregisters them on uninstall.
+Source: {#Root}\WordAssist\WordAssist\x64\Release\WordAssist.dll; DestDir: {app}; Components: word; Flags: ignoreversion regserver 64bit
+Source: {#Root}\ExcelAssist\ExcelAssist\x64\Release\ExcelAssist.dll; DestDir: {app}; Components: excel; Flags: ignoreversion regserver 64bit
+Source: {#Root}\PowerPointAssist\PowerPointAssist\x64\Release\PowerPointAssist.dll; DestDir: {app}; Components: powerpoint; Flags: ignoreversion regserver 64bit
 
-; version info
-Source: version.txt; DestDir: {localappdata}\Felix; Flags: ignoreversion
+; Visual C++ runtimes (v14): x86 for Felix, x64 for the add-ins.
+Source: {#VcRedist}\vc_redist.x86.exe; DestDir: {tmp}; Flags: deleteafterinstall
+Source: {#VcRedist}\vc_redist.x64.exe; DestDir: {tmp}; Flags: deleteafterinstall
 
-; Prefs
-Source: D:\dev\cpp\Assistant Suite\settings\stringres.database; DestDir: {localappdata}\Felix\prefs; Flags: ignoreversion
-Source: D:\dev\cpp\Assistant Suite\settings\felix_rules.frules; DestDir: {localappdata}\Felix\prefs; Flags: ignoreversion onlyifdoesntexist
+[Registry]
+; File types: Felix memories, glossaries and preferences.
+Root: HKA; Subkey: Software\Classes\.ftm; ValueType: string; ValueData: FelixTMFile; Flags: uninsdeletevalue
+Root: HKA; Subkey: Software\Classes\FelixTMFile; ValueType: string; ValueData: Felix Translation Memory; Flags: uninsdeletekey
+Root: HKA; Subkey: Software\Classes\FelixTMFile\DefaultIcon; ValueType: string; ValueData: """{app}\Felix.exe"",0"
+Root: HKA; Subkey: Software\Classes\FelixTMFile\shell\open\command; ValueType: string; ValueData: """{app}\Felix.exe"" ""%1"""
+Root: HKA; Subkey: Software\Classes\.fgloss; ValueType: string; ValueData: FelixGlossaryFile; Flags: uninsdeletevalue
+Root: HKA; Subkey: Software\Classes\FelixGlossaryFile; ValueType: string; ValueData: Felix Glossary; Flags: uninsdeletekey
+Root: HKA; Subkey: Software\Classes\FelixGlossaryFile\DefaultIcon; ValueType: string; ValueData: """{app}\Felix.exe"",0"
+Root: HKA; Subkey: Software\Classes\FelixGlossaryFile\shell\open\command; ValueType: string; ValueData: """{app}\Felix.exe"" ""%1"""
+Root: HKA; Subkey: Software\Classes\.fprefs; ValueType: string; ValueData: FelixPreferenceFile; Flags: uninsdeletevalue
+Root: HKA; Subkey: Software\Classes\FelixPreferenceFile; ValueType: string; ValueData: Felix Preferences; Flags: uninsdeletekey
+Root: HKA; Subkey: Software\Classes\FelixPreferenceFile\shell\open\command; ValueType: string; ValueData: """{app}\Felix.exe"" ""%1"""
 
-; Resources
-Source: D:\dev\cpp\Assistant Suite\settings\Felix.ico; DestDir: {localappdata}\Felix\res; Flags: ignoreversion
-
-; HTML stuff
-Source: D:\dev\cpp\Assistant Suite\Felix\html\*; components: Main; DestDir: {localappdata}\Felix\html; Flags: ignoreversion recursesubdirs
-Source: D:\dev\cpp\Assistant Suite\Felix\html\*; components: Main; DestDir: {app}\html; Flags: ignoreversion recursesubdirs
-
-; Docs
-Source: D:\dev\cpp\Assistant Suite\LICENSE.txt; components: Main; DestDir: {app}; Flags: ignoreversion
-Source: D:\dev\cpp\Assistant Suite\LICENSE_JP.txt; components: Main; DestDir: {app}; Flags: ignoreversion
-
-; DLLs
-Source: D:\dev\cpp\Common DLLs\DbgHelp.Dll; components: Main; DestDir: {sys}; Flags: sharedfile
-Source: D:\dev\cpp\Common DLLs\SciLexer.Dll; components: Main; DestDir: {sys}; Flags: sharedfile
-
-;; Stuff for Win 2000 Only
-Source: D:\dev\cpp\Common DLLs\DbgHelp.Dll; components: Main; DestDir: {app}; OnlyBelowVersion: 4.9.3000,5.01.2600
-Source: D:\dev\cpp\Common DLLs\MSVCR90.DLL; components: Main; DestDir: {sys}; OnlyBelowVersion: 4.9.3000,5.01.2600
-Source: D:\dev\cpp\Common DLLs\MSVCP90.dll; components: Main; DestDir: {sys}; OnlyBelowVersion: 4.9.3000,5.01.2600
-
-; ===================
-; OFFICE INTERFACES
-; ===================
-; word
-Source: D:\dev\cpp\Assistant Suite\WordAssist\WordAssist\Release\WordAssist.dll; components: WordIF; DestDir: {app}; Flags: ignoreversion
-
-; excel
-Source: D:\dev\cpp\Assistant Suite\ExcelAssist\ExcelAssist\Release\ExcelAssist.dll; components: ExcelIF; DestDir: {app}; Flags: ignoreversion
-
-; powerpoint
-Source: D:\dev\cpp\Assistant Suite\PowerPointAssist\PowerPointAssist\Release\PowerPointAssist.dll; components: PowerPointIF; DestDir: {app}; Flags: ignoreversion
-
-; CRT junk
-Source: D:\dev\cpp\Common DLLs\vcredist_x86.exe; components: Main; DestDir: {tmp}
-Source: D:\dev\cpp\Common DLLs\vcredist_2013_x86.exe; components: Main; DestDir: {tmp}
-
+[Icons]
+Name: {group}\Felix; Filename: {app}\Felix.exe
+Name: {group}\{cm:UninstallProgram,Felix}; Filename: {uninstallexe}
 
 [Run]
-; VC Redistributables
-Filename: "{tmp}\vcredist_x86.exe"; StatusMsg: {cm:Registering,VC 2008 Redistributable Files}; components: Main; Parameters: "/qn"
-Filename: "{tmp}\vcredist_2013_x86.exe"; StatusMsg: {cm:Registering,VC 2013 Redistributable Files}; components: Main; Parameters: "/q /norestart"
-
-; Register Office interfaces
-Filename: {app}\pytools\RegDll.exe; StatusMsg: {cm:Registering,Excel Interface}; WorkingDir: {app}; components: ExcelIF; Parameters: """{app}\ExcelAssist.dll"""
-Filename: {app}\pytools\RegDll.exe; StatusMsg: {cm:Registering,PowerPoint Interface}; WorkingDir: {app}; components: PowerPointIF; Parameters: """{app}\PowerPointAssist.dll"""
-Filename: {app}\pytools\RegDll.exe; StatusMsg: {cm:Registering,Word Interface}; WorkingDir: {app}; components: WordIF; Parameters: """{app}\WordAssist.dll"""
-
-; others
-Filename: {app}\pytools\MemoryEngine.exe; StatusMsg: {cm:Registering,MemoryEngine}; WorkingDir: {app}\pytools; components: Main; Parameters: /register
-Filename: {app}\pytools\FelixUtilities.exe; StatusMsg: {cm:Registering,FelixUtilities}; WorkingDir: {app}\pytools; components: Main; Parameters: /register
-Filename: {app}\pytools\ExcelHistory.exe; StatusMsg: {cm:Registering,TransHistoryExcel}; WorkingDir: {app}\pytools; components: Main; Parameters: /register
-Filename: {app}\pytools\WordHistory.exe; StatusMsg: {cm:Registering,TransHistoryWord}; WorkingDir: {app}\pytools; components: Main; Parameters: /register
-Filename: {app}\pytools\FelixPrefs.exe; StatusMsg: {cm:Registering,FelixPrefs}; WorkingDir: {app}\pytools; components: Main; Parameters: /register
-
-; Felix
-Filename: {app}\Felix.exe; StatusMsg: {cm:Registering,Felix}; WorkingDir: {app}; components: Main; Parameters: /RegServer
-Filename: {app}\Felix.exe; Description: {cm:LaunchProgram,Felix}; WorkingDir: {app}; components: Main; Flags: nowait postinstall skipifsilent; Parameters: -lang {cm:LanguageID}
+Filename: {tmp}\vc_redist.x86.exe; Parameters: "/install /quiet /norestart"; StatusMsg: {cm:InstallingRuntime}; Flags: waituntilterminated
+Filename: {tmp}\vc_redist.x64.exe; Parameters: "/install /quiet /norestart"; StatusMsg: {cm:InstallingRuntime}; Flags: waituntilterminated
+; Felix's COM server (Felix.App), which the add-ins use to reach Felix.
+Filename: {app}\Felix.exe; Parameters: /RegServer; StatusMsg: {cm:RegisteringFelix}; Flags: waituntilterminated
+Filename: {app}\Felix.exe; Description: {cm:LaunchProgram,Felix}; Flags: nowait postinstall skipifsilent
 
 [UninstallRun]
-; Unregister the Office interfaces
-Filename: {app}\pytools\UnRegDll.exe; StatusMsg: Unregistering Excel Interface; WorkingDir: {app}; components: ExcelIF; Parameters: """{app}\ExcelAssist.dll"""
-Filename: {app}\pytools\UnRegDll.exe; StatusMsg: Unregistering PowerPoint Interface; WorkingDir: {app}; components: PowerPointIF; Parameters: """{app}\PowerPointAssist.dll"""
-Filename: {app}\pytools\UnRegDll.exe; StatusMsg: Unregistering Word Interface; WorkingDir: {app}; components: WordIF; Parameters: """{app}\WordAssist.dll"""
-
-; Unregister the Memory Serves COM interface
-Filename: {app}\pytools\MemoryEngine.exe; StatusMsg: Unregistering  MemoryEngine; WorkingDir: {app}\pytools; components: Main; Parameters: /unregister
-
-; Unregister Felix as server
-Filename: {app}\Felix.exe; StatusMsg: Unregistering Felix; WorkingDir: {app}\res; RunOnceId: DelReg; components: Main; Parameters: /UnRegServer
-Filename: {app}\pytools\FelixUtilities.exe; StatusMsg: Unregistering  FelixUtilities; WorkingDir: {app}\pytools; components: Main; Parameters: /unregister
-Filename: {app}\pytools\ExcelHistory.exe; StatusMsg: Unregistering  TransHistoryExcel; WorkingDir: {app}\pytools; components: Main; Parameters: /unregister
-Filename: {app}\pytools\WordHistory.exe; StatusMsg: Unregistering  TransHistoryWord; WorkingDir: {app}\pytools; components: Main; Parameters: /unregister
-Filename: {app}\pytools\FelixPrefs.exe; StatusMsg: Unregistering  FelixPrefs; WorkingDir: {app}\pytools; components: Main; Parameters: /unregister
-
-; delete menus from Office apps
-Filename: {app}\pytools\CleanupOffice.exe; StatusMsg: {cm:RemovingMenus}; WorkingDir: {app}\pytools; RunOnceId: DelMenus; components: WordIF ExcelIF
-
-; Files/directories to delete on uninstallation
-[UninstallDelete]
-Type: files; Name: "{app}\excel_errlog.txt"
-Type: filesandordirs; Name: "{localappdata}\Felix"
-
-; Allow desktop icon to be created
-[Tasks]
-Name: desktopicon; Description: {cm:CreateDesktopIcon}; GroupDescription: {cm:AdditionalIcons}; Components: main
-
-; The places where we put icons.
-[Icons]
-Name: {group}\Felix\{cm:UninstallProgram,Felix}; Filename: {uninstallexe}
-  ; Comment: {cm:UninstallProgram,Felix}; WorkingDir: {app}; Components: Main
-Name: {group}\Felix\Felix; Filename: {app}\Felix.exe
-  ; Comment: {cm:LaunchProgram,Felix}; WorkingDir: {app}; Components: Main; IconFilename: {app}\Felix.exe; IconIndex: 0
-Name: {userdesktop}\Felix; Filename: {app}\Felix.exe
-   ; Comment: {cm:LaunchProgram,Felix}; WorkingDir: {app}; Components: Main; IconFilename: {app}\Felix.exe; IconIndex: 0; Tasks: desktopicon
-Name: {group}\Felix\Show Logs; Filename: {app}\pytools\ShowLogs.exe
-  ; Comment: {cm:LaunchProgram,Show Logs}; WorkingDir: {app}\pytools; Components: Main; IconFilename: {app}\ShowLogs.exe; IconIndex: 0; Parameters: {cm:LanguageID}
-Name: {group}\Felix\Check Updates; Filename: {app}\pytools\CheckUpdates.exe
-  ; Comment: {cm:LaunchProgram,Check Updates}; WorkingDir: {app}\pytools; Components: Main; IconFilename: {app}\CheckUpdates.exe; IconIndex: 0
-
-; Allows user to select which components are installed.
-; Felix must always be installed, but users can select any or none of
-; the Office interfaces. Useful if the user only uses some or none of
-; the Office programs for translation.
-[Components]
-Name: Main; Description: {cm:MainFiles}; Types: full custom compact; Flags: fixed
-Name: WordIF; Description: {cm:InterfaceFor,MS Word}; Types: full
-Name: ExcelIF; Description: {cm:InterfaceFor,MS Excel}; Types: full
-Name: PowerPointIF; Description: {cm:InterfaceFor,MS PowerPoint}; Types: full
-
-; The directories created by the installer.
-; We clean them all up on uninstallation.
-[Dirs]
-Name: {group}\Felix; Flags: uninsalwaysuninstall
-Name: {app}; Flags: uninsalwaysuninstall
-Name: {app}\lang; Flags: uninsalwaysuninstall
-Name: {app}\docs; Flags: uninsalwaysuninstall
-Name: {app}\html; Flags: uninsalwaysuninstall
-Name: {app}\pytools; Flags: uninsalwaysuninstall
-Name: {localappdata}\Felix; Flags: uninsalwaysuninstall
-Name: {localappdata}\Felix\logs; Flags: uninsalwaysuninstall
-Name: {localappdata}\Felix\prefs; Flags: uninsalwaysuninstall
-Name: {localappdata}\Felix\html; Flags: uninsalwaysuninstall
-Name: {localappdata}\Felix\html\en; Flags: uninsalwaysuninstall
-Name: {localappdata}\Felix\html\jp; Flags: uninsalwaysuninstall
-Name: {localappdata}\Felix\html\js; Flags: uninsalwaysuninstall
+Filename: {app}\Felix.exe; Parameters: /UnregServer; RunOnceId: UnregisterFelix; Flags: waituntilterminated

@@ -72,3 +72,6 @@ felix-cat-archive/
 Thumbs.db
 *.sln.cache
 *.vcproj.*.old
+
+# Installer build output
+setup/Output/
