@@ -29,6 +29,7 @@
 #include "input_device_file.h"
 
 #include "HtmlHelp.h"
+#include "word_boundary_marks.h"
 #pragma message("   automatic link to HtmlHelp.lib")
 #pragma comment(lib, "HtmlHelp.lib")
 
@@ -800,7 +801,7 @@ bool WordController::OnConcordanceAction( bool as_plaintext )
 			return OnTransConcordanceAction(as_plaintext) ;
 		}
 	
-		_bstr_t text = get_selection_text( as_plaintext ) ;
+		_bstr_t text = string2BSTR( trim_word_boundary_marks( BSTR2wstring( get_selection_text( as_plaintext ) ) ) ) ;
 
 		if ( text.length() == 0 )
 		{
@@ -1407,7 +1408,7 @@ bool WordController::OnTransConcordanceAction ( bool as_plaintext )
 	{
 		
 		Felix::IAppPtr app = getAssistant( ) ;
-		app->TransConcordance( get_selection_text( as_plaintext ) ) ;
+		app->TransConcordance( string2BSTR( trim_word_boundary_marks( BSTR2wstring( get_selection_text( as_plaintext ) ) ) ) ) ;
 
 	}
 	CATCH_ALL("Action: Getting translation concordance")

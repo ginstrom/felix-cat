@@ -46,3 +46,13 @@ Exclusions: Look up, Set translation, Register glossary, auto-translate, PowerPo
 - [ ] Committed; index row 01 updated with status and hash.
 
 ## Execution record
+
+Engineer, 2026-11-25. `scripts/runlog` could not run (it needs Python, which is not installed), so every command below was run directly and its output kept in the scratchpad. No runlog IDs exist.
+
+- Baseline (Debug|x64, built with MSBuild, tests run by hand with `--report_level=short`): Test_WordAssist 134 cases / 443 assertions, Test_Excel 49 / 140, Test_PPT 65 / 181, all passing. Recorded in log.md.
+- Red: added `WordAssist/WordAssist/word_boundary_marks_test.cpp` (19 cases) and listed it in `Test_WordAssist.vcxproj` and `.filters`. Build failed with C1083, cannot open `word_boundary_marks.h` (the expected reason).
+- Green: added `common/word_boundary_marks.h` per the contract (also exposes `is_word_boundary_mark`). Test_WordAssist: 153 cases / 472 assertions, all passing (134 + 19).
+- Call sites: `WordController::OnConcordanceAction` and `OnTransConcordanceAction` trim via `string2BSTR( trim_word_boundary_marks( BSTR2wstring( get_selection_text(...) ) ) )`, plus `#include "word_boundary_marks.h"`. `get_selection_text` and `WordParser.cpp` are untouched. `WordAssist\WordAssist\WordAssist.vcxproj` builds Debug|x64 with 0 errors.
+- Manual AC1-AC4: not run, needs Felix registration (admin). `Felix.App` is registered (CLSID {4948E973-2FE7-4E6b-914E-55417CCFDF22}) to `C:\Program Files\Felix\Felix.exe`, an installed Felix, not this repo's `Felix\Unicode_Debug` build, and re-pointing it needs `tools\register-felix.ps1` (UAC). AC1-AC4 have unit coverage of the trimming only; the Word-to-Felix path is unverified, and the unfixed 0-hit repro was not done.
+- Deviations: none. `WordController.cpp` has no BOM in the repo and was left that way (CRLF kept). The two new files are UTF-8 with BOM and CRLF.
+- For later steps: Test_WordAssist output is `Test_WordAssist\Test_WordAssist\x64\Debug\Test_WordAssist.exe`. Test_Excel and Test_PPT are at `Test_Excel\x64\Debug\` and `Test_PPT\x64\Debug\`. In PowerShell call MSBuild by full path (`C:\Program Files\Microsoft Visual Studio\18\Community\MSBuild\Current\Bin\MSBuild.exe`); Git Bash mangles `/p:` switches. Steps 03 and 05 will hit the same registration limit for manual checks.

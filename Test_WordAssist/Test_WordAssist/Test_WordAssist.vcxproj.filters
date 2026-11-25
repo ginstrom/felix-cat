@@ -36,6 +36,9 @@
     <ClCompile Include="..\..\WordAssist\WordAssist\html_writer_test.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\WordAssist\WordAssist\word_boundary_marks_test.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\common\input_device_file.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

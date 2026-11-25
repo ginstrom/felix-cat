@@ -6,9 +6,11 @@
 - **Slug:** `office-addin-fixes-3.0.1`
 - **Scope:** ginstrom/felix-cat issues #1 (P2, Word concordance misses a match when the selection includes the paragraph mark), #2 (P2, Excel save dialog Alt+N relaunches Felix), #3 (P3, Excel formula bar stays stale after Get Translation).
 - **Path:** Small. No architecture step. One short design covering all three fixes, then a plan with one step per issue.
-- **Phase:** 3. Planning
-- **Next action:** The planner writes `docs/implementation-plans/office-addin-fixes-3.0.1/`, with one step per issue plus the release notes.
-- **Links:** design `docs/designs/office-addin-fixes-3.0.1.md` (approved 2026-11-25), plan (pending), branch `fix/office-addin-issues-1-3`.
+- **Phase:** 4. Implementation
+- **Next action:** Step 01 (engineer).
+- **Links:** design `docs/designs/office-addin-fixes-3.0.1.md` (approved 2026-11-25), plan `docs/implementation-plans/office-addin-fixes-3.0.1/index.md` (3f203c2), log `docs/implementation-plans/office-addin-fixes-3.0.1/log.md`, branch `fix/office-addin-issues-1-3`.
+- **Step tiers (engineer/reviewer):** 01 sonnet/sonnet; 02 sonnet/sonnet; 03 sonnet/sonnet; 04 opus/opus (COM fakes and Excel refresh); 05 sonnet/sonnet; overall review opus. Escalations: none.
+- **Manual checks:** if a check needs Felix COM registration (UAC/admin), the engineer stops and reports, and the user runs `tools\register-felix.ps1`.
 - **Status thread:** none. The `recursive_slack` tools aren't available in this session, so this State section is the status.
 - **Environment:** VS Community 2026 is installed. Boost is at `C:\local\boost_1_91_0`. Only 64-bit Office is installed, so the x64 add-ins are the ones that can be tested. Test exes are Test_Excel, Test_WordAssist and Felix `Testing`. Python isn't installed.
 - **Open questions:** none.
