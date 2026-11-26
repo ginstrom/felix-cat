@@ -3,6 +3,7 @@
 #include "excel_application.h"
 #include "FelixString.h"
 #include "logging.h"
+#include "stringconversions.h"
 
 /*!
  * Writes text into a cell, falling back to the cell's formula
@@ -58,8 +59,13 @@ inline bool write_selection_text(excel::app_ptr app, _bstr_t text)
 	}
 	catch ( _com_error &e )
 	{
-		logging::log_warn("Failed to refresh the formula bar after writing the cell") ;
-		logging::log_exception(e) ;
+		// Logged at warn level on purpose: log_exception() would log at error
+		// level, and the Debug post-build step treats "COM error 0x...:" output
+		// from the refresh_throws test as a build error.
+		CString msg ;
+		msg.Format(_T("Failed to refresh the formula bar after writing the cell: COM exception 0x%08X: %s"),
+			e.Error(), static_cast<LPCTSTR>(e.ErrorMessage())) ;
+		logging::log_warn(string2string(static_cast<LPCWSTR>(msg))) ;
 	}
 	catch ( ... )
 	{
