@@ -60,9 +60,30 @@ Test_PPT\x64\Debug\Test_PPT.exe --report_level=short
 - Manual (Ctrl+Right moves the caret, AC3): deferred to QA; record that.
 
 ## Completion criteria
-- [ ] Tests written first and passing; counts recorded per program.
-- [ ] `accepts` in the three mappers per the table; C4 methods in Word and PowerPoint targets and every implementer; fakes per C5.
-- [ ] All three test programs pass Debug|x64; Test_Excel builds Release|x64; the three add-ins build Debug|x64.
-- [ ] Committed; index row 02 updated.
+- [x] Tests written first and passing; counts recorded per program.
+- [x] `accepts` in the three mappers per the table; C4 methods in Word and PowerPoint targets and every implementer; fakes per C5.
+- [x] All three test programs pass Debug|x64; Test_Excel builds Release|x64; the three add-ins build Debug|x64.
+- [x] Committed; index row 02 updated.
 
 ## Execution record
+
+Step 02, engineer record (all builds `/t:Rebuild`, x64, from PowerShell; no `runlog`, Python is absent). Commit 143fc28.
+
+| Command | Exit | Result |
+|---|---|---|
+| Red: Debug build + run of the three test programs with the new tests and fakes, before the `accepts` overrides | build failed on post-build run (expected) / 201 | Test_WordAssist, Test_Excel and Test_PPT each failed only the new `accepts` cases (Test_PPT: 105 of 108 passed, 8 assertions failed) |
+| Test_WordAssist Debug build + `Test_WordAssist\Test_WordAssist\x64\Debug\Test_WordAssist.exe --report_level=short` | 0 / 0 | 173 test cases out of 173 passed |
+| Test_Excel Debug build + run | 0 / 0 | 67 out of 67 passed |
+| Test_PPT Debug build + run | 0 / 0 | 108 out of 108 passed |
+| Test_WordAssist Release build + run | 0 / 0 | 173 out of 173 passed |
+| Test_Excel Release build + run | 0 / 0 | 60 out of 60 passed |
+| Test_PPT Release build + run | 0 / 0 | 108 out of 108 passed |
+| WordAssist, ExcelAssist, PowerPointAssist Debug|x64 builds | 0 / 0 / 0 | built |
+
+Counts: Test_WordAssist 166 -> 173 (+7), Test_Excel 65 -> 67 Debug and 58 -> 60 Release (+2), Test_PPT 103 -> 108 (+5).
+
+Deviations and notes:
+- The task and C4 name `WordController` as an implementer of `KeyTargetWord`, but it is not one: `CKeyboardListener : KeyTargetWord` is the interface, and `CWordControllerWord` / `CWordControllerHtml` (which derive from `CKeyboardListener` and `WordController`) are the concrete targets. `SelectionIsEmpty` is implemented on `WordController` (catch-all, true on error) and forwarded in both subclasses like `IsActive`. No other implementers of `KeyTargetWord` or `KeyTargetPpt` exist besides the fakes and `CPowerPointInterface`.
+- `accepts` in all three mappers is wrapped in `try { ... } catch (...) { return false ; }` (the pass-through answer), per the step 01 review note.
+- `CPowerPointInterface::IsActive()` still returns true (unchanged). `HasSelectedText()` uses `getSelectedText(true)` per C4.
+- Manual check (Ctrl+Right moves the caret, AC3): deferred to QA.
