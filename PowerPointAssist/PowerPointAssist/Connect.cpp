@@ -417,7 +417,7 @@ HRESULT CConnect::add_menu(Office::_CommandBarsPtr &spCmdBars)
 		//	m_menu_auto_trans = add_menu_item( ta_menu_controls, 0, caption, tooltip  ) ;
 		//	MenuAutoTransEventImpl		::DispEventAdvise( (IUnknown*)m_menu_auto_trans ) ;
 
-		caption = L"Translate to Fu&zzy (ALT + Z)" ;
+		caption = L"Translate to Fu&zzy (ALT + C)" ;
 		tooltip = L"Auto translate until a fuzzy match is reached" ;
 		m_menu_auto_trans_fuzzy = add_menu_item( ta_menu_controls, 0, caption, tooltip  ) ;
 		MenuAutoTransFuzzyEventImpl	::DispEventAdvise( (IUnknown*)m_menu_auto_trans_fuzzy ) ;
@@ -460,7 +460,7 @@ HRESULT CConnect::add_menu(Office::_CommandBarsPtr &spCmdBars)
 		m_menu_extend_lookup = add_menu_item( ta_menu_controls, 0, caption, tooltip  ) ;
 		MenuExtendLookupEventImpl	::DispEventAdvise( (IUnknown*)m_menu_extend_lookup ) ;
 
-		caption = L"Find C&oncordance (ALT + C)" ;
+		caption = L"Find C&oncordance" ;
 		tooltip = L"Find concordance for the current selection in the memory" ;
 		m_menu_concordance = add_menu_item( ta_menu_controls, 0, caption, tooltip  ) ;
 		MenuConcordanceEventImpl	::DispEventAdvise( (IUnknown*)m_menu_concordance ) ;
@@ -1429,7 +1429,7 @@ void CConnect::set_english_trans_menu_text()
 {
 	CComBSTR caption, tooltip ;
 
-	caption = L"Translate to Fu&zzy (ALT + Z)" ;
+	caption = L"Translate to Fu&zzy (ALT + C)" ;
 	tooltip = L"Auto translate until a fuzzy match is reached" ;
 	m_menu_auto_trans_fuzzy->put_Caption( caption ) ;
 	m_menu_auto_trans_fuzzy->put_TooltipText( tooltip ) ;
@@ -1469,7 +1469,7 @@ void CConnect::set_english_trans_menu_text()
 	m_menu_extend_lookup->put_Caption( caption ) ;
 	m_menu_extend_lookup->put_TooltipText( tooltip ) ;
 
-	caption = L"Find C&oncordance (ALT + C)" ;
+	caption = L"Find C&oncordance" ;
 	tooltip = L"Find concordance for the current selection in the memory" ;
 	m_menu_concordance->put_Caption( caption ) ;
 	m_menu_concordance->put_TooltipText( tooltip ) ;
@@ -1582,7 +1582,7 @@ void CConnect::set_english_review_menu_text()
 {
 	CComBSTR caption, tooltip ;
 
-	caption = L"Translate to Fu&zzy (ALT + Z)" ;
+	caption = L"Translate to Fu&zzy (ALT + C)" ;
 	tooltip = L"Auto translate until a fuzzy match is reached" ;
 	m_menu_auto_trans_fuzzy->put_Caption( caption ) ;
 	m_menu_auto_trans_fuzzy->put_TooltipText( tooltip ) ;
@@ -1622,7 +1622,7 @@ void CConnect::set_english_review_menu_text()
 	m_menu_extend_lookup->put_Caption( caption ) ;
 	m_menu_extend_lookup->put_TooltipText( tooltip ) ;
 
-	caption = L"Find C&oncordance (ALT + C)" ;
+	caption = L"Find C&oncordance" ;
 	tooltip = L"Find concordance for the current selection in the memory" ;
 	m_menu_concordance->put_Caption( caption ) ;
 	m_menu_concordance->put_TooltipText( tooltip ) ;

@@ -41,10 +41,22 @@ Test_PPT\x64\Debug\Test_PPT.exe --report_level=short
 - Manual (QA): AC10, English and Japanese menus, translation and review modes: Find Concordance shows no shortcut; Translate to Fuzzy shows Alt+C; Alt+C still runs Translate to Fuzzy. Record as deferred.
 
 ## Completion criteria
-- [ ] Six English literals and two Japanese strings changed; nothing else.
-- [ ] `AddIn.rc` is still Shift-JIS, only two lines differ.
-- [ ] Add-in builds; Test_PPT green.
-- [ ] Manual AC10 recorded as deferred to QA.
-- [ ] Committed; index row 06 updated.
+- [x] Six English literals and two Japanese strings changed; nothing else.
+- [x] `AddIn.rc` is still Shift-JIS, only two lines differ.
+- [x] Add-in builds; Test_PPT green.
+- [x] Manual AC10 recorded as deferred to QA.
+- [x] Committed; index row 06 updated.
 
 ## Execution record
+
+Engineer: sonnet. Date 2026-11-26. Baseline Test_PPT 108/108 (step 05 left it unchanged).
+
+- `Connect.cpp`: six literals changed with `sed` (file has no BOM at HEAD or now; line endings untouched, `git diff --numstat` 6/6). Find Concordance `Find C&oncordance (ALT + C)` -> `Find C&oncordance` (lines 463, 1472, 1625). Translate to Fuzzy `Translate to Fu&zzy (ALT + Z)` -> `Translate to Fu&zzy (ALT + C)` (lines 420, 1432, 1585).
+- `AddIn.rc`: read as bytes, decoded with codepage 932, only the lines starting `IDS_AUTO_TRANS_FUZZY_J` and `IDS_CONCORDANCE_J` edited, re-encoded with 932 and written with `WriteAllBytes` (no BOM; file starts `// M`, 519 CRLF, 0 bare LF, preserved). File shrank by exactly 10 bytes (` (ALT + C)`). `git diff --numstat` 2/2; `git diff --text | iconv -f CP932` shows only:
+  - `IDS_AUTO_TRANS_FUZZY_J`: `ファジーマッチまで自動翻訳(&Z) (ALT + Z)` -> `ファジーマッチまで自動翻訳(&Z) (ALT + C)`
+  - `IDS_CONCORDANCE_J`: `コンコーダンス(一致)検索(&O) (ALT + C)` -> `コンコーダンス(一致)検索(&O)`
+- Untouched on purpose: `IDS_TRANS_CONCORDANCE_J` (line 383, unused, design section 9).
+- Grep: no `Find C&oncordance (ALT + C)` or `Fu&zzy (ALT + Z)` left in `Connect.cpp`.
+- Builds (PowerShell, MSBuild): PowerPointAssist Debug|x64 exit 0; Release|x64 exit 0 (resource compiler accepted the .rc; only the usual FELIXREG registration warning, needs admin). Test_PPT Debug|x64 build exit 0; `Test_PPT.exe --report_level=short` exit 0: "108 test cases out of 108 passed, 340 assertions out of 340 passed".
+- No deviations. No tests added (menus need PowerPoint).
+- Deferred to QA: AC10, English and Japanese, translation and review modes: Find Concordance shows no shortcut; Translate to Fuzzy shows Alt+C; Alt+C runs Translate to Fuzzy; Japanese tooltips follow the caption string.

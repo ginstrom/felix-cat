@@ -26,3 +26,4 @@ After step 01: Test_PPT 99 / 99 (+18), Test_Excel 65 / 58, Test_WordAssist 166 /
 - Step 04: commit ef06fa5. Test_WordAssist 175 / 175 (Debug), Test_Excel 67, Test_PPT 108; WordAssist, ExcelAssist, PowerPointAssist build Debug|x64.
 - Step 04: tier sonnet; reviewer verdict clean after 1 review round plus a follow-up change (hook pass-on logging Debug-only); commits ef06fa5, fad7aba, plus the follow-up commit.
 - Step 05: commit 6f2415b. Test_Excel 71 / 60 (Debug / Release; +4 Debug-only), Test_WordAssist and Test_PPT not rerun (untouched). ExcelAssist builds Debug|x64 and Release|x64.
+- Step 06: tier sonnet; commit recorded in git log (subject "Step 06 (#11)"). PowerPointAssist builds Debug|x64 and Release|x64; Test_PPT 108 / 108 (Debug).
