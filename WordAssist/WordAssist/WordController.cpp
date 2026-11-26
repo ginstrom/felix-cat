@@ -1658,15 +1658,16 @@ bool WordController::select_next_sentence()
 	return false ;
 }
 
-/*!
- * \brief
- * Write brief comment for get_selection_text here.
-  */
+// Selection text with Word boundary marks trimmed; empty when no text is left outside tags.
 _bstr_t WordController::get_concordance_query( bool as_plaintext )
 {
 	return string2BSTR( trim_concordance_query( BSTR2wstring( get_selection_text( as_plaintext ) ) ) ) ;
 }
 
+/*!
+ * \brief
+ * Write brief comment for get_selection_text here.
+  */
 _bstr_t WordController::get_selection_text(bool as_plaintext )
 {
 	typedef std::shared_ptr<WordParser> parser_ptr ;
