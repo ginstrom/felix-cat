@@ -54,6 +54,35 @@ namespace shortcuts
 		scoped_shift_state(const scoped_shift_state &) ;
 		scoped_shift_state &operator=(const scoped_shift_state &) ;
 	};
+
+	// While alive, no override is in force: shift_key_is_pressed() reads the
+	// keyboard. The keyboard-hook path uses it, because the hook can run while a
+	// deferred command (and its override) is running. The destructor restores
+	// the previous override.
+	struct scoped_physical_shift_state
+	{
+		scoped_physical_shift_state() :
+			m_previous(detail::current_shift_override())
+		{
+			detail::current_shift_override().active = false ;
+		}
+		~scoped_physical_shift_state()
+		{
+			detail::current_shift_override() = m_previous ;
+		}
+	private:
+		const detail::shift_override m_previous ;
+
+		scoped_physical_shift_state(const scoped_physical_shift_state &) ;
+		scoped_physical_shift_state &operator=(const scoped_physical_shift_state &) ;
+	};
+
+	// The Shift key as the keyboard reports it, ignoring any override.
+	// Use this in hook procedures.
+	inline bool physical_shift_key_is_pressed()
+	{
+		return !! ( ::GetKeyState(VK_SHIFT) & 0x8000 ) ;
+	}
 }
 
 inline bool shift_key_is_pressed()
@@ -63,7 +92,7 @@ inline bool shift_key_is_pressed()
 	{
 		return override_state.down ;
 	}
-	return !! ( ::GetKeyState(VK_SHIFT) & 0x8000 ) ;
+	return shortcuts::physical_shift_key_is_pressed() ;
 }
 inline bool control_key_is_pressed()
 {

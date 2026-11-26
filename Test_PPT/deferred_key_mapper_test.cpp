@@ -58,6 +58,50 @@ namespace
 		}
 	};
 
+	// Stands in for the physical Shift key (DeferredKeyMapper::m_read_keyboard_shift).
+	struct KeyboardShift
+	{
+		bool m_down ;
+		explicit KeyboardShift(bool down) : m_down(down) {}
+		bool operator()() const { return m_down ; }
+	};
+
+	// Records the Shift state that accepts() sees.
+	class KeyMapperRecordsAccepts : public KeyMapperFake
+	{
+	public:
+		std::vector<bool> m_accepts_shift_values ;
+		bool accepts(const string &command)
+		{
+			m_accepts_shift_values.push_back(shift_key_is_pressed()) ;
+			return KeyMapperFake::accepts(command) ;
+		}
+	};
+
+	// A keystroke arrives while "First" runs with a Shift override active
+	// (Office pumps messages inside the command); the hook queues "Second".
+	struct KeystrokeDuringOverride
+	{
+		DeferredKeyMapper *m_deferred ;
+		bool m_override ;
+		bool m_override_seen ;
+
+		KeystrokeDuringOverride(DeferredKeyMapper *deferred, bool override_value) :
+			m_deferred(deferred), m_override(override_value), m_override_seen(false)
+		{
+		}
+		void operator()(const string &command)
+		{
+			if (command != "First")
+			{
+				return ;
+			}
+			scoped_shift_state running_command_shift(m_override) ;
+			m_override_seen = (shift_key_is_pressed() == m_override) ;
+			m_deferred->map_command("Second") ;
+		}
+	};
+
 	struct ToggleRecorder
 	{
 		std::vector<BOOL> *m_values ;
@@ -97,6 +141,22 @@ BOOST_AUTO_TEST_SUITE( ScopedShiftStateTest )
 			BOOST_CHECK(shift_key_is_pressed()) ;
 		}
 		BOOST_CHECK_EQUAL(real_shift_state(), shift_key_is_pressed()) ;
+	}
+
+	BOOST_AUTO_TEST_CASE(test_physical_scope_suspends_and_restores_override)
+	{
+		const bool real = real_shift_state() ;
+		{
+			scoped_shift_state outer(! real) ;
+			{
+				scoped_physical_shift_state physical ;
+				BOOST_CHECK_EQUAL(real, shift_key_is_pressed()) ;
+				BOOST_CHECK_EQUAL(real, physical_shift_key_is_pressed()) ;
+			}
+			BOOST_CHECK_EQUAL(! real, shift_key_is_pressed()) ;
+			BOOST_CHECK_EQUAL(real, physical_shift_key_is_pressed()) ;
+		}
+		BOOST_CHECK_EQUAL(real, shift_key_is_pressed()) ;
 	}
 
 BOOST_AUTO_TEST_SUITE_END()
@@ -225,14 +285,10 @@ BOOST_AUTO_TEST_SUITE( DeferredKeyMapperTest )
 		DeferredKeyMapper deferred(&inner) ;
 		BOOST_REQUIRE(deferred.create()) ;
 
-		{
-			scoped_shift_state shift(true) ;
-			deferred.map_command("Correct") ;
-		}
-		{
-			scoped_shift_state shift(false) ;
-			pump_messages() ;
-		}
+		deferred.m_read_keyboard_shift = KeyboardShift(true) ;
+		deferred.map_command("Correct") ;
+		deferred.m_read_keyboard_shift = KeyboardShift(false) ;
+		pump_messages() ;
 
 		BOOST_REQUIRE_EQUAL(1u, inner.m_shift_values.size()) ;
 		BOOST_CHECK(inner.m_shift_values[0]) ;
@@ -246,18 +302,57 @@ BOOST_AUTO_TEST_SUITE( DeferredKeyMapperTest )
 		DeferredKeyMapper deferred(&inner) ;
 		BOOST_REQUIRE(deferred.create()) ;
 
-		{
-			scoped_shift_state shift(false) ;
-			deferred.map_command("Correct") ;
-		}
-		{
-			scoped_shift_state shift(true) ;
-			pump_messages() ;
-		}
+		deferred.m_read_keyboard_shift = KeyboardShift(false) ;
+		deferred.map_command("Correct") ;
+		deferred.m_read_keyboard_shift = KeyboardShift(true) ;
+		pump_messages() ;
 
 		BOOST_REQUIRE_EQUAL(1u, inner.m_shift_values.size()) ;
 		BOOST_CHECK(! inner.m_shift_values[0]) ;
 		deferred.destroy() ;
+	}
+
+	// The hook path reads the physical Shift key, not the override of a
+	// command that is running (Office pumps messages inside commands).
+	BOOST_AUTO_TEST_CASE(test_keystroke_during_running_command_ignores_its_shift_override)
+	{
+		pump_messages() ;
+		const bool real = real_shift_state() ;
+		KeyMapperRecordsAccepts inner ;
+		DeferredKeyMapper deferred(&inner) ;
+		BOOST_REQUIRE(deferred.create()) ;
+		KeystrokeDuringOverride keystroke(&deferred, ! real) ;
+		inner.m_on_map_command = boost::ref(keystroke) ;
+
+		deferred.map_command("First") ;
+		pump_messages() ;
+
+		BOOST_CHECK(keystroke.m_override_seen) ;
+		BOOST_REQUIRE_EQUAL(2u, inner.m_sensing_variable.size()) ;
+		BOOST_CHECK_EQUAL("Second", inner.m_sensing_variable[1]) ;
+		// Shift captured for Second (and in force while it ran) is the real state.
+		BOOST_REQUIRE_EQUAL(2u, inner.m_shift_values.size()) ;
+		BOOST_CHECK_EQUAL(real, inner.m_shift_values[1]) ;
+		// accepts for Second saw the real state.
+		BOOST_REQUIRE_EQUAL(2u, inner.m_accepts_shift_values.size()) ;
+		BOOST_CHECK_EQUAL(real, inner.m_accepts_shift_values[1]) ;
+		deferred.destroy() ;
+	}
+
+	// With no window, the command runs at once, also with the physical Shift state.
+	BOOST_AUTO_TEST_CASE(test_without_window_runs_with_physical_shift)
+	{
+		const bool real = real_shift_state() ;
+		KeyMapperFake inner ;
+		DeferredKeyMapper deferred(&inner) ;
+
+		{
+			scoped_shift_state running_command_shift(! real) ;
+			deferred.map_command("LookupNext") ;
+		}
+
+		BOOST_REQUIRE_EQUAL(1u, inner.m_shift_values.size()) ;
+		BOOST_CHECK_EQUAL(real, inner.m_shift_values[0]) ;
 	}
 
 	BOOST_AUTO_TEST_CASE(test_command_queued_while_running_waits)

@@ -23,7 +23,12 @@ namespace shortcuts
 	                          public CWindowImpl<DeferredKeyMapper, CWindow, CNullTraits>
 	{
 	public:
+		// Reads the Shift key when a keystroke is queued (R4). Tests replace it
+		// to simulate the physical key.
+		boost::function<bool()> m_read_keyboard_shift ;
+
 		explicit DeferredKeyMapper(KeyMapper *inner) :
+			m_read_keyboard_shift(&physical_shift_key_is_pressed),
 			m_inner(inner),
 			m_posted(false),
 			m_running(false)
@@ -68,9 +73,13 @@ namespace shortcuts
 			m_hWnd = NULL ;
 		}
 
-		// Called from the keyboard hook (via receive_keypress).
+		// Called from the keyboard hook (via receive_keypress). The hook can run
+		// while a deferred command and its Shift override are running (Office
+		// pumps messages inside commands), so the override is suspended here:
+		// accepts, the Shift capture and a synchronous run see the real keyboard.
 		bool map_command(string command)
 		{
+			scoped_physical_shift_state physical_shift ;
 			if (! m_inner->accepts(command))
 			{
 				logging::log_debug("Felix hook: declined " + command) ;
@@ -80,7 +89,7 @@ namespace shortcuts
 			{
 				return m_inner->map_command(command) ;
 			}
-			m_queue.push_back(std::make_pair(command, shift_key_is_pressed())) ;
+			m_queue.push_back(std::make_pair(command, m_read_keyboard_shift())) ;
 			if (! m_posted)
 			{
 				if (PostMessage(WM_FELIX_RUN_COMMANDS))

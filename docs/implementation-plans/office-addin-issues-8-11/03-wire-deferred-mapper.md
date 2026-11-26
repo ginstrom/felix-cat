@@ -30,6 +30,8 @@ Changes, in each of the three Connects:
 5. `m_deferred_mapper.destroy();` in `OnDisconnection` after `uninstallhook`.
 6. List `common\deferred_key_mapper.h` as a `<ClInclude>` in `WordAssist.vcxproj`, `ExcelAssist.vcxproj` and `PowerPointAssist.vcxproj` (and filters).
 
+PowerPoint hook Shift read (added after the step 01 review): `PowerPointAssist/PowerPointAssist/Hooker.cpp:60` (`control_key_pressed && shift_key_is_pressed()`) runs in the hook, possibly while a deferred command's Shift override is active. Change it to `shortcuts::physical_shift_key_is_pressed()`. This one-line hook edit is the only exception to "no change to `Hooker.cpp`" below. Word's and Excel's hooks do not read Shift.
+
 Excel Shift reads (R4): in `ExcelAssist/ExcelAssist/FelixExcelIF.cpp`, `OnAutoTransSel`, `OnAutoTransSheet` and `OnAutoTransWorkbook` read `::GetKeyState(VK_SHIFT)` directly (lines ~476, ~563, ~582). Change each to `shift_key_is_pressed()` (include `keyboard_shortcuts.h` if needed), keeping the same boolean meaning (cell colouring when Shift is down). Menu handlers are unaffected because no override is alive when they run.
 
 If `create()` returns false (window not created), nothing else is needed: the decorator falls back to synchronous dispatch and has logged the failure.

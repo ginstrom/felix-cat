@@ -214,7 +214,7 @@ namespace shortcuts { struct scoped_shift_state { explicit scoped_shift_state(bo
 inline bool shift_key_is_pressed() ; // returns the innermost active override if any, else GetKeyState(VK_SHIFT)
 ```
 
-The override is a function-local static (single UI thread per add-in instance) and is restored by the destructor, so nested scopes are safe. Excel's three direct `::GetKeyState(VK_SHIFT)` reads (FelixExcelIF.cpp 476, 563, 582) change to `shift_key_is_pressed()`. Menu handlers are unaffected: no override is active when they run.
+The override is a function-local static (single UI thread per add-in instance) and is restored by the destructor, so nested scopes are safe. The hook path suspends the override: Office can pump messages inside a running command, so `DeferredKeyMapper::map_command` (accepts and the capture) and the hook procedures read the physical key (`shortcuts::scoped_physical_shift_state`, `shortcuts::physical_shift_key_is_pressed()`). Excel's three direct `::GetKeyState(VK_SHIFT)` reads (FelixExcelIF.cpp 476, 563, 582) change to `shift_key_is_pressed()`. Menu handlers are unaffected: no override is active when they run.
 
 **Per-app `accepts` (R2):**
 
@@ -327,7 +327,7 @@ If D1 is decided as "rebind" instead, see D1 for the extra work.
 - **Risk:**
   - The deferral is the largest change. It touches every shortcut in three add-ins.
   - The `accepts` pre-checks must match today's pass-through behavior for Ctrl+Right, or Ctrl+Right stops moving the caret. AC3 covers it.
-  - `shift_key_is_pressed()` gains a hidden override. It is scoped and only active inside `run_pending`.
+  - `shift_key_is_pressed()` gains a hidden override. It is scoped to the running command, and the hook path suspends it (`DeferredKeyMapper::map_command` reads the physical key, as do hook procedures).
   - Dropping the HWND check could let a shortcut run while focus is in an `OpusApp` child that isn't the document (task pane search box, ribbon). That was already possible for Excel and PowerPoint. A command there acts on Word's current selection, as the menu does.
 - **Performance:** one `PostMessage` per shortcut, one message per burst. #10 adds three in-process COM calls per translated cell.
 - **Rollback:** the four fixes are independent. Reverting #8 is the constructor argument plus `create`/`destroy` in each `Connect`; `accepts` can stay.
