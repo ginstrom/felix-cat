@@ -101,7 +101,12 @@ namespace shortcuts
 				}
 				else
 				{
-					return m_mapper->map_command(m_second_command) ;
+					// The first key of this chord was already consumed, so the
+					// second key belongs to us even when the command declines
+					// (e.g. concordance on an empty selection); passing it on
+					// would type it into the document.
+					m_mapper->map_command(m_second_command) ;
+					return true ;
 				}
 			}
 			m_second_key = 0 ;

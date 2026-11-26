@@ -84,6 +84,31 @@ BOOST_AUTO_TEST_SUITE( ExcelSelectionWriterTest )
 		BOOST_CHECK_EQUAL( f.fake_app->refresh_count, 1 ) ;
 	}
 
+	// Auto Translate writes cells through set_cell_text, which does not
+	// update the formula bar; the refresher does it once on scope exit.
+	BOOST_AUTO_TEST_CASE( formula_bar_refresher_refreshes_once_on_scope_exit )
+	{
+		writer_fixture f ;
+		{
+			formula_bar_refresher refresher(f.app) ;
+			BOOST_CHECK_EQUAL( f.fake_app->refresh_count, 0 ) ;
+		}
+		BOOST_CHECK_EQUAL( f.fake_app->refresh_count, 1 ) ;
+	}
+
+	BOOST_AUTO_TEST_CASE( formula_bar_refresher_swallows_refresh_failure )
+	{
+		writer_fixture f ;
+		f.fake_app->refresh_throws = true ;
+		BOOST_CHECK_NO_THROW( { formula_bar_refresher refresher(f.app) ; } ) ;
+		BOOST_CHECK_EQUAL( f.fake_app->refresh_count, 1 ) ;
+	}
+
+	BOOST_AUTO_TEST_CASE( formula_bar_refresher_ignores_null_app )
+	{
+		BOOST_CHECK_NO_THROW( { formula_bar_refresher refresher((excel::app_ptr())) ; } ) ;
+	}
+
 BOOST_AUTO_TEST_SUITE_END()
 
 #endif

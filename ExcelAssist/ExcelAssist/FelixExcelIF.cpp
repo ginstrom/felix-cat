@@ -469,6 +469,7 @@ void CFelixExcelIF::OnGetAndNext( )
 void CFelixExcelIF::OnAutoTransSel ( ) 
 {
 	BANNER( "CFelixExcelIF::OnAutoTransSel" ) ;
+	formula_bar_refresher refresh_on_exit(m_excel_app) ; // AutoTransCell writes via Characters
 	numTransSheet = 0 ;
 	numNotTransSheet = 0 ;
 
@@ -558,6 +559,7 @@ ta_ptr CFelixExcelIF::realGetAssistant(void)
 void CFelixExcelIF::OnAutoTransSheet()
 {
 	BANNER( " CFelixExcelIF::OnAutoTransSheet" ) ;
+	formula_bar_refresher refresh_on_exit(m_excel_app) ; // AutoTransCell writes via Characters
 	m_shouldColor = !!( ::GetKeyState(VK_SHIFT) & 0x8000 ) ;
 	if (m_shouldColor)
 	{
@@ -574,6 +576,7 @@ void CFelixExcelIF::OnAutoTransSheet()
 void CFelixExcelIF::OnAutoTransWorkbook()
 {
 	BANNER( " CFelixExcelIF::OnAutoTransWorkbook" ) ;
+	formula_bar_refresher refresh_on_exit(m_excel_app) ; // AutoTransCell writes via Characters
 	numTransBook = 0 ;
 	numNotTransBook = 0 ;
 	m_shouldColor = !!( ::GetKeyState(VK_SHIFT) & 0x8000 ) ;

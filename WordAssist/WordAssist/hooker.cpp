@@ -62,6 +62,7 @@ LRESULT __declspec(dllexport)__stdcall  CALLBACK KeyboardProc(int nCode,
 	{
 		logging::log_error("Error in keyboard hook process") ;
 		logging::log_exception(e) ;
+		return CallNextHookEx(hkb, nCode, wParam, lParam);
 	}
 	catch(...)
 	{

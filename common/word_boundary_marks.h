@@ -137,3 +137,23 @@ inline std::wstring trim_concordance_query( const std::wstring &text )
 	const std::wstring trimmed = trim_word_boundary_marks( text ) ;
 	return has_text_outside_tags( trimmed ) ? trimmed : std::wstring() ;
 }
+
+/*!
+ * Trim a plain-text concordance query, such as PowerPoint's TextRange.Text:
+ * drop structural marks (see is_word_boundary_mark) from both ends. Unlike
+ * trim_concordance_query, nothing is treated as an HTML tag.
+ */
+inline std::wstring trim_plain_concordance_query( const std::wstring &text )
+{
+	std::wstring::size_type begin = 0 ;
+	std::wstring::size_type end = text.size() ;
+	while ( end > begin && is_word_boundary_mark( text[end-1] ) )
+	{
+		--end ;
+	}
+	while ( begin < end && is_word_boundary_mark( text[begin] ) )
+	{
+		++begin ;
+	}
+	return text.substr( begin, end - begin ) ;
+}

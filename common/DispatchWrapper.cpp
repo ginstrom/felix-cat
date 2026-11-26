@@ -7,7 +7,13 @@ m_server_name(app_name),
 m_app(nullptr)
 {
 	CLSID clsid;
-	ATLVERIFY(SUCCEEDED(CLSIDFromProgID(app_name, &clsid)));
+	// An unregistered ProgID (e.g. Felix.Utilities) is a normal runtime
+	// failure: throw like create() does, so callers' _com_error handlers run.
+	const HRESULT hr = CLSIDFromProgID(app_name, &clsid) ;
+	if (FAILED(hr))
+	{
+		throw _com_error(hr) ;
+	}
 	this->create(clsid) ;
 }
 

@@ -67,6 +67,7 @@ STDMETHODIMP CConnect::OnConnection(IDispatch *pApplication, AddInDesignerObject
 		killOldMenu() ;
 		m_interface.setApp( m_pApplication ) ;
 		m_interface.setProperties(&m_properties) ;
+		m_interface.load_abbreviations() ;
 
 		Office::_CommandBarsPtr spCmdBars = m_pApplication->GetCommandBars( ) ;
 		ATLASSERT(spCmdBars);

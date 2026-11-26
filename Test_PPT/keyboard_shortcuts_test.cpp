@@ -244,6 +244,46 @@ BOOST_AUTO_TEST_SUITE( KeyboardShortcutsMapperTest )
 		BOOST_CHECK_EQUAL(0u, mapper.m_sensing_variable.size());
 		BOOST_CHECK_EQUAL(0, keyboard_shortcuts.m_second_key);
 	}
+
+	// A mapper whose command runs but declines (e.g. concordance on an empty selection).
+	class KeyMapperDeclines : public KeyMapper
+	{
+	public:
+		DECLARE_SENSING_VAR ;
+		bool map_command(string command)
+		{
+			SENSE(command) ;
+			return false ;
+		}
+	};
+
+	// Alt+M, C with nothing to look up: the first key was already eaten, so the
+	// second key must be eaten too, or it gets typed into the document.
+	BOOST_AUTO_TEST_CASE(test_second_key_consumed_when_command_declines)
+	{
+		KeyMapperDeclines mapper ;
+		KeyboardShortcuts keyboard_shortcuts(&mapper) ;
+		keyboard_shortcuts.add_shortcut(shortcut_ptr(new KeyboardShortcut(SHORTCUT_ALT, L'M', L'C', "Concordance"))) ;
+
+		BOOST_CHECK(keyboard_shortcuts.receive_keypress(false, true, L'M')) ;
+		BOOST_CHECK(keyboard_shortcuts.receive_keypress(false, false, L'C')) ;
+
+		BOOST_CHECK_EQUAL(1u, mapper.m_sensing_variable.size());
+		BOOST_CHECK_EQUAL("Concordance", mapper.m_sensing_variable[0]);
+		BOOST_CHECK_EQUAL(0, keyboard_shortcuts.m_second_key);
+	}
+
+	// A single-key shortcut whose command declines still passes the key on (unchanged behavior).
+	BOOST_AUTO_TEST_CASE(test_single_key_passed_on_when_command_declines)
+	{
+		KeyMapperDeclines mapper ;
+		KeyboardShortcuts keyboard_shortcuts(&mapper) ;
+		keyboard_shortcuts.add_shortcut(shortcut_ptr(new KeyboardShortcut(SHORTCUT_CTRL, L'M', 0, "FooBar"))) ;
+
+		BOOST_CHECK(! keyboard_shortcuts.receive_keypress(true, false, L'M')) ;
+
+		BOOST_CHECK_EQUAL(1u, mapper.m_sensing_variable.size());
+	}
 BOOST_AUTO_TEST_SUITE_END()
 
 BOOST_AUTO_TEST_SUITE( KeyboardShortcutTest )
