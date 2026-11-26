@@ -20,7 +20,7 @@
 <meta content="Completed" name="doc-class" />
 <meta content="Creative Commons" name="doc-rights" />
 
-    <title>13. Troubleshooting Felix &mdash; Felix Manual 1.7.1.1 documentation</title>
+    <title>13. Troubleshooting Felix &mdash; Felix User Manual</title>
     
     <link rel="stylesheet" href="_static/agogo.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -39,7 +39,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="shortcut icon" href="_static/favicon.ico"/>
     <link rel="author" title="About these documents" href="about.html" />
-    <link rel="top" title="Felix Manual 1.7.1.1 documentation" href="index.html" />
+    <link rel="top" title="Felix User Manual" href="index.html" />
     <link rel="next" title="14. What’s New in Felix" href="whats-new.html" />
     <link rel="prev" title="12. Customizing Felix Templates" href="customizing-templates.html" /> 
   </head>
@@ -47,7 +47,7 @@
     <div class="header-wrapper">
       <div class="header">
         <div class="headertitle"><a
-          href="index.html">Felix Manual 1.7.1.1 documentation</a></div>
+          href="index.html">Felix User Manual</a></div>
         <div class="rel">
           <a href="customizing-templates.html" title="12. Customizing Felix Templates"
              accesskey="P">previous</a> |
@@ -77,15 +77,16 @@
 </div>
 <div class="section" id="some-items-could-not-be-removed-during-uninstallation">
 <h3>13.1.2. Some items could not be removed during uninstallation<a class="headerlink" href="#some-items-could-not-be-removed-during-uninstallation" title="Permalink to this headline">¶</a></h3>
-<p>Those items may have been in use by another program. Check the files or folders, and delete them if you no longer need them.</p>
-<p>The places to check are as follows:</p>
-<div class="highlight-python"><pre>{Program Files}/Assistant Suite/Felix
-{Local App Data}/Felix</pre>
-</div>
+<p>Close Felix and all Office applications. If installation files remain in <code>C:\Program Files\Felix</code>, restart Windows and try the uninstaller again.</p>
+<p>The Felix 3 uninstaller leaves <code>%LOCALAPPDATA%\Felix</code> in place. That folder contains your settings and can contain customized templates.</p>
 </div>
 </div>
 <div class="section" id="felix">
 <h2>13.2. Felix<a class="headerlink" href="#felix" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="checking-for-updates">
+<h3>Checking for updates</h3>
+<p>Check <a href="https://github.com/ginstrom/felix-cat/releases/latest">GitHub Releases</a> for new installers. The <strong>Help → Check for Updates</strong> command is unavailable in Felix 3.</p>
+</div>
 <div class="section" id="i-looked-up-white-text-and-i-can-t-see-it-in-felix">
 <h3>13.2.1. I looked up white text, and I can&#8217;t see it in Felix<a class="headerlink" href="#i-looked-up-white-text-and-i-can-t-see-it-in-felix" title="Permalink to this headline">¶</a></h3>
 <p>Change the background color of the window so that there is a contrast with the text. (Select <em class="menuselection">Format ‣ Background Color</em>... from the menu.)</p>
@@ -95,7 +96,7 @@
 <h2>13.3. Word<a class="headerlink" href="#word" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="the-toolbar-and-menu-don-t-show-up">
 <h3>13.3.1. The toolbar and menu don&#8217;t show up<a class="headerlink" href="#the-toolbar-and-menu-don-t-show-up" title="Permalink to this headline">¶</a></h3>
-<p>Word may have disabled the Felix add-in. <a class="reference external" href="../../../blog/2009/04/30/felix-tip-if-the-felix-menustoolbars-dont-show-up/index.html">See this blog post for details</a>.</p>
+<p>With a document open in Word, check the ribbon’s <strong>Add-ins</strong> tab. If the Felix commands are missing, open <strong>File → Options → Add-ins</strong>. Choose <strong>COM Add-ins</strong> from <strong>Manage</strong> and click <strong>Go</strong>. If <strong>Felix Addin</strong> is listed, select its checkbox. If it is missing, check that the matching component was installed for 64-bit Office.</p>
 </div>
 <div class="section" id="some-keyboard-shortcuts-don-t-work">
 <h3>13.3.2. Some keyboard shortcuts don&#8217;t work<a class="headerlink" href="#some-keyboard-shortcuts-don-t-work" title="Permalink to this headline">¶</a></h3>
@@ -110,7 +111,15 @@
 <h2>13.4. Excel<a class="headerlink" href="#excel" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id1">
 <h3>13.4.1. The toolbar and menu don&#8217;t show up<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
-<p>Excel may have disabled the Felix add-in. <a class="reference external" href="../../../blog/2009/04/30/felix-tip-if-the-felix-menustoolbars-dont-show-up/index.html">See this blog post for details</a>.</p>
+<p>With a document open in Excel, check the ribbon’s <strong>Add-ins</strong> tab. If the Felix commands are missing, open <strong>File → Options → Add-ins</strong>. Choose <strong>COM Add-ins</strong> from <strong>Manage</strong> and click <strong>Go</strong>. If <strong>Felix Addin</strong> is listed, select its checkbox. If it is missing, check that the matching component was installed for 64-bit Office.</p>
+</div>
+<div class="section" id="excel-close-shortcut">
+<h3>Excel’s save dialog stays open after Alt+N</h3>
+<p>If Felix opens when you press <kbd>Alt</kbd>+<kbd>N</kbd> in Excel’s save confirmation, use the buttons in the dialog to finish closing the workbook.</p>
+</div>
+<div class="section" id="excel-formula-bar-stale">
+<h3>The formula bar still shows the source after Get Translation</h3>
+<p>If the cell shows the translation, select another cell and then reselect the translated cell to refresh the formula bar.</p>
 </div>
 <div class="section" id="when-i-set-a-translation-the-old-text-is-added-instead-of-my-translation">
 <h3>13.4.2. When I set a translation, the old text is added instead of my translation<a class="headerlink" href="#when-i-set-a-translation-the-old-text-is-added-instead-of-my-translation" title="Permalink to this headline">¶</a></h3>
@@ -121,7 +130,7 @@
 <h2>13.5. PowerPoint<a class="headerlink" href="#powerpoint" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id3">
 <h3>13.5.1. The toolbar and menu don&#8217;t show up<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
-<p>PowerPoint may have disabled the Felix add-in. <a class="reference external" href="../../../blog/2009/04/30/felix-tip-if-the-felix-menustoolbars-dont-show-up/index.html">See this blog post for details</a>.</p>
+<p>With a document open in PowerPoint, check the ribbon’s <strong>Add-ins</strong> tab. If the Felix commands are missing, open <strong>File → Options → Add-ins</strong>. Choose <strong>COM Add-ins</strong> from <strong>Manage</strong> and click <strong>Go</strong>. If <strong>Felix Addin</strong> is listed, select its checkbox. If it is missing, check that the matching component was installed for 64-bit Office.</p>
 </div>
 <div class="section" id="powerpoint-skips-text-boxes-when-i-set-a-translation-and-go-to-the-next-one">
 <h3>13.5.2. PowerPoint skips text boxes when I set a translation and go to the next one<a class="headerlink" href="#powerpoint-skips-text-boxes-when-i-set-a-translation-and-go-to-the-next-one" title="Permalink to this headline">¶</a></h3>
