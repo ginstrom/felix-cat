@@ -50,7 +50,7 @@ Existing code the contracts rely on (inspected): `shortcuts::KeyboardShortcuts::
 
 | ID | Task file | Outcome | Depends on | Size | Status |
 |---|---|---|---|---|---|
-| 01 | [01-deferred-key-mapper-core.md](01-deferred-key-mapper-core.md) | #8 core: `accepts` in `KeyMapper`, `scoped_shift_state`, `DeferredKeyMapper`, fake extension, tests in Test_PPT | none | M, moderate (ATL window in a test project) | pending |
+| 01 | [01-deferred-key-mapper-core.md](01-deferred-key-mapper-core.md) | #8 core: `accepts` in `KeyMapper`, `scoped_shift_state`, `DeferredKeyMapper`, fake extension, tests in Test_PPT | none | M, moderate (ATL window in a test project) | done (step 01 commit; see the task file's execution record) |
 | 02 | [02-per-app-accepts.md](02-per-app-accepts.md) | #8: `accepts` in the Word, PowerPoint and Excel mappers, new target methods, fakes, tests | 01 | M, moderate | pending |
 | 03 | [03-wire-deferred-mapper.md](03-wire-deferred-mapper.md) | #8: wire the decorator into the three Connects, route Excel's Shift reads through `shift_key_is_pressed()` | 01, 02 | S-M, moderate (no unit coverage; builds only) | pending |
 | 04 | [04-word-is-active-and-hook-logging.md](04-word-is-active-and-hook-logging.md) | #9: drop the HWND comparison in `WordApplication::is_active`; R7 hook logging in all three hooks | none (AC7 check needs 03) | S, easy | pending |

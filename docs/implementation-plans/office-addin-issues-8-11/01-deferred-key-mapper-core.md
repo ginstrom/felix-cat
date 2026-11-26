@@ -82,9 +82,42 @@ Test_WordAssist\Test_WordAssist\x64\Debug\Test_WordAssist.exe --report_level=sho
 - The three add-ins still build `Debug|x64` (they include `key_mapper.h` and `keyboard_shortcuts.h`).
 
 ## Completion criteria
-- [ ] New tests written first, seen failing, then passing; counts recorded.
-- [ ] C1, C2, C3 and the C5 fake part implemented exactly as in the index; header listed in `Test_PPT.vcxproj` (+ filters); UTF-8 BOM on new files.
-- [ ] Baselines (six runs) recorded in `log.md`; the three test programs pass in Debug|x64 and Release|x64; the three add-ins build Debug|x64.
-- [ ] Committed; index row 01 updated.
+- [x] New tests written first, seen failing, then passing; counts recorded.
+- [x] C1, C2, C3 and the C5 fake part implemented exactly as in the index; header listed in `Test_PPT.vcxproj` (+ filters); UTF-8 BOM on new files.
+- [x] Baselines (six runs) recorded in `log.md`; the three test programs pass in Debug|x64 and Release|x64; the three add-ins build Debug|x64.
+- [x] Committed; index row 01 updated.
 
 ## Execution record
+Engineer, 2026-11-26, branch `fix/office-addin-issues-8-11` from f7bf9b2. `runlog` unavailable (no Python); commands run directly from PowerShell at the repository root with `$ms` = MSBuild 18.
+
+**Baseline** (before any change; six runs, all exit 0): Test_PPT 81 / 81, Test_Excel 65 / 58, Test_WordAssist 166 / 166 (Debug / Release x64). Recorded in [log.md](log.md).
+
+**Red:** `& $ms Test_PPT\Test_PPT.vcxproj /p:Configuration=Debug /p:Platform=x64 /m /v:minimal /nologo` with only the new test file added: exit 1, `error C1083: Cannot open include file: 'deferred_key_mapper.h'`.
+
+**Green:** after C1, C2, C3 and the C5 fake part, an incremental build ran 99 cases with 4 failures and an access violation in the existing `KeyboardShortcutsLoadTest/test_load_simple`. The cause was stale object files (MSBuild did not recompile all dependants of the edited `common/*.h`): `& $ms Test_PPT\Test_PPT.vcxproj /t:Rebuild ...` then gave exit 0 and `Test_PPT.exe --report_level=short`: exit 0, "99 test cases out of 99 passed".
+
+**Verification** (all with `/t:Rebuild`, x64):
+
+| Command | Exit | Result |
+|---|---|---|
+| Test_PPT Debug build + `Test_PPT\x64\Debug\Test_PPT.exe --report_level=short` | 0 / 0 | 99 test cases out of 99 passed |
+| Test_Excel Debug build + run | 0 / 0 | 65 test cases out of 65 passed |
+| Test_WordAssist Debug build + run | 0 / 0 | 166 test cases out of 166 passed |
+| Test_PPT Release build + run | 0 / 0 | 99 test cases out of 99 passed |
+| Test_Excel Release build + run | 0 / 0 | 58 test cases out of 58 passed |
+| Test_WordAssist Release build + run | 0 / 0 | 166 test cases out of 166 passed |
+| `& $ms WordAssist\WordAssist\WordAssist.vcxproj /t:Rebuild /p:Configuration=Debug /p:Platform=x64` | 0 | built |
+| `& $ms ExcelAssist\ExcelAssist\ExcelAssist.vcxproj /t:Rebuild /p:Configuration=Debug /p:Platform=x64` | 0 | built |
+| `& $ms PowerPointAssist\PowerPointAssist\PowerPointAssist.vcxproj /t:Rebuild /p:Configuration=Debug /p:Platform=x64` | 0 | built |
+
+New tests (18, `Test_PPT/deferred_key_mapper_test.cpp`): suite `ScopedShiftStateTest` (3: no override reads the keyboard; override down/up; nesting restores the outer value) and `DeferredKeyMapperTest` (15: no window runs the inner mapper at once and returns its result (2); queued until pumped; three commands, one message, FIFO, second pump a no-op; declined with and without a window (2); `accepts` forwards; Shift captured down and up (2); command queued and nested `run_pending` inside a running command waits; throwing commands are caught and the queue continues; `destroy()` drops pending commands and later commands run synchronously; `KeyboardShortcuts` chord second key and single-key shortcut consumed and queued (2); `ToggleShortcuts` stays synchronous).
+
+Decisions and deviations:
+- `stdafx.h` of Test_PPT already includes `<atlwin.h>`; no change needed.
+- `DeferredKeyMapper` catches `_com_error`, `except::CException`, `std::exception` and `...` separately so each is logged with its message (`logging::log_exception`); the header therefore includes `Exceptions.h` and `logging.h`. Projects that include `deferred_key_mapper.h` (step 03) need `common/Exceptions.h` on their include path; all three add-in projects already compile `common\Exceptions.cpp`.
+- `create()` returns true without creating a second window if one already exists. If `PostMessage` fails, `map_command` logs a warning and leaves the posted flag clear so the next keystroke retries; the command stays queued (contract silent on this).
+- The destructor calls `destroy()`.
+- The throw case uses `m_throw = true` for both queued commands (the fake has one flag): both are sensed, so the second ran after the first threw.
+- The `scoped_shift_state` override lives in `shortcuts::detail::current_shift_override()` (function-local static), declared before the global `shift_key_is_pressed()`.
+
+For later steps: rebuild with `/t:Rebuild` after editing shared headers (see log.md). Manual Office checks deferred to QA.

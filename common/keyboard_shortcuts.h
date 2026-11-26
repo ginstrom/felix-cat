@@ -13,8 +13,56 @@ void create_shortcut_node(pugi::xml_node &node,
 						  string command) ;
 
 
+namespace shortcuts
+{
+	namespace detail
+	{
+		struct shift_override
+		{
+			bool active ;
+			bool down ;
+		};
+
+		// The Shift state forced by the innermost live scoped_shift_state.
+		// One per module; each add-in runs its shortcuts on one UI thread.
+		inline shift_override &current_shift_override()
+		{
+			static shift_override value = { false, false } ;
+			return value ;
+		}
+	}
+
+	// While alive, shift_key_is_pressed() returns `down` instead of reading the
+	// keyboard. Used to run a deferred command with the Shift state of its keystroke.
+	// The innermost scope wins; the destructor restores the previous override.
+	struct scoped_shift_state
+	{
+		explicit scoped_shift_state(bool down) :
+			m_previous(detail::current_shift_override())
+		{
+			detail::shift_override &current = detail::current_shift_override() ;
+			current.active = true ;
+			current.down = down ;
+		}
+		~scoped_shift_state()
+		{
+			detail::current_shift_override() = m_previous ;
+		}
+	private:
+		const detail::shift_override m_previous ;
+
+		scoped_shift_state(const scoped_shift_state &) ;
+		scoped_shift_state &operator=(const scoped_shift_state &) ;
+	};
+}
+
 inline bool shift_key_is_pressed()
 {
+	const shortcuts::detail::shift_override &override_state = shortcuts::detail::current_shift_override() ;
+	if (override_state.active)
+	{
+		return override_state.down ;
+	}
 	return !! ( ::GetKeyState(VK_SHIFT) & 0x8000 ) ;
 }
 inline bool control_key_is_pressed()

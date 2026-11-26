@@ -75,6 +75,9 @@
     <ClCompile Include="..\PowerPointAssist\PowerPointAssist\keyboard_shortcuts_ppt.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="deferred_key_mapper_test.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="keyboard_shortcuts_ppt_test.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -189,6 +192,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\common\input_device_file.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\deferred_key_mapper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\common\key_mapper_fake.h">
