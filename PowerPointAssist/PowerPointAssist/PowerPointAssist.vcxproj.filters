@@ -308,6 +308,9 @@
     <ClInclude Include="InputDlg.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\common\deferred_key_mapper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="keyboard_shortcuts_ppt.h">
       <Filter>Header Files</Filter>
     </ClInclude>

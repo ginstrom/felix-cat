@@ -12,6 +12,7 @@
 
 #include "Exceptions.h"
 #include "DispatchWrapper.h"
+#include "keyboard_shortcuts.h" // shift_key_is_pressed (honours a deferred command's captured Shift)
 
 #include <cmath>    // for fabs( )
 
@@ -473,7 +474,7 @@ void CFelixExcelIF::OnAutoTransSel ( )
 	numTransSheet = 0 ;
 	numNotTransSheet = 0 ;
 
-	m_shouldColor = !!( ::GetKeyState(VK_SHIFT) & 0x8000 ) ;
+	m_shouldColor = shift_key_is_pressed() ;
 	if (m_shouldColor)
 	{
 		m_ColoredCells.clear() ;
@@ -560,7 +561,7 @@ void CFelixExcelIF::OnAutoTransSheet()
 {
 	BANNER( " CFelixExcelIF::OnAutoTransSheet" ) ;
 	formula_bar_refresher refresh_on_exit(m_excel_app) ; // AutoTransCell writes via Characters
-	m_shouldColor = !!( ::GetKeyState(VK_SHIFT) & 0x8000 ) ;
+	m_shouldColor = shift_key_is_pressed() ;
 	if (m_shouldColor)
 	{
 		m_ColoredCells.clear() ;
@@ -579,7 +580,7 @@ void CFelixExcelIF::OnAutoTransWorkbook()
 	formula_bar_refresher refresh_on_exit(m_excel_app) ; // AutoTransCell writes via Characters
 	numTransBook = 0 ;
 	numNotTransBook = 0 ;
-	m_shouldColor = !!( ::GetKeyState(VK_SHIFT) & 0x8000 ) ;
+	m_shouldColor = shift_key_is_pressed() ;
 	if (m_shouldColor)
 	{
 		m_ColoredCells.clear() ;

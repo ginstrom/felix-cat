@@ -57,7 +57,7 @@ LRESULT __declspec(dllexport)__stdcall  CALLBACK KeyboardProc(int nCode,
 		return 1 ;
 	}
 	// Don't react to control + shift combo
-	else if (control_key_pressed && shift_key_is_pressed())
+	else if (control_key_pressed && shortcuts::physical_shift_key_is_pressed())
 	{
 		return CallNextHookEx(hkb, nCode, wParam, lParam); 
 	}

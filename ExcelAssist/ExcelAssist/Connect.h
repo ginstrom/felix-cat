@@ -17,6 +17,7 @@
 #include "keyboard_shortcuts.h"
 #include "keyboard_shortcuts_excel.h"
 #include "key_mapper_excel.h"
+#include "deferred_key_mapper.h"
 
 _bstr_t glossCap( _bstr_t txt, int num ) ;
 _bstr_t glossDesc( _bstr_t txt, int num ) ;
@@ -154,6 +155,7 @@ class ATL_NO_VTABLE CConnect :
 
 
 	KeyMapperExcel m_mapper ;
+	shortcuts::DeferredKeyMapper m_deferred_mapper ; // after m_mapper, before m_keyboard_shortcuts (init order)
 	shortcuts::KeyboardShortcuts m_keyboard_shortcuts ;
 
 public:

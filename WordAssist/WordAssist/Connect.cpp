@@ -197,6 +197,7 @@ STDMETHODIMP CConnect::OnConnection(IDispatch *pApplication,
 
 		load_keyboard_shortcuts() ;
 		m_mapper.m_target = m_controller ;
+		m_deferred_mapper.create() ;
 		installhook( &m_keyboard_shortcuts ) ;
 		m_keyboard_shortcuts.m_on_toggle_shortcuts = boost::bind(&CConnect::on_toggle_shortcuts, this, _1) ;
 
@@ -420,6 +421,7 @@ STDMETHODIMP CConnect::OnBeginShutdown (SAFEARRAY ** /*custom*/ )
 
 		logging::log_debug("Cleaning up keyboard listener") ;
 		uninstallhook( &m_keyboard_shortcuts ) ;
+		m_deferred_mapper.destroy() ;
 
 		m_controller->shut_down() ;
 		logging::log_debug("shutdown complete") ;
@@ -2053,7 +2055,8 @@ CKeyboardListener* CConnect::get_listener(int /*listener_type*/)
 
 CConnect::CConnect() :
 	m_controller( NULL ),
-	m_keyboard_shortcuts(&m_mapper)
+	m_deferred_mapper(&m_mapper),
+	m_keyboard_shortcuts(&m_deferred_mapper)
 {
 }
 

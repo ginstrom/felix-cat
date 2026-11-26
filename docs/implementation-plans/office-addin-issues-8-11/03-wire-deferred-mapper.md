@@ -65,3 +65,38 @@ Test_PPT\x64\Debug\Test_PPT.exe --report_level=short
 - [ ] Committed; index row 03 updated.
 
 ## Execution record
+
+### Engineer, 2026-11-26 (opus; base 84a5fa6)
+
+Changes:
+- Word, Excel, PowerPoint `Connect.h`: `#include "deferred_key_mapper.h"`; `shortcuts::DeferredKeyMapper m_deferred_mapper` declared between `m_mapper` and `m_keyboard_shortcuts`; constructors initialise `m_deferred_mapper(&m_mapper)` and `m_keyboard_shortcuts(&m_deferred_mapper)`.
+- `OnConnection` (all three): `m_deferred_mapper.create()` immediately before `installhook(&m_keyboard_shortcuts)`, on the thread Office calls `OnConnection` on (the UI thread).
+- Shutdown: `m_deferred_mapper.destroy()` (see deviations for placement). The destructor also calls `destroy()`; `CConnect` is released by Office on the UI thread.
+- `PowerPointAssist/PowerPointAssist/Hooker.cpp`: the Ctrl+Shift guard now reads `shortcuts::physical_shift_key_is_pressed()` (the one allowed hook edit). No other change to any `Hooker.cpp`/`hooker.cpp`.
+- `ExcelAssist/ExcelAssist/FelixExcelIF.cpp`: `OnAutoTransSel`, `OnAutoTransSheet`, `OnAutoTransWorkbook` set `m_shouldColor = shift_key_is_pressed()`; added `#include "keyboard_shortcuts.h"` (the first Debug build failed with C3861 without it).
+- `common\deferred_key_mapper.h` listed as `<ClInclude>` (Header Files filter) in `WordAssist.vcxproj`, `ExcelAssist.vcxproj`, `PowerPointAssist.vcxproj` and their `.filters`.
+
+Deviations:
+- `destroy()` placement. The task says `OnDisconnection` after `uninstallhook`, but in Word and Excel `uninstallhook` is in `OnBeginShutdown`, not `OnDisconnection`, so `destroy()` sits right after it there. PowerPoint never calls `uninstallhook` (pre-existing); its `destroy()` is the first statement of `OnBeginShutdown`'s try block, so a throwing `DispEventUnadvise` cannot skip it. With the window gone, a later shortcut runs synchronously (R5 fallback, the pre-#8 behaviour). If the add-in is unloaded through the COM Add-ins dialog without `OnBeginShutdown`, the window lives until the `CConnect` destructor (UI thread).
+- Win32 builds were not attempted: the brief scopes builds to Debug|x64 and Release|x64 (only 64-bit Office is installed).
+
+Verification (run from PowerShell in the repository root; `$ms` = MSBuild 18 path; `runlog` unavailable, run directly):
+
+| Command | Exit | Result |
+|---|---|---|
+| `& $ms WordAssist\WordAssist\WordAssist.vcxproj /t:Rebuild /p:Configuration=Debug /p:Platform=x64 /m /v:minimal /nologo` | 0 | 0 errors |
+| same, ExcelAssist Debug\|x64 (first run, before the include) | 1 | 3 x C3861 `shift_key_is_pressed` in FelixExcelIF.cpp |
+| same, ExcelAssist Debug\|x64 (after the include) | 0 | 0 errors |
+| same, PowerPointAssist Debug\|x64 | 0 | 0 errors |
+| same, WordAssist / ExcelAssist / PowerPointAssist Release\|x64 | 0 / 0 / 0 | 0 errors |
+| `& $ms Test_WordAssist\...\Test_WordAssist.vcxproj /t:Rebuild` Debug / Release x64, then `Test_WordAssist.exe --report_level=short` | 0 / 0 | 174 of 174 passed (both) |
+| `& $ms Test_Excel\Test_Excel.vcxproj /t:Rebuild` Debug / Release x64, then `Test_Excel.exe --report_level=short` | 0 / 0 | 67 of 67 (Debug), 60 of 60 (Release) |
+| `& $ms Test_PPT\Test_PPT.vcxproj /t:Rebuild` Debug / Release x64, then `Test_PPT.exe --report_level=short` | 0 / 0 | 108 of 108 passed (both) |
+
+No warnings were reported in the touched files. The `WARN`/`ERROR` trace lines in the Test_Excel and Test_PPT output come from existing failure-path tests. No new tests (Connect wiring needs Office).
+
+Deferred to QA (manual, in Office with this build registered):
+- AC1-AC5: Word Look up Next / Previous Translation no longer fail with 0x80010005; Ctrl+Right etc. still reach Office when the mapper declines; Shift-modified shortcuts (and Excel Shift+Auto Translate cell colouring) keep their Shift meaning; rapid repeated shortcuts run in order; chords and Ctrl+Alt+F9 still work.
+- With debug logging on, `%LOCALAPPDATA%\Felix\logs\` should show `Felix hook: queued <command>` for each shortcut and `Felix hook: declined <command>` when a key is passed to Office; there should be no `could not create the command window` line.
+- PowerPoint: Ctrl+Shift+<key> is still passed to PowerPoint.
+- Clean shutdown of Word, Excel and PowerPoint with Felix loaded (no crash or hang on exit).

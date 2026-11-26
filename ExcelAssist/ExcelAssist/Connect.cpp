@@ -43,7 +43,8 @@ _ATL_FUNC_INFO BeforeCloseInfo =
 {CC_STDCALL, VT_EMPTY, 2, {VT_DISPATCH | VT_BYREF, VT_BYREF | VT_BOOL}};
 
 CConnect::CConnect():
-	m_keyboard_shortcuts(&m_mapper)
+	m_deferred_mapper(&m_mapper),
+	m_keyboard_shortcuts(&m_deferred_mapper)
 {
 }
 
@@ -236,6 +237,7 @@ STDMETHODIMP CConnect::OnConnection(IDispatch *pApplication,
 		load_keyboard_shortcuts() ;
 		m_mapper.m_target = &m_excelIF ;
 
+		m_deferred_mapper.create() ;
 		installhook( &m_keyboard_shortcuts ) ;
 
 		m_keyboard_shortcuts.m_on_toggle_shortcuts = boost::bind(&CConnect::on_toggle_shortcuts, this, _1) ;
@@ -334,6 +336,7 @@ STDMETHODIMP CConnect::OnBeginShutdown (SAFEARRAY ** /*custom*/ )
 		unadvise_menu_methods();
 
 		uninstallhook( &m_keyboard_shortcuts ) ;
+		m_deferred_mapper.destroy() ;
 		m_excelIF.shut_down() ;
 
 		logging::log_debug("shutdown complete") ;

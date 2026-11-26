@@ -429,6 +429,7 @@
     <ClInclude Include="Hooker.h" />
     <ClInclude Include="InputDlg.h" />
     <ClInclude Include="KeyboardDriver.h" />
+    <ClInclude Include="..\..\common\deferred_key_mapper.h" />
     <ClInclude Include="keyboard_shortcuts_ppt.h" />
     <ClInclude Include="menu_manip.h" />
     <ClInclude Include="nav_query_dlg.h" />

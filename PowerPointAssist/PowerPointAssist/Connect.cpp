@@ -82,6 +82,7 @@ STDMETHODIMP CConnect::OnConnection(IDispatch *pApplication, AddInDesignerObject
 
 		load_keyboard_shortcuts() ;
 		m_mapper.m_target = &m_interface ;
+		m_deferred_mapper.create() ;
 		installhook( &m_keyboard_shortcuts ) ;
 
 		m_keyboard_shortcuts.m_on_toggle_shortcuts = boost::bind(&CConnect::on_toggle_shortcuts, this, _1) ;
@@ -231,6 +232,10 @@ STDMETHODIMP CConnect::OnBeginShutdown (SAFEARRAY ** /*custom*/ )
 	try
 	{
 		logging::log_debug("PowerPoint Assist :: OnBeginShutdown") ;
+
+		// The keyboard hook is never uninstalled here; without the window, any
+		// later shortcut runs synchronously, as before. Queued commands are dropped.
+		m_deferred_mapper.destroy() ;
 
 		MenuAutoTransFuzzyEventImpl	::DispEventUnadvise( (IUnknown*)m_menu_auto_trans_fuzzy ) ;
 		MenuGetEventImpl::DispEventUnadvise( (IUnknown*)m_menu_get );

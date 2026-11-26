@@ -269,6 +269,9 @@
     <ClInclude Include="..\..\common\input_device_file.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\common\deferred_key_mapper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\common\key_mapper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
