@@ -273,7 +273,7 @@ Reasons:
 
 `m_active_window`, `activate()` and `active_window_has_focus()` stay; `new_window_has_focus()` still uses them. `IsActive` is also used by `OnMenuPreferences` (Connect.cpp:1969) and the segmentation swap (line 2601), which both benefit.
 
-**Diagnostics (R7).** In each hook, at the points that return `CallNextHookEx` for a key that had Alt or Ctrl down, log one `logging::log_debug` line naming the reason (`dialog guard`, `shortcuts off`, `not mapped or declined`). `DeferredKeyMapper::map_command` logs `queued <command>` and, when `accepts` is false, `declined <command>`. Keys without Alt/Ctrl aren't logged, to keep the log small.
+**Diagnostics (R7).** In each hook, at the points that return `CallNextHookEx` for a key that had Alt or Ctrl down, log one `logging::log_debug` line naming the reason (`dialog guard`, `shortcuts off`, `not mapped or declined`). `DeferredKeyMapper::map_command` logs `queued <command>` and, when `accepts` is false, `declined <command>`. Keys without Alt/Ctrl aren't logged, to keep the log small. These pass-on lines are compiled in Debug builds only, because the add-ins log at debug level in Release too; QA uses the Debug build.
 
 If AC6 still fails after this change and the log shows no line for Alt+1, the cause is the alternative in section 3. See D4 for what to do then.
 

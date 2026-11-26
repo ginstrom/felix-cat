@@ -9,8 +9,11 @@ namespace shortcuts
 	// Debug log line saying why a keyboard hook passed a key on to Office.
 	// Only keystrokes with Alt or Ctrl down are logged (key-up messages never).
 	// Makes no COM calls and never throws.
+	// Debug builds only: the add-ins log at debug level in Release too, so the
+	// line would cost a write per Ctrl/Alt key (Ctrl+C etc.) on the UI thread.
 	inline void log_hook_pass_on( const char *reason, WPARAM vk, WORD key_message )
 	{
+#ifdef _DEBUG
 		try
 		{
 			if ( key_message & KF_UP )
@@ -28,5 +31,8 @@ namespace shortcuts
 		catch ( ... )
 		{
 		}
+#else
+		reason ; vk ; key_message ;
+#endif
 	}
 }
