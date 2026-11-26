@@ -236,7 +236,7 @@ Both catch everything and return "empty"/false on error, so the key passes on. T
 - Add `shortcuts::DeferredKeyMapper m_deferred_mapper` constructed with `&m_mapper`, declared after `m_mapper` and before `m_keyboard_shortcuts`.
 - Construct `m_keyboard_shortcuts(&m_deferred_mapper)` instead of `&m_mapper`. Word Connect.cpp:2056, Excel Connect.cpp:46, PowerPoint Connect.h:134.
 - `m_deferred_mapper.create()` in `OnConnection` next to `installhook`.
-- `m_deferred_mapper.destroy()` in `OnDisconnection` after `uninstallhook`.
+- `m_deferred_mapper.destroy()` in `OnDisconnection` after `uninstallhook`. (Implementation note, step 03: `destroy()` goes in `OnBeginShutdown` right after `uninstallhook`, because that is where Word and Excel remove the hook; PowerPoint, which never uninstalls its hook (pre-existing), calls it as the first statement of `OnBeginShutdown`'s try block; on an unload from the COM Add-ins dialog the destructor covers it.)
 - Word's controller swap (Connect.cpp:316, 2604) only changes `m_mapper.m_target`; the decorator holds `&m_mapper`, so nothing else changes.
 
 **Ordering effects:**
