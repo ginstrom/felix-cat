@@ -205,7 +205,7 @@ Invariants:
 - The hook path makes no cross-process COM call (`accepts` contract, R1).
 - Commands never nest (`m_running`).
 - FIFO order.
-- `m_posted` records an outstanding run message; keys that arrive while a command runs queue without posting. A key that arrives while commands wait and none runs posts again, so a run message removed by some loop without being dispatched cannot strand the queue; a spare message finds the queue empty and does nothing (added after the overall review).
+- `m_posted` records an outstanding run message, so keys that arrive while one is outstanding and a command is running queue without posting. A key that arrives while commands wait and none runs posts again, so a run message removed by some loop without being dispatched cannot strand the queue; a spare message finds the queue empty and does nothing (added after the overall review).
 - The window proc catches everything; no exception reaches Office.
 
 **Shift capture (R4).** In `common/keyboard_shortcuts.h`, `shift_key_is_pressed()` consults an override set by an RAII helper:

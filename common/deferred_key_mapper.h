@@ -4,7 +4,7 @@
 //
 // The hook procedures call KeyboardShortcuts::receive_keypress, which calls
 // KeyMapper::map_command. Commands that make cross-process COM calls fail with
-// RPC_E_CANTCALLOUT_ININPUTSYNCCALL (0x80010005) when run inside the hook, so
+// RPC_E_CANTCALLOUT_INEXTERNALCALL (0x80010005) when run inside the hook, so
 // this decorator decides synchronously (accepts), queues the command, and runs
 // it later from a message-only window on the same (Office UI) thread.
 
