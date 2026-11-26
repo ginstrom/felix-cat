@@ -34,17 +34,37 @@ namespace
 		return !! (::GetKeyState(VK_SHIFT) & 0x8000) ;
 	}
 
-	// Inside "First", a keystroke queues "Second" and the message loop is
-	// pumped, as Office does when a command makes a COM call.
+	// Counts the WM_FELIX_RUN_COMMANDS messages waiting on this thread's queue
+	// without consuming them (they are removed and posted again).
+	size_t count_run_messages()
+	{
+		std::vector<MSG> found ;
+		MSG msg ;
+		while (::PeekMessage(&msg, NULL, WM_FELIX_RUN_COMMANDS, WM_FELIX_RUN_COMMANDS, PM_REMOVE))
+		{
+			found.push_back(msg) ;
+		}
+		for (size_t i = 0 ; i < found.size() ; ++i)
+		{
+			::PostMessage(found[i].hwnd, found[i].message, found[i].wParam, found[i].lParam) ;
+		}
+		return found.size() ;
+	}
+
+	// Inside "First", keystrokes queue "Second" and "Third" and the message
+	// loop is pumped, as Office does when a command makes a COM call.
 	struct NestedQueuer
 	{
 		DeferredKeyMapper *m_deferred ;
 		KeyMapperFake *m_inner ;
 		size_t m_runs_seen_inside ;
 		size_t m_pending_seen_inside ;
+		size_t m_messages_after_second ;
+		size_t m_messages_after_third ;
 
 		NestedQueuer(DeferredKeyMapper *deferred, KeyMapperFake *inner) :
-			m_deferred(deferred), m_inner(inner), m_runs_seen_inside(0), m_pending_seen_inside(0)
+			m_deferred(deferred), m_inner(inner), m_runs_seen_inside(0), m_pending_seen_inside(0),
+			m_messages_after_second(0), m_messages_after_third(0)
 		{
 		}
 		void operator()(const string &command)
@@ -54,6 +74,9 @@ namespace
 				return ;
 			}
 			m_deferred->map_command("Second") ;
+			m_messages_after_second = count_run_messages() ;
+			m_deferred->map_command("Third") ;
+			m_messages_after_third = count_run_messages() ;
 			pump_messages() ;
 			m_runs_seen_inside = m_inner->m_sensing_variable.size() ;
 			m_pending_seen_inside = m_deferred->pending_count() ;
@@ -243,8 +266,9 @@ BOOST_AUTO_TEST_SUITE( DeferredKeyMapperTest )
 		BOOST_CHECK_EQUAL("Three", inner.m_sensing_variable[2]) ;
 		BOOST_CHECK_EQUAL(0u, deferred.pending_count()) ;
 
-		// The remaining (spare) messages run nothing more.
-		pump_messages() ;
+		// The remaining messages are the two spares ("Two" and "Three" each
+		// found a waiting queue); they run nothing more.
+		BOOST_CHECK_EQUAL(2u, pump_messages()) ;
 		BOOST_CHECK_EQUAL(0u, pump_messages()) ;
 		BOOST_CHECK_EQUAL(3u, inner.m_sensing_variable.size()) ;
 		deferred.destroy() ;
@@ -375,12 +399,17 @@ BOOST_AUTO_TEST_SUITE( DeferredKeyMapperTest )
 		deferred.map_command("First") ;
 		pump_messages() ;
 
-		// Inside "First", the nested pump did not run "Second"; it ran afterwards.
+		// "Second" posts (run_pending cleared m_posted); "Third", queued while
+		// a command runs and a message is outstanding, posts nothing more.
+		BOOST_CHECK_EQUAL(1u, queuer.m_messages_after_second) ;
+		BOOST_CHECK_EQUAL(1u, queuer.m_messages_after_third) ;
+		// Inside "First", the nested pump ran neither; they ran afterwards.
 		BOOST_CHECK_EQUAL(1u, queuer.m_runs_seen_inside) ;
-		BOOST_CHECK_EQUAL(1u, queuer.m_pending_seen_inside) ;
-		BOOST_REQUIRE_EQUAL(2u, inner.m_sensing_variable.size()) ;
+		BOOST_CHECK_EQUAL(2u, queuer.m_pending_seen_inside) ;
+		BOOST_REQUIRE_EQUAL(3u, inner.m_sensing_variable.size()) ;
 		BOOST_CHECK_EQUAL("First", inner.m_sensing_variable[0]) ;
 		BOOST_CHECK_EQUAL("Second", inner.m_sensing_variable[1]) ;
+		BOOST_CHECK_EQUAL("Third", inner.m_sensing_variable[2]) ;
 		BOOST_CHECK_EQUAL(0u, deferred.pending_count()) ;
 		deferred.destroy() ;
 	}
