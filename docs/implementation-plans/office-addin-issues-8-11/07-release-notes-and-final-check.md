@@ -43,11 +43,34 @@ foreach ($cfg in "Debug","Release") {
 Record each command's exit code and each test program's "N test cases out of N" line. Expected: all pass; Debug counts are baselines plus the new cases from steps 01, 02, 04 and 05 (Test_Excel's Release count is lower than Debug, because the fakes are Debug-only). Record the release-notes diff.
 
 ## Completion criteria
-- [ ] Four bullets added in the existing style; rest of the file unchanged.
-- [ ] All six test runs (three projects x Debug and Release) pass; totals in the execution record and `log.md`.
-- [ ] Add-in builds (Debug|x64, and the Win32 outcome) recorded.
-- [ ] `git status` clean apart from intended files; nothing pushed.
-- [ ] Manual AC1-AC10 listed as deferred to QA.
-- [ ] Committed; index row 07 updated and the index's overall completion criteria checked off.
+- [x] Four bullets (plus the toggle-chord line) added in the existing style; rest of the file unchanged.
+- [x] All six test runs (three projects x Debug and Release) pass; totals in the execution record and `log.md`.
+- [x] Add-in builds (Debug|x64, and the Win32 outcome) recorded.
+- [x] `git status` clean apart from intended files; nothing pushed.
+- [x] Manual AC1-AC10 listed as deferred to QA.
+- [x] Committed; index row 07 updated and the index's overall completion criteria checked off.
 
 ## Execution record
+
+Run by the sonnet engineer, 2026-11-26. `runlog` unavailable (no Python); commands run directly from PowerShell. Every build used `/t:Rebuild /m /v:minimal /nologo`.
+
+### Orchestrator addition: ToggleShortcuts chord
+`common/keyboard_shortcuts.cpp` chord path did `m_shortcuts_enabled = !! m_shortcuts_enabled` (never toggles); the single-key path uses `!`. Only Test_PPT compiles `keyboard_shortcuts_test.cpp`, so the tests went there (`KeyboardShortcutsMapperTest/test_toggle_chord`, `test_toggle_chord_notifies`). Red first: Test_PPT 110 cases, 2 failed, 5 assertions failed (state stayed true, mapper still called). After the one-character fix: 110 / 110. Commit 6224018. The default Ctrl+Alt+F9 binding is single-key, so only user-defined two-key bindings were affected; release note written accordingly.
+
+### Release notes
+`setup/release-notes-3.0.1.md`: five bullets added after the existing ones (#8, #9, #10, #11, toggle chord), 6 lines inserted including a TODO HTML comment after the #9 bullet saying QA must confirm it. #9 wording is limited to what the code does. File stays LF. Commit 0342489.
+
+### Final regression (all exit 0, 0 compiler errors)
+| Command | Result |
+|---|---|
+| Test_WordAssist Debug\|x64 build + run | 175 / 175 |
+| Test_WordAssist Release\|x64 | 175 / 175 |
+| Test_Excel Debug\|x64 | 71 / 71 |
+| Test_Excel Release\|x64 | 60 / 60 (fakes Debug-only) |
+| Test_PPT Debug\|x64 | 110 / 110 |
+| Test_PPT Release\|x64 | 110 / 110 |
+| WordAssist, ExcelAssist, PowerPointAssist Debug\|x64 and Release\|x64 | build, exit 0 |
+| WordAssist, ExcelAssist, PowerPointAssist Debug\|Win32 | build, exit 0 |
+| Felix\Felix.vcxproj Unicode_Debug\|Win32 | build, exit 0 |
+
+Deviations: none beyond the orchestrator additions. `git status` clean apart from these records; nothing pushed. Manual AC1-AC10 deferred to QA.

@@ -27,3 +27,7 @@ After step 01: Test_PPT 99 / 99 (+18), Test_Excel 65 / 58, Test_WordAssist 166 /
 - Step 04: tier sonnet; reviewer verdict clean after 1 review round plus a follow-up change (hook pass-on logging Debug-only); commits ef06fa5, fad7aba, plus the follow-up commit.
 - Step 05: commit 6f2415b. Test_Excel 71 / 60 (Debug / Release; +4 Debug-only), Test_WordAssist and Test_PPT not rerun (untouched). ExcelAssist builds Debug|x64 and Release|x64.
 - Step 06: tier sonnet; commit recorded in git log (subject "Step 06 (#11)"). PowerPointAssist builds Debug|x64 and Release|x64; Test_PPT 108 / 108 (Debug).
+- Step 05: tier sonnet; reviewer verdict clean after 1 review round; commits 6f2415b, dc95f42.
+- Step 06: tier sonnet; reviewed by the orchestrator's diff check (text-only change), clean; commit 8a1ad2d.
+- Orchestrator addition (found during step 07): `ToggleShortcuts` chord path in `common/keyboard_shortcuts.cpp` used `!! m_shortcuts_enabled` and never toggled; fixed test-first in 6224018 (two tests in `Test_PPT/keyboard_shortcuts_test.cpp`, Test_PPT 108 -> 110).
+- Step 07: release notes (0342489) and final regression, all `/t:Rebuild`, all exit 0. Test_WordAssist 175 / 175 (Debug and Release), Test_Excel 71 / 71 Debug and 60 / 60 Release, Test_PPT 110 / 110 (Debug and Release). WordAssist, ExcelAssist, PowerPointAssist build Debug|x64, Release|x64 and Debug|Win32; Felix `Unicode_Debug|Win32` builds.
