@@ -11,7 +11,7 @@ Measured by step 01 at f7bf9b2, before any change (all passing, exit code 0):
 | Test_Excel | 65 | 58 (Excel fakes are Debug-only) |
 | Test_WordAssist | 166 | 166 |
 
-After step 01: Test_PPT 99 / 99 (+18), Test_Excel 65 / 58, Test_WordAssist 166 / 166.
+After step 01: Test_PPT 99 / 99 (+18), Test_Excel 65 / 58, Test_WordAssist 166 / 166. After step 01 review round 1: Test_PPT 103 / 103 (+22 in all).
 
 ## Environment notes
 - Python is not installed, so `runlog` is unavailable; commands are run directly and their exit codes recorded.

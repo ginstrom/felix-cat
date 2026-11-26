@@ -121,3 +121,16 @@ Decisions and deviations:
 - The `scoped_shift_state` override lives in `shortcuts::detail::current_shift_override()` (function-local static), declared before the global `shift_key_is_pressed()`.
 
 For later steps: rebuild with `/t:Rebuild` after editing shared headers (see log.md). Manual Office checks deferred to QA.
+
+### Review round 1 (reviewer verdict: changes needed on f7bf9b2..bafe885)
+
+| # | Finding | Outcome |
+|---|---|---|
+| 1 | The Shift override leaked into hook-time decisions made while a deferred command runs (Office pumps messages inside commands) | Fixed, 48694fe. Following the orchestrator's decision, `map_command` runs under the new `shortcuts::scoped_physical_shift_state` (it clears the override for its lifetime), so `accepts`, the capture and a synchronous run see the real keyboard. There is a new `shortcuts::physical_shift_key_is_pressed()`, and the capture goes through the public `boost::function<bool()> m_read_keyboard_shift` (default `physical_shift_key_is_pressed`). That member is a test seam the contract did not have: the R4 tests can no longer simulate the key with `scoped_shift_state`, so they set it instead (deliberate change of those two tests' setup). New tests: `test_keystroke_during_running_command_ignores_its_shift_override` (red first: captured and `accepts` Shift values were the override), `test_without_window_runs_with_physical_shift` (red first), and `ScopedShiftStateTest/test_physical_scope_suspends_and_restores_override`. C2/C3 updated in index.md, design section 5.1 (two sentences) updated, and step 03 told to change `PowerPointAssist/PowerPointAssist/Hooker.cpp:60` to `shortcuts::physical_shift_key_is_pressed()`. |
+| 2 | `m_running` not exception-safe; handler could let an exception reach Office | Fixed, 67a7718: `running_scope` RAII and `catch (...)` in `OnRunCommands`. No unit test: `run_one` catches everything, so no exception can be made to escape `run_pending` through the public interface. |
+| 3 | Tests: nested case bypassed the message path; throw case did not check a later command | Fixed, 3585518. `NestedQueuer` now calls `map_command` then `pump_messages()` inside First and checks Second is still pending there and runs afterwards. Checked by mutation: with the `m_running` guard disabled the test fails (`1 != 2`, `1 != 0`). The throw test now also queues and pumps Third. |
+| 4 | A failed `PostMessage` stranded the command | Fixed, 3a7cf38. The item just queued is removed, a warning is logged, and `map_command` returns false so Office gets the key. This supersedes the round 0 note "the command stays queued". Test `test_failed_post_returns_key_to_office` fills the thread message queue (red first: returned true, 1 pending). |
+| 5 | Notes: `accepts` must not throw; `destroy()` on the UI thread | Records only: lines added to 02-per-app-accepts.md (shared constraints, plus a C2 note that the decorator suspends the override) and 03-wire-deferred-mapper.md (item 5). |
+| 6 | Commit hashes in index row 01 | Done in this record commit. |
+
+Verification after the round (all `/t:Rebuild`, x64, exit 0): Test_PPT 103 / 103, Test_Excel 65 / 58, Test_WordAssist 166 / 166 (Debug / Release). WordAssist, ExcelAssist and PowerPointAssist built Debug|x64.

@@ -12,10 +12,11 @@ Each app's `KeyMapper` implements `accepts`, so that once the decorator is wired
   - every other mapped shortcut is consumed even if its command later declines or fails;
   - Excel: `accepts` returns false only when `IsActive()` fails (it is always true today).
 - `accepts` makes no cross-process COM calls. New target methods are in-process only, catch everything and return "empty"/false on error (so the key passes on).
+- `accepts` overrides must not throw: they run inside the keyboard hook, and `DeferredKeyMapper::map_command` does not catch around `accepts` (added after the step 01 review).
 
 ## Dependencies and prerequisites (from step 01, copied)
 - **C1** `common/key_mapper.h`: `KeyMapper::accepts(const string &command)` is virtual, default returns true.
-- **C2** `shortcuts::scoped_shift_state(bool down)` in `common/keyboard_shortcuts.h`: while alive, `shift_key_is_pressed()` returns `down`. Use it in tests to control Shift.
+- **C2** `shortcuts::scoped_shift_state(bool down)` in `common/keyboard_shortcuts.h`: while alive, `shift_key_is_pressed()` returns `down`. Use it in tests to control Shift when calling a mapper's `accepts` directly. Note (step 01 review): `DeferredKeyMapper::map_command` suspends the override (`scoped_physical_shift_state`), so through the decorator `accepts` sees the physical key; tests through the decorator set `DeferredKeyMapper::m_read_keyboard_shift` for the captured value only.
 - **C5 (KeyMapperFake)** exists; this step adds the target-fake controls below.
 
 ## Contracts produced (identical to the index: C4, C5 target-fake part)
