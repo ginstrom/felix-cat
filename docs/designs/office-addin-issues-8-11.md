@@ -11,7 +11,7 @@ Four bugs in the Office add-ins, found in user testing at `55079ee` with 64-bit 
 | [#10](https://github.com/ginstrom/felix-cat/issues/10) P3 | During Excel **Auto Translate Selection** the formula bar briefly shows the source while the active cell shows the translation | Auto Translate writes cells through `Characters.Text`, which doesn't refresh the formula bar, and PR #7's `formula_bar_refresher` refreshes only when the whole command ends. Between the active cell's write and the end, the bar is stale. (High) |
 | [#11](https://github.com/ginstrom/felix-cat/issues/11) P3 | PowerPoint's menu says **Find Concordance (ALT + C)**, but Alt+C runs Translate to Fuzzy | The default PowerPoint shortcut table binds Alt+C to `Auto Trans to Fuzzy` and has no source-concordance command at all, while the menu captions are hard-coded strings. The same menu also labels Translate to Fuzzy "(ALT + Z)", which is unbound. (High) |
 
-**Status:** ready for planning. Four decisions are listed in section 8. Each has a recommendation, and the design assumes it. Only D1 (#11 relabel or rebind) changes what gets built in a visible way; none blocks starting the other fixes.
+**Status:** approved by the user on 2026-11-26, with every recommendation in section 8 accepted (D1 relabel, D2 all three add-ins, D3 refresh, D4 fix now).
 
 Felix.exe doesn't change. The #8 mechanism is shared code in `common/` used by all three add-ins; #9 is Word-only; #10 is Excel-only; #11 is PowerPoint-only.
 
