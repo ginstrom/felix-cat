@@ -1,5 +1,5 @@
 ﻿#include "stdafx.h"
-#include "PowerPointInterface.h"
+#include "../PowerPointAssist/PowerPointAssist/PowerPointInterface.h"
 #include "logging.h"
 
 #ifdef UNIT_TEST
