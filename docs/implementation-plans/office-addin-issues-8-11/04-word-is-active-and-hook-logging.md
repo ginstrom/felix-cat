@@ -62,10 +62,20 @@ Test_Excel\x64\Debug\Test_Excel.exe --report_level=short
 - Manual (QA, not this step): AC6 (Alt+1 inserts `Ouvrez la porte de service.` with no AutoSave prompt, also after clicking into Felix and returning by title bar and by Alt+Tab) and AC7 (one hook log line per Alt+digit press saying the command was queued). Record as deferred.
 
 ## Completion criteria
-- [ ] `is_active` no longer compares HWNDs; test for the not-instantiated case passes.
-- [ ] Hook log lines in Word, Excel and PowerPoint hooks per C7; no behaviour change otherwise.
-- [ ] Builds and test programs green, recorded.
-- [ ] Manual AC6/AC7 recorded as deferred to QA.
-- [ ] Committed; index row 04 updated.
+- [x] `is_active` no longer compares HWNDs; test for the not-instantiated case passes.
+- [x] Hook log lines in Word, Excel and PowerPoint hooks per C7; no behaviour change otherwise.
+- [x] Builds and test programs green, recorded.
+- [x] Manual AC6/AC7 recorded as deferred to QA.
+- [x] Committed; index row 04 updated.
 
 ## Execution record
+
+Commit ef06fa5. Engineer: Sonnet 5.5.
+
+- Test first: added `WordApplicationTest/is_active_false_when_not_instantiated` (documents the retained meaning; it passes before and after, since the active path needs Word). No test was added for "never touches GetFocus": not testable without Word.
+- `common/WordAutomationObject.cpp`: removed the `GetFocus() == m_active_window` comparison from `is_active()`. `m_active_window`, `activate()` and `active_window_has_focus()` are unchanged (`new_window_has_focus()` still uses them). No comment in the file stated the HWND rule, so only a short note in `is_active` was added.
+- New `common/hook_log.h` (`shortcuts::log_hook_pass_on(reason, vk, key_message)`): one place for the C7 text `Felix hook: passing on key (<reason>) vk=0x..`. It returns at once for key-up messages and for keys without Ctrl or Alt (two `GetKeyState`/flag reads, no allocation), makes no COM calls and swallows exceptions. Listed in the three add-in vcxprojs.
+- Hooks: dialog guard logged at the flag check and the #2 guard (all three); shortcuts off (all three); not mapped or declined after `receive_keypress` returns false (all three; PowerPoint's Ctrl+Shift pass-on also logs "not mapped or declined"). In the Word hook `new_keyboard_proc` logs both of its own pass-on reasons, so `KeyboardProc` adds no second line. The Ctrl+Alt+F9 toggle and key bindings are unchanged.
+- Deviation: the helper checks `KF_UP` so a key release with Ctrl/Alt held does not produce a second line per press (the task only says "one line per pass-on"; the key-up event is not a keystroke to diagnose). Modifier-only keys (VK_MENU, VK_CONTROL) pass on silently, as before.
+- Commands (PowerShell, x64 Debug, exit 0 each): MSBuild `/t:Rebuild` of Test_WordAssist, WordAssist, ExcelAssist, PowerPointAssist, Test_PPT, Test_Excel. Test_WordAssist.exe: 175 of 175 passed (174 + 1); Test_PPT.exe: 108 of 108; Test_Excel.exe: 67 of 67. Release not rebuilt (no Release-specific change).
+- Deferred to QA: AC6 (Alt+1 inserts the glossary entry with no AutoSave prompt, also after clicking into Felix and returning by title bar and by Alt+Tab) and AC7 (one hook log line per Alt+digit press saying `queued`, and a pass-on line when a key is passed on).
