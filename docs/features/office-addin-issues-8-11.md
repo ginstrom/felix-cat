@@ -12,7 +12,7 @@
   - All four were found in Codex user testing at `55079ee`.
 - **Path:** Medium. No architecture step. One design covering all four, then a plan, implementation, verification.
 - **Phase:** 5. Verification
-- **Next action:** Overall review (opus) and QA in Office (sonnet). For QA, the user registers the Debug build (`toolsegister-felix.ps1 -Configuration Debug`).
+- **Next action:** QA in Office is running (the Debug build is registered). Then the review fixes below, then the PR.
 - **Links:**
   - design: `docs/designs/office-addin-issues-8-11.md`
   - plan: `docs/implementation-plans/office-addin-issues-8-11/index.md`, log `log.md` beside it
@@ -24,7 +24,7 @@
   - Registration: Office currently uses the installed Felix. QA needs `tools\register-felix.ps1 -Configuration Debug`, which the user runs (UAC).
 - **Coming up for the user:** registering the Debug build for QA; push/PR.
 - **Open questions:** none.
-- **Verification gates:** steps 01–07 clean (see `log.md`). Regression at 5244adc: Word 175/175, Excel 71/71 (Release 60), PPT 110/110; add-ins Debug and Release x64 and Debug Win32 build; Felix Unicode_Debug|Win32 builds.
+- **Verification gates:** steps 01–07 clean (see `log.md`). Regression at 5244adc: Word 175/175, Excel 71/71 (Release 60), PPT 110/110; add-ins Debug and Release x64 and Debug Win32 build; Felix Unicode_Debug|Win32 builds. Overall review (opus): clean at fe70b6b, with 7 non-blocking findings. Fixing after QA: the PowerPoint read-only probe, re-posting a lost run message, the release-note wording (toggle chord, Alt+0), the HRESULT name in a comment. Accepted: Ctrl+Right in a Word task pane goes to Felix (design §6).
 - **Tiers:** designer opus; planner sonnet. Engineer and reviewer per step: 01 opus, 02 sonnet, 03 opus, 04 sonnet, 05 sonnet, 06 sonnet, 07 sonnet. Overall review opus; QA sonnet. Escalations: none.
 
 ## Decision log
