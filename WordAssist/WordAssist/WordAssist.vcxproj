@@ -448,6 +448,7 @@
     <ClInclude Include="..\..\common\input_device_file.h" />
     <ClInclude Include="InputNumDlg.h" />
     <ClInclude Include="..\..\common\deferred_key_mapper.h" />
+    <ClInclude Include="..\..\common\hook_log.h" />
     <ClInclude Include="..\..\common\key_mapper.h" />
     <ClInclude Include="key_mapper_word.h" />
     <ClInclude Include="key_target_word.h" />

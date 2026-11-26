@@ -50,11 +50,8 @@ bool WordApplication::is_active()
 			return false ;
 		}
 
-		HWND active_window = ::GetFocus() ;
-		if ( active_window != m_active_window )
-		{
-			return false ;
-		}
+		// No focus-HWND comparison: the keyboard hook already checks that the
+		// keystroke is aimed at a Word main window (issue #9).
 
 	WORD_CATCH	
 
