@@ -2236,7 +2236,7 @@ bool WordController::SelectionIsEmpty()
 {
 	try
 	{
-		return m_word_object.selection_is_empty() ;
+		return m_word_object.selection_is_empty_noexcept() ;
 	}
 	catch (...)
 	{

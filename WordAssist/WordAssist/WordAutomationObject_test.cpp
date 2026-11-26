@@ -101,6 +101,14 @@ BOOST_AUTO_TEST_SUITE_END()
 
 BOOST_AUTO_TEST_SUITE( WordApplicationTest )
 
+	// Hook-time probe must not assert or throw when there is no Word object
+	BOOST_AUTO_TEST_CASE( selection_is_empty_noexcept_not_instantiated )
+	{
+		WordApplication app ;
+		BOOST_CHECK(! app.is_instantiated()) ;
+		BOOST_CHECK(app.selection_is_empty_noexcept()) ;
+		BOOST_CHECK(! app.is_instantiated()) ;
+	}
 	BOOST_AUTO_TEST_CASE( Instantiate )
 	{
 		BOOST_CHECK_NO_THROW(WordApplication()) ;

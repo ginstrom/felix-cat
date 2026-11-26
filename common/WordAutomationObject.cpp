@@ -84,6 +84,33 @@ bool WordApplication::selection_is_empty()
 	WORD_CATCH 
 }
 
+bool WordApplication::selection_is_empty_noexcept()
+{
+	try
+	{
+		if ( ! m_member )
+		{
+			return true ;
+		}
+		word_sel_ptr selection ;
+		if ( FAILED( m_member->get_Selection( &selection ) ) || ! selection )
+		{
+			return true ;
+		}
+		long start = 0 ;
+		long end = 0 ;
+		if ( FAILED( selection->get_Start( &start ) ) || FAILED( selection->get_End( &end ) ) )
+		{
+			return true ;
+		}
+		return start == end ;
+	}
+	catch (...)
+	{
+		return true ;
+	}
+}
+
 word_sel_ptr WordApplication::get_selection()
 { 
 	WORD_TRY

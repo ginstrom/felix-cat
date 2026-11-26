@@ -313,6 +313,9 @@ public:
 	void activate();
 	word_sel_ptr get_selection();
 	bool selection_is_empty();
+	// Hook-time probe: no ATLASSERT, never throws, never resets m_member.
+	// True (empty) when not instantiated or on any error.
+	bool selection_is_empty_noexcept();
 	void set_app( word_app_ptr word_app );
 	bool is_active();
 
