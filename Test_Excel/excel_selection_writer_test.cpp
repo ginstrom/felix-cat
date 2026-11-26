@@ -109,6 +109,68 @@ BOOST_AUTO_TEST_SUITE( ExcelSelectionWriterTest )
 		BOOST_CHECK_NO_THROW( { formula_bar_refresher refresher((excel::app_ptr())) ; } ) ;
 	}
 
+	// Auto Translate refreshes the formula bar as soon as the active cell is written (#10).
+	BOOST_AUTO_TEST_CASE( refresh_if_active_refreshes_when_same_row_and_column )
+	{
+		writer_fixture f ;
+		excel::FakeRange *active = f.add_active_cell() ;
+		active->row = 10 ;
+		active->col = 1 ;
+		excel::FakeRange *written = new excel::FakeRange ;
+		written->row = 10 ;
+		written->col = 1 ;
+
+		refresh_formula_bar_if_active(f.app, excel::range_ptr(written)) ;
+
+		BOOST_CHECK_EQUAL( f.fake_app->refresh_count, 1 ) ;
+	}
+
+	BOOST_AUTO_TEST_CASE( refresh_if_active_skips_different_row_or_column )
+	{
+		writer_fixture f ;
+		excel::FakeRange *active = f.add_active_cell() ;
+		active->row = 10 ;
+		active->col = 1 ;
+
+		excel::FakeRange *other_row = new excel::FakeRange ;
+		other_row->row = 11 ;
+		other_row->col = 1 ;
+		refresh_formula_bar_if_active(f.app, excel::range_ptr(other_row)) ;
+
+		excel::FakeRange *other_col = new excel::FakeRange ;
+		other_col->row = 10 ;
+		other_col->col = 2 ;
+		refresh_formula_bar_if_active(f.app, excel::range_ptr(other_col)) ;
+
+		BOOST_CHECK_EQUAL( f.fake_app->refresh_count, 0 ) ;
+	}
+
+	BOOST_AUTO_TEST_CASE( refresh_if_active_swallows_missing_active_cell )
+	{
+		writer_fixture f ;
+		excel::FakeRange *written = new excel::FakeRange ;
+		written->row = 10 ;
+		written->col = 1 ;
+
+		BOOST_CHECK_NO_THROW( refresh_formula_bar_if_active(f.app, excel::range_ptr(written)) ) ;
+		BOOST_CHECK_EQUAL( f.fake_app->refresh_count, 0 ) ;
+	}
+
+	BOOST_AUTO_TEST_CASE( refresh_if_active_swallows_refresh_failure )
+	{
+		writer_fixture f ;
+		excel::FakeRange *active = f.add_active_cell() ;
+		active->row = 3 ;
+		active->col = 4 ;
+		excel::FakeRange *written = new excel::FakeRange ;
+		written->row = 3 ;
+		written->col = 4 ;
+		f.fake_app->refresh_throws = true ;
+
+		BOOST_CHECK_NO_THROW( refresh_formula_bar_if_active(f.app, excel::range_ptr(written)) ) ;
+		BOOST_CHECK_EQUAL( f.fake_app->refresh_count, 1 ) ;
+	}
+
 BOOST_AUTO_TEST_SUITE_END()
 
 #endif

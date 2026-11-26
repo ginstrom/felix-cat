@@ -51,6 +51,34 @@ inline void refresh_formula_bar(excel::app_ptr app)
 }
 
 /*!
+ * If `written` is the application's active cell (same row and column),
+ * refreshes the formula bar now. Never throws; failures are logged.
+ */
+inline void refresh_formula_bar_if_active(excel::app_ptr app, excel::range_ptr written)
+{
+	try
+	{
+		excel::range_ptr active = app->GetActiveCell() ;
+		if ( written->Row() == active->Row() && written->Column() == active->Column() )
+		{
+			refresh_formula_bar(app) ;
+		}
+	}
+	catch ( _com_error &e )
+	{
+		// Warn level on purpose; see refresh_formula_bar.
+		CString msg ;
+		msg.Format(_T("Failed to check the active cell before refreshing the formula bar: COM exception 0x%08X: %s"),
+			e.Error(), static_cast<LPCTSTR>(e.ErrorMessage())) ;
+		logging::log_warn(string2string(static_cast<LPCWSTR>(msg))) ;
+	}
+	catch ( ... )
+	{
+		logging::log_warn("Failed to check the active cell before refreshing the formula bar") ;
+	}
+}
+
+/*!
  * Writes text into the current selection (a cell or a shape such as a
  * text box), falling back to the active cell, then asks Excel to refresh
  * the formula bar.

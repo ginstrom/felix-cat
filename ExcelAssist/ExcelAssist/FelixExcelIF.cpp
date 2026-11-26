@@ -820,6 +820,7 @@ void CFelixExcelIF::AutoTransCell( excel::range_ptr activeCell, ta_ptr assistant
 		}
 
 		set_cell_text(activeCell, assistant->GetTrans());
+		refresh_formula_bar_if_active(m_excel_app, activeCell);
 
 		restoreColor(activeCell);
 		numTransSheet++ ;
