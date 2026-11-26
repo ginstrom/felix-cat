@@ -43,3 +43,18 @@ Matches the documented baseline (Word 134, PowerPoint 65, Excel 49).
   - In Word's `KeyboardProc`, the `catch(CException&)` swallows the key.
   - Auto Translate probably leaves the formula bar stale.
   - PowerPoint concordance probably has the trailing-¶ defect.
+
+## Follow-up: pre-existing issues (branch fix/office-addin-older-bugs, 2026-11-26)
+
+All six were confirmed in the code and fixed, test-first where the logic could be isolated.
+
+| Issue | Cause | Fix | Test |
+|---|---|---|---|
+| Concordance key leak (Alt+M, C on empty selection) | `KeyboardShortcuts::receive_keypress` returned the command's result for a chord's second key, so a declining command (empty query) passed the key on to Word | The second key of a recognised chord is always consumed; single-key shortcuts unchanged | Test_PPT `test_second_key_consumed_when_command_declines`, `test_single_key_passed_on_when_command_declines` |
+| Word hook swallows keys | `catch(CException&)` in Word's `KeyboardProc` fell through to `return 1` | Returns `CallNextHookEx` like the other handlers | None (Win32 hook callback); one line |
+| Auto Translate formula bar | `AutoTransCell` writes through `set_cell_text` (Characters) and never refreshes | `formula_bar_refresher` (RAII) in `OnAutoTransSel`, `OnAutoTransSheet`, `OnAutoTransWorkbook` | Test_Excel `formula_bar_refresher_*` (3) |
+| PowerPoint concordance trailing paragraph mark | `textRange->Text` sent raw in `OnConcordanceAction` and `OnTransConcordanceAction` | New `trim_plain_concordance_query` (plain text, no tag handling) | Test_PPT `TrimPlainConcordanceQueryTest` (5) |
+| Debug "Logger not initialized!" at PowerPoint startup | `CPowerPointInterface`'s constructor (a `CConnect` member, built before `OnConnection` sets the logger) loads abbreviations, which logs "File does not exist." when `abbreviations.txt` is missing | Abbreviations load in `OnConnection` after `set_logger` | Test_PPT `constructor_does_not_log` |
+| Debug assert in `DispatchWrapper.cpp:10` | `ATLVERIFY` on `CLSIDFromProgID`, then `CoCreateInstance` with an uninitialised CLSID | Throws `_com_error(hr)`, which callers already catch | Test_Excel `unregistered_progid_throws_com_error` |
+
+Final, Debug|x64: Test_WordAssist 166/166, Test_Excel 65/65, Test_PPT 81/81. Add-ins build Debug x64 and Win32. Not checked by hand in Office (needs `tools\register-felix.ps1`, admin).

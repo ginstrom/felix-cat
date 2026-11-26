@@ -22,7 +22,9 @@ Download **Felix_Setup_3.0.1.exe** below and run it. It needs:
 - **The installer and Felix's programs are code-signed**, so Windows shows the publisher's name instead of "unknown publisher".
 - **Word concordance searches work with a whole paragraph selected** ([#1](https://github.com/ginstrom/felix-cat/issues/1)). Find Concordance and Translation Concordance no longer come back empty when your selection includes the paragraph mark.
 - **Felix shortcuts no longer fire inside dialogs** ([#2](https://github.com/ginstrom/felix-cat/issues/2)). In Excel, Word and PowerPoint, pressing Alt+N in the "save changes?" prompt (or any other dialog) no longer launches Felix.
-- **Excel's formula bar updates right away** ([#3](https://github.com/ginstrom/felix-cat/issues/3)). After Get Translation or inserting a glossary entry, the formula bar shows the new text instead of the old.
+- **Excel's formula bar updates right away** ([#3](https://github.com/ginstrom/felix-cat/issues/3)). After Get Translation or inserting a glossary entry, the formula bar shows the new text instead of the old. The same goes for Auto Translate.
+- **Two-key shortcuts no longer type a stray letter.** If you press Alt+M, C (Find Concordance) with nothing selected, the "c" is no longer typed into your document.
+- **PowerPoint concordance searches work with a whole paragraph selected**, as in Word.
 
 ## Known issues
 

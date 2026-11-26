@@ -21,6 +21,12 @@
     <ClCompile Include="abbreviations_test.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="concordance_query_test.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PowerPointInterface_test.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="..\PowerPointAssist\PowerPointAssist\app_state.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

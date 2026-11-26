@@ -16,6 +16,7 @@
 #include "Hooker.h"
 #include "logging.h"
 #include "input_device_file.h"
+#include "word_boundary_marks.h"	// trim_plain_concordance_query
 
 using namespace except ;
 
@@ -43,7 +44,8 @@ CPowerPointInterface::CPowerPointInterface() :
 	m_textRangeParser(m_properties, &m_abbreviations),
 	m_is_trans_mode(true)
 {
-	load_abbreviations();
+	// Abbreviations are loaded in CConnect::OnConnection, after the logger is
+	// set up: this object is constructed with CConnect, before OnConnection.
 }
 
 CPowerPointInterface::~CPowerPointInterface()
@@ -365,10 +367,12 @@ HRESULT CPowerPointInterface::OnConcordanceAction( bool )
 
 		PowerPoint::TextRangePtr textRange = getSelectionTextRange() ;
 
-		if ( textRange->Text.length() > 0 )
+		const _bstr_t text = string2BSTR( trim_plain_concordance_query( BSTR2wstring( textRange->Text ) ) ) ;
+
+		if ( text.length() > 0 )
 		{
 			Felix::IAppPtr app = getAssistant() ;
-			app->Concordance( textRange->Text ) ;
+			app->Concordance( text ) ;
 		}
 
 	} 
@@ -677,7 +681,7 @@ HRESULT CPowerPointInterface::OnTransConcordanceAction ( bool)
 
 		PowerPoint::TextRangePtr textRange = getSelectionTextRange() ;
 
-		const _bstr_t text = textRange->Text ;
+		const _bstr_t text = string2BSTR( trim_plain_concordance_query( BSTR2wstring( textRange->Text ) ) ) ;
 
 		if ( text.length() > 0 )
 		{

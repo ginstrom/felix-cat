@@ -25,6 +25,32 @@ inline void set_cell_text(excel::range_ptr cell, _bstr_t text)
 }
 
 /*!
+ * Asks Excel to refresh the formula bar for the active cell.
+ * A failure is logged and ignored; this never throws.
+ */
+inline void refresh_formula_bar(excel::app_ptr app)
+{
+	try
+	{
+		app->RefreshActiveCell() ;
+	}
+	catch ( _com_error &e )
+	{
+		// Logged at warn level on purpose: log_exception() would log at error
+		// level, and the Debug post-build step treats "COM error 0x...:" output
+		// from the refresh_throws test as a build error.
+		CString msg ;
+		msg.Format(_T("Failed to refresh the formula bar after writing the cell: COM exception 0x%08X: %s"),
+			e.Error(), static_cast<LPCTSTR>(e.ErrorMessage())) ;
+		logging::log_warn(string2string(static_cast<LPCWSTR>(msg))) ;
+	}
+	catch ( ... )
+	{
+		logging::log_warn("Failed to refresh the formula bar after writing the cell") ;
+	}
+}
+
+/*!
  * Writes text into the current selection (a cell or a shape such as a
  * text box), falling back to the active cell, then asks Excel to refresh
  * the formula bar.
@@ -53,23 +79,27 @@ inline bool write_selection_text(excel::app_ptr app, _bstr_t text)
 	}
 
 	// Writing through Characters does not update the formula bar (#3).
-	try
-	{
-		app->RefreshActiveCell() ;
-	}
-	catch ( _com_error &e )
-	{
-		// Logged at warn level on purpose: log_exception() would log at error
-		// level, and the Debug post-build step treats "COM error 0x...:" output
-		// from the refresh_throws test as a build error.
-		CString msg ;
-		msg.Format(_T("Failed to refresh the formula bar after writing the cell: COM exception 0x%08X: %s"),
-			e.Error(), static_cast<LPCTSTR>(e.ErrorMessage())) ;
-		logging::log_warn(string2string(static_cast<LPCWSTR>(msg))) ;
-	}
-	catch ( ... )
-	{
-		logging::log_warn("Failed to refresh the formula bar after writing the cell") ;
-	}
+	refresh_formula_bar(app) ;
 	return true ;
 }
+
+/*!
+ * Refreshes the formula bar once when it goes out of scope, for commands
+ * such as Auto Translate that write cells with set_cell_text (through
+ * Characters, which leaves the formula bar stale) and may return early.
+ */
+class formula_bar_refresher
+{
+	excel::app_ptr m_app ;
+	formula_bar_refresher(const formula_bar_refresher&) ;
+	formula_bar_refresher& operator=(const formula_bar_refresher&) ;
+public:
+	explicit formula_bar_refresher(excel::app_ptr app) : m_app(app) {}
+	~formula_bar_refresher()
+	{
+		if ( m_app )
+		{
+			refresh_formula_bar(m_app) ;
+		}
+	}
+};
