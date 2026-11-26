@@ -292,7 +292,7 @@ Implementation:
 
 - Inside a try, compare `written->Row()`/`Column()` with `app->GetActiveCell()->Row()`/`Column()`; if equal, call `refresh_formula_bar(app)` and then `reload_formula_bar(app)`.
 - Catch `_com_error` and `...` and log at warn level, like `refresh_formula_bar`.
-- Comparing row and column only can fire for the same address on a non-active sheet during Auto Translate Workbook. That is harmless: `RefreshActiveCell` re-activates the active cell, which keeps the selection and active cell, and the reload below runs once more.
+- Comparing row and column only does not give false matches across sheets: Auto Translate Workbook activates each sheet before translating it, so the active cell compared against is on the sheet being written. The refresh and the reload below therefore run at most once per sheet translated.
 
 QA found that `Activate` alone does not update the formula bar mid-command: Excel refreshes it only when the add-in command returns (`ac8_formulabar_samples_menu.txt`, `_keyboard.txt`). Repainting the formula-bar window (`EXCEL<`) or `XLMAIN` with `RedrawWindow(RDW_UPDATENOW)`, re-reading `ActiveCell.Formula`, toggling `ScreenUpdating`, and setting `FormulaBarHeight` to its own value had no effect; hiding and showing the formula bar does work, so **`reload_formula_bar(app)`** (never throws) sets `Application.DisplayFormulaBar` to false and back to true when it is shown (new `excel::application::FormulaBarShown`/`ShowFormulaBar`), leaves a hidden formula bar alone, and retries the show once if it fails. If that fails too, it sets a flag (`formula_bar_left_hidden()`, one per process: Excel has a single UI thread) and `formula_bar_refresher`'s destructor shows the bar when the command returns, retrying on the next command if needed, because Excel saves the setting (`ac8_formulabar_samples_fixed.txt`: the bar shows the translation in the same sample as the cell). No message pumping is involved.
 
@@ -300,7 +300,7 @@ QA found that `Activate` alone does not update the formula bar mid-command: Exce
 
 The three `formula_bar_refresher`s stay, because the active cell can change during Sheet auto-translate (row re-selection) and the final state must be right.
 
-Cost: three in-process Excel calls per translated cell (no Felix call), and one `Activate` plus one formula-bar hide/show for the active cell only.
+Cost: three in-process Excel calls per translated cell (no Felix call), and one `Activate` plus one formula-bar hide/show for the active cell only: at most one hide/show per sheet translated.
 
 ### 5.4 #11: PowerPoint labels (D1 = relabel)
 
@@ -332,7 +332,7 @@ If D1 is decided as "rebind" instead, see D1 for the extra work.
   - The `accepts` pre-checks must match today's pass-through behavior for Ctrl+Right, or Ctrl+Right stops moving the caret. AC3 covers it.
   - `shift_key_is_pressed()` gains a hidden override. It is scoped to the running command, and the hook path suspends it (`DeferredKeyMapper::map_command` reads the physical key, as do hook procedures).
   - Dropping the HWND check could let a shortcut run while focus is in an `OpusApp` child that isn't the document (task pane search box, ribbon). That was already possible for Excel and PowerPoint. A command there acts on Word's current selection, as the menu does.
-- **Performance:** at most one `PostMessage` per shortcut. #10 adds three in-process COM calls per translated cell, and one formula-bar hide/show per command.
+- **Performance:** at most one `PostMessage` per shortcut. #10 adds three in-process COM calls per translated cell, and at most one formula-bar hide/show per sheet translated.
 - **Rollback:** the four fixes are independent. Reverting #8 is the constructor argument plus `create`/`destroy` in each `Connect`; `accepts` can stay.
 - **Release:** add-ins only, in the 3.0.1 installer. Release-note lines are the orchestrator's call (`setup/release-notes-3.0.1.md`).
 
