@@ -218,7 +218,10 @@ BOOST_AUTO_TEST_SUITE( DeferredKeyMapperTest )
 		deferred.destroy() ;
 	}
 
-	BOOST_AUTO_TEST_CASE(test_three_commands_one_message_in_order)
+	// The first run message runs every queued command, in order. (Keys queued
+	// behind a waiting command post a spare message, so that a lost message
+	// cannot strand the queue; the spares find the queue empty.)
+	BOOST_AUTO_TEST_CASE(test_three_commands_first_message_runs_all_in_order)
 	{
 		pump_messages() ;
 		KeyMapperFake inner ;
@@ -230,7 +233,9 @@ BOOST_AUTO_TEST_SUITE( DeferredKeyMapperTest )
 		deferred.map_command("Three") ;
 		BOOST_CHECK_EQUAL(3u, deferred.pending_count()) ;
 
-		BOOST_CHECK_EQUAL(1u, pump_messages()) ;
+		MSG msg ;
+		BOOST_REQUIRE(::PeekMessage(&msg, NULL, WM_FELIX_RUN_COMMANDS, WM_FELIX_RUN_COMMANDS, PM_REMOVE)) ;
+		::DispatchMessage(&msg) ;
 
 		BOOST_REQUIRE_EQUAL(3u, inner.m_sensing_variable.size()) ;
 		BOOST_CHECK_EQUAL("One", inner.m_sensing_variable[0]) ;
@@ -238,7 +243,8 @@ BOOST_AUTO_TEST_SUITE( DeferredKeyMapperTest )
 		BOOST_CHECK_EQUAL("Three", inner.m_sensing_variable[2]) ;
 		BOOST_CHECK_EQUAL(0u, deferred.pending_count()) ;
 
-		// A second pump has nothing to do.
+		// The remaining (spare) messages run nothing more.
+		pump_messages() ;
 		BOOST_CHECK_EQUAL(0u, pump_messages()) ;
 		BOOST_CHECK_EQUAL(3u, inner.m_sensing_variable.size()) ;
 		deferred.destroy() ;
@@ -434,6 +440,35 @@ BOOST_AUTO_TEST_SUITE( DeferredKeyMapperTest )
 		BOOST_CHECK(deferred.map_command("LookupNext")) ;
 		pump_messages() ;
 		BOOST_CHECK_EQUAL(1u, inner.m_sensing_variable.size()) ;
+		deferred.destroy() ;
+	}
+
+	// If some message loop removes the run message without dispatching it,
+	// the next keystroke posts again, so the stale queue is not stuck forever.
+	BOOST_AUTO_TEST_CASE(test_lost_run_message_is_reposted_on_next_key)
+	{
+		pump_messages() ;
+		KeyMapperFake inner ;
+		DeferredKeyMapper deferred(&inner) ;
+		BOOST_REQUIRE(deferred.create()) ;
+
+		BOOST_CHECK(deferred.map_command("First")) ;
+		MSG msg ;
+		size_t removed = 0 ;
+		while (::PeekMessage(&msg, NULL, WM_FELIX_RUN_COMMANDS, WM_FELIX_RUN_COMMANDS, PM_REMOVE))
+		{
+			++removed ;
+		}
+		BOOST_REQUIRE_EQUAL(1u, removed) ;
+		BOOST_CHECK_EQUAL(1u, deferred.pending_count()) ;
+
+		BOOST_CHECK(deferred.map_command("Second")) ;
+		pump_messages() ;
+
+		BOOST_REQUIRE_EQUAL(2u, inner.m_sensing_variable.size()) ;
+		BOOST_CHECK_EQUAL("First", inner.m_sensing_variable[0]) ;
+		BOOST_CHECK_EQUAL("Second", inner.m_sensing_variable[1]) ;
+		BOOST_CHECK_EQUAL(0u, deferred.pending_count()) ;
 		deferred.destroy() ;
 	}
 

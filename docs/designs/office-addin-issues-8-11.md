@@ -171,7 +171,8 @@ namespace shortcuts
 		//   if ! inner->accepts(command)          -> return false (key passes on)
 		//   if no window                          -> return inner->map_command(command) (R5, today's behavior)
 		//   push {command, shift_key_is_pressed()} to m_queue
-		//   if ! m_posted: PostMessage(WM_FELIX_RUN_COMMANDS); m_posted = true
+		//   if ! m_posted, or ! m_running and the queue was non-empty before the push
+		//   (the run message may have been lost): PostMessage(WM_FELIX_RUN_COMMANDS); m_posted = true
 		//   return true
 		bool map_command(string command) ;
 		bool accepts(const string &command) ;  // forwards to inner
@@ -204,7 +205,7 @@ Invariants:
 - The hook path makes no cross-process COM call (`accepts` contract, R1).
 - Commands never nest (`m_running`).
 - FIFO order.
-- At most one `WM_FELIX_RUN_COMMANDS` is outstanding (`m_posted`), so a burst of keys costs one message.
+- `m_posted` records an outstanding run message; keys that arrive while a command runs queue without posting. A key that arrives while commands wait and none runs posts again, so a run message removed by some loop without being dispatched cannot strand the queue; a spare message finds the queue empty and does nothing (added after the overall review).
 - The window proc catches everything; no exception reaches Office.
 
 **Shift capture (R4).** In `common/keyboard_shortcuts.h`, `shift_key_is_pressed()` consults an override set by an RAII helper:
@@ -331,7 +332,7 @@ If D1 is decided as "rebind" instead, see D1 for the extra work.
   - The `accepts` pre-checks must match today's pass-through behavior for Ctrl+Right, or Ctrl+Right stops moving the caret. AC3 covers it.
   - `shift_key_is_pressed()` gains a hidden override. It is scoped to the running command, and the hook path suspends it (`DeferredKeyMapper::map_command` reads the physical key, as do hook procedures).
   - Dropping the HWND check could let a shortcut run while focus is in an `OpusApp` child that isn't the document (task pane search box, ribbon). That was already possible for Excel and PowerPoint. A command there acts on Word's current selection, as the menu does.
-- **Performance:** one `PostMessage` per shortcut, one message per burst. #10 adds three in-process COM calls per translated cell.
+- **Performance:** at most one `PostMessage` per shortcut. #10 adds three in-process COM calls per translated cell, and one formula-bar hide/show per command.
 - **Rollback:** the four fixes are independent. Reverting #8 is the constructor argument plus `create`/`destroy` in each `Connect`; `accepts` can stay.
 - **Release:** add-ins only, in the 3.0.1 installer. Release-note lines are the orchestrator's call (`setup/release-notes-3.0.1.md`).
 
@@ -343,7 +344,7 @@ If D1 is decided as "rebind" instead, see D1 for the extra work.
   - Without `create()`, `map_command` runs the inner mapper immediately and returns its result (R5).
   - After `create()`:
     - `map_command` returns true and the inner mapper isn't called until the window processes the posted message. Pump with `PeekMessage`/`DispatchMessage` on the test thread.
-    - Three commands queued, then one pump: all three run in order, and only one message was posted.
+    - Three commands queued, then the first run message dispatched: all three run in order, and later (spare) messages run nothing. A lost run message is re-posted by the next key.
     - `accepts` false: returns false, nothing queued.
     - Shift captured: queue with Shift reported down (through `scoped_shift_state` in the test), run with it up; the inner mapper observes "down".
     - Re-entrancy: the inner mapper queues another command and calls `run_pending()` itself; the second command runs after the first returns, not inside it.

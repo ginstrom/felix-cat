@@ -89,8 +89,14 @@ namespace shortcuts
 			{
 				return m_inner->map_command(command) ;
 			}
+			// Post when no run message is outstanding, or when commands are
+			// already waiting and none is running: then the run message may
+			// have been lost (removed by some loop without being dispatched),
+			// and posting again keeps the queue from waiting forever. A spare
+			// message is harmless: run_pending on an empty queue does nothing.
+			const bool was_waiting = ! m_queue.empty() ;
 			m_queue.push_back(std::make_pair(command, m_read_keyboard_shift())) ;
-			if (! m_posted)
+			if (! m_posted || (! m_running && was_waiting))
 			{
 				if (! PostMessage(WM_FELIX_RUN_COMMANDS))
 				{
