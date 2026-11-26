@@ -51,6 +51,16 @@ inline void refresh_formula_bar(excel::app_ptr app)
 }
 
 /*!
+ * True while the formula bar is hidden because reload_formula_bar hid it and
+ * could not show it again. Excel has a single UI thread, so one flag is enough.
+ */
+inline bool& formula_bar_left_hidden()
+{
+	static bool left_hidden = false ;
+	return left_hidden ;
+}
+
+/*!
  * Makes Excel reload the formula bar while an add-in command is still
  * running, by hiding and showing it. Does nothing if the formula bar is
  * hidden. If showing it again fails, tries once more so the user's
@@ -94,8 +104,31 @@ inline void reload_formula_bar(excel::app_ptr app)
 		}
 		catch ( ... )
 		{
+			// formula_bar_refresher shows it when the command returns.
+			formula_bar_left_hidden() = true ;
 			logging::log_warn("Failed to show the formula bar again after hiding it") ;
 		}
+	}
+}
+
+/*!
+ * Shows the formula bar if reload_formula_bar left it hidden. The flag stays
+ * set if this fails too, so the next command tries again. Never throws.
+ */
+inline void show_formula_bar_left_hidden(excel::app_ptr app)
+{
+	if ( ! formula_bar_left_hidden() )
+	{
+		return ;
+	}
+	try
+	{
+		app->ShowFormulaBar(true) ;
+		formula_bar_left_hidden() = false ;
+	}
+	catch ( ... )
+	{
+		logging::log_warn("Failed to show the formula bar hidden by the formula bar reload") ;
 	}
 }
 
@@ -166,6 +199,8 @@ inline bool write_selection_text(excel::app_ptr app, _bstr_t text)
  * Refreshes the formula bar once when it goes out of scope, for commands
  * such as Auto Translate that write cells with set_cell_text (through
  * Characters, which leaves the formula bar stale) and may return early.
+ * Also shows the formula bar again if reload_formula_bar left it hidden.
+ * Never throws.
  */
 class formula_bar_refresher
 {
@@ -178,6 +213,7 @@ public:
 	{
 		if ( m_app )
 		{
+			show_formula_bar_left_hidden(m_app) ;
 			refresh_formula_bar(m_app) ;
 		}
 	}

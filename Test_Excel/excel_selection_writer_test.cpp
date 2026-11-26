@@ -17,6 +17,11 @@ BOOST_AUTO_TEST_SUITE( ExcelSelectionWriterTest )
 			fake_app(new excel::FakeApplication),
 			app(fake_app)
 		{
+			formula_bar_left_hidden() = false ;
+		}
+		~writer_fixture()
+		{
+			formula_bar_left_hidden() = false ;
 		}
 
 		excel::FakeCharacters* add_selected_chars()
@@ -254,6 +259,66 @@ BOOST_AUTO_TEST_SUITE( ExcelSelectionWriterTest )
 		f.fake_app->formula_bar_query_throws = true ;
 
 		BOOST_CHECK_NO_THROW( refresh_formula_bar_if_active(f.app, excel::range_ptr(written)) ) ;
+		BOOST_CHECK( f.fake_app->formula_bar_sets.empty() ) ;
+	}
+
+	// If both shows fail after the hide, the bar is shown again when the
+	// command returns; Excel saves the setting, so it must not stay hidden.
+	BOOST_AUTO_TEST_CASE( refresher_shows_formula_bar_left_hidden_by_reload )
+	{
+		writer_fixture f ;
+		excel::FakeRange *active = f.add_active_cell() ;
+		active->row = 10 ;
+		active->col = 1 ;
+		excel::FakeRange *written = new excel::FakeRange ;
+		written->row = 10 ;
+		written->col = 1 ;
+		f.fake_app->show_failures = 2 ;
+
+		{
+			formula_bar_refresher refresher(f.app) ;
+			BOOST_CHECK_NO_THROW( refresh_formula_bar_if_active(f.app, excel::range_ptr(written)) ) ;
+			BOOST_CHECK( ! f.fake_app->formula_bar_shown ) ;
+		}
+
+		BOOST_CHECK( f.fake_app->formula_bar_shown ) ;
+		BOOST_CHECK( ! formula_bar_left_hidden() ) ;
+	}
+
+	BOOST_AUTO_TEST_CASE( refresher_keeps_flag_when_show_fails_again )
+	{
+		writer_fixture f ;
+		excel::FakeRange *active = f.add_active_cell() ;
+		active->row = 10 ;
+		active->col = 1 ;
+		excel::FakeRange *written = new excel::FakeRange ;
+		written->row = 10 ;
+		written->col = 1 ;
+		f.fake_app->show_failures = 3 ;
+
+		{
+			formula_bar_refresher refresher(f.app) ;
+			refresh_formula_bar_if_active(f.app, excel::range_ptr(written)) ;
+		}
+
+		// Never throws; the next command's refresher tries again.
+		BOOST_CHECK( ! f.fake_app->formula_bar_shown ) ;
+		BOOST_CHECK( formula_bar_left_hidden() ) ;
+		{
+			formula_bar_refresher refresher(f.app) ;
+		}
+		BOOST_CHECK( f.fake_app->formula_bar_shown ) ;
+		BOOST_CHECK( ! formula_bar_left_hidden() ) ;
+	}
+
+	BOOST_AUTO_TEST_CASE( refresher_does_not_show_bar_it_did_not_hide )
+	{
+		writer_fixture f ;
+		f.fake_app->formula_bar_shown = false ;
+		{
+			formula_bar_refresher refresher(f.app) ;
+		}
+		BOOST_CHECK( ! f.fake_app->formula_bar_shown ) ;
 		BOOST_CHECK( f.fake_app->formula_bar_sets.empty() ) ;
 	}
 
