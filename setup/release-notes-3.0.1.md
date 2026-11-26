@@ -20,6 +20,9 @@ Download **Felix_Setup_3.0.1.exe** below and run it. It needs:
 - **The user manual is back online**, in [English](https://ginstrom.github.io/felix-cat/manual/en/) and [Japanese](https://ginstrom.github.io/felix-cat/manual/jp/).
 - **Help links work again.** Felix's Help menu, the FAQ link and the Word, Excel and PowerPoint add-ins' help open the new online manual; they used to point at felix-cat.com, which is offline. The Japanese interface now opens the Japanese manual.
 - **The installer and Felix's programs are code-signed**, so Windows shows the publisher's name instead of "unknown publisher".
+- **Word concordance searches work with a whole paragraph selected** ([#1](https://github.com/ginstrom/felix-cat/issues/1)). Find Concordance and Translation Concordance no longer come back empty when your selection includes the paragraph mark.
+- **Felix shortcuts no longer fire inside dialogs** ([#2](https://github.com/ginstrom/felix-cat/issues/2)). In Excel, Word and PowerPoint, pressing Alt+N in the "save changes?" prompt (or any other dialog) no longer launches Felix.
+- **Excel's formula bar updates right away** ([#3](https://github.com/ginstrom/felix-cat/issues/3)). After Get Translation or inserting a glossary entry, the formula bar shows the new text instead of the old.
 
 ## Known issues
 

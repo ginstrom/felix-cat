@@ -150,6 +150,7 @@ private:
 
 private:
 	Felix::IAppPtr getAssistant(void);
+	_bstr_t get_concordance_query( bool as_plaintext ) ;
 
 public:
 

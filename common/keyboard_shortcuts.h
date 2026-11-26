@@ -47,6 +47,11 @@ namespace shortcuts
 						const string &command);
 	};
 
+	// True if keystrokes for `focus` should be treated as Felix shortcuts: `focus` is
+	// non-NULL, its top-level ancestor (GetAncestor(focus, GA_ROOT)) has window class
+	// `main_window_class` (case-insensitive), and that top-level window is enabled.
+	bool keystroke_target_is_main_window(HWND focus, LPCWSTR main_window_class);
+
 	typedef std::shared_ptr<KeyboardShortcut> shortcut_ptr ;
 
 	class KeyboardShortcuts

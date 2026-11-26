@@ -12,6 +12,7 @@
 #include "debugutilities.h"
 #include "excel_application.h"
 #include "excel_range.h"
+#include "excel_selection_writer.h" // set_cell_text, write_selection_text
 #include "Properties.h"
 #include "logging.h"
 
@@ -27,7 +28,6 @@
  */
 
 _bstr_t get_cell_text(excel::range_ptr cell); // prototype
-void set_cell_text(excel::range_ptr cell, _bstr_t text); // prototype
 
 class CFelixExcelIF : public KeyTargetExcel
 {

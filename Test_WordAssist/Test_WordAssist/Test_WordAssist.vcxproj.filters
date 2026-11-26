@@ -36,6 +36,9 @@
     <ClCompile Include="..\..\WordAssist\WordAssist\html_writer_test.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\WordAssist\WordAssist\word_boundary_marks_test.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\common\input_device_file.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -140,6 +143,9 @@
     </ClCompile>
     <ClCompile Include="..\..\common\keyboard_shortcuts.cpp">
       <Filter>Source Files\files_under_test</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\common\keystroke_target_test.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\WordAssist\WordAssist\keyboard_shortcuts_word.cpp">
       <Filter>Source Files\files_under_test</Filter>

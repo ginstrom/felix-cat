@@ -23,6 +23,29 @@ void create_shortcut_node(pugi::xml_node &node, string stype, string first, stri
 namespace shortcuts
 {
 
+	bool keystroke_target_is_main_window(HWND focus, LPCWSTR main_window_class)
+	{
+		if (! focus || ! main_window_class)
+		{
+			return false ;
+		}
+		HWND root = ::GetAncestor(focus, GA_ROOT) ;
+		if (! root)
+		{
+			return false ;
+		}
+		wchar_t class_name[256] = { 0 } ;
+		if (! ::GetClassNameW(root, class_name, _countof(class_name)))
+		{
+			return false ;
+		}
+		if (_wcsicmp(class_name, main_window_class) != 0)
+		{
+			return false ;
+		}
+		return !! ::IsWindowEnabled(root) ;
+	}
+
 	KeyboardShortcut::KeyboardShortcut( SHORTCUT_TYPE stype, 
 										wchar_t firstkey, 
 										wchar_t secondkey,

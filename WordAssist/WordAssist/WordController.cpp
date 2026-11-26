@@ -29,6 +29,7 @@
 #include "input_device_file.h"
 
 #include "HtmlHelp.h"
+#include "word_boundary_marks.h"
 #pragma message("   automatic link to HtmlHelp.lib")
 #pragma comment(lib, "HtmlHelp.lib")
 
@@ -800,7 +801,7 @@ bool WordController::OnConcordanceAction( bool as_plaintext )
 			return OnTransConcordanceAction(as_plaintext) ;
 		}
 	
-		_bstr_t text = get_selection_text( as_plaintext ) ;
+		_bstr_t text = get_concordance_query( as_plaintext ) ;
 
 		if ( text.length() == 0 )
 		{
@@ -1407,7 +1408,7 @@ bool WordController::OnTransConcordanceAction ( bool as_plaintext )
 	{
 		
 		Felix::IAppPtr app = getAssistant( ) ;
-		app->TransConcordance( get_selection_text( as_plaintext ) ) ;
+		app->TransConcordance( get_concordance_query( as_plaintext ) ) ;
 
 	}
 	CATCH_ALL("Action: Getting translation concordance")
@@ -1655,6 +1656,12 @@ bool WordController::select_next_sentence()
 	}
 
 	return false ;
+}
+
+// Selection text with Word boundary marks trimmed; empty when no text is left outside tags.
+_bstr_t WordController::get_concordance_query( bool as_plaintext )
+{
+	return string2BSTR( trim_concordance_query( BSTR2wstring( get_selection_text( as_plaintext ) ) ) ) ;
 }
 
 /*!

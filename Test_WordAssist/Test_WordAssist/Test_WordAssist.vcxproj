@@ -211,9 +211,11 @@
     <ClCompile Include="..\..\WordAssist\WordAssist\html_formatter_test.cpp" />
     <ClCompile Include="..\..\WordAssist\WordAssist\html_processing_test.cpp" />
     <ClCompile Include="..\..\WordAssist\WordAssist\html_writer_test.cpp" />
+    <ClCompile Include="..\..\WordAssist\WordAssist\word_boundary_marks_test.cpp" />
     <ClCompile Include="..\..\common\input_device_file.cpp" />
     <ClCompile Include="keyboard_mapper_word_test.cpp" />
     <ClCompile Include="..\..\common\keyboard_shortcuts.cpp" />
+    <ClCompile Include="..\..\common\keystroke_target_test.cpp" />
     <ClCompile Include="..\..\WordAssist\WordAssist\keyboard_shortcuts_word.cpp" />
     <ClCompile Include="keyboard_shortcuts_word_test.cpp" />
     <ClCompile Include="..\..\WordAssist\WordAssist\logging_test.cpp" />

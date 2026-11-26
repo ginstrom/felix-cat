@@ -205,12 +205,15 @@
     <ClCompile Include="..\ExcelAssist\ExcelAssist\ClipboardBackup_test.cpp" />
     <ClCompile Include="..\common\config_file.cpp" />
     <ClCompile Include="config_file_test.cpp" />
+    <ClCompile Include="..\common\DispatchWrapper.cpp" />
     <ClCompile Include="..\ExcelAssist\ExcelAssist\DispatchWrapper_test.cpp" />
+    <ClCompile Include="excel_selection_writer_test.cpp" />
     <ClCompile Include="..\common\Exceptions.cpp" />
     <ClCompile Include="..\common\Exceptions_test.cpp" />
     <ClCompile Include="..\common\input_device_file.cpp" />
     <ClCompile Include="key_mapper_excel_test.cpp" />
     <ClCompile Include="..\common\keyboard_shortcuts.cpp" />
+    <ClCompile Include="..\common\keystroke_target_test.cpp" />
     <ClCompile Include="..\ExcelAssist\ExcelAssist\keyboard_shortcuts_excel.cpp" />
     <ClCompile Include="keyboard_shortcuts_excel_test.cpp" />
     <ClCompile Include="..\common\logging.cpp" />
@@ -235,6 +238,9 @@
     <ClInclude Include="..\ExcelAssist\ExcelAssist\ClipboardBackup.h" />
     <ClInclude Include="..\common\config_file.h" />
     <ClInclude Include="..\common\Exceptions.h" />
+    <ClInclude Include="..\ExcelAssist\ExcelAssist\excel_application.h" />
+    <ClInclude Include="..\ExcelAssist\ExcelAssist\excel_selection_writer.h" />
+    <ClInclude Include="..\ExcelAssist\ExcelAssist\fake_excel.h" />
     <ClInclude Include="..\common\input_device.h" />
     <ClInclude Include="..\common\input_device_fake.h" />
     <ClInclude Include="..\common\input_device_file.h" />
