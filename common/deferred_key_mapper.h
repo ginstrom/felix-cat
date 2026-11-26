@@ -121,7 +121,7 @@ namespace shortcuts
 			{
 				return ;
 			}
-			m_running = true ;
+			running_scope running(m_running) ;
 			while (! m_queue.empty())
 			{
 				const std::pair<string, bool> item = m_queue.front() ;
@@ -129,7 +129,6 @@ namespace shortcuts
 				scoped_shift_state shift(item.second) ;
 				run_one(item.first) ;
 			}
-			m_running = false ;
 		}
 
 		size_t pending_count() const
@@ -138,9 +137,34 @@ namespace shortcuts
 		}
 
 	private:
+		// Sets the flag for its lifetime, so it is cleared even if an exception escapes.
+		struct running_scope
+		{
+			bool &m_flag ;
+			explicit running_scope(bool &flag) : m_flag(flag) { m_flag = true ; }
+			~running_scope() { m_flag = false ; }
+		private:
+			running_scope(const running_scope &) ;
+			running_scope &operator=(const running_scope &) ;
+		};
+
+		// Window procedure entry: no exception may reach Office.
 		LRESULT OnRunCommands(UINT, WPARAM, LPARAM, BOOL &)
 		{
-			run_pending() ;
+			try
+			{
+				run_pending() ;
+			}
+			catch (...)
+			{
+				try
+				{
+					logging::log_error("Felix hook: unexpected exception while running queued commands") ;
+				}
+				catch (...)
+				{
+				}
+			}
 			return 0 ;
 		}
 
