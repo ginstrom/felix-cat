@@ -34,16 +34,17 @@ namespace
 		return !! (::GetKeyState(VK_SHIFT) & 0x8000) ;
 	}
 
-	// Queues another command from inside the running one and pumps "nested",
-	// as Office does when a command makes a COM call.
+	// Inside "First", a keystroke queues "Second" and the message loop is
+	// pumped, as Office does when a command makes a COM call.
 	struct NestedQueuer
 	{
 		DeferredKeyMapper *m_deferred ;
 		KeyMapperFake *m_inner ;
 		size_t m_runs_seen_inside ;
+		size_t m_pending_seen_inside ;
 
 		NestedQueuer(DeferredKeyMapper *deferred, KeyMapperFake *inner) :
-			m_deferred(deferred), m_inner(inner), m_runs_seen_inside(0)
+			m_deferred(deferred), m_inner(inner), m_runs_seen_inside(0), m_pending_seen_inside(0)
 		{
 		}
 		void operator()(const string &command)
@@ -53,8 +54,9 @@ namespace
 				return ;
 			}
 			m_deferred->map_command("Second") ;
-			m_deferred->run_pending() ;
+			pump_messages() ;
 			m_runs_seen_inside = m_inner->m_sensing_variable.size() ;
+			m_pending_seen_inside = m_deferred->pending_count() ;
 		}
 	};
 
@@ -367,8 +369,9 @@ BOOST_AUTO_TEST_SUITE( DeferredKeyMapperTest )
 		deferred.map_command("First") ;
 		pump_messages() ;
 
-		// Inside "First", the nested run_pending did not run "Second".
+		// Inside "First", the nested pump did not run "Second"; it ran afterwards.
 		BOOST_CHECK_EQUAL(1u, queuer.m_runs_seen_inside) ;
+		BOOST_CHECK_EQUAL(1u, queuer.m_pending_seen_inside) ;
 		BOOST_REQUIRE_EQUAL(2u, inner.m_sensing_variable.size()) ;
 		BOOST_CHECK_EQUAL("First", inner.m_sensing_variable[0]) ;
 		BOOST_CHECK_EQUAL("Second", inner.m_sensing_variable[1]) ;
@@ -392,6 +395,13 @@ BOOST_AUTO_TEST_SUITE( DeferredKeyMapperTest )
 		BOOST_REQUIRE_EQUAL(2u, inner.m_sensing_variable.size()) ;
 		BOOST_CHECK_EQUAL("First", inner.m_sensing_variable[0]) ;
 		BOOST_CHECK_EQUAL("Second", inner.m_sensing_variable[1]) ;
+		BOOST_CHECK_EQUAL(0u, deferred.pending_count()) ;
+
+		// The queue still works after the throws.
+		deferred.map_command("Third") ;
+		BOOST_CHECK_NO_THROW(pump_messages()) ;
+		BOOST_REQUIRE_EQUAL(3u, inner.m_sensing_variable.size()) ;
+		BOOST_CHECK_EQUAL("Third", inner.m_sensing_variable[2]) ;
 		BOOST_CHECK_EQUAL(0u, deferred.pending_count()) ;
 		deferred.destroy() ;
 	}
