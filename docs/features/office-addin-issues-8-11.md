@@ -11,11 +11,11 @@
   - #11 (P3): PowerPoint's menu advertises Alt+C for Find Concordance, but Alt+C runs another command.
   - All four were found in Codex user testing at `55079ee`.
 - **Path:** Medium. No architecture step. One design covering all four, then a plan, implementation, verification.
-- **Phase:** 3. Planning
-- **Next action:** The planner writes the plan from the approved design; then implementation on the branch.
+- **Phase:** 4. Implementation
+- **Next action:** Run steps 01–07 through the step loop, in order.
 - **Links:**
   - design: `docs/designs/office-addin-issues-8-11.md`
-  - plan: `docs/implementation-plans/office-addin-issues-8-11/`
+  - plan: `docs/implementation-plans/office-addin-issues-8-11/index.md`, log `log.md` beside it
   - branch: `fix/office-addin-issues-8-11` (base f1a6a4c)
 - **Status thread:** none, because the `recursive_slack` tools aren't available. This State section is the status.
 - **Environment:**
@@ -24,7 +24,7 @@
   - Registration: Office currently uses the installed Felix. QA needs `tools\register-felix.ps1 -Configuration Debug`, which the user runs (UAC).
 - **Coming up for the user:** registering the Debug build for QA; push/PR.
 - **Open questions:** none yet.
-- **Tiers:** designer opus; planner sonnet.
+- **Tiers:** designer opus; planner sonnet. Engineer and reviewer per step: 01 opus, 02 sonnet, 03 opus, 04 sonnet, 05 sonnet, 06 sonnet, 07 sonnet. Overall review opus; QA sonnet. Escalations: none.
 
 ## Decision log
 
