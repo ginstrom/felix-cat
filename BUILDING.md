@@ -196,16 +196,29 @@ tries to register itself after it builds; without admin rights the build
 finishes with the warning `FELIXREG: Could not register ...`. To register
 Felix and all three add-ins in one go, run the following. If the terminal
 isn't elevated, the script asks Windows for administrator rights (a UAC
-prompt) and continues in a new window:
+prompt), waits, and shows the result in the same window:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File tools\register-felix.ps1
+powershell -ExecutionPolicy Bypass -File tools\register-felix.ps1 -Configuration Debug
 ```
 
-It defaults to the Release builds and x64 (64-bit Office). Use `-Configuration
-Debug`, `-Platform Win32` (32-bit Office) or `-Unregister` as needed, and close
-Office first. In Word, Excel or PowerPoint, the add-in appears as **Felix
-Addin** (File > Options > Add-ins, "COM Add-ins"), and its buttons on the
+`-Configuration` picks what Office and the add-ins should use: `Debug` or
+`Release` (this repo's builds; the default is `Release`), or `Installed` (the
+installed Felix in `C:\Program Files\Felix`, or `-InstallDir`), which switches
+back after testing without reinstalling. Add `-Platform Win32` for 32-bit
+Office, or `-Unregister` to remove a build's registration. Close Office first.
+
+To see what is registered now, without admin rights:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File tools\register-felix.ps1 -Status
+```
+
+It shows where Felix and each add-in point (repo Debug, repo Release,
+installed, or other). It warns about per-user registrations that override
+the machine-wide ones, and about a Felix add-in that Office has disabled.
+
+In Word, Excel or PowerPoint, the add-in appears as **Felix Addin** (File > Options > Add-ins, "COM Add-ins"), and its buttons on the
 **Add-ins** ribbon tab.
 
 **An older installed Felix** (e.g. 2.0 under `C:\Program Files (x86)\Assistant
@@ -215,8 +228,7 @@ uninstaller doesn't unregister `Felix.App`, and it deletes
 `%LOCALAPPDATA%\Felix`, which the new Felix shares (HTML templates, logs,
 preferences). Afterwards, restore the templates by building Debug or with
 `xcopy /E /I /Y Felix\html "%LOCALAPPDATA%\Felix\html\"`. To check what's
-registered: `HKLM\SOFTWARE\WOW6432Node\Classes\CLSID\{4948E973-2FE7-4E6b-914E-55417CCFDF22}\LocalServer32`
-should point to this repo's `Felix.exe`.
+registered, run the script with `-Status`.
 
 **Tests.** `Test_WordAssist`, `Test_Excel` and `Test_PPT` are console apps
 built in the `Testing` configuration; each runs its tests after building.
