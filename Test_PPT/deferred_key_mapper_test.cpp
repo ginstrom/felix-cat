@@ -406,6 +406,37 @@ BOOST_AUTO_TEST_SUITE( DeferredKeyMapperTest )
 		deferred.destroy() ;
 	}
 
+	// If the run message cannot be posted (thread message queue full), the
+	// command is not stranded in the queue: the key goes to Office instead.
+	BOOST_AUTO_TEST_CASE(test_failed_post_returns_key_to_office)
+	{
+		pump_messages() ;
+		KeyMapperFake inner ;
+		DeferredKeyMapper deferred(&inner) ;
+		BOOST_REQUIRE(deferred.create()) ;
+
+		size_t posted = 0 ;
+		while (::PostThreadMessage(::GetCurrentThreadId(), WM_NULL, 0, 0) && posted < 100000)
+		{
+			++posted ;
+		}
+		BOOST_REQUIRE(posted < 100000) ;
+
+		const bool consumed = deferred.map_command("LookupNext") ;
+		const size_t pending = deferred.pending_count() ;
+		pump_messages() ;
+
+		BOOST_CHECK(! consumed) ;
+		BOOST_CHECK_EQUAL(0u, pending) ;
+		BOOST_CHECK_EQUAL(0u, inner.m_sensing_variable.size()) ;
+
+		// Once the queue has room, commands are queued and run again.
+		BOOST_CHECK(deferred.map_command("LookupNext")) ;
+		pump_messages() ;
+		BOOST_CHECK_EQUAL(1u, inner.m_sensing_variable.size()) ;
+		deferred.destroy() ;
+	}
+
 	BOOST_AUTO_TEST_CASE(test_destroy_drops_pending_commands)
 	{
 		pump_messages() ;

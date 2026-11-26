@@ -92,15 +92,15 @@ namespace shortcuts
 			m_queue.push_back(std::make_pair(command, m_read_keyboard_shift())) ;
 			if (! m_posted)
 			{
-				if (PostMessage(WM_FELIX_RUN_COMMANDS))
+				if (! PostMessage(WM_FELIX_RUN_COMMANDS))
 				{
-					m_posted = true ;
-				}
-				else
-				{
+					// Nothing would run the command: drop it and let Office have the key.
+					m_queue.pop_back() ;
 					logging::log_warn("Felix hook: could not post the command message (error "
-						+ boost::lexical_cast<string>(::GetLastError()) + ")") ;
+						+ boost::lexical_cast<string>(::GetLastError()) + "); passing on " + command) ;
+					return false ;
 				}
+				m_posted = true ;
 			}
 			logging::log_debug("Felix hook: queued " + command) ;
 			return true ;
