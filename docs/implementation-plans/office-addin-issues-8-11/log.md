@@ -18,3 +18,4 @@ After step 01: Test_PPT 99 / 99 (+18), Test_Excel 65 / 58, Test_WordAssist 166 /
 - Incremental MSBuild did not recompile all dependants after edits to `common/*.h` (step 01: stale objects gave a crash in `KeyboardShortcutsLoadTest/test_load_simple` and wrong `shift_key_is_pressed()` results; `/t:Rebuild` fixed both). After changing a shared header, build with `/t:Rebuild`.
 
 ## Step outcomes
+- Step 01: tier opus; reviewer verdict clean after 2 review rounds (round 1 changes needed, round 2 clean on bafe885..ee8cf71); commits bafe885, 48694fe, 67a7718, 3585518, 3a7cf38, ee8cf71; Test_PPT 103/103.
