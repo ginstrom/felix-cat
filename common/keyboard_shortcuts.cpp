@@ -92,7 +92,7 @@ namespace shortcuts
 				m_second_command = (*m_second_keys)[key]->m_command ;
 				if (m_second_command == "ToggleShortcuts")
 				{
-					m_shortcuts_enabled = !! m_shortcuts_enabled ;
+					m_shortcuts_enabled = ! m_shortcuts_enabled ;
 					if (m_on_toggle_shortcuts)
 					{
 						m_on_toggle_shortcuts(!! m_shortcuts_enabled) ;

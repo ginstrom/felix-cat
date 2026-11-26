@@ -195,6 +195,43 @@ BOOST_AUTO_TEST_SUITE( KeyboardShortcutsMapperTest )
 		BOOST_CHECK_EQUAL(1u, mapper.m_sensing_variable.size());
 		BOOST_CHECK_EQUAL("FooBar", mapper.m_sensing_variable[0]);
 	}
+	BOOST_AUTO_TEST_CASE(test_toggle_chord)
+	{
+		KeyMapperFake mapper ;
+		KeyboardShortcuts keyboard_shortcuts(&mapper) ;
+		keyboard_shortcuts.add_shortcut(shortcut_ptr(new KeyboardShortcut(SHORTCUT_CTRL, L'M', L'T', "ToggleShortcuts"))) ;
+		keyboard_shortcuts.add_shortcut(shortcut_ptr(new KeyboardShortcut(SHORTCUT_CTRL, L'K', 0, "FooBar"))) ;
+
+		BOOST_CHECK(keyboard_shortcuts.receive_keypress(true, false, L'M')) ;
+		BOOST_CHECK(keyboard_shortcuts.receive_keypress(true, false, L'T')) ;
+		BOOST_CHECK_EQUAL(false, keyboard_shortcuts.m_shortcuts_enabled) ;
+		BOOST_CHECK(! keyboard_shortcuts.receive_keypress(true, false, L'K')) ;
+		BOOST_CHECK_EQUAL(0u, mapper.m_sensing_variable.size()) ;
+
+		// pressing the chord again turns shortcuts back on
+		BOOST_CHECK(keyboard_shortcuts.receive_keypress(true, false, L'M')) ;
+		BOOST_CHECK(keyboard_shortcuts.receive_keypress(true, false, L'T')) ;
+		BOOST_CHECK_EQUAL(true, keyboard_shortcuts.m_shortcuts_enabled) ;
+		BOOST_CHECK(keyboard_shortcuts.receive_keypress(true, false, L'K')) ;
+		BOOST_CHECK_EQUAL(1u, mapper.m_sensing_variable.size()) ;
+	}
+	BOOST_AUTO_TEST_CASE(test_toggle_chord_notifies)
+	{
+		KeyMapperFake mapper ;
+		KeyboardShortcuts keyboard_shortcuts(&mapper) ;
+		keyboard_shortcuts.add_shortcut(shortcut_ptr(new KeyboardShortcut(SHORTCUT_CTRL, L'M', L'T', "ToggleShortcuts"))) ;
+		std::vector<bool> seen ;
+		keyboard_shortcuts.m_on_toggle_shortcuts = [&seen](bool enabled) { seen.push_back(enabled) ; } ;
+
+		keyboard_shortcuts.receive_keypress(true, false, L'M') ;
+		keyboard_shortcuts.receive_keypress(true, false, L'T') ;
+		keyboard_shortcuts.receive_keypress(true, false, L'M') ;
+		keyboard_shortcuts.receive_keypress(true, false, L'T') ;
+
+		BOOST_REQUIRE_EQUAL(2u, seen.size()) ;
+		BOOST_CHECK_EQUAL(false, seen[0]) ;
+		BOOST_CHECK_EQUAL(true, seen[1]) ;
+	}
 	BOOST_AUTO_TEST_CASE(test_ctrl_m_missed)
 	{
 		KeyMapperFake mapper ;
