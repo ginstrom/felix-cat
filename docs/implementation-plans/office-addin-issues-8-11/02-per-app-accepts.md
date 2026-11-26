@@ -87,3 +87,6 @@ Deviations and notes:
 - `accepts` in all three mappers is wrapped in `try { ... } catch (...) { return false ; }` (the pass-through answer), per the step 01 review note.
 - `CPowerPointInterface::IsActive()` still returns true (unchanged). `HasSelectedText()` uses `getSelectedText(true)` per C4.
 - Manual check (Ctrl+Right moves the caret, AC3): deferred to QA.
+
+### Review round 1 (non-blocking finding from the coordinator)
+Found: `WordController::SelectionIsEmpty` called `selection_is_empty()`, whose `WORD_CATCH` nulls `m_member` and rethrows, and which `ATLASSERT`s `is_instantiated()`; a failed probe on Ctrl+Right would disable Felix until `set_app`. Fixed, 65c302d: new `WordApplication::selection_is_empty_noexcept()` (true if not instantiated or on any error; no assert; never touches `m_member`), used by `SelectionIsEmpty`; `selection_is_empty()` and its other callers unchanged. Test `WordApplicationTest/selection_is_empty_noexcept_not_instantiated` (written with the code; it could not compile before the method existed). The COM path needs Word and has no unit test. Verification (`/t:Rebuild`, x64, exit 0): Test_WordAssist Debug 174 / 174 and Release 174 / 174; WordAssist Debug built.
