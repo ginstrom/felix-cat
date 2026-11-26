@@ -21,4 +21,4 @@ After step 01: Test_PPT 99 / 99 (+18), Test_Excel 65 / 58, Test_WordAssist 166 /
 - Step 01: tier opus; reviewer verdict clean after 2 review rounds (round 1 changes needed, round 2 clean on bafe885..ee8cf71); commits bafe885, 48694fe, 67a7718, 3585518, 3a7cf38, ee8cf71; Test_PPT 103/103.
 - Step 02: commit 143fc28. Test_WordAssist 173 / 173, Test_Excel 67 / 60 (Debug / Release), Test_PPT 108 / 108 (both configurations).
 - Step 02 review round 1: 65c302d; Test_WordAssist 174 / 174 (Debug and Release).
-- Step 03: decorator wired in Word, Excel, PowerPoint. Test_WordAssist 174 / 174, Test_Excel 67 / 60, Test_PPT 108 / 108 (Debug / Release x64, unchanged); all three add-ins build Debug|x64 and Release|x64.
+- Step 03: commit 4921cb9. Decorator wired in Word, Excel, PowerPoint. Test_WordAssist 174 / 174, Test_Excel 67 / 60, Test_PPT 108 / 108 (Debug / Release x64, unchanged); all three add-ins build Debug|x64 and Release|x64.
