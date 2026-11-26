@@ -381,11 +381,19 @@ HRESULT CPowerPointInterface::OnConcordanceAction( bool )
 }
 
 // HasSelectedText
+// Read-only: runs inside the keyboard hook, possibly while a command is
+// running, so it must not touch m_textRangeParser (getSelectedText resets
+// its current segment and start).
 bool CPowerPointInterface::HasSelectedText()
 {
 	try
 	{
-		return m_app->Active == Office::msoTrue && m_textRangeParser.getSelectedText(true).length() > 0 ;
+		if ( m_app->Active != Office::msoTrue )
+		{
+			return false ;
+		}
+		PowerPoint::TextRangePtr selected = getSelectionTextRange() ;
+		return selected && selected->Length > 0 ;
 	}
 	catch (...)
 	{
