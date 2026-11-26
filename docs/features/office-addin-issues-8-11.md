@@ -11,8 +11,8 @@
   - #11 (P3): PowerPoint's menu advertises Alt+C for Find Concordance, but Alt+C runs another command.
   - All four were found in Codex user testing at `55079ee`.
 - **Path:** Medium. No architecture step. One design covering all four, then a plan, implementation, verification.
-- **Phase:** 4. Implementation
-- **Next action:** Run steps 01–07 through the step loop, in order.
+- **Phase:** 5. Verification
+- **Next action:** Overall review (opus) and QA in Office (sonnet). For QA, the user registers the Debug build (`toolsegister-felix.ps1 -Configuration Debug`).
 - **Links:**
   - design: `docs/designs/office-addin-issues-8-11.md`
   - plan: `docs/implementation-plans/office-addin-issues-8-11/index.md`, log `log.md` beside it
@@ -23,7 +23,8 @@
   - Office: 64-bit Microsoft 365 only.
   - Registration: Office currently uses the installed Felix. QA needs `tools\register-felix.ps1 -Configuration Debug`, which the user runs (UAC).
 - **Coming up for the user:** registering the Debug build for QA; push/PR.
-- **Open questions:** none yet.
+- **Open questions:** none.
+- **Verification gates:** steps 01–07 clean (see `log.md`). Regression at 5244adc: Word 175/175, Excel 71/71 (Release 60), PPT 110/110; add-ins Debug and Release x64 and Debug Win32 build; Felix Unicode_Debug|Win32 builds.
 - **Tiers:** designer opus; planner sonnet. Engineer and reviewer per step: 01 opus, 02 sonnet, 03 opus, 04 sonnet, 05 sonnet, 06 sonnet, 07 sonnet. Overall review opus; QA sonnet. Escalations: none.
 
 ## Decision log
@@ -39,3 +40,6 @@
 | D4 (#9): fix now on the inferred cause, with debug logging | user (via approval) | instrumented build first | If QA still fails, the log tells which follow-up applies |
 | Work on branch `fix/office-addin-issues-8-11` | user | commit on main | Ready for a PR |
 | Add the fixes to `setup/release-notes-3.0.1.md` | orchestrator | leave the notes alone | Same as #1–#3; 3.0.1 isn't released yet |
+| Fix the two-key ToggleShortcuts chord (`!!` typo) on this branch | orchestrator | separate PR | One character in code this branch touches; found by the step 01 engineer |
+| Make hook pass-on log lines Debug-only | orchestrator | log in all builds | Add-ins log at debug level in Release too; every Ctrl/Alt key Office handles would write and flush a line |
+| Step 06 reviewed by the orchestrator's diff check | orchestrator | reviewer subagent | Text-only change; the diff was checked line by line, including the CP932 decode |
