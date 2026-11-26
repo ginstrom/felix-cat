@@ -54,7 +54,7 @@ Existing code the contracts rely on (inspected): `shortcuts::KeyboardShortcuts::
 | 02 | [02-per-app-accepts.md](02-per-app-accepts.md) | #8: `accepts` in the Word, PowerPoint and Excel mappers, new target methods, fakes, tests | 01 | M, moderate | done: 143fc28 |
 | 03 | [03-wire-deferred-mapper.md](03-wire-deferred-mapper.md) | #8: wire the decorator into the three Connects, route Excel's Shift reads through `shift_key_is_pressed()` | 01, 02 | S-M, moderate (no unit coverage; builds only) | done: 4921cb9 |
 | 04 | [04-word-is-active-and-hook-logging.md](04-word-is-active-and-hook-logging.md) | #9: drop the HWND comparison in `WordApplication::is_active`; R7 hook logging in all three hooks | none (AC7 check needs 03) | S, easy | done: ef06fa5 |
-| 05 | [05-excel-auto-translate-refresh.md](05-excel-auto-translate-refresh.md) | #10: `refresh_formula_bar_if_active` and its call in `AutoTransCell`, tests | none | S, easy | pending |
+| 05 | [05-excel-auto-translate-refresh.md](05-excel-auto-translate-refresh.md) | #10: `refresh_formula_bar_if_active` and its call in `AutoTransCell`, tests | none | S, easy | done (6f2415b) |
 | 06 | [06-powerpoint-menu-labels.md](06-powerpoint-menu-labels.md) | #11: relabel Find Concordance / Translate to Fuzzy in `Connect.cpp` and the Shift-JIS `AddIn.rc` | none | S, easy (encoding care) | pending |
 | 07 | [07-release-notes-and-final-check.md](07-release-notes-and-final-check.md) | Release-note lines (#8-#11) and full regression in Debug and Release x64 | 01-06 | S, easy | pending |
 

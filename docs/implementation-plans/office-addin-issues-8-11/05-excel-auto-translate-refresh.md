@@ -56,3 +56,17 @@ Test_Excel\x64\Release\Test_Excel.exe --report_level=short
 - [ ] Committed; index row 05 updated.
 
 ## Execution record
+
+Commit: 6f2415b. Tests written first against a no-op stub of `refresh_formula_bar_if_active`: 2 of the 4 failed (same-cell refresh, refresh-failure count), the other 2 (different cell, missing active cell) pass against a no-op by nature. Then implemented per C6 and called in `AutoTransCell` after `set_cell_text(activeCell, ...)`.
+
+| Command | Exit | Result |
+|---|---|---|
+| MSBuild Test_Excel Debug\|x64 (post-build runs tests) | 0 | built, 71 tests ran |
+| `Test_Excel\x64\Debug\Test_Excel.exe --report_level=short` | 0 | 71 of 71 passed, 192 of 192 assertions (was 67) |
+| MSBuild Test_Excel Release\|x64 | 0 | built |
+| `Test_Excel\x64\Release\Test_Excel.exe --report_level=short` | 0 | 60 of 60 passed (unchanged) |
+| MSBuild ExcelAssist Debug\|x64 | 0 | built (FELIXREG registration warning: needs admin, pre-existing) |
+| MSBuild ExcelAssist Release\|x64 | 0 | built (same warning) |
+
+Deviations: none. The catch handlers log at warn level with their own message ("Failed to check the active cell ...") rather than reusing the refresh message, so the two failure causes are distinguishable.
+Manual AC8 and AC9: deferred to QA (need Office).
