@@ -4,6 +4,8 @@ class KeyTargetPpt
 {
 public:
 	virtual bool IsActive() = 0 ;
+	// in-process only; false on error
+	virtual bool HasSelectedText() = 0 ;
 	virtual HRESULT OnExtendLookupAction( bool shift_pressed ) = 0 ;
 	virtual HRESULT OnLookupNextTransAction( bool shift_pressed )  = 0 ;
 	virtual HRESULT OnCorrectTransAction( bool shift_pressed )  = 0 ;

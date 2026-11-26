@@ -6,9 +6,11 @@ class KeyTargetExcelFake : public KeyTargetExcel
 {
 public:
 	DECLARE_SENSING_VAR ;
+	bool m_is_active = true ;
+
 	bool IsActive()
 	{
-		return true ;
+		return m_is_active ;
 	}
 	void OnLookupNext()
 	{ 

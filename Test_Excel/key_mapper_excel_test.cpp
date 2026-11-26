@@ -241,6 +241,30 @@ BOOST_AUTO_TEST_CASE(Test_CmdEntry9Action)
 	BOOST_CHECK_EQUAL("OnEntry", target.m_sensing_variable[0]) ;
 	BOOST_CHECK_EQUAL("9", target.m_sensing_variable[1]) ;
 }
+
+// ---- accepts (issue #8): what the keyboard hook consumes ----
+
+BOOST_AUTO_TEST_CASE(Test_accepts_when_active)
+{
+	KeyTargetExcelFake target ;
+	KeyMapperExcel mapper ;
+	mapper.m_target = (KeyTargetExcel *)&target ;
+
+	BOOST_CHECK(mapper.accepts(CmdLookupNext)) ;
+	BOOST_CHECK(mapper.accepts(CmdEntry1Action)) ;
+	BOOST_CHECK(mapper.accepts("this command does not exist")) ;
+	BOOST_CHECK(target.m_sensing_variable.empty()) ;
+}
+BOOST_AUTO_TEST_CASE(Test_accepts_declined_when_inactive)
+{
+	KeyTargetExcelFake target ;
+	target.m_is_active = false ;
+	KeyMapperExcel mapper ;
+	mapper.m_target = (KeyTargetExcel *)&target ;
+
+	BOOST_CHECK(! mapper.accepts(CmdLookupNext)) ;
+	BOOST_CHECK(! mapper.accepts(CmdEntry1Action)) ;
+}
 BOOST_AUTO_TEST_SUITE_END()
 
 #endif // #ifdef _DEBUG

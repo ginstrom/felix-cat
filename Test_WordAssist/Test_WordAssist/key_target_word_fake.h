@@ -12,9 +12,16 @@ public:
 		SENSE("set_auto_off") ; 
 	}
 
+	bool m_is_active = true ;
+	bool m_selection_is_empty = false ;
+
 	bool IsActive()
 	{ 
-		return true ; 
+		return m_is_active ;
+	}
+	bool SelectionIsEmpty()
+	{ 
+		return m_selection_is_empty ;
 	}
 
 	bool OnAutoTransAction ( bool )

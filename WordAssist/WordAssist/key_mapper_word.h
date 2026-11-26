@@ -60,6 +60,32 @@ class KeyMapperWord : public KeyMapper
 public:
 
 	KeyTargetWord	*m_target ;
+
+	// Called from the keyboard hook: false means the key goes on to Word.
+	// Must not throw and must not make cross-process calls.
+	bool accepts(const string &command)
+	{
+		try
+		{
+			if (! m_target->IsActive())
+			{
+				return false ;
+			}
+			if (boost::iequals(command, CmdExtendLookupAction) || boost::iequals(command, CmdExtendTransLookupAction))
+			{
+				// Ctrl+Right (+Shift) keeps moving/extending the caret
+				if (shift_key_is_pressed() || m_target->SelectionIsEmpty())
+				{
+					return false ;
+				}
+			}
+			return true ;
+		}
+		catch (...)
+		{
+			return false ;
+		}
+	}
 	bool map_command(string command)
 	{
 		if (! m_target->IsActive())

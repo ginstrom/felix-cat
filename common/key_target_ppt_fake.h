@@ -6,9 +6,16 @@ class KeyTargetPptFake : public KeyTargetPpt
 {
 public:
 	DECLARE_SENSING_VAR ;
+	bool m_is_active = true ;
+	bool m_has_selected_text = true ;
+
 	bool IsActive()
 	{
-		return true ;
+		return m_is_active ;
+	}
+	bool HasSelectedText()
+	{
+		return m_has_selected_text ;
 	}
 
 	HRESULT OnExtendLookupAction( bool ) 

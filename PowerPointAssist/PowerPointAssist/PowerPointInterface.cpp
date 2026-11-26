@@ -380,6 +380,19 @@ HRESULT CPowerPointInterface::OnConcordanceAction( bool )
 	return S_OK ;
 }
 
+// HasSelectedText
+bool CPowerPointInterface::HasSelectedText()
+{
+	try
+	{
+		return m_app->Active == Office::msoTrue && m_textRangeParser.getSelectedText(true).length() > 0 ;
+	}
+	catch (...)
+	{
+		return false ;
+	}
+}
+
 // OnExtendLookupAction
 HRESULT CPowerPointInterface::OnExtendLookupAction ( bool plaintext )
 {
