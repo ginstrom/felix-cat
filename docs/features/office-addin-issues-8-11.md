@@ -11,8 +11,8 @@
   - #11 (P3): PowerPoint's menu advertises Alt+C for Find Concordance, but Alt+C runs another command.
   - All four were found in Codex user testing at `55079ee`.
 - **Path:** Medium. No architecture step. One design covering all four, then a plan, implementation, verification.
-- **Phase:** 5. Verification
-- **Next action:** An opus engineer makes one bounded attempt at the #10 formula-bar repaint (fallback: revert the mid-run refresh) and fixes the overall-review findings. Then targeted re-QA of #10, then the PR.
+- **Phase:** 6. Report (verified; nothing pushed)
+- **Next action:** The user decides about the PR (pr-reviewer, then pr-creator) and closing #8–#11 on merge. Then they may switch Office back with `toolsegister-felix.ps1 -Configuration Installed`.
 - **Links:**
   - design: `docs/designs/office-addin-issues-8-11.md`
   - plan: `docs/implementation-plans/office-addin-issues-8-11/index.md`, log `log.md` beside it
@@ -24,7 +24,8 @@
   - Registration: Office uses this repo's Debug build (the user registered it for QA on 2026-11-26).
 - **Coming up for the user:** registering the Debug build for QA; push/PR.
 - **Open questions:** none.
-- **Verification gates:** steps 01–07 clean (see `log.md`). Regression at 5244adc: Word 175/175, Excel 71/71 (Release 60), PPT 110/110; add-ins Debug and Release x64 and Debug Win32 build; Felix Unicode_Debug|Win32 builds. Overall review (opus): clean at fe70b6b, with 7 non-blocking findings. Fixing after QA: the PowerPoint read-only probe, re-posting a lost run message, the release-note wording (toggle chord, Alt+0), the HRESULT name in a comment. Accepted: Ctrl+Right in a Word task pane goes to Felix (design §6). QA (sonnet) at 5244adc: FAIL on AC8 (#10: the formula bar stays stale until Auto Translate ends; the mid-run ActiveCell.Activate has no visible effect). AC1–AC7, AC9 and AC10 pass. Evidence in `.git/pr-review/fix/office-addin-issues-8-11/evidence/`.
+- **Verification gates:** steps 01–07 clean (see `log.md`). Regression at 5244adc: Word 175/175, Excel 71/71 (Release 60), PPT 110/110; add-ins Debug and Release x64 and Debug Win32 build; Felix Unicode_Debug|Win32 builds. Overall review (opus): clean at fe70b6b, with 7 non-blocking findings. Fixing after QA: the PowerPoint read-only probe, re-posting a lost run message, the release-note wording (toggle chord, Alt+0), the HRESULT name in a comment. Accepted: Ctrl+Right in a Word task pane goes to Felix (design §6). QA (sonnet) at 5244adc: FAIL on AC8 (#10: the formula bar stays stale until Auto Translate ends; the mid-run ActiveCell.Activate has no visible effect). AC1–AC7, AC9 and AC10 pass. Evidence in `.git/pr-review/fix/office-addin-issues-8-11/evidence/`. Fix round (opus, c65cf88..93a96b0): #10 fixed by hiding and showing the formula bar once after the active-cell write; review clean (3 non-blocking findings, all fixed). QA round 2 at 9cfc594: all 5 checks PASS (AC8 by menu and keyboard, hidden bar stays hidden, PowerPoint Ctrl+Right, Word sanity, shutdown). Final tests: Word 175/175, Excel 80/80 (Release 60), PPT 111/111.
+- **Out-of-scope findings (not fixed):** Auto Translate Sheet stops short (A10:A60 translates only to A51; `PerformSheetAutoTrans` likely uses the used-range row count as the last row); a Release add-in build re-registers itself over a Debug registration through its post-build regsvr32; PowerPoint never uninstalls its hook (use-after-free on unload from the COM Add-ins dialog, predates this branch); plain Alt+Z in Excel never reached the hook in QA's SendInput runs; Japanese review-mode PowerPoint captions (design §9).
 - **Tiers:** designer opus; planner sonnet. Engineer and reviewer per step: 01 opus, 02 sonnet, 03 opus, 04 sonnet, 05 sonnet, 06 sonnet, 07 sonnet. Overall review opus; QA sonnet. Escalations: none.
 
 ## Decision log
