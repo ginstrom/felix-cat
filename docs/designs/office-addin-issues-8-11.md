@@ -289,15 +289,17 @@ inline void refresh_formula_bar_if_active(excel::app_ptr app, excel::range_ptr w
 
 Implementation:
 
-- Inside a try, compare `written->Row()`/`Column()` with `app->GetActiveCell()->Row()`/`Column()`; if equal, call `refresh_formula_bar(app)`.
+- Inside a try, compare `written->Row()`/`Column()` with `app->GetActiveCell()->Row()`/`Column()`; if equal, call `refresh_formula_bar(app)` and then `reload_formula_bar(app)`.
 - Catch `_com_error` and `...` and log at warn level, like `refresh_formula_bar`.
-- Comparing row and column only can fire for the same address on a non-active sheet during Auto Translate Workbook. That is harmless: `RefreshActiveCell` re-activates the active cell, which keeps the selection and active cell.
+- Comparing row and column only can fire for the same address on a non-active sheet during Auto Translate Workbook. That is harmless: `RefreshActiveCell` re-activates the active cell, which keeps the selection and active cell, and the reload below runs once more.
+
+QA found that `Activate` alone does not update the formula bar mid-command: Excel refreshes it only when the add-in command returns (`ac8_formulabar_samples_menu.txt`, `_keyboard.txt`). Repainting the formula-bar window (`EXCEL<`) or `XLMAIN` with `RedrawWindow(RDW_UPDATENOW)`, re-reading `ActiveCell.Formula`, toggling `ScreenUpdating`, and setting `FormulaBarHeight` to its own value had no effect; hiding and showing the formula bar does work, so **`reload_formula_bar(app)`** (never throws) sets `Application.DisplayFormulaBar` to false and back to true when it is shown (new `excel::application::FormulaBarShown`/`ShowFormulaBar`), leaves a hidden formula bar alone, and retries the show once if it fails so the user's setting is kept (`ac8_formulabar_samples_fixed.txt`: the bar shows the translation in the same sample as the cell). No message pumping is involved.
 
 **`CFelixExcelIF::AutoTransCell`** (FelixExcelIF.cpp:821): straight after `set_cell_text(activeCell, assistant->GetTrans())`, call `refresh_formula_bar_if_active(m_excel_app, activeCell)`.
 
 The three `formula_bar_refresher`s stay, because the active cell can change during Sheet auto-translate (row re-selection) and the final state must be right.
 
-Cost: three in-process Excel calls per translated cell (no Felix call), and one `Activate` for the active cell only.
+Cost: three in-process Excel calls per translated cell (no Felix call), and one `Activate` plus one formula-bar hide/show for the active cell only.
 
 ### 5.4 #11: PowerPoint labels (D1 = relabel)
 

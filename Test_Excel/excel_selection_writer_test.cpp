@@ -171,6 +171,104 @@ BOOST_AUTO_TEST_SUITE( ExcelSelectionWriterTest )
 		BOOST_CHECK_EQUAL( f.fake_app->refresh_count, 1 ) ;
 	}
 
+	// #10: Activate alone leaves the formula bar stale until the command
+	// returns; hiding and showing the formula bar makes Excel reload it now.
+	BOOST_AUTO_TEST_CASE( refresh_if_active_reloads_shown_formula_bar )
+	{
+		writer_fixture f ;
+		excel::FakeRange *active = f.add_active_cell() ;
+		active->row = 10 ;
+		active->col = 1 ;
+		excel::FakeRange *written = new excel::FakeRange ;
+		written->row = 10 ;
+		written->col = 1 ;
+
+		refresh_formula_bar_if_active(f.app, excel::range_ptr(written)) ;
+
+		BOOST_CHECK_EQUAL( f.fake_app->formula_bar_sets.size(), 2u ) ;
+		if ( f.fake_app->formula_bar_sets.size() == 2u )
+		{
+			BOOST_CHECK( ! f.fake_app->formula_bar_sets[0] ) ;
+			BOOST_CHECK( f.fake_app->formula_bar_sets[1] ) ;
+		}
+		BOOST_CHECK( f.fake_app->formula_bar_shown ) ;
+	}
+
+	BOOST_AUTO_TEST_CASE( refresh_if_active_leaves_hidden_formula_bar_hidden )
+	{
+		writer_fixture f ;
+		excel::FakeRange *active = f.add_active_cell() ;
+		active->row = 10 ;
+		active->col = 1 ;
+		excel::FakeRange *written = new excel::FakeRange ;
+		written->row = 10 ;
+		written->col = 1 ;
+		f.fake_app->formula_bar_shown = false ;
+
+		refresh_formula_bar_if_active(f.app, excel::range_ptr(written)) ;
+
+		BOOST_CHECK( f.fake_app->formula_bar_sets.empty() ) ;
+		BOOST_CHECK( ! f.fake_app->formula_bar_shown ) ;
+	}
+
+	BOOST_AUTO_TEST_CASE( refresh_if_active_does_not_reload_for_other_cell )
+	{
+		writer_fixture f ;
+		excel::FakeRange *active = f.add_active_cell() ;
+		active->row = 10 ;
+		active->col = 1 ;
+		excel::FakeRange *written = new excel::FakeRange ;
+		written->row = 11 ;
+		written->col = 1 ;
+
+		refresh_formula_bar_if_active(f.app, excel::range_ptr(written)) ;
+
+		BOOST_CHECK( f.fake_app->formula_bar_sets.empty() ) ;
+	}
+
+	BOOST_AUTO_TEST_CASE( refresh_if_active_shows_formula_bar_again_after_failed_show )
+	{
+		writer_fixture f ;
+		excel::FakeRange *active = f.add_active_cell() ;
+		active->row = 10 ;
+		active->col = 1 ;
+		excel::FakeRange *written = new excel::FakeRange ;
+		written->row = 10 ;
+		written->col = 1 ;
+		f.fake_app->show_failures = 1 ;
+
+		BOOST_CHECK_NO_THROW( refresh_formula_bar_if_active(f.app, excel::range_ptr(written)) ) ;
+
+		BOOST_CHECK( f.fake_app->formula_bar_shown ) ;
+	}
+
+	BOOST_AUTO_TEST_CASE( refresh_if_active_swallows_formula_bar_query_failure )
+	{
+		writer_fixture f ;
+		excel::FakeRange *active = f.add_active_cell() ;
+		active->row = 10 ;
+		active->col = 1 ;
+		excel::FakeRange *written = new excel::FakeRange ;
+		written->row = 10 ;
+		written->col = 1 ;
+		f.fake_app->formula_bar_query_throws = true ;
+
+		BOOST_CHECK_NO_THROW( refresh_formula_bar_if_active(f.app, excel::range_ptr(written)) ) ;
+		BOOST_CHECK( f.fake_app->formula_bar_sets.empty() ) ;
+	}
+
+	BOOST_AUTO_TEST_CASE( end_of_command_refreshes_do_not_reload_formula_bar )
+	{
+		writer_fixture f ;
+		f.add_selected_chars() ;
+		write_selection_text(f.app, _bstr_t(L"text")) ;
+		{
+			formula_bar_refresher refresher(f.app) ;
+		}
+
+		BOOST_CHECK( f.fake_app->formula_bar_sets.empty() ) ;
+	}
+
 BOOST_AUTO_TEST_SUITE_END()
 
 #endif

@@ -102,14 +102,41 @@ namespace excel
 		range_ptr active_cell ;
 		int refresh_count ;
 		bool refresh_throws ;
+		bool formula_bar_shown ;
+		bool formula_bar_query_throws ;
+		int show_failures ; // times ShowFormulaBar(true) throws before it works
+		std::vector<bool> formula_bar_sets ;
 
 		FakeApplication() :
 			active_sheet(new FakeWorksheet),
 			refresh_count(0),
-			refresh_throws(false)
+			refresh_throws(false),
+			formula_bar_shown(true),
+			formula_bar_query_throws(false),
+			show_failures(0)
 			{
 
 			}
+
+		bool FormulaBarShown()
+		{
+			if ( formula_bar_query_throws )
+			{
+				throw _com_error(E_FAIL) ;
+			}
+			return formula_bar_shown ;
+		}
+
+		void ShowFormulaBar(bool show)
+		{
+			formula_bar_sets.push_back(show) ;
+			if ( show && show_failures > 0 )
+			{
+				--show_failures ;
+				throw _com_error(E_FAIL) ;
+			}
+			formula_bar_shown = show ;
+		}
 
 		void RefreshActiveCell()
 		{
