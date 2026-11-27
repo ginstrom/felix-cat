@@ -12,7 +12,7 @@
   - All four were found in Codex user testing at `55079ee`.
 - **Path:** Medium. No architecture step. One design covering all four, then a plan, implementation, verification.
 - **Phase:** 6. Report (verified; nothing pushed)
-- **Next action:** The user decides about the PR (pr-reviewer, then pr-creator) and closing #8–#11 on merge. Then they may switch Office back with `toolsegister-felix.ps1 -Configuration Installed`.
+- **Next action:** The user decides about the PR (pr-reviewer, then pr-creator) and closing #8–#11 on merge. Then they may switch Office back with `tools\register-felix.ps1 -Configuration Installed`.
 - **Links:**
   - design: `docs/designs/office-addin-issues-8-11.md`
   - plan: `docs/implementation-plans/office-addin-issues-8-11/index.md`, log `log.md` beside it
