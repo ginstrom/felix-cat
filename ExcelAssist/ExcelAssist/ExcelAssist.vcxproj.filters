@@ -221,6 +221,9 @@
     <ClInclude Include="ConnectEvents.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="excel_scan_bounds.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="excel_selection_writer.h">
       <Filter>Header Files</Filter>
     </ClInclude>

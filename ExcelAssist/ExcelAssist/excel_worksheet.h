@@ -41,13 +41,35 @@ namespace excel
 			return cell ;
 		}
 
+		// Number of rows in the used range (not its last row; see LastUsedRow).
 		virtual int UsedRows()
 		{
 			return m_sheet->UsedRange->Rows->Count ;
 		}
+		// Number of columns in the used range (not its last column; see LastUsedColumn).
 		virtual int UsedColumns()
 		{
 			return m_sheet->UsedRange->Columns->Count ;
+		}
+		// Index of the used range's first row. The used range need not start at row 1.
+		virtual int UsedFirstRow()
+		{
+			return m_sheet->UsedRange->Row ;
+		}
+		// Index of the used range's first column.
+		virtual int UsedFirstColumn()
+		{
+			return m_sheet->UsedRange->Column ;
+		}
+		// Index of the used range's last row.
+		int LastUsedRow()
+		{
+			return UsedFirstRow() + UsedRows() - 1 ;
+		}
+		// Index of the used range's last column.
+		int LastUsedColumn()
+		{
+			return UsedFirstColumn() + UsedColumns() - 1 ;
 		}
 	};
 

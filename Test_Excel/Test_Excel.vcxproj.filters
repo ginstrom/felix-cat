@@ -84,6 +84,9 @@
     <ClCompile Include="..\common\DispatchWrapper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="excel_scan_bounds_test.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="excel_selection_writer_test.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -165,6 +168,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\ExcelAssist\ExcelAssist\excel_application.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ExcelAssist\ExcelAssist\excel_scan_bounds.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\ExcelAssist\ExcelAssist\excel_selection_writer.h">
