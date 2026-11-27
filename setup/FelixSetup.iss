@@ -14,10 +14,22 @@
 ; each user's %LOCALAPPDATA%\Felix (settings, customized templates, logs) and
 ; their memories and glossaries alone.
 
-#define AppVersion "3.0.1"
-#define Root ".."
+; Each of these can be set from the command line, e.g.
+;   ISCC /DAppVersion=3.0.2 /DVcRedist=<folder> setup\FelixSetup.iss
+; (tools\build-installer.ps1 and the GitHub Actions workflows do this.)
+#ifndef AppVersion
+  #define AppVersion "3.0.1"
+#endif
+; Repo root, which holds the built binaries.
+#ifndef SourceDir
+  #define SourceDir ".."
+#endif
+#define Root SourceDir
 #define FelixBin Root + "\Felix\Unicode_Release"
-#define VcRedist "C:\Program Files\Microsoft Visual Studio\18\Community\VC\Redist\MSVC\v145"
+; Folder with vc_redist.x86.exe and vc_redist.x64.exe (Microsoft-signed).
+#ifndef VcRedist
+  #define VcRedist "C:\Program Files\Microsoft Visual Studio\18\Community\VC\Redist\MSVC\v145"
+#endif
 
 [Setup]
 AppId={{98802423-6787-4122-BCEC-08CC2E12F18E}

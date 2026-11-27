@@ -1,0 +1,94 @@
+name: Set up Felix build dependencies
+description: >
+  Provides Boost (headers plus the compiled Filesystem, Test and Regex
+  libraries, 32- and 64-bit) and WTL 10, and sets BoostDir and WtlDir for
+  MSBuild (Dependencies.props reads them). Both are cached by version.
+
+inputs:
+  boost-version:
+    description: Boost version (dotted)
+    default: '1.91.0'
+  boost-sha256:
+    description: SHA-256 of boost_<version>.7z from archives.boost.io
+    default: '9446c37fd86fecd95254ebe5d368a66ef9b09cec4592b2746979076657e24e65'
+  wtl-version:
+    description: Version of the "wtl" NuGet package (WTL 10)
+    default: '10.0.10320'
+
+runs:
+  using: composite
+  steps:
+    - name: Paths
+      shell: pwsh
+      run: |
+        $u = '${{ inputs.boost-version }}'.Replace('.', '_')
+        # A short path: Boost's file names overflow MAX_PATH under long ones.
+        "FELIX_BOOST_DIR=C:\deps\boost_$u" >> $env:GITHUB_ENV
+        "FELIX_BOOST_UNDERSCORE=$u" >> $env:GITHUB_ENV
+        "FELIX_WTL_DIR=C:\deps\wtl_${{ inputs.wtl-version }}" >> $env:GITHUB_ENV
+
+    - name: Cache Boost
+      id: cache-boost
+      uses: actions/cache@v6
+      with:
+        path: C:\deps\boost_*
+        # Bump the -bN suffix when the b2 command below changes.
+        key: boost-${{ inputs.boost-version }}-msvc-14.5-fs-test-regex-b1
+
+    - name: Build Boost
+      if: steps.cache-boost.outputs.cache-hit != 'true'
+      shell: pwsh
+      run: |
+        $ErrorActionPreference = 'Stop'
+        $u = $env:FELIX_BOOST_UNDERSCORE
+        $archive = Join-Path $env:RUNNER_TEMP "boost_$u.7z"
+        Invoke-WebRequest "https://archives.boost.io/release/${{ inputs.boost-version }}/source/boost_$u.7z" -OutFile $archive
+        $hash = (Get-FileHash $archive -Algorithm SHA256).Hash.ToLower()
+        if ($hash -ne '${{ inputs.boost-sha256 }}') { throw "Boost archive SHA-256 mismatch: $hash" }
+        New-Item -ItemType Directory C:\deps -Force | Out-Null
+        7z x $archive -oC:\deps -y -bso0 -bsp0
+        if ($LASTEXITCODE -ne 0) { throw '7z failed' }
+        Set-Location $env:FELIX_BOOST_DIR
+        cmd /c "bootstrap.bat vc145"
+        if ($LASTEXITCODE -ne 0) { throw 'bootstrap failed' }
+        # Static Boost libraries for the shared (DLL) runtime, as the Release
+        # configurations use (/MD), in the folders Dependencies.props expects.
+        foreach ($p in @(@{ am = 32; dir = 'lib32-msvc-14.5' }, @{ am = 64; dir = 'lib64-msvc-14.5' })) {
+          .\b2.exe -j4 toolset=msvc-14.5 address-model=$($p.am) link=static runtime-link=shared `
+            variant=release threading=multi --with-filesystem --with-test --with-regex `
+            "--build-dir=$env:RUNNER_TEMP\b2-$($p.am)" "--stagedir=stage$($p.am)" stage -d0
+          if ($LASTEXITCODE -ne 0) { throw "b2 failed (address-model=$($p.am))" }
+          Move-Item "stage$($p.am)\lib" $p.dir
+        }
+        # Keep the cache small: headers and libraries only.
+        Get-ChildItem -Exclude boost, lib32-msvc-14.5, lib64-msvc-14.5 | Remove-Item -Recurse -Force
+        Get-ChildItem lib32-msvc-14.5, lib64-msvc-14.5 | Select-Object -ExpandProperty Name
+
+    - name: Cache WTL
+      id: cache-wtl
+      uses: actions/cache@v6
+      with:
+        path: C:\deps\wtl_*
+        key: wtl-nuget-${{ inputs.wtl-version }}
+
+    - name: Get WTL
+      if: steps.cache-wtl.outputs.cache-hit != 'true'
+      shell: pwsh
+      run: |
+        $ErrorActionPreference = 'Stop'
+        $pkg = Join-Path $env:RUNNER_TEMP 'wtl.zip'
+        Invoke-WebRequest "https://www.nuget.org/api/v2/package/wtl/${{ inputs.wtl-version }}" -OutFile $pkg
+        Expand-Archive $pkg -DestinationPath $env:FELIX_WTL_DIR
+
+    - name: Set BoostDir and WtlDir
+      shell: pwsh
+      run: |
+        $ErrorActionPreference = 'Stop'
+        if (-not (Test-Path "$env:FELIX_BOOST_DIR\boost\version.hpp")) { throw 'Boost headers missing' }
+        $atlapp = Get-ChildItem $env:FELIX_WTL_DIR -Recurse -Filter atlapp.h | Select-Object -First 1
+        if (-not $atlapp) { throw 'atlapp.h not found in the WTL package' }
+        # MSBuild sees environment variables as properties.
+        "BoostDir=$env:FELIX_BOOST_DIR" >> $env:GITHUB_ENV
+        "WtlDir=$($atlapp.DirectoryName)" >> $env:GITHUB_ENV
+        "BoostDir=$env:FELIX_BOOST_DIR"
+        "WtlDir=$($atlapp.DirectoryName)"

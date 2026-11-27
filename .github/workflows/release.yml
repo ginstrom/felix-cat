@@ -1,0 +1,189 @@
+# Release build: pushing a tag like v3.0.2 builds Felix and the add-ins,
+# signs Felix's own program files through SignPath, builds the installer from
+# the signed files, signs the installer, verifies every signature, and
+# attaches the installer to a DRAFT GitHub release for the maintainer to
+# review and publish.
+#
+# Signing runs only when the repository variable SIGNPATH_ORGANIZATION_ID is
+# set (with the secret SIGNPATH_API_TOKEN). Until then this produces an
+# unsigned draft release. The SignPath slugs are repository variables too, with
+# the defaults below; set SIGNPATH_SIGNING_POLICY_SLUG to "test-signing" to
+# try the pipeline with SignPath's test certificate.
+#
+# What is signed and why: CODE_SIGNING_POLICY.md.
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  SIGN: ${{ vars.SIGNPATH_ORGANIZATION_ID != '' }}
+  SIGNPATH_PROJECT_SLUG: ${{ vars.SIGNPATH_PROJECT_SLUG || 'felix-cat' }}
+  SIGNPATH_SIGNING_POLICY_SLUG: ${{ vars.SIGNPATH_SIGNING_POLICY_SLUG || 'release-signing' }}
+
+jobs:
+  release:
+    runs-on: windows-latest
+    # Includes the wait while the maintainer approves the two signing requests.
+    timeout-minutes: 240
+    permissions:
+      contents: write   # create the draft release
+      actions: read     # SignPath reads this run's artifacts
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Version from tag
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $version = '${{ github.ref_name }}'.TrimStart('v')
+          if ($version -notmatch '^\d+\.\d+\.\d+$') { throw "Tag ${{ github.ref_name }} is not vX.Y.Z" }
+          # The version in the source must match the tag (see BUILDING.md,
+          # "Version number"): the installer and Felix's VERSIONINFO agree.
+          $iss = Get-Content setup\FelixSetup.iss -Raw
+          if ($iss -notmatch '#define AppVersion "([^"]+)"') { throw 'AppVersion not found in FelixSetup.iss' }
+          if ($Matches[1] -ne $version) { throw "Tag says $version but setup\FelixSetup.iss says $($Matches[1]). Bump the version first." }
+          "FELIX_VERSION=$version" >> $env:GITHUB_ENV
+          "Signing: $env:SIGN"
+
+      - uses: ./.github/actions/setup-felix-deps
+
+      - uses: microsoft/setup-msbuild@v3
+
+      - name: Install Inno Setup
+        run: choco install innosetup -y --no-progress
+
+      - name: Build binaries
+        shell: pwsh
+        run: >
+          powershell -NoProfile -ExecutionPolicy Bypass -File tools\build-installer.ps1
+          -Unsigned -NoRegister -SkipInstaller
+
+      # Only Felix's own files. SciLexer.dll (Scintilla) and the Visual C++
+      # runtimes are third-party and are not signed with Felix's certificate.
+      - name: Stage program files
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $s = 'staging\program-files'
+          New-Item -ItemType Directory "$s\lang" -Force | Out-Null
+          Copy-Item Felix\Unicode_Release\Felix.exe $s
+          Copy-Item Felix\Unicode_Release\lang\EngResource.dll, Felix\Unicode_Release\lang\JpnResource.dll "$s\lang"
+          foreach ($a in 'WordAssist', 'ExcelAssist', 'PowerPointAssist') { Copy-Item "$a\$a\x64\Release\$a.dll" $s }
+          Get-ChildItem $s -Recurse -File | ForEach-Object { $_.FullName }
+
+      - name: Upload unsigned program files
+        id: upload-unsigned
+        uses: actions/upload-artifact@v7
+        with:
+          name: felix-${{ env.FELIX_VERSION }}-program-files-unsigned
+          path: staging/program-files/
+          if-no-files-found: error
+
+      - name: Sign program files
+        if: env.SIGN == 'true'
+        uses: signpath/github-action-submit-signing-request@v2
+        with:
+          api-token: ${{ secrets.SIGNPATH_API_TOKEN }}
+          organization-id: ${{ vars.SIGNPATH_ORGANIZATION_ID }}
+          project-slug: ${{ env.SIGNPATH_PROJECT_SLUG }}
+          signing-policy-slug: ${{ env.SIGNPATH_SIGNING_POLICY_SLUG }}
+          artifact-configuration-slug: program-files
+          github-artifact-id: ${{ steps.upload-unsigned.outputs.artifact-id }}
+          wait-for-completion: true
+          # Long enough for the maintainer to approve the request.
+          wait-for-completion-timeout-in-seconds: 7200
+          output-artifact-directory: staging/program-files-signed
+
+      - name: Put signed program files in place
+        if: env.SIGN == 'true'
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $s = 'staging\program-files-signed'
+          Copy-Item "$s\Felix.exe" Felix\Unicode_Release\ -Force
+          Copy-Item "$s\lang\*.dll" Felix\Unicode_Release\lang\ -Force
+          foreach ($a in 'WordAssist', 'ExcelAssist', 'PowerPointAssist') { Copy-Item "$s\$a.dll" "$a\$a\x64\Release\" -Force }
+
+      - name: Build installer
+        shell: pwsh
+        run: >
+          powershell -NoProfile -ExecutionPolicy Bypass -File tools\build-installer.ps1
+          -Unsigned -SkipBuild -AppVersion $env:FELIX_VERSION
+
+      - name: Upload unsigned installer
+        id: upload-installer
+        uses: actions/upload-artifact@v7
+        with:
+          name: felix-${{ env.FELIX_VERSION }}-installer-unsigned
+          path: setup/Output/Felix_Setup_${{ env.FELIX_VERSION }}.exe
+          if-no-files-found: error
+
+      - name: Sign installer
+        if: env.SIGN == 'true'
+        uses: signpath/github-action-submit-signing-request@v2
+        with:
+          api-token: ${{ secrets.SIGNPATH_API_TOKEN }}
+          organization-id: ${{ vars.SIGNPATH_ORGANIZATION_ID }}
+          project-slug: ${{ env.SIGNPATH_PROJECT_SLUG }}
+          signing-policy-slug: ${{ env.SIGNPATH_SIGNING_POLICY_SLUG }}
+          artifact-configuration-slug: installer
+          github-artifact-id: ${{ steps.upload-installer.outputs.artifact-id }}
+          wait-for-completion: true
+          wait-for-completion-timeout-in-seconds: 7200
+          output-artifact-directory: staging/installer-signed
+
+      - name: Verify signatures
+        if: env.SIGN == 'true'
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $installer = "staging\installer-signed\Felix_Setup_$env:FELIX_VERSION.exe"
+          Copy-Item $installer setup\Output\ -Force
+          $files = @(
+            'Felix\Unicode_Release\Felix.exe',
+            'Felix\Unicode_Release\lang\EngResource.dll',
+            'Felix\Unicode_Release\lang\JpnResource.dll',
+            'WordAssist\WordAssist\x64\Release\WordAssist.dll',
+            'ExcelAssist\ExcelAssist\x64\Release\ExcelAssist.dll',
+            'PowerPointAssist\PowerPointAssist\x64\Release\PowerPointAssist.dll',
+            "setup\Output\Felix_Setup_$env:FELIX_VERSION.exe"
+          )
+          $signtool = Get-ChildItem "${env:ProgramFiles(x86)}\Windows Kits\10\bin\*\x64\signtool.exe" |
+            Sort-Object FullName -Descending | Select-Object -First 1
+          $failed = @()
+          foreach ($f in $files) {
+            & $signtool.FullName verify /pa /v $f
+            if ($LASTEXITCODE -ne 0) { $failed += $f }
+          }
+          # The installer must contain the signed program files: install it
+          # silently into a temp folder and check the files there too.
+          $dir = Join-Path $env:RUNNER_TEMP 'felix-install-check'
+          & "setup\Output\Felix_Setup_$env:FELIX_VERSION.exe" /VERYSILENT /SUPPRESSMSGBOXES /NORESTART "/DIR=$dir" /LOG="$env:RUNNER_TEMP\install.log" | Out-Null
+          foreach ($f in 'Felix.exe', 'lang\EngResource.dll', 'lang\JpnResource.dll', 'WordAssist.dll', 'ExcelAssist.dll', 'PowerPointAssist.dll') {
+            & $signtool.FullName verify /pa (Join-Path $dir $f)
+            if ($LASTEXITCODE -ne 0) { $failed += "installed $f" }
+          }
+          if ($failed) { throw "Signature check failed: $($failed -join ', ')" }
+
+      - name: Create draft release
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $installer = "setup\Output\Felix_Setup_$env:FELIX_VERSION.exe"
+          $notes = "setup\release-notes-$env:FELIX_VERSION.md"
+          $title = "Felix $env:FELIX_VERSION"
+          if ($env:SIGN -ne 'true') { $title += ' (UNSIGNED)' }
+          $ghArgs = @('release', 'create', '${{ github.ref_name }}', $installer, '--draft', '--verify-tag', '--title', $title)
+          if (Test-Path $notes) { $ghArgs += @('--notes-file', $notes) } else { $ghArgs += @('--notes', "Felix $env:FELIX_VERSION") }
+          gh @ghArgs

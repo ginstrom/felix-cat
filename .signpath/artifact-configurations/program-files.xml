@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  SignPath artifact configuration "program-files" for the felix-cat project.
+  Paste this into SignPath (Project > Artifact configurations > program-files).
+
+  release.yml uploads staging/program-files/ as a GitHub Actions artifact
+  (a zip). Only Felix's own files are in it: SciLexer.dll (Scintilla) and
+  the Visual C++ runtimes are not signed with Felix's certificate.
+-->
+<artifact-configuration xmlns="http://signpath.io/artifact-configuration/v1">
+  <zip-file>
+    <pe-file path="Felix.exe">
+      <authenticode-sign />
+    </pe-file>
+    <pe-file path="WordAssist.dll">
+      <authenticode-sign />
+    </pe-file>
+    <pe-file path="ExcelAssist.dll">
+      <authenticode-sign />
+    </pe-file>
+    <pe-file path="PowerPointAssist.dll">
+      <authenticode-sign />
+    </pe-file>
+    <directory path="lang">
+      <pe-file path="EngResource.dll">
+        <authenticode-sign />
+      </pe-file>
+      <pe-file path="JpnResource.dll">
+        <authenticode-sign />
+      </pe-file>
+    </directory>
+  </zip-file>
+</artifact-configuration>
