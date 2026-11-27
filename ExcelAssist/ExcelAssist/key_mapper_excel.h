@@ -32,6 +32,21 @@ class KeyMapperExcel : public KeyMapper
 public:
 
 	KeyTargetExcel	*m_target ;
+
+	// Called from the keyboard hook: false means the key goes on to Excel.
+	// Must not throw and must not make cross-process calls.
+	bool accepts(const string &command)
+	{
+		command ;
+		try
+		{
+			return m_target->IsActive() ;
+		}
+		catch (...)
+		{
+			return false ;
+		}
+	}
 	bool map_command(string command)
 	{
 		if (! m_target->IsActive())

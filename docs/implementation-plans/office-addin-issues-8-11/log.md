@@ -1,0 +1,39 @@
+# Log
+
+Plan: [index.md](index.md). Accumulates across steps: baseline test totals, environment notes, step outcomes, review and QA records.
+
+## Baseline test totals (Debug and Release x64)
+Measured by step 01 at f7bf9b2, before any change (all passing, exit code 0):
+
+| Program | Debug\|x64 | Release\|x64 |
+|---|---|---|
+| Test_PPT | 81 | 81 |
+| Test_Excel | 65 | 58 (Excel fakes are Debug-only) |
+| Test_WordAssist | 166 | 166 |
+
+After step 01: Test_PPT 99 / 99 (+18), Test_Excel 65 / 58, Test_WordAssist 166 / 166. After step 01 review round 1: Test_PPT 103 / 103 (+22 in all).
+
+## Environment notes
+- Python is not installed, so `runlog` is unavailable; commands are run directly and their exit codes recorded.
+- Incremental MSBuild did not recompile all dependants after edits to `common/*.h` (step 01: stale objects gave a crash in `KeyboardShortcutsLoadTest/test_load_simple` and wrong `shift_key_is_pressed()` results; `/t:Rebuild` fixed both). After changing a shared header, build with `/t:Rebuild`.
+
+## Step outcomes
+- Step 01: tier opus; reviewer verdict clean after 2 review rounds (round 1 changes needed, round 2 clean on bafe885..ee8cf71); commits bafe885, 48694fe, 67a7718, 3585518, 3a7cf38, ee8cf71; Test_PPT 103/103.
+- Step 02: commit 143fc28. Test_WordAssist 173 / 173, Test_Excel 67 / 60 (Debug / Release), Test_PPT 108 / 108 (both configurations).
+- Step 02 review round 1: 65c302d; Test_WordAssist 174 / 174 (Debug and Release).
+- Step 03: commit 4921cb9. Decorator wired in Word, Excel, PowerPoint. Test_WordAssist 174 / 174, Test_Excel 67 / 60, Test_PPT 108 / 108 (Debug / Release x64, unchanged); all three add-ins build Debug|x64 and Release|x64.
+- Step 03: tier opus; reviewer verdict clean after 1 review round (84a5fa6..d74e460); commits 4921cb9, d74e460.
+- Step 04: commit ef06fa5. Test_WordAssist 175 / 175 (Debug), Test_Excel 67, Test_PPT 108; WordAssist, ExcelAssist, PowerPointAssist build Debug|x64.
+- Step 04: tier sonnet; reviewer verdict clean after 1 review round plus a follow-up change (hook pass-on logging Debug-only); commits ef06fa5, fad7aba, plus the follow-up commit.
+- Step 05: commit 6f2415b. Test_Excel 71 / 60 (Debug / Release; +4 Debug-only), Test_WordAssist and Test_PPT not rerun (untouched). ExcelAssist builds Debug|x64 and Release|x64.
+- Step 06: tier sonnet; commit recorded in git log (subject "Step 06 (#11)"). PowerPointAssist builds Debug|x64 and Release|x64; Test_PPT 108 / 108 (Debug).
+- Step 05: tier sonnet; reviewer verdict clean after 1 review round; commits 6f2415b, dc95f42.
+- Step 06: tier sonnet; reviewed by the orchestrator's diff check (text-only change), clean; commit 8a1ad2d.
+- Orchestrator addition (found during step 07): `ToggleShortcuts` chord path in `common/keyboard_shortcuts.cpp` used `!! m_shortcuts_enabled` and never toggled; fixed test-first in 6224018 (two tests in `Test_PPT/keyboard_shortcuts_test.cpp`, Test_PPT 108 -> 110).
+- Step 07: release notes (0342489) and final regression, all `/t:Rebuild`, all exit 0. Test_WordAssist 175 / 175 (Debug and Release), Test_Excel 71 / 71 Debug and 60 / 60 Release, Test_PPT 110 / 110 (Debug and Release). WordAssist, ExcelAssist, PowerPointAssist build Debug|x64, Release|x64 and Debug|Win32; Felix `Unicode_Debug|Win32` builds.
+
+## Verification follow-up (after QA and the overall review)
+- #10 mid-run formula bar (QA finding, AC8): `Activate` alone left the formula bar stale until Auto Translate Selection returned. One bounded attempt in real 64-bit Excel (Debug|x64 add-in, A10:A60 all `Serial label.` -> `001`, formula bar sampled through UI Automation from a separate process), approaches tried after the `Activate`: `RedrawWindow(RDW_INVALIDATE|RDW_ERASE|RDW_UPDATENOW|RDW_ALLCHILDREN)` on the formula-bar window (class `EXCEL<`) - no effect; re-reading `ActiveCell.Formula` - no effect; `ScreenUpdating` false/true (only when true) - no effect; `RedrawWindow` on `XLMAIN` - no effect; `FormulaBarHeight` set to its own value - no effect; `DisplayFormulaBar` false/true (only when shown) - works, the bar shows `001` in the same sample as the cell. Kept as `reload_formula_bar` in `excel_selection_writer.h`, called from `refresh_formula_bar_if_active`; +6 Test_Excel Debug tests (71 -> 77). Evidence: `.git/pr-review/fix/office-addin-issues-8-11/evidence/ac8_formulabar_samples_fixed.txt` (two clean runs: 0 samples with the cell translated and the bar stale, against 300+ before). Note: an incremental ExcelAssist build after adding the virtuals to `excel_application.h` produced a DLL whose reload threw and lost the selection; `/t:Rebuild` fixed it (same stale-object problem as step 01).
+- #10 fix commit c65cf88. Overall-review fixes: a2a5459 (read-only PowerPoint `HasSelectedText`, C4 updated; not unit-testable without a fake PowerPoint application, PowerPointAssist builds), bb2ac4f (re-post the run message when a stale queue waits; +1 Test_PPT test simulating a lost message, and the three-commands test now checks that the first message runs all three), 28cc7a2 (release notes: toggle-chord scope, Alt+0 to Alt+9, #9 TODO removed after QA confirmed it; the #10 line stays, the fix works), 49f495f (0x80010005 is `RPC_E_CANTCALLOUT_INEXTERNALCALL`).
+- Final regression after these, all `/t:Rebuild`, all exit 0: Test_WordAssist 175 / 175 (Debug / Release x64), Test_Excel 77 / 60, Test_PPT 111 / 111; WordAssist, ExcelAssist, PowerPointAssist build Debug|x64.
+- Second review round (after QA round 2 passed): 04f2342 (`formula_bar_refresher` shows the formula bar if `reload_formula_bar` hid it and both shows failed; flag `formula_bar_left_hidden()`; +3 Test_Excel Debug tests, red first), e06834b (design: at most one hide/show per sheet translated), dcd9cfa (Test_PPT: no extra run message while one is outstanding and a command runs; exactly two spares in the three-commands test). `/t:Rebuild`, exes run directly with `--report_level=short`, all exit 0: Test_Excel 80 / 60 (Debug / Release x64), Test_PPT 111 / 111. ExcelAssist rebuilt Debug|x64 (exit 0, expected FELIXREG warning).

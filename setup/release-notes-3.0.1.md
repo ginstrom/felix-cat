@@ -25,6 +25,11 @@ Download **Felix_Setup_3.0.1.exe** below and run it. It needs:
 - **Excel's formula bar updates right away** ([#3](https://github.com/ginstrom/felix-cat/issues/3)). After Get Translation or inserting a glossary entry, the formula bar shows the new text instead of the old. The same goes for Auto Translate.
 - **Two-key shortcuts no longer type a stray letter.** If you press Alt+M, C (Find Concordance) with nothing selected, the "c" is no longer typed into your document.
 - **PowerPoint concordance searches work with a whole paragraph selected**, as in Word.
+- **Shortcuts no longer fail with a COM error when you type fast** ([#8](https://github.com/ginstrom/felix-cat/issues/8)). In Word, Excel and PowerPoint, Felix shortcuts (for example Look up Next and Previous Translation) are queued and run in order instead of sometimes failing with "illegal to call out while inside message filter".
+- **Word's Alt+0 to Alt+9 glossary shortcuts work after switching back to Word from another window** ([#9](https://github.com/ginstrom/felix-cat/issues/9)). Alt+1 no longer opens the AutoSave prompt.
+- **Excel's formula bar follows Auto Translate** ([#10](https://github.com/ginstrom/felix-cat/issues/10)). The formula bar shows the translation for the active cell as soon as it is written, instead of the source text until the command ends.
+- **PowerPoint's menu shows the right shortcuts** ([#11](https://github.com/ginstrom/felix-cat/issues/11)). Translate to Fuzzy shows Alt+C, and Find Concordance no longer advertises a shortcut.
+- **A two-key shortcut for Toggle Shortcuts now works.** If you bound Toggle Shortcuts to a two-key shortcut, it did nothing. It now turns Felix's single-key shortcuts off and on; two-key shortcuts stay on. Ctrl+Alt+F9, which turns all Felix shortcuts off and on, is a separate switch and was not affected.
 
 ## Known issues
 

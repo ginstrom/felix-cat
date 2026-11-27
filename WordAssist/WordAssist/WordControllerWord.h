@@ -47,6 +47,7 @@ public:
 	//////////////////////////////////////////////////////////////////////////
 
 	bool IsActive() { return WordController::IsActive() ; }
+	bool SelectionIsEmpty() { return WordController::SelectionIsEmpty() ; }
 
 	bool OnAutoTransAction ( bool as_plaintext ) { return WordController::OnAutoTransAction(as_plaintext) ; }
 	bool OnAutoTransFuzzyAction ( bool as_plaintext ) { return WordController::OnAutoTransFuzzyAction(as_plaintext) ; }

@@ -6,6 +6,8 @@ public:
 
 	virtual void set_auto_off() = 0 ;
 	virtual bool IsActive() = 0 ;
+	// in-process only; catches everything; true (empty) on error
+	virtual bool SelectionIsEmpty() = 0 ;
 
 	//////////////////////////////////////////////////////////////////////////
 	// These hook keyboard shortcuts

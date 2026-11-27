@@ -1,6 +1,7 @@
 //! Keyboard hooks to implement keyboard shortcuts.
 #include "stdafx.h"
 #include "logging.h"
+#include "hook_log.h"
 #include "hooker.h"
 
 #include "DebugUtilities.h"
@@ -39,6 +40,7 @@ LRESULT __declspec(dllexport)__stdcall  CALLBACK KeyboardProc(int nCode,
 		// if we are manipulating a menu, quit processing
 		if ( wKeystrokeMsg &  stop_flags )
 		{
+			shortcuts::log_hook_pass_on( "dialog or menu mode", wParam, wKeystrokeMsg ) ;
 			return CallNextHookEx(hkb, nCode, wParam, lParam); 
 		}
 
@@ -50,6 +52,7 @@ LRESULT __declspec(dllexport)__stdcall  CALLBACK KeyboardProc(int nCode,
 		// Only react when keyboard focus is in the main window (not a dialog or prompt)
 		if ( ! shortcuts::keystroke_target_is_main_window( ::GetFocus(), L"OpusApp" ) )
 		{
+			shortcuts::log_hook_pass_on( "focus not in main window", wParam, wKeystrokeMsg ) ;
 			return CallNextHookEx(hkb, nCode, wParam, lParam);
 		}
 
@@ -133,8 +136,14 @@ if ( control_key_pressed && wParam == VK_F3 )
 	}
 	else if (! shortcuts_enabled)
 	{
+		shortcuts::log_hook_pass_on( "shortcuts off", wParam, wKeystrokeMsg ) ;
 		return false ;
 	}
 
-	return hook_keys->receive_keypress(control_key_pressed, alt_key_pressed, static_cast<wchar_t>(wParam)) ;
+	if ( hook_keys->receive_keypress(control_key_pressed, alt_key_pressed, static_cast<wchar_t>(wParam)) )
+	{
+		return true ;
+	}
+	shortcuts::log_hook_pass_on( "not mapped or declined", wParam, wKeystrokeMsg ) ;
+	return false ;
 }

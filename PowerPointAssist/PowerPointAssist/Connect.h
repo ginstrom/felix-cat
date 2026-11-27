@@ -14,6 +14,7 @@
 #include "keyboard_shortcuts.h"
 #include "keyboard_shortcuts_ppt.h"
 #include "key_mapper_ppt.h"
+#include "deferred_key_mapper.h"
 
 // CConnect
 class ATL_NO_VTABLE CConnect : 
@@ -124,6 +125,7 @@ class ATL_NO_VTABLE CConnect :
 	app_state m_properties ;
 
 	KeyMapperPpt m_mapper ;
+	shortcuts::DeferredKeyMapper m_deferred_mapper ; // after m_mapper, before m_keyboard_shortcuts (init order)
 	shortcuts::KeyboardShortcuts m_keyboard_shortcuts ;
 
 public:
@@ -131,7 +133,8 @@ public:
 
 	CConnect() : 
 		scidll_(NULL),
-		m_keyboard_shortcuts(&m_mapper)
+		m_deferred_mapper(&m_mapper),
+		m_keyboard_shortcuts(&m_deferred_mapper)
 	{
 		scidll_ = ::LoadLibrary( _T("SciLexer.dll") ) ;
 	}

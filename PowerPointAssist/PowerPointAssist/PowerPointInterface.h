@@ -64,6 +64,8 @@ public:
 	HRESULT  OnAutoTransAction ( ) ;
 	HRESULT  OnAutoTransFuzzyAction ( ) ;
 	HRESULT OnConcordanceAction ( bool plaintext = false ) ;
+	// In-process checks for the keyboard hook (KeyMapperPpt::accepts); false on any error.
+	bool HasSelectedText() ;
 	HRESULT OnExtendLookupAction ( bool plaintext = false ) ;
 	HRESULT OnRegisterGlossAction ( bool plaintext = false )	;
 	HRESULT OnDeleteAction ( ) ;

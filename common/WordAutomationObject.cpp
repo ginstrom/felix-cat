@@ -50,11 +50,8 @@ bool WordApplication::is_active()
 			return false ;
 		}
 
-		HWND active_window = ::GetFocus() ;
-		if ( active_window != m_active_window )
-		{
-			return false ;
-		}
+		// No focus-HWND comparison: the keyboard hook already checks that the
+		// keystroke is aimed at a Word main window (issue #9).
 
 	WORD_CATCH	
 
@@ -82,6 +79,33 @@ bool WordApplication::selection_is_empty()
 		return selection.get_start() == selection.get_end() ;
 
 	WORD_CATCH 
+}
+
+bool WordApplication::selection_is_empty_noexcept()
+{
+	try
+	{
+		if ( ! m_member )
+		{
+			return true ;
+		}
+		word_sel_ptr selection ;
+		if ( FAILED( m_member->get_Selection( &selection ) ) || ! selection )
+		{
+			return true ;
+		}
+		long start = 0 ;
+		long end = 0 ;
+		if ( FAILED( selection->get_Start( &start ) ) || FAILED( selection->get_End( &end ) ) )
+		{
+			return true ;
+		}
+		return start == end ;
+	}
+	catch (...)
+	{
+		return true ;
+	}
 }
 
 word_sel_ptr WordApplication::get_selection()

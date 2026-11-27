@@ -450,6 +450,81 @@ BOOST_AUTO_TEST_SUITE( KeyMapperTest )
 		BOOST_CHECK_EQUAL("OnAnalyze", target.m_sensing_variable[0]) ;
 	}
 
+
+	// ---- accepts (issue #8): what the keyboard hook consumes ----
+
+	BOOST_AUTO_TEST_CASE(Test_accepts_extend_lookup_declined_with_shift)
+	{
+		KeyTargetWordFake target ;
+		KeyMapperWord mapper ;
+		mapper.m_target = &target ;
+
+		shortcuts::scoped_shift_state shift(true) ;
+		BOOST_CHECK(! mapper.accepts(CmdExtendLookupAction)) ;
+		BOOST_CHECK(! mapper.accepts(CmdExtendTransLookupAction)) ;
+	}
+	BOOST_AUTO_TEST_CASE(Test_accepts_extend_lookup_declined_when_selection_empty)
+	{
+		KeyTargetWordFake target ;
+		target.m_selection_is_empty = true ;
+		KeyMapperWord mapper ;
+		mapper.m_target = &target ;
+
+		shortcuts::scoped_shift_state shift(false) ;
+		BOOST_CHECK(! mapper.accepts(CmdExtendLookupAction)) ;
+		BOOST_CHECK(! mapper.accepts(CmdExtendTransLookupAction)) ;
+	}
+	BOOST_AUTO_TEST_CASE(Test_accepts_extend_lookup_accepted_otherwise)
+	{
+		KeyTargetWordFake target ;
+		KeyMapperWord mapper ;
+		mapper.m_target = &target ;
+
+		shortcuts::scoped_shift_state shift(false) ;
+		BOOST_CHECK(mapper.accepts(CmdExtendLookupAction)) ;
+		BOOST_CHECK(mapper.accepts(CmdExtendTransLookupAction)) ;
+		BOOST_CHECK(mapper.accepts(boost::to_upper_copy(CmdExtendLookupAction))) ;
+	}
+	BOOST_AUTO_TEST_CASE(Test_accepts_extend_lookup_upper_case_declined_with_shift)
+	{
+		KeyTargetWordFake target ;
+		KeyMapperWord mapper ;
+		mapper.m_target = &target ;
+
+		shortcuts::scoped_shift_state shift(true) ;
+		BOOST_CHECK(! mapper.accepts(boost::to_upper_copy(CmdExtendLookupAction))) ;
+	}
+	BOOST_AUTO_TEST_CASE(Test_accepts_declined_when_inactive)
+	{
+		KeyTargetWordFake target ;
+		target.m_is_active = false ;
+		KeyMapperWord mapper ;
+		mapper.m_target = &target ;
+
+		shortcuts::scoped_shift_state shift(false) ;
+		BOOST_CHECK(! mapper.accepts(CmdEntry1Action)) ;
+		BOOST_CHECK(! mapper.accepts(CmdLookupNextTransAction)) ;
+		BOOST_CHECK(! mapper.accepts(CmdExtendLookupAction)) ;
+	}
+	BOOST_AUTO_TEST_CASE(Test_accepts_entry_1_when_active)
+	{
+		KeyTargetWordFake target ;
+		KeyMapperWord mapper ;
+		mapper.m_target = &target ;
+
+		shortcuts::scoped_shift_state shift(true) ;
+		BOOST_CHECK(mapper.accepts(CmdEntry1Action)) ;
+		BOOST_CHECK(mapper.accepts(CmdLookupNextTransAction)) ;
+		BOOST_CHECK(target.m_sensing_variable.empty()) ;
+	}
+	BOOST_AUTO_TEST_CASE(Test_accepts_unmapped_command)
+	{
+		KeyTargetWordFake target ;
+		KeyMapperWord mapper ;
+		mapper.m_target = &target ;
+
+		BOOST_CHECK(mapper.accepts("this command does not exist")) ;
+	}
 BOOST_AUTO_TEST_SUITE_END()
 
 #endif // #ifdef _DEBUG

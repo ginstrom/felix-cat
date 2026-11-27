@@ -68,6 +68,7 @@ public:
 	bool new_window_has_focus();
 	bool extend_lookup( );
 	bool IsActive();
+	bool SelectionIsEmpty();
 
 	virtual void write_translation(const wstring& text, bool as_plaintext );
 	virtual _bstr_t get_selection_text( bool as_plaintext ) ;

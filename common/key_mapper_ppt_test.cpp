@@ -290,6 +290,67 @@ BOOST_AUTO_TEST_SUITE( KeyMapperTest )
 		BOOST_CHECK_EQUAL("OnEntryAction", target.m_sensing_variable[0]) ;
 		BOOST_CHECK_EQUAL("9", target.m_sensing_variable[1]) ;
 	}
+
+	// ---- accepts (issue #8): what the keyboard hook consumes ----
+
+	BOOST_AUTO_TEST_CASE(Test_accepts_extend_lookup_declined_with_shift)
+	{
+		KeyTargetPptFake target ;
+		KeyMapperPpt mapper ;
+		mapper.m_target = &target ;
+
+		shortcuts::scoped_shift_state shift(true) ;
+		BOOST_CHECK(! mapper.accepts(CMD_EXTEND_LOOKUP)) ;
+		BOOST_CHECK(! mapper.accepts(CMD_EXTEND_TRANS_LOOKUP)) ;
+		BOOST_CHECK(! mapper.accepts(boost::to_upper_copy(CMD_EXTEND_LOOKUP))) ;
+	}
+	BOOST_AUTO_TEST_CASE(Test_accepts_extend_lookup_declined_without_selected_text)
+	{
+		KeyTargetPptFake target ;
+		target.m_has_selected_text = false ;
+		KeyMapperPpt mapper ;
+		mapper.m_target = &target ;
+
+		shortcuts::scoped_shift_state shift(false) ;
+		BOOST_CHECK(! mapper.accepts(CMD_EXTEND_LOOKUP)) ;
+		BOOST_CHECK(! mapper.accepts(CMD_EXTEND_TRANS_LOOKUP)) ;
+	}
+	BOOST_AUTO_TEST_CASE(Test_accepts_extend_lookup_accepted_with_selected_text)
+	{
+		KeyTargetPptFake target ;
+		KeyMapperPpt mapper ;
+		mapper.m_target = &target ;
+
+		shortcuts::scoped_shift_state shift(false) ;
+		BOOST_CHECK(mapper.accepts(CMD_EXTEND_LOOKUP)) ;
+		BOOST_CHECK(mapper.accepts(CMD_EXTEND_TRANS_LOOKUP)) ;
+		BOOST_CHECK(target.m_sensing_variable.empty()) ;
+	}
+	BOOST_AUTO_TEST_CASE(Test_accepts_declined_when_inactive)
+	{
+		KeyTargetPptFake target ;
+		target.m_is_active = false ;
+		KeyMapperPpt mapper ;
+		mapper.m_target = &target ;
+
+		shortcuts::scoped_shift_state shift(false) ;
+		BOOST_CHECK(! mapper.accepts(CMD_ENTRY_1)) ;
+		BOOST_CHECK(! mapper.accepts(CMD_LOOK_UP_NEXT_TRANS)) ;
+		BOOST_CHECK(! mapper.accepts(CMD_EXTEND_LOOKUP)) ;
+	}
+	BOOST_AUTO_TEST_CASE(Test_accepts_other_commands)
+	{
+		KeyTargetPptFake target ;
+		target.m_has_selected_text = false ;
+		KeyMapperPpt mapper ;
+		mapper.m_target = &target ;
+
+		shortcuts::scoped_shift_state shift(true) ;
+		BOOST_CHECK(mapper.accepts(CMD_ENTRY_1)) ;
+		BOOST_CHECK(mapper.accepts(CMD_LOOK_UP_NEXT_TRANS)) ;
+		BOOST_CHECK(mapper.accepts(CMD_LOOK_UP)) ;
+		BOOST_CHECK(mapper.accepts("this command does not exist")) ;
+	}
 BOOST_AUTO_TEST_SUITE_END()
 
 #endif // #ifdef _DEBUG

@@ -93,6 +93,18 @@ public:
 		}
 	}
 
+	//! Whether Excel shows the formula bar (Application.DisplayFormulaBar).
+	virtual bool FormulaBarShown()
+	{
+		return m_pApplication->GetDisplayFormulaBar(0) != VARIANT_FALSE ;
+	}
+
+	//! Shows or hides the formula bar (Application.DisplayFormulaBar).
+	virtual void ShowFormulaBar(bool show)
+	{
+		m_pApplication->PutDisplayFormulaBar(0, show ? VARIANT_TRUE : VARIANT_FALSE) ;
+	}
+
 	virtual range_ptr GetSelectedCell()
 	{
 		Excel::RangePtr activeCell = m_pApplication->Selection ;

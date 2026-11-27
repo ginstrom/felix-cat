@@ -2230,6 +2230,20 @@ bool WordController::IsActive()
 	return m_word_object.is_active() ;
 }
 
+// In-process only; used by the keyboard hook (KeyMapperWord::accepts).
+// True (empty) on any error so the key passes on to Word.
+bool WordController::SelectionIsEmpty()
+{
+	try
+	{
+		return m_word_object.selection_is_empty_noexcept() ;
+	}
+	catch (...)
+	{
+		return true ;
+	}
+}
+
 bool WordController::OnShiftStateAction()
 {
 	return true ;
