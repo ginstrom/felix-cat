@@ -29,7 +29,7 @@ Felix.exe doesn't change. The #8 mechanism is shared code in `common/` used by a
 - **R4 (#8).** A command runs with the Shift state that was current when its key was pressed (Shift selects plain-text mode or, in Excel Auto Translate, cell colouring).
 - **R5 (#8).** If the add-in's window can't be created, shortcuts behave as today (synchronous in the hook) and the failure is logged once.
 - **R6 (#9).** In Word, a mapped shortcut whose key is aimed at a Word main window (the #2 guard) runs regardless of which child HWND had focus at the last activation event. Word's `IsActive` keeps its "Word object exists and a document window is active" meaning but no longer compares HWNDs.
-- **R7 (#9).** Each add-in's hook logs, at debug level, why it passed on an Alt/Ctrl keystroke (dialog guard, shortcuts disabled, not mapped, mapper declined) or that it queued a command, so a recurrence of #9 can be diagnosed from the add-in log.
+- **R7 (#9).** Each add-in's hook logs, at debug level, why it passed on an Alt/Ctrl keystroke (dialog or menu mode, focus not in the main window, shortcuts disabled, not mapped, mapper declined) or that it queued a command, so a recurrence of #9 can be diagnosed from the add-in log.
 - **R8 (#10).** During Auto Translate (Selection, Sheet, Workbook), when a cell that is the active cell is written, the formula bar is refreshed straight away. The end-of-command refresh from PR #7 stays.
 - **R9 (#10).** Writes keep literal-text semantics (`001` stays text). The refresh never changes the selection or the active cell, and a refresh failure is logged and ignored.
 - **R10 (#11).** In the PowerPoint Felix menu, English and Japanese, translation and review modes, **Find Concordance** shows no shortcut and **Translate to Fuzzy** shows Alt+C, matching the default bindings (decision D1). Key bindings don't change.
@@ -274,7 +274,7 @@ Reasons:
 
 `m_active_window`, `activate()` and `active_window_has_focus()` stay; `new_window_has_focus()` still uses them. `IsActive` is also used by `OnMenuPreferences` (Connect.cpp:1969) and the segmentation swap (line 2601), which both benefit.
 
-**Diagnostics (R7).** In each hook, at the points that return `CallNextHookEx` for a key that had Alt or Ctrl down, log one `logging::log_debug` line naming the reason (`dialog guard`, `shortcuts off`, `not mapped or declined`). `DeferredKeyMapper::map_command` logs `queued <command>` and, when `accepts` is false, `declined <command>`. Keys without Alt/Ctrl aren't logged, to keep the log small. These pass-on lines are compiled in Debug builds only, because the add-ins log at debug level in Release too; QA uses the Debug build.
+**Diagnostics (R7).** In each hook, at the points that return `CallNextHookEx` for a key that had Alt or Ctrl down, log one `logging::log_debug` line naming the reason (`dialog or menu mode`, `focus not in main window`, `shortcuts off`, `ctrl+shift guard` in PowerPoint, `not mapped or declined`). `DeferredKeyMapper::map_command` logs `queued <command>` and, when `accepts` is false, `declined <command>`. Keys without Alt/Ctrl aren't logged, to keep the log small. These pass-on lines are compiled in Debug builds only, because the add-ins log at debug level in Release too; QA uses the Debug build.
 
 If AC6 still fails after this change and the log shows no line for Alt+1, the cause is the alternative in section 3. See D4 for what to do then.
 

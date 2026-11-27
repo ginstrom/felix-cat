@@ -135,6 +135,8 @@ inline void show_formula_bar_left_hidden(excel::app_ptr app)
 /*!
  * If `written` is the application's active cell (same row and column),
  * refreshes the formula bar now, while the command is still running.
+ * Row and column are enough: Auto Translate Workbook activates each sheet
+ * before writing it, so the active cell is on the sheet being written.
  * Never throws; failures are logged.
  */
 inline void refresh_formula_bar_if_active(excel::app_ptr app, excel::range_ptr written)

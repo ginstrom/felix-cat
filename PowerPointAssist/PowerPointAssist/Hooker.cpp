@@ -34,7 +34,7 @@ LRESULT __declspec(dllexport)__stdcall  CALLBACK KeyboardProc(int nCode,
 
 	if ( wKeystrokeMsg & stop_flags ) // key is up
 	{
-		shortcuts::log_hook_pass_on( "dialog guard", wParam, wKeystrokeMsg ) ;
+		shortcuts::log_hook_pass_on( "dialog or menu mode", wParam, wKeystrokeMsg ) ;
 		return CallNextHookEx(hkb, nCode, wParam, lParam); 
 	}
 	if ( wParam == VK_MENU || wParam == VK_CONTROL ) 
@@ -45,7 +45,7 @@ LRESULT __declspec(dllexport)__stdcall  CALLBACK KeyboardProc(int nCode,
 	// Only react when keyboard focus is in the main window (not a dialog or prompt)
 	if ( ! shortcuts::keystroke_target_is_main_window( ::GetFocus(), L"PPTFrameClass" ) )
 	{
-		shortcuts::log_hook_pass_on( "dialog guard", wParam, wKeystrokeMsg ) ;
+		shortcuts::log_hook_pass_on( "focus not in main window", wParam, wKeystrokeMsg ) ;
 		return CallNextHookEx(hkb, nCode, wParam, lParam);
 	}
 
@@ -62,7 +62,7 @@ LRESULT __declspec(dllexport)__stdcall  CALLBACK KeyboardProc(int nCode,
 	// Don't react to control + shift combo
 	else if (control_key_pressed && shortcuts::physical_shift_key_is_pressed())
 	{
-		shortcuts::log_hook_pass_on( "not mapped or declined", wParam, wKeystrokeMsg ) ;
+		shortcuts::log_hook_pass_on( "ctrl+shift guard", wParam, wKeystrokeMsg ) ;
 		return CallNextHookEx(hkb, nCode, wParam, lParam); 
 	}
 	// If shortcuts are disabled, ignore any keystrokes
