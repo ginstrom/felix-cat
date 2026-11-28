@@ -8,7 +8,7 @@
 ;   Felix\Felix.vcxproj                       Unicode_Release | Win32
 ;   Felix\EngResource, Felix\JpnResource      Unicode_Release | Win32
 ;   <App>Assist\<App>Assist\<App>Assist.vcxproj  Release | x64
-; then compile this script:  ISCC setup\FelixSetup.iss
+; then compile this script:  ISCC /DVcRedist=<folder with the vc_redist exes> setup\FelixSetup.iss
 ;
 ; The uninstaller removes only what this installer put in place. It leaves
 ; each user's %LOCALAPPDATA%\Felix (settings, customized templates, logs) and
