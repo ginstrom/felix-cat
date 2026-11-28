@@ -6,8 +6,8 @@
 - **Slug:** `unsigned-releases`
 - **Starting point:** PR ginstrom/felix-cat#16 (merged as 807ccc0) already did most of Phase 1–2: committed Office headers, WTL from NuGet, Boost via b2, build.yml, installer in CI, release.yml with SignPath steps, root `CODE_SIGNING_POLICY.md` linked from README. This feature is the delta.
 - **Path:** Medium. No architecture. Design (gap analysis against the spec), plan, implement, verify.
-- **Phase:** 4. Implementation
-- **Next action:** run steps 01–05 (sequential, shared worktree), then 06 after the user approves a push.
+- **Phase:** 6. Report (PR open)
+- **Next action:** user reviews and merges PR ginstrom/felix-cat#46, then the hand-offs in the PR description (tag v3.0.1, publish, winget, screenshot, Office test). Optional: re-run the clean-VM test on the CI installer once the user signs in to FelixTest.
 - **Design:** `docs/designs/unsigned-releases.md` (gap analysis; open questions in §8.1). Orchestrator settled Q3 (`actions/attest@v4`, upstream-recommended; attest-build-provenance v4 wraps it) and Q4 (English install guide now, Japanese as follow-up); design approved 2026-11-29.
 - **Branch:** `ci/unsigned-releases` in worktree `.claude/worktrees/unsigned-releases`, base 807ccc0 (origin/main).
 - **Status thread:** none; the `recursive_slack` tools aren't available in this session. This State section is the status.
@@ -15,7 +15,8 @@
 - **Open questions:** none.
 - **Tiers:** designer opus; planner sonnet; engineers 01 sonnet, 02 opus, 03 sonnet, 04 sonnet, 05 sonnet; reviewers match. Escalations: none.
 - **Plan:** `docs/implementation-plans/unsigned-releases/index.md`, log `log.md` there. Scintilla issue: ginstrom/felix-cat#44.
-- **Verification gates:** none yet.
+- **Verification gates:** steps 01–05 reviews clean (see log.md); overall review (opus) clean at ffd48a9; Build CI success at ffd48a9 (run 46160127626), artifact hash and notes checked; follow-ups at 553c307 are docs only.
+- **PR:** https://github.com/ginstrom/felix-cat/pull/46
 
 ## Decision log
 
