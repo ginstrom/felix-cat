@@ -4549,6 +4549,10 @@ void MemoryWindowFrame::start_update_check(bool report)
 			{
 				result->m_succeeded = false ;	// no allocation here; the handler words the error
 			}
+			// All writes to *result happen before this post, and the UI thread
+			// reads them only after retrieving the message. The Win32 message
+			// queue is synchronized, so that retrieval orders the reads after
+			// these writes.
 			::PostMessage(hwnd, message, USER_UPDATE_CHECK_DONE, reinterpret_cast<LPARAM>(result.get())) ;
 		}).detach() ;
 		m_pending_update_check = result ;
@@ -4556,6 +4560,13 @@ void MemoryWindowFrame::start_update_check(bool report)
 	catch (std::exception &e)	// std::system_error, std::bad_alloc
 	{
 		logging::log_error(string("Failed to start the update check: ") + e.what()) ;
+		if (m_update_check_report)
+		{
+			CString error(e.what()) ;
+			CString text ;
+			text.FormatMessage(IDS_UPDATE_FAILED, static_cast<LPCTSTR>(error)) ;
+			MessageBox(text, resource_string(IDS_UPDATE_TITLE), MB_OK | MB_ICONWARNING | MB_SETFOREGROUND) ;
+		}
 		m_update_check_report = false ;
 	}
 }

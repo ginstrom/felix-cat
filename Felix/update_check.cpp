@@ -131,8 +131,9 @@ namespace updates
 
 		std::string last_error(const char *step)
 		{
+			const DWORD code = ::GetLastError() ;	// before anything can overwrite it
 			std::ostringstream out ;
-			out << step << " failed (error " << ::GetLastError() << ")" ;
+			out << step << " failed (error " << code << ")" ;
 			return out.str() ;
 		}
 	}
