@@ -1,0 +1,1 @@
+﻿- Step 01: engineer sonnet, reviewer sonnet, verdict clean after 1 review round (fix: ISCC example in FelixSetup.iss header now passes /DVcRedist). Commits 99f914e and the header fix.
