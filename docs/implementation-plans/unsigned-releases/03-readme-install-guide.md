@@ -49,3 +49,14 @@ Reviewer will also render the README on the pushed branch (step 06).
 - [ ] Checks 1-5 recorded; index status updated; one commit if the brief says so.
 
 ## Execution record
+
+Step 03 (engineer). Files changed: `README.rst`, `docs/manual/en/getting-started.html`, `setup/release-notes-3.0.1.md`.
+
+Checks (Python and `pwsh` are not installed, so no docutils render; commands run in Git Bash):
+1. Render check by eye (no docutils): heading underlines are all at least as long as their titles (awk comparison of each underlined title: all OK, 16/16 ... 19/19); subsections use `~` under the `-` section; the two literal blocks use a bare `::` paragraph followed by an indented block; internal references `Code signing status`_ and `Verifying the download`_ match unique section titles; the screenshot placeholder is an RST comment (`.. TODO: ...`) followed by a blank line.
+2. `grep -n -i "signed\|signpath" README.rst`: only "not code-signed yet", future-tense plans, "unsigned COM add-ins", "signed in" (GitHub CLI), the Trusted Publisher menu option, and "A signed release is expected to help". `grep -n -i signed setup/release-notes-3.0.1.md docs/manual/en/getting-started.html`: only the new "isn't code-signed yet" paragraph in getting-started.html; none in the release notes.
+3. Command parity: `grep -cF` of each command (with `{{VERSION}}` -> `3.0.1`) as an indented line in `.github/release-notes-install.md` and in `README.rst`: 1 and 1 for both commands.
+4. Menu paths hand-compared with the list in the task file; no additional Windows/Office claims.
+5. `git grep -n CODE_SIGNING_POLICY -- README.rst`: no output (exit 1).
+
+Departures: (a) the SignPath Foundation is linked to `https://signpath.org` (the old link for it), and the "signed releases won't be blocked" wording is softened to "expected to show a verified publisher and to get past Smart App Control", with a SciLexer.dll caveat linking issue #44, because the design (section 6) says signing alone may not clear Smart App Control or Office policy. (b) The Smart App Control paragraph also says it checks the other program files (design section 6 / Microsoft's "signature checks apply to all executable files"). (c) The Office re-enable steps are a numbered list rather than one arrow-separated sentence; same menu path. (d) The release-notes line pointing at the README sits under "Download and install". (e) Local files are CRLF in the working tree while the index is LF; git normalizes, so the diff is line-clean.
