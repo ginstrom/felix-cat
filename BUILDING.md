@@ -34,7 +34,8 @@ other locations, copy `Dependencies.local.props.example` to
 > `Dependencies.props` picks `lib32-msvc-14.5` or `lib64-msvc-14.5` per platform.)
 
 Scintilla's headers are already in `common\`. The build copies `Felix\SciLexer.dll`
-next to `Felix.exe`.
+next to `Felix.exe`. It is an old Scintilla 2.01 build; migrating to Scintilla 5 is
+tracked in [ginstrom/felix-cat#44](https://github.com/ginstrom/felix-cat/issues/44).
 
 `BoostDir` and `WtlDir` can also come from environment variables of the same
 name (MSBuild reads them as properties); the GitHub Actions build does that
@@ -293,21 +294,46 @@ Uninstalling removes all of that, but leaves each user's
 memories and glossaries alone. (The 2015 installer's uninstaller deleted
 `%LOCALAPPDATA%\Felix`.)
 
-**Releases from GitHub Actions.** Official releases are built and signed by
-`.github\workflows\release.yml`, not on a personal machine. Bump the version
-(below), merge, then push a tag such as `v3.0.2`. The workflow builds
-everything on a clean runner, sends Felix's own program files to SignPath for
-signing (the maintainer approves the request in SignPath), builds the
-installer from the signed files, sends the installer for signing, checks all
-signatures with `signtool verify /pa`, and attaches the installer to a
-**draft** release. Review it, then publish. Until SignPath is set up (the
-repository variable `SIGNPATH_ORGANIZATION_ID` is empty), it skips signing
-and makes an unsigned draft. What is signed, and why: `CODE_SIGNING_POLICY.md`.
-The SignPath artifact configurations are in `.signpath\artifact-configurations\`.
+**Releases from GitHub Actions.** Official releases are built by
+`.github\workflows\release.yml`, not on a personal machine, and are
+**unsigned** for now (what a future signed release would cover is drafted in
+`docs/CODE_SIGNING_POLICY.md`). To make one:
+
+1. Bump the version (below) and, optionally, write `setup\release-notes-<v>.md`.
+   Merge, then push the tag `v<v>` (for example `v3.0.2`). The tag must match
+   `AppVersion` in `setup\FelixSetup.iss`, or the run fails.
+2. The workflow builds Felix and the add-ins on a clean runner, builds the
+   installer, and writes `SHA256SUMS.txt`. For tag builds it also attests the
+   installer's build provenance (`actions/attest`). It uploads the workflow
+   artifact `felix-<v>-release` (installer, `SHA256SUMS.txt`, `release-notes.md`)
+   and creates the **draft** release `Felix <v> (unsigned)` with two assets: the
+   installer and `SHA256SUMS.txt`. The notes are `setup\release-notes-<v>.md`
+   followed by an "Installing and verifying" section generated from
+   `.github\release-notes-install.md`.
+3. Review the draft, then publish it.
+
+Other things to know:
+
+- **Dry run.** Actions > Release > Run workflow (`workflow_dispatch`) on any
+  branch builds everything and uploads the `felix-<v>-release` artifact, but
+  creates no release and no attestation.
+- **Re-running a tag.** If the draft release already exists, re-running that
+  tag's run fails at `gh release create`. Delete the draft and re-run.
+- **No secrets are needed.** The workflow uses only the built-in `GITHUB_TOKEN`.
+- **Signing placeholders.** `release.yml` has two steps marked "SIGNING
+  PLACEHOLDER" (sign program files, before the installer is built; sign the
+  installer, after), plus a "Verify signatures" step. They run only when the
+  repository variable `SIGNING_ENABLED` is `true`. Leave it unset. Until a real
+  signer is added to those steps, setting it to `true` fails the run on purpose,
+  so a release is never labeled signed when it isn't.
+- **SciLexer.** `Felix\SciLexer.dll` is an old third-party Scintilla build that
+  is shipped as provided. Migrating to Scintilla 5 is tracked in
+  [ginstrom/felix-cat#44](https://github.com/ginstrom/felix-cat/issues/44).
+
 `.github\workflows\build.yml` builds the binaries (add-ins for both
 platforms) and an unsigned installer on every push and pull request.
 
-**Signing locally.** Unsigned installers make Windows SmartScreen warn about an
+**Signing locally.** Official releases are currently unsigned; don't sign them with a self-signed certificate, which gives users no benefit. Unsigned installers make Windows SmartScreen warn about an
 "unknown publisher". To sign a build yourself, get a code-signing certificate (an
 OV/individual certificate from a certificate authority, or Microsoft's Azure
 Artifact Signing service), then copy `tools\signing.example.json` to

@@ -35,8 +35,21 @@ Step 02 (BUILDING.md describes the final `release.yml`: dispatch dry run, `SIGNI
 5. Each network connection N1-N8 in design 3.6 is accounted for in the privacy text (N1/N2 dead paths need no user-facing mention beyond "doesn't connect on its own").
 
 ## Completion criteria
-- [ ] Root policy deleted; new draft exists, unlinked, with all sections.
-- [ ] `.signpath/` marked not in use; BUILDING.md rewritten.
-- [ ] Checks 1-5 recorded; index status updated; one commit if the brief says so.
+- [x] Root policy deleted; new draft exists, unlinked, with all sections.
+- [x] `.signpath/` marked not in use; BUILDING.md rewritten.
+- [x] Checks 1-5 recorded; index status updated; one commit if the brief says so.
 
 ## Execution record
+
+### Engineer record (2026-11-29)
+
+Done: `git rm CODE_SIGNING_POLICY.md`; new `docs/CODE_SIGNING_POLICY.md` (DRAFT comment, required line plus pending marker, roles, will/won't be signed with #44 and the Smart App Control note, how releases are built, privacy text from design 5.6 with the bracketed N8 paragraph); `.signpath/README.md` and a "Not in use" comment after the XML declaration in both configurations; BUILDING.md "Releases from GitHub Actions" rewritten against the actual `release.yml` (tag flow, `SHA256SUMS.txt`, attestation on tag pushes only, artifact `felix-<v>-release`, draft `Felix <v> (unsigned)`, dispatch dry run, re-run fails at `gh release create`, no secrets, two SIGNING PLACEHOLDER steps plus Verify, `SIGNING_ENABLED` unset), the self-signed sentence in "Signing locally", and the #44 note in section 2 and the release section.
+
+Verification (run from the worktree root):
+1. `git ls-files CODE_SIGNING_POLICY.md` -> empty. `rg -n CODE_SIGNING_POLICY --glob '!docs/designs' --glob '!docs/features' --glob '!docs/implementation-plans' .` -> `BUILDING.md:299` (plain mention in backticks, no hyperlink) and `setup/FelixSetup.iss:65` (comment). Not README. The new `.signpath` files reference it by path in text/comments (they use the lowercase-path form `docs/CODE_SIGNING_POLICY.md`, so they match too once staged).
+2. `rg -n "pending approval|Free code signing provided by" docs/CODE_SIGNING_POLICY.md` -> lines 8 and 9.
+3. PowerShell `[xml](Get-Content -Raw <file>)` on both `.signpath` XML files -> OK, no error.
+4. `rg -n -i signpath BUILDING.md` -> no output. `rg -n SIGNPATH_ --glob` (excluding docs/designs, docs/features, docs/implementation-plans) -> no output.
+5. N1/N2: "doesn't connect to the internet on its own". N3/N4: help paragraph. N5: Felix.RemoteMemory paragraph. N6: Office add-ins paragraph. N7: HTML engine paragraph. N8: bracketed paragraph, marked "only if the update checker merges". Installer: no connections, not mentioned.
+
+Deviations/notes: (a) README.rst still names SignPath in its "Code signing status" section (step 03's scope, intentionally a plain future-intent statement); `rg -i signpath` outside `.signpath`, the policy and docs therefore finds that README hit. (b) BUILDING.md's working copy had CRLF; my edits left it LF (the index is LF and autocrlf=true, so the diff is clean). (c) The policy's roles table splits author, reviewer and approver into three rows instead of two.
