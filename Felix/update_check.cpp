@@ -15,7 +15,9 @@ namespace updates
 	std::vector<int> parse_version(const std::string &text)
 	{
 		std::vector<int> parts ;
-		static const std::regex pattern("^\\s*[vV]?(\\d{1,6}(?:\\.\\d{1,6})*)\\s*$") ;
+		// Local, not static: these run on the update-check worker thread, which
+		// may still be running while static objects are destroyed at exit.
+		const std::regex pattern("^\\s*[vV]?(\\d{1,6}(?:\\.\\d{1,6})*)\\s*$") ;
 		std::smatch match ;
 		if (! std::regex_match(text, match, pattern))
 		{
@@ -52,7 +54,9 @@ namespace updates
 
 	bool parse_release_tag(const std::string &json, std::string &tag)
 	{
-		static const std::regex pattern("\"tag_name\"\\s*:\\s*\"([^\"\\\\]*)\"") ;
+		// Local, not static (see parse_version). The top-level tag_name comes
+		// first in GitHub's release JSON, and nested objects have none.
+		const std::regex pattern("\"tag_name\"\\s*:\\s*\"([^\"\\\\]*)\"") ;
 		std::smatch match ;
 		if (! std::regex_search(json, match, pattern))
 		{
@@ -66,7 +70,7 @@ namespace updates
 	{
 		std::wstring url(RELEASES_PAGE) ;
 		url += L"/tag/" ;
-		url += std::wstring(tag.begin(), tag.end()) ;
+		url += static_cast<LPCWSTR>(CA2W(tag.c_str(), CP_UTF8)) ;
 		return url ;
 	}
 
@@ -152,7 +156,8 @@ namespace updates
 			error = last_error("WinHttpOpen") ;
 			return false ;
 		}
-		// resolve, connect, send, receive (milliseconds)
+		// resolve, connect, send, receive (milliseconds). Best effort: if this
+		// fails, WinHTTP's defaults apply, and this runs off the UI thread anyway.
 		::WinHttpSetTimeouts(session, 10000, 10000, 10000, 15000) ;
 
 		internet_handle connection(::WinHttpConnect(session, LATEST_RELEASE_HOST, INTERNET_DEFAULT_HTTPS_PORT, 0)) ;
