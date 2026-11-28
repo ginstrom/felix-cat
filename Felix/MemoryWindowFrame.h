@@ -48,7 +48,8 @@ enum
 {
 	USER_LOOKUP_SOURCE = 1,
 	USER_LOOKUP_TRANS,
-	USER_SAVE_MEMORIES
+	USER_SAVE_MEMORIES,
+	USER_UPDATE_CHECK_DONE	//!< Posted by the update-check thread; lParam owns an updates::check_result.
 };
 /**
 	@class MemoryWindowFrame 							   
@@ -128,6 +129,10 @@ public:
 	model_iface_ptr m_model ;
 
 	wstring m_deferred_query ;
+
+	// update check (see update_check.h)
+	bool m_update_check_running ;	//!< A background check is in flight.
+	bool m_update_check_report ;	//!< Show the result even if there's no new version (manual check).
 
 	// message maps
 	typedef std::map< UINT, boost::function< LRESULT( WindowsMessage& ) >  > messageMapType ;
@@ -335,6 +340,9 @@ public:
 	LRESULT on_glossary_trans(WindowsMessage &message);
 	LRESULT on_help_faq(WindowsMessage &message);
 	LRESULT on_help_check_updates(WindowsMessage &message);
+	void auto_check_for_updates();
+	void start_update_check(bool report);
+	LRESULT on_user_update_check_done(WindowsMessage &message);
 
 	// tools menu
 	LRESULT on_tools_preferences(WindowsMessage &message) ;

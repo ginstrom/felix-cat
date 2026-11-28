@@ -318,6 +318,16 @@ status bar and written into saved memories), the `VERSIONINFO` blocks of
 `Felix/Felix.rc`, `Felix/FelixENG.rc`, `Felix/FelixJPN.rc` and the three
 add-ins' `AddIn.rc`, and `AppVersion` in `setup\FelixSetup.iss`.
 
+**Update check.** Felix's update check (Help > Check Updates, and the
+automatic check every 14 days) reads this repository's latest GitHub release
+(`api.github.com/repos/ginstrom/felix-cat/releases/latest`; drafts and
+pre-releases are ignored) and compares its tag with `VERSION`. So tag releases
+`v<VERSION>`, for example `v3.0.1`, with numbers and dots only: a tag like
+`v3.1-beta` is never treated as newer. Felix asks once, on the second launch,
+whether to check automatically, and saves the answer under
+`HKCU\Software\AssistantSuite\Felix\UPDATE_CHECK`. Delete that key to be asked
+again. The code is in `Felix\update_check.cpp`.
+
 ## Source file encoding
 
 Source files are **UTF-8 with a byte order mark** (or, for three files,
@@ -365,9 +375,12 @@ the narrow-string encoding this also sets doesn't change any existing string.
 - The 14 remote-memory tests are skipped unless the fake COM server in `python_tools\MemoryEngineFake.py` (Python 2 + pywin32) is registered. See section 5.
 - The Word add-in has been tried in Word (lookup works end to end); the Excel
   and PowerPoint add-ins load-tested only through their test programs so far.
-- Help > Check for Updates, and Felix's automatic update check at startup,
-  relied on Python tools that aren't part of this repo. The automatic check
-  fails quietly (one line in `felix.log`); the menu item doesn't work.
+- Some features still call Python 2 tools in `python_tools\` (the Rule
+  Manager, the add-ins' shortcut and abbreviation editors, and Word/Excel
+  translation history). Their source is in the repo, but nothing builds them
+  and the installer doesn't ship them, so those features don't work. See
+  issue #14. (The update check used to be one of them; it's now built into
+  Felix, see `Felix\update_check.h`.)
 - The installer only offers the 64-bit add-ins; it could also offer the Win32
   ones for 32-bit Office.
 - The Win32 add-in builds (for 32-bit Office) haven't been built since the

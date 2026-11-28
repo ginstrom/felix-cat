@@ -252,6 +252,12 @@
     <ClCompile Include="text_templates.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="update_check.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="update_check_test.cpp">
+      <Filter>Source Files\tests</Filter>
+    </ClCompile>
     <ClCompile Include="..\common\xpmenu\ToolBarXP.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -1339,6 +1345,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="text_templates.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="update_check.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\common\textstream_reader.h">
