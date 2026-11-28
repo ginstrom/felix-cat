@@ -4531,24 +4531,33 @@ void MemoryWindowFrame::start_update_check(bool report)
 
 	// The window and the worker share the result, so neither can leave the
 	// other with a dangling pointer. lParam only identifies which check finished.
-	std::shared_ptr<updates::check_result> result = std::make_shared<updates::check_result>() ;
 	const HWND hwnd = m_hWnd ;
 	const UINT message = UWM_USER_MESSAGE ;
 	try
 	{
+		std::shared_ptr<updates::check_result> result = std::make_shared<updates::check_result>() ;
 		std::thread([hwnd, message, result]()
 		{
-			result->m_succeeded = updates::fetch_latest_release(result->m_latest_tag, result->m_error) ;
+			// The worker only downloads; parsing happens on the UI thread.
+			// Nothing may escape a std::thread function (std::terminate), and
+			// the message must always be posted so the check doesn't stay pending.
+			try
+			{
+				result->m_succeeded = updates::fetch_latest_release(result->m_body, result->m_error) ;
+			}
+			catch (...)
+			{
+				result->m_succeeded = false ;	// no allocation here; the handler words the error
+			}
 			::PostMessage(hwnd, message, USER_UPDATE_CHECK_DONE, reinterpret_cast<LPARAM>(result.get())) ;
 		}).detach() ;
+		m_pending_update_check = result ;
 	}
-	catch (std::system_error &e)
+	catch (std::exception &e)	// std::system_error, std::bad_alloc
 	{
 		logging::log_error(string("Failed to start the update check: ") + e.what()) ;
 		m_update_check_report = false ;
-		return ;
 	}
-	m_pending_update_check = result ;
 }
 
 LRESULT MemoryWindowFrame::on_user_update_check_done(WindowsMessage &message)
@@ -4566,15 +4575,20 @@ LRESULT MemoryWindowFrame::on_user_update_check_done(WindowsMessage &message)
 	const bool report = m_update_check_report ;
 	m_update_check_report = false ;
 
-	if (! result)
-	{
-		return 0L ;
-	}
-
 	const CString title = resource_string(IDS_UPDATE_TITLE) ;
 
+	std::string latest_tag ;
+	if (result->m_succeeded && ! updates::parse_release_tag(result->m_body, latest_tag))
+	{
+		result->m_succeeded = false ;
+		result->m_error = "No tag_name in the GitHub release response" ;
+	}
 	if (! result->m_succeeded)
 	{
+		if (result->m_error.empty())
+		{
+			result->m_error = "Unexpected error in the update check" ;
+		}
 		logging::log_warn("Update check failed: " + result->m_error) ;
 		if (report)
 		{
@@ -4594,10 +4608,10 @@ LRESULT MemoryWindowFrame::on_user_update_check_done(WindowsMessage &message)
 		logging::log_warn("Failed to save update-check settings") ;
 	}
 
-	logging::log_debug("Latest release: " + result->m_latest_tag + "; this version: " + VERSION) ;
+	logging::log_debug("Latest release: " + latest_tag + "; this version: " + VERSION) ;
 
 	CString current(VERSION) ;
-	if (! updates::is_newer(result->m_latest_tag, VERSION))
+	if (! updates::is_newer(latest_tag, VERSION))
 	{
 		if (report)
 		{
@@ -4608,12 +4622,12 @@ LRESULT MemoryWindowFrame::on_user_update_check_done(WindowsMessage &message)
 		return 0L ;
 	}
 
-	CString latest(result->m_latest_tag.c_str()) ;
+	CString latest(latest_tag.c_str()) ;
 	CString text ;
 	text.FormatMessage(IDS_UPDATE_AVAILABLE, static_cast<LPCTSTR>(latest), static_cast<LPCTSTR>(current)) ;
 	if (MessageBox(text, title, MB_YESNO | MB_ICONINFORMATION | MB_SETFOREGROUND) == IDYES)
 	{
-		const std::wstring url = updates::release_page_url(result->m_latest_tag) ;
+		const std::wstring url = updates::release_page_url(latest_tag) ;
 		HINSTANCE shell_result = ::ShellExecute(m_hWnd, _T("open"), url.c_str(), NULL, NULL, SW_SHOW) ;
 		check_shell_execute_result((int)shell_result, CString(url.c_str())) ;
 	}

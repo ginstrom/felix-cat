@@ -49,9 +49,10 @@ namespace updates
 	long day_number(const SYSTEMTIME &time) ;
 	long today_day_number() ;
 
-	//! Fetches the latest release tag over HTTPS. On failure returns false and
-	//! sets error to a short (English) description for the log.
-	bool fetch_latest_release(std::string &tag, std::string &error) ;
+	//! Fetches the latest-release JSON over HTTPS (runs on a worker thread, so it
+	//! does no parsing; call parse_release_tag on the UI thread). On failure
+	//! returns false and sets error to a short (English) description for the log.
+	bool fetch_latest_release(std::string &body, std::string &error) ;
 
 	/**
 		@struct update_settings
@@ -84,7 +85,7 @@ namespace updates
 	struct check_result
 	{
 		bool		m_succeeded ;
-		std::string	m_latest_tag ;
+		std::string	m_body ;		//!< Release JSON, filled by the worker thread.
 		std::string	m_error ;
 
 		check_result() :

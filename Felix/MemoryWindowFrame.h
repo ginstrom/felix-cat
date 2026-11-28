@@ -56,7 +56,7 @@ enum
 	USER_LOOKUP_SOURCE = 1,
 	USER_LOOKUP_TRANS,
 	USER_SAVE_MEMORIES,
-	USER_UPDATE_CHECK_DONE	//!< Posted by the update-check thread; lParam owns an updates::check_result.
+	USER_UPDATE_CHECK_DONE	//!< Posted by the update-check thread. lParam only identifies the check (compared with m_pending_update_check); it owns nothing.
 };
 /**
 	@class MemoryWindowFrame 							   

@@ -15,8 +15,6 @@ namespace updates
 	std::vector<int> parse_version(const std::string &text)
 	{
 		std::vector<int> parts ;
-		// Local, not static: these run on the update-check worker thread, which
-		// may still be running while static objects are destroyed at exit.
 		const std::regex pattern("^\\s*[vV]?(\\d{1,6}(?:\\.\\d{1,6})*)\\s*$") ;
 		std::smatch match ;
 		if (! std::regex_match(text, match, pattern))
@@ -54,8 +52,8 @@ namespace updates
 
 	bool parse_release_tag(const std::string &json, std::string &tag)
 	{
-		// Local, not static (see parse_version). The top-level tag_name comes
-		// first in GitHub's release JSON, and nested objects have none.
+		// The top-level tag_name comes first in GitHub's release JSON, and
+		// nested objects (author, assets) have none.
 		const std::regex pattern("\"tag_name\"\\s*:\\s*\"([^\"\\\\]*)\"") ;
 		std::smatch match ;
 		if (! std::regex_search(json, match, pattern))
@@ -139,7 +137,7 @@ namespace updates
 		}
 	}
 
-	bool fetch_latest_release(std::string &tag, std::string &error)
+	bool fetch_latest_release(std::string &body, std::string &error)
 	{
 		std::wstring agent(L"Felix-update-check/") ;
 		agent += CA2W(VERSION) ;
@@ -214,7 +212,7 @@ namespace updates
 
 		// The release JSON is a few KB; cap it so a bad response can't eat memory.
 		const size_t MAX_BODY = 1024 * 1024 ;
-		std::string body ;
+		body.clear() ;
 		for (;;)
 		{
 			DWORD available = 0 ;
@@ -242,11 +240,6 @@ namespace updates
 			}
 		}
 
-		if (! parse_release_tag(body, tag))
-		{
-			error = "No tag_name in the GitHub release response" ;
-			return false ;
-		}
 		return true ;
 	}
 }
