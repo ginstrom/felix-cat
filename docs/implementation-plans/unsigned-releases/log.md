@@ -1,1 +1,2 @@
-﻿- Step 01: engineer sonnet, reviewer sonnet, verdict clean after 1 review round (fix: ISCC example in FelixSetup.iss header now passes /DVcRedist). Commits 99f914e and the header fix.
+- Step 01: engineer sonnet, reviewer sonnet, verdict clean after 1 review round (fix: ISCC example in FelixSetup.iss header now passes /DVcRedist). Commits 99f914e and the header fix.
+- Step 02: engineer opus, reviewer opus, verdict clean after 1 review round (change taken: the attest step runs only on tag pushes, so dispatch dry runs don't mint attestations that gh attestation verify --repo would accept). Commits b36a9f9 and 28d47fe.
