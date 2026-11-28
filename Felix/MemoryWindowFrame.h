@@ -39,6 +39,13 @@
 #include "view_state_match.h"
 #include "view_state_review.h"
 
+#include <memory>
+
+namespace updates
+{
+	struct check_result ;	// update_check.h
+}
+
 using mem_engine::search_match_ptr ;
 using mem_engine::placement::trans_pair ;
 using mem_engine::placement::pairings_t ;
@@ -131,7 +138,7 @@ public:
 	wstring m_deferred_query ;
 
 	// update check (see update_check.h)
-	bool m_update_check_running ;	//!< A background check is in flight.
+	std::shared_ptr<updates::check_result> m_pending_update_check ;	//!< The check in flight, if any.
 	bool m_update_check_report ;	//!< Show the result even if there's no new version (manual check).
 
 	// message maps

@@ -96,7 +96,6 @@ MemoryWindowFrame::MemoryWindowFrame( model_iface_ptr model, app_props::props_pt
 
 	// other props
 	m_is_active = false ;
-	m_update_check_running = false ;
 	m_update_check_report = false ;
 	initialize_values() ;
 	m_editor->m_interface = this ;
@@ -4525,30 +4524,46 @@ void MemoryWindowFrame::start_update_check(bool report)
 	{
 		m_update_check_report = true ;
 	}
-	if (m_update_check_running)
+	if (m_pending_update_check)
 	{
-		return ;
+		return ;	// a check is already running; its result will be reported
 	}
-	m_update_check_running = true ;
 
+	// The window and the worker share the result, so neither can leave the
+	// other with a dangling pointer. lParam only identifies which check finished.
+	std::shared_ptr<updates::check_result> result = std::make_shared<updates::check_result>() ;
 	const HWND hwnd = m_hWnd ;
 	const UINT message = UWM_USER_MESSAGE ;
-	std::thread([hwnd, message]()
+	try
 	{
-		std::unique_ptr<updates::check_result> result(new updates::check_result) ;
-		result->m_succeeded = updates::fetch_latest_release(result->m_latest_tag, result->m_error) ;
-		if (::PostMessage(hwnd, message, USER_UPDATE_CHECK_DONE, reinterpret_cast<LPARAM>(result.get())))
+		std::thread([hwnd, message, result]()
 		{
-			result.release() ;	// the window owns it now
-		}
-	}).detach() ;
+			result->m_succeeded = updates::fetch_latest_release(result->m_latest_tag, result->m_error) ;
+			::PostMessage(hwnd, message, USER_UPDATE_CHECK_DONE, reinterpret_cast<LPARAM>(result.get())) ;
+		}).detach() ;
+	}
+	catch (std::system_error &e)
+	{
+		logging::log_error(string("Failed to start the update check: ") + e.what()) ;
+		m_update_check_report = false ;
+		return ;
+	}
+	m_pending_update_check = result ;
 }
 
 LRESULT MemoryWindowFrame::on_user_update_check_done(WindowsMessage &message)
 {
-	std::unique_ptr<updates::check_result> result(reinterpret_cast<updates::check_result*>(message.lParam)) ;
+	// UWM_USER_MESSAGE is registered system-wide, so only accept the result
+	// of the check this window started.
+	if (! m_pending_update_check ||
+		message.lParam != reinterpret_cast<LPARAM>(m_pending_update_check.get()))
+	{
+		logging::log_warn("Ignored an update-check message that this window didn't start") ;
+		return 0L ;
+	}
+	std::shared_ptr<updates::check_result> result ;
+	result.swap(m_pending_update_check) ;
 	const bool report = m_update_check_report ;
-	m_update_check_running = false ;
 	m_update_check_report = false ;
 
 	if (! result)
