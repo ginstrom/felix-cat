@@ -115,7 +115,8 @@ this depends on Felix's other files (such as ``SciLexer.dll``) being accepted as
 well; see `Code signing status`_.
 
 You can turn Smart App Control off, but that lowers protection for the whole PC,
-so we don't recommend doing it just for Felix. Recent Windows updates let you
+so we don't recommend doing it just for Felix. In most cases, recent Windows
+updates let you
 turn it back on without reinstalling Windows.
 
 Office add-ins
