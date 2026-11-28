@@ -1123,6 +1123,15 @@ END
 
 STRINGTABLE
 BEGIN
+    IDS_UPDATE_TITLE        "Felixのアップデート"
+    IDS_UPDATE_ASK          "Felixの新しいバージョンを自動的にオンラインで確認しますか？\n\n約2週間ごとにGitHubを確認し、新しいバージョンがある場合のみお知らせします。［ヘルプ］→［バージョンアップの確認］からいつでも確認できます。"
+    IDS_UPDATE_LATEST       "最新バージョンのFelix（%1）をお使いです。"
+    IDS_UPDATE_AVAILABLE    "Felixの新しいバージョン %1 が公開されています。\n現在のバージョンは %2 です。\n\nダウンロードページを開きますか？"
+    IDS_UPDATE_FAILED       "アップデートを確認できませんでした。インターネット接続を確認するか、しばらくしてからもう一度お試しください。\n\n(%1)"
+END
+
+STRINGTABLE
+BEGIN
     IDS_POPUP_ADD_TO_MEMORY "メモリに追加(&A)"
     IDS_SAVE_GLOSSARY       "現在の用語集を保存します\n現在の用語集を保存します"
     IDS_SAVE_MEMORY         "現在のメモリを保存します\n現在のメモリを保存します"

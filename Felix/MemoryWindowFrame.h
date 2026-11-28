@@ -39,6 +39,13 @@
 #include "view_state_match.h"
 #include "view_state_review.h"
 
+#include <memory>
+
+namespace updates
+{
+	struct check_result ;	// update_check.h
+}
+
 using mem_engine::search_match_ptr ;
 using mem_engine::placement::trans_pair ;
 using mem_engine::placement::pairings_t ;
@@ -48,7 +55,8 @@ enum
 {
 	USER_LOOKUP_SOURCE = 1,
 	USER_LOOKUP_TRANS,
-	USER_SAVE_MEMORIES
+	USER_SAVE_MEMORIES,
+	USER_UPDATE_CHECK_DONE	//!< Posted by the update-check thread. lParam only identifies the check (compared with m_pending_update_check); it owns nothing.
 };
 /**
 	@class MemoryWindowFrame 							   
@@ -128,6 +136,10 @@ public:
 	model_iface_ptr m_model ;
 
 	wstring m_deferred_query ;
+
+	// update check (see update_check.h)
+	std::shared_ptr<updates::check_result> m_pending_update_check ;	//!< The check in flight, if any.
+	bool m_update_check_report ;	//!< Show the result even if there's no new version (manual check).
 
 	// message maps
 	typedef std::map< UINT, boost::function< LRESULT( WindowsMessage& ) >  > messageMapType ;
@@ -335,6 +347,9 @@ public:
 	LRESULT on_glossary_trans(WindowsMessage &message);
 	LRESULT on_help_faq(WindowsMessage &message);
 	LRESULT on_help_check_updates(WindowsMessage &message);
+	void auto_check_for_updates();
+	void start_update_check(bool report);
+	LRESULT on_user_update_check_done(WindowsMessage &message);
 
 	// tools menu
 	LRESULT on_tools_preferences(WindowsMessage &message) ;

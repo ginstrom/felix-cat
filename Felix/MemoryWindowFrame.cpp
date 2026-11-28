@@ -66,6 +66,10 @@
 
 // placement
 #include "number_placement.h"
+#include "update_check.h"
+
+#include <thread>
+#include <memory>
 
 using namespace mem_engine ;
 using namespace except ;
@@ -92,6 +96,7 @@ MemoryWindowFrame::MemoryWindowFrame( model_iface_ptr model, app_props::props_pt
 
 	// other props
 	m_is_active = false ;
+	m_update_check_report = false ;
 	initialize_values() ;
 	m_editor->m_interface = this ;
 
@@ -148,6 +153,7 @@ MemoryWindowFrame::MemoryWindowFrame( model_iface_ptr model, app_props::props_pt
 	this->register_user_event_listener( USER_LOOKUP_SOURCE, boost::bind(&MemoryWindowFrame::on_user_lookup_source, this, _1 )) ;
 	this->register_user_event_listener( USER_LOOKUP_TRANS, boost::bind(&MemoryWindowFrame::on_user_lookup_trans, this, _1 )) ;
 	this->register_user_event_listener( USER_SAVE_MEMORIES, boost::bind(&MemoryWindowFrame::on_user_save, this, _1 )) ;
+	this->register_user_event_listener( USER_UPDATE_CHECK_DONE, boost::bind(&MemoryWindowFrame::on_user_update_check_done, this, _1 )) ;
 
 	this->register_user_event_listener( ID_EDIT_FIND, boost::bind(&MemoryWindowFrame::on_user_edit_search, this, _1 )) ;
 	this->register_user_event_listener( ID_USER_SEARCH, boost::bind(&MemoryWindowFrame::on_user_search, this, _1 )) ;
@@ -3077,20 +3083,7 @@ LRESULT MemoryWindowFrame::on_startup_checks(WindowsMessage &)
 	// only do this if it is not the first launch
 	if (! m_props->m_gen_props.is_first_launch())
 	{
-		try
-		{
-			logging::log_debug("Checking for updates") ;
-			CDispatchWrapper utilities(L"Felix.Utilities") ;
-			CComBSTR langcode ;
-			langcode.LoadStringW(IDS_LANG_CODE) ;
-			CComVariant arg1(langcode) ;
-			utilities.method(L"CheckUpdates", arg1) ;
-		}
-		catch (_com_error& e)
-		{
-			logging::log_error("Failed to auto check for updates") ;
-			logging::log_exception(e) ;
-		}
+		auto_check_for_updates() ;
 		return 0L ;
 	}
 
@@ -4467,34 +4460,188 @@ wstring MemoryWindowFrame::get_record_translation(record_pointer record)
 		record_string_prefs( m_props->m_mem_props.is_plaintext())) ;
 }
 
-/* Show the updates dialog.
-* This is in a separate process, so that in the future we can have this
-* process shut us down, and download/install the update automatically.
+/** Help > Check Updates: check GitHub now and always report the result.
 */
 LRESULT MemoryWindowFrame::on_help_check_updates(WindowsMessage &)
 {
-	logging::log_debug("Checking for updates") ;
+	logging::log_debug("Checking for updates at user request") ;
+	start_update_check(true) ;
+	return 0L ;
+}
 
-	file::CPath path ;
-	path.GetModulePath(_Module.GetModuleInstance()) ;
-	path.Append(_T("pytools")) ;
-	path.Append(_T("CheckUpdates.exe")) ;
+/** Startup: ask once whether to check automatically, then check every
+* updates::CHECK_INTERVAL_DAYS days, telling the user only about new versions.
+*/
+void MemoryWindowFrame::auto_check_for_updates()
+{
+	updates::update_settings settings ;
+	settings.read_from_registry() ;	// missing values keep their defaults
 
-	CString filepath = path.Path() ;
-#ifdef _DEBUG
-	filepath = "D:\\Program Files (x86)\\Assistant Suite\\Felix\\pytools\\CheckUpdates.exe" ;
-#endif
+	const long today = updates::today_day_number() ;
+	switch (updates::decide_auto_check(!! settings.m_asked,
+		!! settings.m_enabled,
+		settings.m_last_check_day,
+		today))
+	{
+	case updates::AUTO_CHECK_ASK:
+		{
+			const int answer = MessageBox(resource_string(IDS_UPDATE_ASK),
+				resource_string(IDS_UPDATE_TITLE),
+				MB_YESNO | MB_ICONQUESTION | MB_SETFOREGROUND) ;
+			settings.m_asked = TRUE ;
+			settings.m_enabled = (answer == IDYES) ;
+			if (! settings.write_to_registry())
+			{
+				logging::log_warn("Failed to save update-check settings") ;
+			}
+			if (settings.m_enabled)
+			{
+				logging::log_debug("User turned on automatic update checks") ;
+				start_update_check(false) ;
+			}
+			else
+			{
+				logging::log_debug("User turned off automatic update checks") ;
+			}
+		}
+		break ;
+	case updates::AUTO_CHECK_NOW:
+		logging::log_debug("Automatic update check is due") ;
+		start_update_check(false) ;
+		break ;
+	default:
+		break ;
+	}
+}
 
-	HINSTANCE result = ::ShellExecute(
-		m_hWnd,				// HWND hwnd, 
-		_T("open"),			// LPCTSTR lpOperation,
-		filepath,			// LPCTSTR lpFile, 
-		NULL,				// LPCTSTR lpParameters, 
-		NULL,				// LPCTSTR lpDirectory,
-		SW_SHOW				// INT nShowCmd
-		);	
+/** Fetch the latest release on a worker thread; the result comes back as
+* USER_UPDATE_CHECK_DONE.
+* @param report Show the result even if Felix is up to date or the check fails.
+*/
+void MemoryWindowFrame::start_update_check(bool report)
+{
+	if (report)
+	{
+		m_update_check_report = true ;
+	}
+	if (m_pending_update_check)
+	{
+		return ;	// a check is already running; its result will be reported
+	}
 
-	check_shell_execute_result((int)result, filepath);
+	// The window and the worker share the result, so neither can leave the
+	// other with a dangling pointer. lParam only identifies which check finished.
+	const HWND hwnd = m_hWnd ;
+	const UINT message = UWM_USER_MESSAGE ;
+	try
+	{
+		std::shared_ptr<updates::check_result> result = std::make_shared<updates::check_result>() ;
+		std::thread([hwnd, message, result]()
+		{
+			// The worker only downloads; parsing happens on the UI thread.
+			// Nothing may escape a std::thread function (std::terminate), and
+			// the message must always be posted so the check doesn't stay pending.
+			try
+			{
+				result->m_succeeded = updates::fetch_latest_release(result->m_body, result->m_error) ;
+			}
+			catch (...)
+			{
+				result->m_succeeded = false ;	// no allocation here; the handler words the error
+			}
+			// All writes to *result happen before this post, and the UI thread
+			// reads them only after retrieving the message. The Win32 message
+			// queue is synchronized, so that retrieval orders the reads after
+			// these writes.
+			::PostMessage(hwnd, message, USER_UPDATE_CHECK_DONE, reinterpret_cast<LPARAM>(result.get())) ;
+		}).detach() ;
+		m_pending_update_check = result ;
+	}
+	catch (std::exception &e)	// std::system_error, std::bad_alloc
+	{
+		logging::log_error(string("Failed to start the update check: ") + e.what()) ;
+		if (m_update_check_report)
+		{
+			CString error(e.what()) ;
+			CString text ;
+			text.FormatMessage(IDS_UPDATE_FAILED, static_cast<LPCTSTR>(error)) ;
+			MessageBox(text, resource_string(IDS_UPDATE_TITLE), MB_OK | MB_ICONWARNING | MB_SETFOREGROUND) ;
+		}
+		m_update_check_report = false ;
+	}
+}
+
+LRESULT MemoryWindowFrame::on_user_update_check_done(WindowsMessage &message)
+{
+	// UWM_USER_MESSAGE is registered system-wide, so only accept the result
+	// of the check this window started.
+	if (! m_pending_update_check ||
+		message.lParam != reinterpret_cast<LPARAM>(m_pending_update_check.get()))
+	{
+		logging::log_warn("Ignored an update-check message that this window didn't start") ;
+		return 0L ;
+	}
+	std::shared_ptr<updates::check_result> result ;
+	result.swap(m_pending_update_check) ;
+	const bool report = m_update_check_report ;
+	m_update_check_report = false ;
+
+	const CString title = resource_string(IDS_UPDATE_TITLE) ;
+
+	std::string latest_tag ;
+	if (result->m_succeeded && ! updates::parse_release_tag(result->m_body, latest_tag))
+	{
+		result->m_succeeded = false ;
+		result->m_error = "No tag_name in the GitHub release response" ;
+	}
+	if (! result->m_succeeded)
+	{
+		if (result->m_error.empty())
+		{
+			result->m_error = "Unexpected error in the update check" ;
+		}
+		logging::log_warn("Update check failed: " + result->m_error) ;
+		if (report)
+		{
+			CString error(result->m_error.c_str()) ;
+			CString text ;
+			text.FormatMessage(IDS_UPDATE_FAILED, static_cast<LPCTSTR>(error)) ;
+			MessageBox(text, title, MB_OK | MB_ICONWARNING | MB_SETFOREGROUND) ;
+		}
+		return 0L ;
+	}
+
+	updates::update_settings settings ;
+	settings.read_from_registry() ;
+	settings.m_last_check_day = updates::today_day_number() ;
+	if (! settings.write_to_registry())
+	{
+		logging::log_warn("Failed to save update-check settings") ;
+	}
+
+	logging::log_debug("Latest release: " + latest_tag + "; this version: " + VERSION) ;
+
+	CString current(VERSION) ;
+	if (! updates::is_newer(latest_tag, VERSION))
+	{
+		if (report)
+		{
+			CString text ;
+			text.FormatMessage(IDS_UPDATE_LATEST, static_cast<LPCTSTR>(current)) ;
+			MessageBox(text, title, MB_OK | MB_ICONINFORMATION | MB_SETFOREGROUND) ;
+		}
+		return 0L ;
+	}
+
+	CString latest(latest_tag.c_str()) ;
+	CString text ;
+	text.FormatMessage(IDS_UPDATE_AVAILABLE, static_cast<LPCTSTR>(latest), static_cast<LPCTSTR>(current)) ;
+	if (MessageBox(text, title, MB_YESNO | MB_ICONINFORMATION | MB_SETFOREGROUND) == IDYES)
+	{
+		const std::wstring url = updates::release_page_url(latest_tag) ;
+		HINSTANCE shell_result = ::ShellExecute(m_hWnd, _T("open"), url.c_str(), NULL, NULL, SW_SHOW) ;
+		check_shell_execute_result((int)shell_result, CString(url.c_str())) ;
+	}
 	return 0L ;
 }
 

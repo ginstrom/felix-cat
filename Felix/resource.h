@@ -672,6 +672,11 @@
 #define ID_CMD_SEARCH_PAGE              32832
 #define ID_CMD_REPLACE_PAGE             32833
 #define ID_TOOLS_RULEMANAGER            40003
+#define IDS_UPDATE_TITLE                33100
+#define IDS_UPDATE_ASK                  33101
+#define IDS_UPDATE_LATEST               33102
+#define IDS_UPDATE_AVAILABLE            33103
+#define IDS_UPDATE_FAILED               33104
 #define IDC_SOURCE_LANG_STATIC          -1
 
 // Next default values for new objects

@@ -1083,6 +1083,15 @@ END
 
 STRINGTABLE
 BEGIN
+    IDS_UPDATE_TITLE        "Felix Updates"
+    IDS_UPDATE_ASK          "Should Felix check online for new versions automatically?\n\nFelix checks GitHub about every two weeks and only tells you when a new version is available. You can always check yourself with Help > Check Updates."
+    IDS_UPDATE_LATEST       "You have the latest version of Felix (%1)."
+    IDS_UPDATE_AVAILABLE    "A new version of Felix is available: %1\nYou have version %2.\n\nOpen the download page?"
+    IDS_UPDATE_FAILED       "Felix couldn't check for updates. Check your internet connection, or try again later.\n\n(%1)"
+END
+
+STRINGTABLE
+BEGIN
     ID_APP_ABOUT            "Display program information, version number and copyright\nAbout"
     ID_APP_EXIT             "Quit the application; prompts to save documents\nExit"
     ID_HELP                 "View the help file\nHelp"

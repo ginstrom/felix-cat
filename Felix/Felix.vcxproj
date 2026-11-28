@@ -632,6 +632,8 @@ if exist "$(ProjectDir)Unicode_Debug\lang\EngResource.dll" xcopy /I /Y /Q "$(Pro
     <ClCompile Include="TabbedTextImporter.cpp" />
     <ClCompile Include="tag_name_holder.cpp" />
     <ClCompile Include="text_templates.cpp" />
+    <ClCompile Include="update_check.cpp" />
+    <ClCompile Include="update_check_test.cpp" />
     <ClCompile Include="..\common\xpmenu\ToolBarXP.cpp" />
     <ClCompile Include="UserStringDlg.cpp">
       <Optimization Condition="'$(Configuration)|$(Platform)'=='Testing|Win32'">Disabled</Optimization>
@@ -1140,6 +1142,7 @@ if exist "$(ProjectDir)Unicode_Debug\lang\EngResource.dll" xcopy /I /Y /Q "$(Pro
     <ClInclude Include="tag_name_holder.h" />
     <ClInclude Include="..\common\tag_stripper.h" />
     <ClInclude Include="text_templates.h" />
+    <ClInclude Include="update_check.h" />
     <ClInclude Include="..\common\textstream_reader.h" />
     <ClInclude Include="..\common\xpmenu\ToolBarXP.h" />
     <ClInclude Include="..\common\xpmenu\Tools.h" />
