@@ -40,8 +40,10 @@ a Japanese speaker check the wording before submitting.
        Get-FileHash .\Felix_Setup_<version>.exe -Algorithm SHA256
        winget hash .\Felix_Setup_<version>.exe
 
-   Alternatively, `wingetcreate update Ginstrom.Felix --version <version> --urls <installer URL>`
-   (see step 7) computes the hash for you.
+   For versions after the first one has been merged into winget-pkgs,
+   `wingetcreate update Ginstrom.Felix --version <version> --urls <installer URL>`
+   computes the hash for you. It only works for a package that already exists
+   in winget-pkgs, so it cannot be used for the first submission.
 
 3. **For a later version**, copy the newest version folder to a new folder
    named for the new version, then in all four files set `PackageVersion`. In
@@ -58,8 +60,11 @@ a Japanese speaker check the wording before submitting.
 
 5. **Test the install yourself** (winget cannot be tested before the release
    exists, and this is why it is a manual step). Local manifest installs are
-   disabled by default. In a Windows Sandbox or a VM, not on your main PC, open
-   PowerShell **as administrator** and enable them:
+   disabled by default. Test in a VM that has winget, not on your main PC.
+   Windows Sandbox has no winget by default; to use it, run winget-pkgs'
+   `Tools\SandboxTest.ps1` (from a clone of your fork), which sets up winget in
+   the sandbox and installs from a manifest folder. In the VM, open
+   PowerShell **as administrator** and enable local manifests:
 
        winget settings --enable LocalManifestFiles
 
@@ -81,7 +86,9 @@ a Japanese speaker check the wording before submitting.
    (`manifests/g/Ginstrom/Felix/<version>/`), commit, and open a pull request.
    When the bot asks, sign the Microsoft Contributor License Agreement. Then
    answer anything the validation pipeline or the moderators raise on the
-   pull request.
+   pull request. The automated checks
+   may flag a new unsigned installer (Defender or SmartScreen), so a moderator
+   may need to review it.
 
 7. **Alternative: `wingetcreate`.** Instead of forking by hand you can use
    [`wingetcreate`](https://github.com/microsoft/winget-create):
