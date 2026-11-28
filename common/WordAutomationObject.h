@@ -6,19 +6,10 @@
 
 #pragma warning(disable:4146) // unary minus operator applied to unsigned type
 
-// Type libraries are located through the registry (requires Office installed).
-// Office core (MSO.DLL)
-#import "libid:2DF8D04C-5BFA-101B-BDE5-00AA0044DE52"	\
-	rename_namespace("MSOffice") rename("RGB", "OfficeRGB") rename( "SearchPath", "OfficeSearchPath" ) rename("DocumentProperties", "OfficeDocumentProperties") named_guids
-
-// VBA extensibility (VBE6EXT.OLB)
-#import "libid:0002E157-0000-0000-C000-000000000046" \
-	rename_namespace("VBE6")
-
-// Word
-#import "libid:00020905-0000-0000-C000-000000000046" \
-	rename_namespace("MSWord") rename("FindText", "WordFindText") rename("ExitWindows","MSWordExitWindows") \
-	rename( "RGB", "WordRBG" ) rename( "ReplaceText", "WordReplaceText" )
+// Office core (MSOffice), VBA extensibility (VBE6) and Word (MSWord), from
+// headers generated from Office's type libraries, so building needs no Office.
+// See office_typelibs\README.md.
+#include "office_typelibs/msoffice_word.h"
 
 #include "html_processing.h"
 

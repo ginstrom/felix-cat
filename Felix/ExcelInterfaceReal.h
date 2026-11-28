@@ -26,21 +26,10 @@ public:
 
 #else // FELIX_NO_EXCEL
 
-// Type libraries are located through the registry (requires Office installed
-// on the build machine). Was: Office 2000 OLBs at hardcoded D:\dev paths.
-// Office core (MSO.DLL)
-#import "libid:2DF8D04C-5BFA-101B-BDE5-00AA0044DE52"	\
-	rename_namespace("MSOffice") rename("RGB", "OfficeRGB") rename( "SearchPath", "OfficeSearchPath" ) rename("DocumentProperties", "OfficeDocumentProperties") named_guids
-
-// VBA extensibility (VBE6EXT.OLB)
-#import "libid:0002E157-0000-0000-C000-000000000046" \
-	rename_namespace("VBE6")
-
-// Excel
-#import "libid:00020813-0000-0000-C000-000000000046" \
-	exclude( "IFont" ) exclude( "IPicture" )\
-	rename("DialogBox", "DialogBoxForExcel") rename( "RGB", "RGBForExcel") \
-	rename( "CopyFile", "CopyFileForExcel" ) rename( "ReplaceText", "ReplaceTextForExcel" ) \
+// Office core (MSOffice), VBA extensibility (VBE6) and Excel, from headers
+// generated from Office's type libraries, so building needs no Office.
+// See common\office_typelibs\README.md.
+#include "office_typelibs/msoffice_excel.h"
 
 #include "ExcelInterface.h"
 #include "logging.h"

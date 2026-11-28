@@ -4,7 +4,8 @@
 #define __WORDINTERFACE_H_
 
 #include "resource.h"       // main symbols
-#import "libid:AC0714F2-3D04-11D1-AE7D-00A0C90F26F4" no_namespace 
+#include "office_typelibs/addin_designer.h"
+using namespace AddInDesignerObjects ;
 
 #include "WordController.h"
 #include "app_state.h"

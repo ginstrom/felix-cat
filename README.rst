@@ -23,8 +23,9 @@ run it. You need:
 - 64-bit Microsoft Office (Microsoft 365, Office 2021 or 2024) for the Word,
   Excel and PowerPoint add-ins; this is the default edition of current Office
 
-The installer isn't code-signed, so Windows SmartScreen may warn that it comes
-from an unknown publisher: choose **More info**, then **Run anyway**.
+Releases up to 3.0.1 aren't code-signed, so Windows SmartScreen may warn
+that they come from an unknown publisher: choose **More info**, then **Run
+anyway**. Later releases are signed (see "Code signing" below).
 
 It installs Felix to ``C:\Program Files\Felix``, the Office add-ins (each
 optional) and the Visual C++ runtimes they need. In Word, Excel and
@@ -52,8 +53,12 @@ the unit tests.
 Building Felix requires the following separate libraries:
 
 - Windows Template Library (WTL) 10: https://sourceforge.net/projects/wtl/
-- Boost (Test and Filesystem compiled): https://www.boost.org/
-- Microsoft Office, to build the add-ins (they import its type libraries)
+- Boost (Test, Filesystem and Regex compiled): https://www.boost.org/
+
+Microsoft Office is not needed: the Office type library headers are in
+``common/office_typelibs``. GitHub Actions builds Felix, the add-ins and the
+installer on every push (``.github/workflows/build.yml``) and builds signed
+releases from version tags (``release.yml``).
 
 Felix also uses these, which are included in the repository:
 
@@ -62,6 +67,17 @@ Felix also uses these, which are included in the repository:
 
 The ``python_tools`` folder holds Python 2 tools from the original
 distribution; they are not part of the C++ build.
+
+Code signing
+------------
+
+Free code signing provided by `SignPath.io <https://signpath.io>`_, certificate
+by `SignPath Foundation <https://signpath.org>`_.
+
+Releases are built from this repository by GitHub Actions and signed through
+the SignPath Foundation, so Windows shows **SignPath Foundation** as the
+publisher. See the `code signing policy <CODE_SIGNING_POLICY.md>`_ for what is
+signed, who approves it, and Felix's privacy statement.
 
 History
 -------

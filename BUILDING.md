@@ -10,8 +10,10 @@ add-ins**, which now also build as 64-bit for 64-bit Office (section 6).
   **Desktop development with C++** workload, plus these individual components:
   - *C++ ATL for latest v145 build tools (x86 & x64)*
   - a Windows 10/11 SDK (installed by the workload)
-- **Microsoft Office** (Excel and Word). Felix `#import`s the Office type
-  libraries by their registry ID, so Office must be installed on the build machine.
+- **Microsoft Office is not needed to build.** The C++ headers generated from
+  Office's type libraries are committed in `common\office_typelibs\` (see its
+  `README.md`, including how to regenerate them). You still need Office to
+  run the add-ins and their tests.
 
 ## 2. Put the libraries in `third_party\`
 
@@ -34,9 +36,13 @@ other locations, copy `Dependencies.local.props.example` to
 Scintilla's headers are already in `common\`. The build copies `Felix\SciLexer.dll`
 next to `Felix.exe`.
 
-**No Office on the build machine?** Set `<FelixNoExcel>true</FelixNoExcel>` in
-`Dependencies.local.props`. Felix then builds without the Excel type libraries,
-and Excel export shows a "not available" message instead.
+`BoostDir` and `WtlDir` can also come from environment variables of the same
+name (MSBuild reads them as properties); the GitHub Actions build does that
+(`.github\actions\setup-felix-deps`).
+
+`<FelixNoExcel>true</FelixNoExcel>` in `Dependencies.local.props` still builds
+Felix without Excel export (it shows a "not available" message instead), but
+it's no longer needed for building without Office.
 
 **Lua is no longer needed.** Lua was never actually used: Felix and Word Assist
 only created an unused Lua VM at startup. That code, and the Lua, LuaBridge and
@@ -165,13 +171,11 @@ inside Office, so **their bitness must match Office's**: build **x64** for
 64-bit Office (the default for current Office) and **Win32** for 32-bit Office.
 They talk to Felix.exe across processes, so Felix stays 32-bit either way.
 
-**Office must be installed to build them.** They `#import` the Office type
-libraries (MSO, VBA extensibility, Word, Excel, PowerPoint) by registry ID.
-Without Office the build stops at `error C3505: cannot load type library
-'{2DF8D04C-...}'`. They also `#import "Felix.tlb"`, which the Felix build
-produces (`FelixTlbDir` in `Dependencies.props`). Built and tested against
-64-bit Microsoft 365 (Office 16.0): the newer type libraries needed no extra
-`rename()`s.
+**Office type libraries.** The add-ins use the Office type libraries (MSO, VBA
+extensibility, Word, Excel, PowerPoint, Add-in Designer) through the headers
+in `common\office_typelibs\`, generated from 64-bit Microsoft 365 (Office
+16.0), so Office isn't needed to build them. They also `#import "Felix.tlb"`,
+which the Felix build produces (`FelixTlbDir` in `Dependencies.props`).
 
 **64-bit Boost.** The x64 builds need Boost.Filesystem and Boost.Test built for
 x64 in `<BoostDir>\lib64-msvc-14.5\`. Either install the prebuilt
@@ -279,7 +283,8 @@ Windows 10 or later, asks for admin rights, and:
 - installs the Word, Excel and PowerPoint add-ins (64-bit, each optional) and
   registers them with Office;
 - installs the Visual C++ runtimes (x86 for Felix, x64 for the add-ins), taken
-  from the local Visual Studio (`VcRedist` in the script);
+  from the local Visual Studio (`tools\build-installer.ps1` finds them and
+  passes `/DVcRedist=<folder>`; or use `-VcRedist <folder>`);
 - registers Felix's COM server (`Felix.exe /RegServer`), the `.ftm`, `.fgloss`
   and `.fprefs` file types, and a Start menu shortcut.
 
@@ -288,8 +293,22 @@ Uninstalling removes all of that, but leaves each user's
 memories and glossaries alone. (The 2015 installer's uninstaller deleted
 `%LOCALAPPDATA%\Felix`.)
 
-**Code signing.** Unsigned installers make Windows SmartScreen warn about an
-"unknown publisher". To sign a release, get a code-signing certificate (an
+**Releases from GitHub Actions.** Official releases are built and signed by
+`.github\workflows\release.yml`, not on a personal machine. Bump the version
+(below), merge, then push a tag such as `v3.0.2`. The workflow builds
+everything on a clean runner, sends Felix's own program files to SignPath for
+signing (the maintainer approves the request in SignPath), builds the
+installer from the signed files, sends the installer for signing, checks all
+signatures with `signtool verify /pa`, and attaches the installer to a
+**draft** release. Review it, then publish. Until SignPath is set up (the
+repository variable `SIGNPATH_ORGANIZATION_ID` is empty), it skips signing
+and makes an unsigned draft. What is signed, and why: `CODE_SIGNING_POLICY.md`.
+The SignPath artifact configurations are in `.signpath\artifact-configurations\`.
+`.github\workflows\build.yml` builds the binaries (add-ins for both
+platforms) and an unsigned installer on every push and pull request.
+
+**Signing locally.** Unsigned installers make Windows SmartScreen warn about an
+"unknown publisher". To sign a build yourself, get a code-signing certificate (an
 OV/individual certificate from a certificate authority, or Microsoft's Azure
 Artifact Signing service), then copy `tools\signing.example.json` to
 `signing.local.json` at the repo root and fill in one method:
