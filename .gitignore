@@ -25,6 +25,9 @@ x64/
 # MIDL / #import generated
 *.tlh
 *.tli
+# ...except the Office type library headers, generated once and committed
+!common/office_typelibs/**/*.tlh
+!common/office_typelibs/**/*.tli
 *.tlb
 *_i.c
 *_p.c

@@ -323,9 +323,6 @@
     <ClInclude Include="nav_query_dlg.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="OfficeImports.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="PowerPointEventDefs.h">
       <Filter>Header Files</Filter>
     </ClInclude>

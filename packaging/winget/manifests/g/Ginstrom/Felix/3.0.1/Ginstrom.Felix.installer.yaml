@@ -1,0 +1,33 @@
+# yaml-language-server: $schema=https://aka.ms/winget-manifest.installer.1.10.0.schema.json
+
+PackageIdentifier: Ginstrom.Felix
+PackageVersion: 3.0.1
+MinimumOSVersion: 10.0.0.0
+InstallerType: inno
+Scope: machine
+ElevationRequirement: elevatesSelf
+InstallModes:
+- interactive
+- silent
+- silentWithProgress
+InstallerSwitches:
+  Silent: /VERYSILENT /SUPPRESSMSGBOXES /NORESTART
+  SilentWithProgress: /SILENT /SUPPRESSMSGBOXES /NORESTART
+UpgradeBehavior: install
+FileExtensions:
+- ftm
+- fgloss
+- fprefs
+ProductCode: '{98802423-6787-4122-BCEC-08CC2E12F18E}_is1'
+AppsAndFeaturesEntries:
+- DisplayName: Felix
+  Publisher: Ryan Ginstrom
+  ProductCode: '{98802423-6787-4122-BCEC-08CC2E12F18E}_is1'
+Installers:
+- Architecture: x64
+  InstallerUrl: https://github.com/ginstrom/felix-cat/releases/download/v3.0.1/Felix_Setup_3.0.1.exe
+  # PLACEHOLDER: replace with this installer's hash from the published
+  # release's SHA256SUMS.txt before submitting. See packaging/winget/README.md.
+  InstallerSha256: 0000000000000000000000000000000000000000000000000000000000000000
+ManifestType: installer
+ManifestVersion: 1.10.0

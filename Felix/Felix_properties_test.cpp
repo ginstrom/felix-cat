@@ -1683,5 +1683,59 @@ BOOST_AUTO_TEST_SUITE( properties_general_xml_tests )
 		BOOST_CHECK_EQUAL(actual, expected);
 	}
 
+	// Issue #22: the memory flag was written from the glossary flag.
+	static app_props::properties_general round_trip_general(const app_props::properties_general &in)
+	{
+		app_props::properties_general props = in ;
+		pugi::xml_document doc ;
+		pugi::xml_node preferences = doc.append_child() ;
+		preferences.set_name("properties") ;
+		props.build_xml_doc(preferences) ;
+
+		app_props::properties_general out ;
+		BOOST_REQUIRE(out.parse_xml_doc(doc)) ;
+		return out ;
+	}
+
+	BOOST_AUTO_TEST_CASE(round_trip_load_prev_mem_only)
+	{
+		app_props::properties_general props ;
+		props.m_data.m_load_prev_mem_on_startup = TRUE ;
+		props.m_data.m_load_prev_gloss_on_startup = FALSE ;
+
+		app_props::properties_general actual = round_trip_general(props) ;
+
+		BOOST_CHECK(actual.m_data.m_load_prev_mem_on_startup) ;
+		BOOST_CHECK(! actual.m_data.m_load_prev_gloss_on_startup) ;
+	}
+
+	BOOST_AUTO_TEST_CASE(round_trip_load_prev_gloss_only)
+	{
+		app_props::properties_general props ;
+		props.m_data.m_load_prev_mem_on_startup = FALSE ;
+		props.m_data.m_load_prev_gloss_on_startup = TRUE ;
+
+		app_props::properties_general actual = round_trip_general(props) ;
+
+		BOOST_CHECK(! actual.m_data.m_load_prev_mem_on_startup) ;
+		BOOST_CHECK(actual.m_data.m_load_prev_gloss_on_startup) ;
+	}
+
+	BOOST_AUTO_TEST_CASE(parse_load_prev_flags_map_to_own_members)
+	{
+		string text = "<properties><properties_general>\n"
+			"<load_prev_mem_on_startup>true</load_prev_mem_on_startup>\n"
+			"<load_prev_gloss_on_startup>false</load_prev_gloss_on_startup>\n"
+			"</properties_general></properties>" ;
+		pugi::xml_document doc ;
+		BOOST_REQUIRE_EQUAL(doc.load(text.c_str()).status, pugi::status_ok) ;
+
+		app_props::properties_general props ;
+		BOOST_REQUIRE(props.parse_xml_doc(doc)) ;
+
+		BOOST_CHECK(props.m_data.m_load_prev_mem_on_startup) ;
+		BOOST_CHECK(! props.m_data.m_load_prev_gloss_on_startup) ;
+	}
+
 BOOST_AUTO_TEST_SUITE_END()
 #endif

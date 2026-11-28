@@ -1,0 +1,20 @@
+# yaml-language-server: $schema=https://aka.ms/winget-manifest.defaultLocale.1.10.0.schema.json
+
+PackageIdentifier: Ginstrom.Felix
+PackageVersion: 3.0.1
+PackageLocale: en-US
+Publisher: Ryan Ginstrom
+PublisherUrl: https://github.com/ginstrom
+PackageName: Felix
+PackageUrl: https://github.com/ginstrom/felix-cat
+License: MIT
+LicenseUrl: https://github.com/ginstrom/felix-cat/blob/main/LICENSE.txt
+ShortDescription: Translation memory (CAT) tool for Windows, with add-ins for Word, Excel and PowerPoint.
+Tags:
+- translation
+- translation-memory
+- cat
+- office-addin
+ReleaseNotesUrl: https://github.com/ginstrom/felix-cat/releases/tag/v3.0.1
+ManifestType: defaultLocale
+ManifestVersion: 1.10.0

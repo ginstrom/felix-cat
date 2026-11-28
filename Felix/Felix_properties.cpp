@@ -523,7 +523,7 @@ namespace app_props
 		add_child(parent, "preferred_gui_lang", int2string(this->m_data.m_preferred_gui_lang)) ;
 		add_child(parent, "merge_choice", int2string(this->m_data.m_merge_choice)) ;
 
-		add_child(parent, "load_prev_mem_on_startup", bool2string(!! this->m_data.m_load_prev_gloss_on_startup)) ;
+		add_child(parent, "load_prev_mem_on_startup", bool2string(!! this->m_data.m_load_prev_mem_on_startup)) ;
 		add_child(parent, "load_prev_gloss_on_startup", bool2string(!! this->m_data.m_load_prev_gloss_on_startup)) ;
 		add_child(parent, "show_markup", bool2string(!! this->m_data.m_show_markup)) ;
 		add_child(parent, "first_launch", bool2string(!! this->m_data.m_first_launch)) ;
