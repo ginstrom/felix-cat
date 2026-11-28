@@ -57,8 +57,21 @@ Create (each file starts with `# yaml-language-server: $schema=https://aka.ms/wi
 Not testable here: `winget install --manifest` (record this).
 
 ## Completion criteria
-- [ ] Five manifest/doc files exist at the paths above; validation passes.
-- [ ] Negative check done; settings unchanged.
-- [ ] Index status updated; one commit if the brief says so.
+- [x] Five manifest/doc files exist at the paths above; validation passes.
+- [x] Negative check done; settings unchanged.
+- [x] Index status updated; one commit if the brief says so.
 
 ## Execution record
+
+### Engineer record (2026-11-29)
+
+Done: created `packaging/winget/manifests/g/Ginstrom/Felix/3.0.1/` with `Ginstrom.Felix.yaml`, `.installer.yaml` (as specified; placeholder hash with a comment inside the `Installers` entry), `.locale.en-US.yaml`, `.locale.ja-JP.yaml`, and `packaging/winget/README.md` (submission steps U6: hash from `SHA256SUMS.txt`, `Get-FileHash`/`winget hash`, `wingetcreate update`; validate; admin `winget settings --enable LocalManifestFiles` then `winget install --manifest` in a sandbox/VM and `winget uninstall --id Ginstrom.Felix`; fork + PR + CLA; `wingetcreate submit`; identifier permanence; placeholder makes it unsubmittable; ja-JP wording check).
+
+Verification (worktree root, winget v1.7.10661):
+1. `winget validate --manifest packaging\winget\manifests\g\Ginstrom\Felix\3.0.1` -> `Manifest validation succeeded.` (exit 0). The ja-JP file validated without trouble.
+2. Negative: temp copy with `InstallerType: bogus` -> `Manifest validation failed.` / `Schema Error ... [InstallerType] Failed to match against any enum values` / `Invalid field value. [InstallerType]` (exit -1978335191). Temp copy deleted.
+3. Cross-check against `setup/FelixSetup.iss`: `AppId={{98802423-6787-4122-BCEC-08CC2E12F18E}` (so ProductCode `{...}_is1`), `AppPublisher=Ryan Ginstrom`, `PrivilegesRequired=admin`, `MinVersion=10.0`, `ArchitecturesInstallIn64BitMode=x64compatible`, `ShowLanguageDialog=yes` (suppressed by `/VERYSILENT`), registry entries for `.ftm`, `.fgloss`, `.fprefs`. `OutputBaseFilename=Felix_Setup_{#AppVersion}`. All match the manifest; no fixes needed.
+4. `winget settings export` -> `"LocalManifestFiles":false` (unchanged; no winget setting touched).
+Not testable here: `winget install --manifest` (needs the setting and a public installer matching the hash); left to the user (README step 5).
+
+Deviations: none. Additions: README also names `winget hash` and `wingetcreate update`, and tells the user to turn `LocalManifestFiles` off again afterwards.

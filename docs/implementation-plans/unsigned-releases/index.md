@@ -26,7 +26,7 @@ Purpose: Felix ships **unsigned** releases for now. A tag builds the installer i
 | 02 | [02-release-workflow.md](02-release-workflow.md) | `release.yml` rewritten: no SignPath, gated signing placeholders, checksums, attestation, draft release with two assets, dispatch dry run | 01 | done (see git log) |
 | 03 | [03-readme-install-guide.md](03-readme-install-guide.md) | README "Installing Felix" section, SignPath claims removed, getting-started.html paragraph, release-notes-3.0.1.md fixed | 01 | done (see git log) |
 | 04 | [04-signing-policy-and-build-docs.md](04-signing-policy-and-build-docs.md) | Root policy deleted; `docs/CODE_SIGNING_POLICY.md` drafted (unlinked); `.signpath/` marked unused; BUILDING.md rewritten for the unsigned flow | 02 | done (see git log) |
-| 05 | [05-winget-manifest.md](05-winget-manifest.md) | `packaging/winget/` manifests and README; `winget validate` passes | none | pending |
+| 05 | [05-winget-manifest.md](05-winget-manifest.md) | `packaging/winget/` manifests and README; `winget validate` passes | none | done (see git log) |
 | 06 | [06-final-verification.md](06-final-verification.md) | Whole-branch checks, CI run on the pushed branch (orchestrator pushes), VM and user hand-offs recorded | 01-05 | pending |
 
 Execution order: 01, then 02; 03, 04 and 05 touch disjoint files and can run in parallel after their dependencies (04 waits for 02 only because BUILDING.md describes the final workflow); then 06. Pushing and the CI run happen only in 06.

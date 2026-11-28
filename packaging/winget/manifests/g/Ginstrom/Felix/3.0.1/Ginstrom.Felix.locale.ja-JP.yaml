@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=https://aka.ms/winget-manifest.locale.1.10.0.schema.json
+
+PackageIdentifier: Ginstrom.Felix
+PackageVersion: 3.0.1
+PackageLocale: ja-JP
+Publisher: Ryan Ginstrom
+PackageName: Felix
+ShortDescription: Word、Excel、PowerPoint のアドインを備えた、Windows 用の翻訳メモリ (CAT) ツール。
+ManifestType: locale
+ManifestVersion: 1.10.0
