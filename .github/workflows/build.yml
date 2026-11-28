@@ -32,6 +32,14 @@ jobs:
           powershell -NoProfile -ExecutionPolicy Bypass -File tools\build-installer.ps1
           -Unsigned -AllPlatforms -NoRegister
 
+      - name: Release files
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $iss = Get-Content setup\FelixSetup.iss -Raw
+          if ($iss -notmatch '#define AppVersion "([^"]+)"') { throw 'AppVersion not found in setup\FelixSetup.iss' }
+          tools\make-release-files.ps1 -Version $Matches[1]
+
       - name: Collect binaries
         shell: pwsh
         run: |
@@ -56,5 +64,8 @@ jobs:
       - uses: actions/upload-artifact@v7
         with:
           name: felix-installer-${{ github.sha }}
-          path: setup/Output/Felix_Setup_*.exe
+          path: |
+            setup/Output/Felix_Setup_*.exe
+            setup/Output/SHA256SUMS.txt
+            setup/Output/release-notes.md
           if-no-files-found: error

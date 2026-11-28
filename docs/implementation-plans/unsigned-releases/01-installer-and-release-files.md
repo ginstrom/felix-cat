@@ -79,3 +79,14 @@ Record each command and result in the Execution record.
 - [ ] Index status updated; one commit made if the brief says so.
 
 ## Execution record
+
+### Run 2026-11-29 (engineer; commit with this record)
+No `runlog` (no Python); commands run directly. `pwsh` is not installed, so only Windows PowerShell 5.1 was tested.
+- Changes: `setup/FelixSetup.iss` (VcRedist default replaced by `#error`; SIGN comment added; BOM and CRLF preserved), `setup/HTML FILE SETUP.iss` removed (`git grep -i "HTML FILE SETUP"` outside `docs/` found nothing; docs hits are the plan/design text only), `.github/release-notes-install.md` (C2 verbatim), `tools/make-release-files.ps1` (C1), `.github/workflows/build.yml` ("Release files" pwsh step after "Build binaries and installer"; installer artifact path is now the 3-line list; CRLF kept).
+- Checks 1-2: dummy installers `Felix_Setup_9.9.9.exe` and `Felix_Setup_3.0.1.exe` in `$env:TEMP\mrf`; `powershell -NoProfile -File tools\make-release-files.ps1 -Version <v> -OutDir <tmp> [-Signed]` for 9.9.9 (no notes file) and 3.0.1 (real notes file), each with and without `-Signed`. All four: SHA256SUMS.txt matches `^[0-9a-f]{64}  Felix_Setup_<v>\.exe\n$` and starts with the `Get-FileHash` value; no BOM; no CR in either file; no `{{VERSION}}`; version appears in both commands; "not code-signed" text and `<!-- unsigned -->` markers present only without `-Signed`; 9.9.9 notes begin `Felix 9.9.9`, 3.0.1 notes begin with the real file's first line.
+- Check 3: empty OutDir, `-Version 1.2.3`: error "Installer not found: ...\Felix_Setup_1.2.3.exe", exit 1, OutDir still empty. `-Version 1.2`: "Version must look like 1.2.3".
+- Check 4: ISCC found at `%LOCALAPPDATA%\Programs\Inno Setup 6\ISCC.exe`. `ISCC setup\FelixSetup.iss` fails: "Error on line 31 ...: Define VcRedist: the folder with vc_redist.x86.exe and vc_redist.x64.exe (tools\build-installer.ps1 does this)", exit 2. The `build-installer.ps1 -SkipBuild` run was skipped: `Felix\Unicode_Release\Felix.exe` does not exist here (no Release binaries).
+- Check 5: no YAML parser available (`ConvertFrom-Yaml` absent); reviewed the `git diff` by hand (indentation, block scalar). Real check is step 06's CI run.
+- Check 6: `git grep -n 'C:\\Program Files' -- setup/FelixSetup.iss` returns nothing.
+- Deviations: (a) with `-Signed` the removal also swallows the newlines after `<!-- /unsigned -->` so no extra blank lines are left; the removed text still runs from the opening to the closing marker inclusive. (b) Only Windows PowerShell 5.1 tested (no `pwsh` locally); the script uses nothing 5.1-incompatible, but CI will be the first pwsh run.
+- For later steps: `make-release-files.ps1` takes `-Version`, `-Signed`, `-OutDir` as in C1; relative `-OutDir` resolves against the repo root.

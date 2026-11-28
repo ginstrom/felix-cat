@@ -22,7 +22,7 @@ Purpose: Felix ships **unsigned** releases for now. A tag builds the installer i
 
 | ID | Task file | Outcome | Depends on | Status |
 |---|---|---|---|---|
-| 01 | [01-installer-and-release-files.md](01-installer-and-release-files.md) | `VcRedist` required in the `.iss`; obsolete `.iss` deleted; `tools/make-release-files.ps1` and `.github/release-notes-install.md` created and verified; `build.yml` runs the script and uploads its outputs | none | pending |
+| 01 | [01-installer-and-release-files.md](01-installer-and-release-files.md) | `VcRedist` required in the `.iss`; obsolete `.iss` deleted; `tools/make-release-files.ps1` and `.github/release-notes-install.md` created and verified; `build.yml` runs the script and uploads its outputs | none | done (see git log) |
 | 02 | [02-release-workflow.md](02-release-workflow.md) | `release.yml` rewritten: no SignPath, gated signing placeholders, checksums, attestation, draft release with two assets, dispatch dry run | 01 | pending |
 | 03 | [03-readme-install-guide.md](03-readme-install-guide.md) | README "Installing Felix" section, SignPath claims removed, getting-started.html paragraph, release-notes-3.0.1.md fixed | 01 | pending |
 | 04 | [04-signing-policy-and-build-docs.md](04-signing-policy-and-build-docs.md) | Root policy deleted; `docs/CODE_SIGNING_POLICY.md` drafted (unlinked); `.signpath/` marked unused; BUILDING.md rewritten for the unsigned flow | 02 | pending |
