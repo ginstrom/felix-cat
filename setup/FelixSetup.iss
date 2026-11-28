@@ -8,7 +8,7 @@
 ;   Felix\Felix.vcxproj                       Unicode_Release | Win32
 ;   Felix\EngResource, Felix\JpnResource      Unicode_Release | Win32
 ;   <App>Assist\<App>Assist\<App>Assist.vcxproj  Release | x64
-; then compile this script:  ISCC setup\FelixSetup.iss
+; then compile this script:  ISCC /DVcRedist=<folder with the vc_redist exes> setup\FelixSetup.iss
 ;
 ; The uninstaller removes only what this installer put in place. It leaves
 ; each user's %LOCALAPPDATA%\Felix (settings, customized templates, logs) and
@@ -28,7 +28,7 @@
 #define FelixBin Root + "\Felix\Unicode_Release"
 ; Folder with vc_redist.x86.exe and vc_redist.x64.exe (Microsoft-signed).
 #ifndef VcRedist
-  #define VcRedist "C:\Program Files\Microsoft Visual Studio\18\Community\VC\Redist\MSVC\v145"
+  #error Define VcRedist: the folder with vc_redist.x86.exe and vc_redist.x64.exe (tools\build-installer.ps1 does this)
 #endif
 
 [Setup]
@@ -62,6 +62,7 @@ CloseApplications=yes
 OutputDir=Output
 OutputBaseFilename=Felix_Setup_{#AppVersion}
 
+; CI never defines SIGN; releases are unsigned (docs/CODE_SIGNING_POLICY.md).
 #ifdef SIGN
 ; Code signing: tools\build-installer.ps1 defines SIGN and the "felixsign"
 ; sign tool (tools\sign-file.ps1) when signing.local.json exists. Inno Setup

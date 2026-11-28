@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Not in use: releases are unsigned. Kept for a future SignPath application; see docs/CODE_SIGNING_POLICY.md -->
 <!--
   SignPath artifact configuration "program-files" for the felix-cat project.
   Paste this into SignPath (Project > Artifact configurations > program-files).
