@@ -333,7 +333,9 @@ Other things to know:
 `.github\workflows\build.yml` builds the binaries (add-ins for both
 platforms) and an unsigned installer on every push and pull request.
 
-**Signing locally.** Official releases are currently unsigned; don't sign them with a self-signed certificate, which gives users no benefit. Unsigned installers make Windows SmartScreen warn about an
+**Signing locally.** Official releases are currently unsigned; don't sign them
+with a self-signed certificate, which gives users no benefit. Unsigned
+installers make Windows SmartScreen warn about an
 "unknown publisher". To sign a build yourself, get a code-signing certificate (an
 OV/individual certificate from a certificate authority, or Microsoft's Azure
 Artifact Signing service), then copy `tools\signing.example.json` to

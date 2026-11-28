@@ -72,7 +72,8 @@ therefore not be enough to get past Smart App Control.
 ## Privacy
 
 Felix doesn't collect usage data, has no telemetry and doesn't connect to the
-internet on its own.
+internet on its own. The release does not include or install `Felix.Utilities`
+(the old update tool; an old Felix 2.x install could still have it registered).
 
 It opens web pages only when you ask. Help and FAQ in Felix, and the help
 buttons in the add-ins, open the online manual (`ginstrom.github.io/felix-cat`)
