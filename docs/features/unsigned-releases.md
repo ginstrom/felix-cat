@@ -7,7 +7,7 @@
 - **Starting point:** PR ginstrom/felix-cat#16 (merged as 807ccc0) already did most of Phase 1–2: committed Office headers, WTL from NuGet, Boost via b2, build.yml, installer in CI, release.yml with SignPath steps, root `CODE_SIGNING_POLICY.md` linked from README. This feature is the delta.
 - **Path:** Medium. No architecture. Design (gap analysis against the spec), plan, implement, verify.
 - **Phase:** 6. Report (PR open)
-- **Next action:** user reviews and merges PR ginstrom/felix-cat#46, then the hand-offs in the PR description (tag v3.0.1, publish, winget, screenshot, Office test). Optional: re-run the clean-VM test on the CI installer once the user signs in to FelixTest.
+- **Next action:** user reviews and merges PR ginstrom/felix-cat#46, then the hand-offs in the PR description (tag v3.0.1, publish, winget, screenshot, Office test). Clean-VM test of the CI installer passed 2026-11-29 (full, uninstall, Felix-only).
 - **Design:** `docs/designs/unsigned-releases.md` (gap analysis; open questions in §8.1). Orchestrator settled Q3 (`actions/attest@v4`, upstream-recommended; attest-build-provenance v4 wraps it) and Q4 (English install guide now, Japanese as follow-up); design approved 2026-11-29.
 - **Branch:** `ci/unsigned-releases` in worktree `.claude/worktrees/unsigned-releases`, base 807ccc0 (origin/main).
 - **Status thread:** none; the `recursive_slack` tools aren't available in this session. This State section is the status.

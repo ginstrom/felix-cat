@@ -16,3 +16,4 @@
 - [ ] U8 Later: SignPath reapplication and replacing the placeholders.
 - [ ] A7 Clean-VM install and run of the CI installer, full and Felix-only (`felix-test.cmd full|main`); silent switches; uninstall key `HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{98802423-6787-4122-BCEC-08CC2E12F18E}_is1` with `DisplayVersion` = 3.0.1.
 - Follow-ups: Japanese install guide (feature record, Q4); Scintilla 5 migration (#44); third-party license notices; `PowerPointAssist`'s unused `SciLexer.dll` load (design section 9).
+- Clean-VM test (A7), 2026-11-29: CI installer from run 46160127626 with /VERYSILENT /SUPPRESSMSGBOXES /NORESTART. Full install, uninstall and Felix-only install all pass (exit 0; registrations and cleanup as in PR #16). Results in C:\VMs\FelixTestesults.
