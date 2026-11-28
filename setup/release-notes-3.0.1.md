@@ -30,6 +30,7 @@ For what to do about Windows security warnings, and how to verify your download,
 - **Excel's formula bar follows Auto Translate** ([#10](https://github.com/ginstrom/felix-cat/issues/10)). The formula bar shows the translation for the active cell as soon as it is written, instead of the source text until the command ends.
 - **PowerPoint's menu shows the right shortcuts** ([#11](https://github.com/ginstrom/felix-cat/issues/11)). Translate to Fuzzy shows Alt+C, and Find Concordance no longer advertises a shortcut.
 - **A two-key shortcut for Toggle Shortcuts now works.** If you bound Toggle Shortcuts to a two-key shortcut, it did nothing. It now turns Felix's single-key shortcuts off and on; two-key shortcuts stay on. Ctrl+Alt+F9, which turns all Felix shortcuts off and on, is a separate switch and was not affected.
+- **Excel's Auto Translate Sheet reaches the end of your data.** When the data didn't start in row 1 or column A, Auto Translate Sheet (and Look Up Next) could stop short and leave the last rows or columns untranslated.
 
 ## Known issues
 

@@ -37,12 +37,16 @@ namespace excel
 		_bstr_t m_name ;
 		int m_rows ;
 		int m_cols ;
+		int m_first_row ;
+		int m_first_col ;
 
 		std::vector< string > m_calls ;
 
 		FakeWorksheet():
 			m_rows(0),
-			m_cols(0)
+			m_cols(0),
+			m_first_row(1),
+			m_first_col(1)
 		{
 
 		}
@@ -74,6 +78,14 @@ namespace excel
 		virtual int UsedColumns()
 		{
 			return m_cols ;
+		}
+		virtual int UsedFirstRow()
+		{
+			return m_first_row ;
+		}
+		virtual int UsedFirstColumn()
+		{
+			return m_first_col ;
 		}
 	};
 

@@ -13,10 +13,10 @@
 #include "Exceptions.h"
 #include "DispatchWrapper.h"
 #include "keyboard_shortcuts.h" // shift_key_is_pressed (honours a deferred command's captured Shift)
+#include "excel_scan_bounds.h"
 
 #include <cmath>    // for fabs( )
 
-static const int MAX_CELL_EXTEND = 30 ;
 static const int ROW_SELECTION_INTERVAL = 10 ;
 static const int MAX_ROWS_NO_ENTRY = 5 ;
 static const int CHECK_ESC_INTERVAL = 5 ;
@@ -326,10 +326,10 @@ void CFelixExcelIF::OnLookupNext( )
 
 		excel::sheet_ptr activeSheet = GetActiveSheet() ;
 
-		const int UsedRows = max( activeSheet->UsedRows(), activeCell->Row() + MAX_CELL_EXTEND ) ;
+		const int UsedRows = excel::last_row_to_scan( activeSheet, activeCell->Row() ) ;
 		ATLASSERT( UsedRows > activeCell->Row() ) ;
 
-		const int UsedColumns = max( activeSheet->UsedColumns(), MAX_CELL_EXTEND ) ;
+		const int UsedColumns = excel::last_column_to_scan( activeSheet ) ;
 		ATLASSERT( UsedColumns > activeCell->Column() ) ;
 
 		long startCol = activeCell->Column() + 1;
@@ -879,8 +879,8 @@ void CFelixExcelIF::PerformSheetAutoTrans()
 			autoTransSheetName(activeSheet, assistant);
 
 			// Now do the sheet cells
-			int UsedRows = max( activeSheet->UsedRows(),  m_excel_app->GetActiveCell()->Row() + MAX_CELL_EXTEND ) ;
-			const int UsedColumns = max( activeSheet->UsedColumns(), MAX_CELL_EXTEND ) ;
+			int UsedRows = excel::last_row_to_scan( activeSheet, m_excel_app->GetActiveCell()->Row() ) ;
+			const int UsedColumns = excel::last_column_to_scan( activeSheet ) ;
 
 			for ( int iRow = 1 ; iRow <= UsedRows ; ++iRow )
 			{
@@ -895,7 +895,7 @@ void CFelixExcelIF::PerformSheetAutoTrans()
 					excel::range_ptr activeCell = activeSheet->Cell( iRow , 1 ) ;
 					activeCell->Select() ;
 					// maybe we found another used range...
-					UsedRows = max( activeSheet->UsedRows(), UsedRows ) ;
+					UsedRows = max( activeSheet->LastUsedRow(), UsedRows ) ;
 				}
 
 				// sanity check...

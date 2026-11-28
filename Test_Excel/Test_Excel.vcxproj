@@ -207,6 +207,7 @@
     <ClCompile Include="config_file_test.cpp" />
     <ClCompile Include="..\common\DispatchWrapper.cpp" />
     <ClCompile Include="..\ExcelAssist\ExcelAssist\DispatchWrapper_test.cpp" />
+    <ClCompile Include="excel_scan_bounds_test.cpp" />
     <ClCompile Include="excel_selection_writer_test.cpp" />
     <ClCompile Include="..\common\Exceptions.cpp" />
     <ClCompile Include="..\common\Exceptions_test.cpp" />
@@ -239,6 +240,7 @@
     <ClInclude Include="..\common\config_file.h" />
     <ClInclude Include="..\common\Exceptions.h" />
     <ClInclude Include="..\ExcelAssist\ExcelAssist\excel_application.h" />
+    <ClInclude Include="..\ExcelAssist\ExcelAssist\excel_scan_bounds.h" />
     <ClInclude Include="..\ExcelAssist\ExcelAssist\excel_selection_writer.h" />
     <ClInclude Include="..\ExcelAssist\ExcelAssist\fake_excel.h" />
     <ClInclude Include="..\common\input_device.h" />
