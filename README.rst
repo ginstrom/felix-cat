@@ -136,8 +136,8 @@ To re-enable an add-in that Office disabled (for example after a crash):
 2. Next to **Manage**, choose **Disabled Items**, then **Go**.
 3. Select the Felix add-in and choose **Enable**.
 4. Next to **Manage**, choose **COM Add-ins**, then **Go**.
-5. Tick **Felix Addin** (its description reads "Felix interface for
-   Word/Excel/PowerPoint") and choose **OK**.
+5. Tick **Felix Addin** (its description reads "Felix interface for Word",
+   "Excel" or "PowerPoint", depending on the application) and choose **OK**.
 
 See the manual's
 `Troubleshooting <https://ginstrom.github.io/felix-cat/manual/en/troubleshooting.html#word>`_
