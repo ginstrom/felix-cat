@@ -1,21 +1,24 @@
-# Release build: pushing a tag like v3.0.2 builds Felix and the add-ins,
-# signs Felix's own program files through SignPath, builds the installer from
-# the signed files, signs the installer, verifies every signature, and
-# attaches the installer to a DRAFT GitHub release for the maintainer to
-# review and publish.
+# Release build: a tag like v3.0.2 builds Felix and the add-ins, builds the
+# installer, writes SHA256SUMS.txt, attests build provenance, and attaches
+# both files to a DRAFT GitHub release for the maintainer to publish.
 #
-# Signing runs only when the repository variable SIGNPATH_ORGANIZATION_ID is
-# set (with the secret SIGNPATH_API_TOKEN). Until then this produces an
-# unsigned draft release. The SignPath slugs are repository variables too, with
-# the defaults below; set SIGNPATH_SIGNING_POLICY_SLUG to "test-signing" to
-# try the pipeline with SignPath's test certificate.
+# Releases are UNSIGNED for now. The two "SIGNING PLACEHOLDER" steps, around
+# "Build installer", mark where signing goes, in the order it must run: sign
+# Felix's program files, build the installer from them, sign the installer,
+# then "Verify signatures". These steps run only when the repository variable
+# SIGNING_ENABLED is 'true', and until a real signer is added the placeholders
+# fail the run on purpose. What will be signed:
+# docs/CODE_SIGNING_POLICY.md.
 #
-# What is signed and why: CODE_SIGNING_POLICY.md.
+# Running this workflow by hand (workflow_dispatch) is a dry run: it does
+# everything except create the release, and the files are in the run's
+# felix-<version>-release artifact.
 name: Release
 
 on:
   push:
     tags: ['v*']
+  workflow_dispatch:        # dry run: everything except creating the release
 
 permissions:
   contents: read
@@ -25,34 +28,43 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  SIGN: ${{ vars.SIGNPATH_ORGANIZATION_ID != '' }}
-  SIGNPATH_PROJECT_SLUG: ${{ vars.SIGNPATH_PROJECT_SLUG || 'felix-cat' }}
-  SIGNPATH_SIGNING_POLICY_SLUG: ${{ vars.SIGNPATH_SIGNING_POLICY_SLUG || 'release-signing' }}
+  SIGNING_ENABLED: ${{ vars.SIGNING_ENABLED == 'true' }}
+  # True only for tag pushes: dispatch runs never create a release.
+  PUBLISH: ${{ github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v') }}
 
 jobs:
   release:
     runs-on: windows-latest
-    # Includes the wait while the maintainer approves the two signing requests.
-    timeout-minutes: 240
+    timeout-minutes: 90
     permissions:
-      contents: write   # create the draft release
-      actions: read     # SignPath reads this run's artifacts
+      contents: write       # create the draft release
+      id-token: write       # attestation: Sigstore certificate via OIDC
+      attestations: write   # attestation: store it on GitHub
     steps:
       - uses: actions/checkout@v7
 
-      - name: Version from tag
+      - name: Version
         shell: pwsh
+        env:
+          REF_TYPE: ${{ github.ref_type }}
+          REF_NAME: ${{ github.ref_name }}
         run: |
           $ErrorActionPreference = 'Stop'
-          $version = '${{ github.ref_name }}'.TrimStart('v')
-          if ($version -notmatch '^\d+\.\d+\.\d+$') { throw "Tag ${{ github.ref_name }} is not vX.Y.Z" }
-          # The version in the source must match the tag (see BUILDING.md,
-          # "Version number"): the installer and Felix's VERSIONINFO agree.
           $iss = Get-Content setup\FelixSetup.iss -Raw
-          if ($iss -notmatch '#define AppVersion "([^"]+)"') { throw 'AppVersion not found in FelixSetup.iss' }
-          if ($Matches[1] -ne $version) { throw "Tag says $version but setup\FelixSetup.iss says $($Matches[1]). Bump the version first." }
+          if ($iss -notmatch '#define AppVersion "([^"]+)"') { throw 'AppVersion not found in setup\FelixSetup.iss' }
+          $appVersion = $Matches[1]
+          if ($env:REF_TYPE -eq 'tag') {
+            $version = $env:REF_NAME.TrimStart('v')
+            if ($version -notmatch '^\d+\.\d+\.\d+$') { throw "Tag $env:REF_NAME is not vX.Y.Z" }
+            # The version in the source must match the tag (see BUILDING.md,
+            # "Version number"): the installer and Felix's VERSIONINFO agree.
+            if ($appVersion -ne $version) { throw "Tag says $version but setup\FelixSetup.iss says $appVersion. Bump the version first." }
+          } else {
+            # Dry run from a branch: use the version in the source.
+            $version = $appVersion
+          }
           "FELIX_VERSION=$version" >> $env:GITHUB_ENV
-          "Signing: $env:SIGN"
+          "Version: $version; signing: $env:SIGNING_ENABLED; publish: $env:PUBLISH"
 
       - uses: ./.github/actions/setup-felix-deps
 
@@ -65,53 +77,24 @@ jobs:
         shell: pwsh
         run: >
           powershell -NoProfile -ExecutionPolicy Bypass -File tools\build-installer.ps1
-          -Unsigned -NoRegister -SkipInstaller
+          -Unsigned -AllPlatforms -NoRegister -SkipInstaller
 
-      # Only Felix's own files. SciLexer.dll (Scintilla) and the Visual C++
-      # runtimes are third-party and are not signed with Felix's certificate.
-      - name: Stage program files
+      - name: Sign program files (SIGNING PLACEHOLDER)
+        if: env.SIGNING_ENABLED == 'true'
         shell: pwsh
         run: |
-          $ErrorActionPreference = 'Stop'
-          $s = 'staging\program-files'
-          New-Item -ItemType Directory "$s\lang" -Force | Out-Null
-          Copy-Item Felix\Unicode_Release\Felix.exe $s
-          Copy-Item Felix\Unicode_Release\lang\EngResource.dll, Felix\Unicode_Release\lang\JpnResource.dll "$s\lang"
-          foreach ($a in 'WordAssist', 'ExcelAssist', 'PowerPointAssist') { Copy-Item "$a\$a\x64\Release\$a.dll" $s }
-          Get-ChildItem $s -Recurse -File | ForEach-Object { $_.FullName }
-
-      - name: Upload unsigned program files
-        id: upload-unsigned
-        uses: actions/upload-artifact@v7
-        with:
-          name: felix-${{ env.FELIX_VERSION }}-program-files-unsigned
-          path: staging/program-files/
-          if-no-files-found: error
-
-      - name: Sign program files
-        if: env.SIGN == 'true'
-        uses: signpath/github-action-submit-signing-request@v2
-        with:
-          api-token: ${{ secrets.SIGNPATH_API_TOKEN }}
-          organization-id: ${{ vars.SIGNPATH_ORGANIZATION_ID }}
-          project-slug: ${{ env.SIGNPATH_PROJECT_SLUG }}
-          signing-policy-slug: ${{ env.SIGNPATH_SIGNING_POLICY_SLUG }}
-          artifact-configuration-slug: program-files
-          github-artifact-id: ${{ steps.upload-unsigned.outputs.artifact-id }}
-          wait-for-completion: true
-          # Long enough for the maintainer to approve the request.
-          wait-for-completion-timeout-in-seconds: 7200
-          output-artifact-directory: staging/program-files-signed
-
-      - name: Put signed program files in place
-        if: env.SIGN == 'true'
-        shell: pwsh
-        run: |
-          $ErrorActionPreference = 'Stop'
-          $s = 'staging\program-files-signed'
-          Copy-Item "$s\Felix.exe" Felix\Unicode_Release\ -Force
-          Copy-Item "$s\lang\*.dll" Felix\Unicode_Release\lang\ -Force
-          foreach ($a in 'WordAssist', 'ExcelAssist', 'PowerPointAssist') { Copy-Item "$s\$a.dll" "$a\$a\x64\Release\" -Force }
+          # A signer added here must sign only Felix's own program files:
+          #   Felix\Unicode_Release\Felix.exe
+          #   Felix\Unicode_Release\lang\EngResource.dll
+          #   Felix\Unicode_Release\lang\JpnResource.dll
+          #   <A>\<A>\x64\Release\<A>.dll for A = WordAssist, ExcelAssist, PowerPointAssist
+          # Stage them, sign them, and copy the signed files back to those paths
+          # before the installer is built. SciLexer.dll (Scintilla) and the
+          # Visual C++ runtimes are third-party and are not signed with Felix's
+          # certificate. A signing service that reads files from this run's
+          # artifacts needs an upload-artifact step here and `actions: read` in
+          # the job's permissions.
+          throw 'SIGNING_ENABLED is true, but no signing step has been added here yet.'
 
       - name: Build installer
         shell: pwsh
@@ -119,35 +102,19 @@ jobs:
           powershell -NoProfile -ExecutionPolicy Bypass -File tools\build-installer.ps1
           -Unsigned -SkipBuild -AppVersion $env:FELIX_VERSION
 
-      - name: Upload unsigned installer
-        id: upload-installer
-        uses: actions/upload-artifact@v7
-        with:
-          name: felix-${{ env.FELIX_VERSION }}-installer-unsigned
-          path: setup/Output/Felix_Setup_${{ env.FELIX_VERSION }}.exe
-          if-no-files-found: error
-
-      - name: Sign installer
-        if: env.SIGN == 'true'
-        uses: signpath/github-action-submit-signing-request@v2
-        with:
-          api-token: ${{ secrets.SIGNPATH_API_TOKEN }}
-          organization-id: ${{ vars.SIGNPATH_ORGANIZATION_ID }}
-          project-slug: ${{ env.SIGNPATH_PROJECT_SLUG }}
-          signing-policy-slug: ${{ env.SIGNPATH_SIGNING_POLICY_SLUG }}
-          artifact-configuration-slug: installer
-          github-artifact-id: ${{ steps.upload-installer.outputs.artifact-id }}
-          wait-for-completion: true
-          wait-for-completion-timeout-in-seconds: 7200
-          output-artifact-directory: staging/installer-signed
+      - name: Sign installer (SIGNING PLACEHOLDER)
+        if: env.SIGNING_ENABLED == 'true'
+        shell: pwsh
+        run: |
+          # A signer added here signs setup\Output\Felix_Setup_<version>.exe in
+          # place. It must run before "Release files", which hashes the installer.
+          throw 'SIGNING_ENABLED is true, but no signing step has been added here yet.'
 
       - name: Verify signatures
-        if: env.SIGN == 'true'
+        if: env.SIGNING_ENABLED == 'true'
         shell: pwsh
         run: |
           $ErrorActionPreference = 'Stop'
-          $installer = "staging\installer-signed\Felix_Setup_$env:FELIX_VERSION.exe"
-          Copy-Item $installer setup\Output\ -Force
           $files = @(
             'Felix\Unicode_Release\Felix.exe',
             'Felix\Unicode_Release\lang\EngResource.dll',
@@ -174,16 +141,37 @@ jobs:
           }
           if ($failed) { throw "Signature check failed: $($failed -join ', ')" }
 
+      # Writes setup\Output\SHA256SUMS.txt and setup\Output\release-notes.md.
+      - name: Release files
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          tools\make-release-files.ps1 -Version $env:FELIX_VERSION -Signed:($env:SIGNING_ENABLED -eq 'true')
+
+      - name: Attest build provenance
+        uses: actions/attest@v4
+        with:
+          subject-path: setup/Output/Felix_Setup_${{ env.FELIX_VERSION }}.exe
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: felix-${{ env.FELIX_VERSION }}-release
+          path: |
+            setup/Output/Felix_Setup_${{ env.FELIX_VERSION }}.exe
+            setup/Output/SHA256SUMS.txt
+            setup/Output/release-notes.md
+          if-no-files-found: error
+
       - name: Create draft release
+        if: env.PUBLISH == 'true'
         shell: pwsh
         env:
           GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.ref_name }}
         run: |
           $ErrorActionPreference = 'Stop'
           $installer = "setup\Output\Felix_Setup_$env:FELIX_VERSION.exe"
-          $notes = "setup\release-notes-$env:FELIX_VERSION.md"
           $title = "Felix $env:FELIX_VERSION"
-          if ($env:SIGN -ne 'true') { $title += ' (UNSIGNED)' }
-          $ghArgs = @('release', 'create', '${{ github.ref_name }}', $installer, '--draft', '--verify-tag', '--title', $title)
-          if (Test-Path $notes) { $ghArgs += @('--notes-file', $notes) } else { $ghArgs += @('--notes', "Felix $env:FELIX_VERSION") }
-          gh @ghArgs
+          if ($env:SIGNING_ENABLED -ne 'true') { $title += ' (unsigned)' }
+          gh release create $env:TAG $installer setup\Output\SHA256SUMS.txt --draft --verify-tag --title $title --notes-file setup\Output\release-notes.md
+          if ($LASTEXITCODE -ne 0) { throw "gh release create failed with exit code $LASTEXITCODE" }

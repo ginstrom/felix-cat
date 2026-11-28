@@ -52,8 +52,21 @@ Edit only `.github/workflows/release.yml`. Target structure (keep existing step 
 The live run (dispatch/tag) is the user's, and the pushed-branch CI run is step 06; record both as not done here.
 
 ## Completion criteria
-- [ ] `release.yml` matches the structure above; checks 1-4 recorded.
-- [ ] No SignPath text remains under `.github`.
-- [ ] Index status updated; one commit if the brief says so.
+- [x] `release.yml` matches the structure above; checks 1-4 recorded.
+- [x] No SignPath text remains under `.github`.
+- [x] Index status updated; one commit if the brief says so.
 
 ## Execution record
+
+### Run 2026-11-29 (engineer; commit with this record)
+No `runlog` (no Python); commands run directly from the worktree in Git Bash. `pwsh`, `actionlint` and any YAML parser (no `ConvertFrom-Yaml`, no `js-yaml` for Node) are absent; nothing was installed.
+- Change: `.github/workflows/release.yml` rewritten to the structure above. Only that file (plus this record and the index) changed.
+- Baseline (red): before the rewrite, `grep -rn -i signpath .github | wc -l` gave 20.
+- Check 1: after, `grep -rn -i signpath .github` prints nothing, exit 1. `grep -n "SIGNING_ENABLED\|PUBLISH" .github/workflows/release.yml`: env `SIGNING_ENABLED: ${{ vars.SIGNING_ENABLED == 'true' }}` and `PUBLISH: ${{ github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v') }}`; `if: env.SIGNING_ENABLED == 'true'` on exactly "Sign program files (SIGNING PLACEHOLDER)", "Sign installer (SIGNING PLACEHOLDER)", "Verify signatures"; `if: env.PUBLISH == 'true'` only on "Create draft release". Step order (`grep -n "name:"`): Version, setup-felix-deps, setup-msbuild, Install Inno Setup, Build binaries, Sign program files (PLACEHOLDER), Build installer, Sign installer (PLACEHOLDER), Verify signatures, Release files, Attest build provenance, upload `felix-<v>-release`, Create draft release.
+- Check 2: no YAML parser available; reviewed by eye (no tabs: `grep -c $'\t'` = 0; block scalars and step indentation match `build.yml`). The real parse is the pushed-branch run in step 06 (the workflow file is parsed on push even though it only triggers on tags/dispatch).
+- Check 3: dummy `Felix_Setup_3.0.1.exe` in a scratch folder; ran the workflow's exact "Release files" line plus the release step's title logic under Windows PowerShell 5.1 with `$env:SIGNING_ENABLED` = `false` and `true`: both exit 0; SHA256SUMS.txt is `<64 hex>  Felix_Setup_3.0.1.exe`; notes contain the `Get-FileHash` and `gh attestation verify` lines with 3.0.1, no BOM, no CR; "not code-signed" present only for `false`. Titles: `Felix 3.0.1 (unsigned)` and `Felix 3.0.1` (C4). `-Signed:($env:SIGNING_ENABLED -eq 'true')` binds correctly in 5.1.
+- Version step: extracted its `run:` body to a scratch .ps1 and ran it under 5.1 with `REF_TYPE`/`REF_NAME`: tag `v3.0.1` -> `FELIX_VERSION=3.0.1`; tag `v3.0.2` -> "Tag says 3.0.2 but setup\FelixSetup.iss says 3.0.1. Bump the version first.", exit 1; tag `v3.0` -> "Tag v3.0 is not vX.Y.Z", exit 1; branch `ci/unsigned-releases` -> `FELIX_VERSION=3.0.1`.
+- Check 4: top-level `permissions: contents: read`; job `release` has exactly `contents: write`, `id-token: write`, `attestations: write` (`actions: read` removed); `concurrency` unchanged; `timeout-minutes: 90`.
+- Not done here: the live tag run and the dispatch dry run (user, design 8.2) and the pushed-branch CI run (step 06).
+- Deviations: (a) The Version step branches on `github.ref_type == 'tag'` rather than event name, so a dispatch from a tag also runs the tag check (it still never publishes; `PUBLISH` is false for dispatch). (b) `github.ref_name` reaches scripts through step `env` (`REF_NAME`, `TAG`) instead of `${{ }}` interpolation inside the script, so branch names can't inject PowerShell. (c) The header comment says "two SIGNING PLACEHOLDER steps ... then Verify signatures" instead of design 5.2's "three", because only two steps carry that label. (d) `gh release create` exit code is checked explicitly (native command failures don't stop pwsh). (e) The placeholder comment describes "a signing service that reads files from this run's artifacts" instead of naming SignPath, because check 1 forbids the name under `.github`.
+- For later steps: step 04's BUILDING.md should describe the steps by these names; artifact `felix-<v>-release`; title `Felix <v> (unsigned)`; dispatch = dry run with no release; re-running a tag after the draft exists fails at `gh release create`.
