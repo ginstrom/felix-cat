@@ -11,14 +11,15 @@
 # docs/CODE_SIGNING_POLICY.md.
 #
 # Running this workflow by hand (workflow_dispatch) is a dry run: it does
-# everything except create the release, and the files are in the run's
-# felix-<version>-release artifact.
+# everything except attest and create the release, and the files are in the
+# run's felix-<version>-release artifact. Only tag builds are attested, so an
+# attestation for the installer always means a build from a release tag.
 name: Release
 
 on:
   push:
     tags: ['v*']
-  workflow_dispatch:        # dry run: everything except creating the release
+  workflow_dispatch:        # dry run: no attestation, no release
 
 permissions:
   contents: read
@@ -29,7 +30,7 @@ concurrency:
 
 env:
   SIGNING_ENABLED: ${{ vars.SIGNING_ENABLED == 'true' }}
-  # True only for tag pushes: dispatch runs never create a release.
+  # True only for tag pushes: dispatch runs never attest or create a release.
   PUBLISH: ${{ github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v') }}
 
 jobs:
@@ -149,6 +150,9 @@ jobs:
           tools\make-release-files.ps1 -Version $env:FELIX_VERSION -Signed:($env:SIGNING_ENABLED -eq 'true')
 
       - name: Attest build provenance
+        # Tag pushes only: `gh attestation verify --repo` accepts any ref, so a
+        # dry-run attestation could not be told apart from a release build.
+        if: env.PUBLISH == 'true'
         uses: actions/attest@v4
         with:
           subject-path: setup/Output/Felix_Setup_${{ env.FELIX_VERSION }}.exe
