@@ -434,7 +434,6 @@
     <ClInclude Include="keyboard_shortcuts_ppt.h" />
     <ClInclude Include="menu_manip.h" />
     <ClInclude Include="nav_query_dlg.h" />
-    <ClInclude Include="OfficeImports.h" />
     <ClInclude Include="PowerPointEventDefs.h" />
     <ClInclude Include="PowerPointImports.h" />
     <ClInclude Include="PowerPointInterface.h" />

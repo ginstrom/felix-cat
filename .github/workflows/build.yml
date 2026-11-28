@@ -1,0 +1,71 @@
+# Builds Felix (Win32) and the Word, Excel and PowerPoint add-ins (Win32 and
+# x64) in Release on a clean runner, then the (unsigned) installer, and
+# uploads both for inspection. Releases are built by release.yml.
+name: Build
+
+on:
+  push:
+    branches: ['**']
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: windows-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: ./.github/actions/setup-felix-deps
+
+      - uses: microsoft/setup-msbuild@v3
+
+      - name: Install Inno Setup
+        run: choco install innosetup -y --no-progress
+
+      - name: Build binaries and installer
+        shell: pwsh
+        run: >
+          powershell -NoProfile -ExecutionPolicy Bypass -File tools\build-installer.ps1
+          -Unsigned -AllPlatforms -NoRegister
+
+      - name: Release files
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $iss = Get-Content setup\FelixSetup.iss -Raw
+          if ($iss -notmatch '#define AppVersion "([^"]+)"') { throw 'AppVersion not found in setup\FelixSetup.iss' }
+          tools\make-release-files.ps1 -Version $Matches[1]
+
+      - name: Collect binaries
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $out = 'staging\binaries'
+          New-Item -ItemType Directory "$out\lang", "$out\addins-x64", "$out\addins-x86" -Force | Out-Null
+          Copy-Item Felix\Unicode_Release\Felix.exe, Felix\Unicode_Release\Felix.tlb, Felix\Unicode_Release\SciLexer.dll $out
+          Copy-Item Felix\Unicode_Release\lang\*.dll "$out\lang"
+          Copy-Item Felix\Unicode_Release\html "$out\html" -Recurse
+          foreach ($a in 'WordAssist', 'ExcelAssist', 'PowerPointAssist') {
+            Copy-Item "$a\$a\x64\Release\$a.dll" "$out\addins-x64"
+            Copy-Item "$a\$a\Release\$a.dll" "$out\addins-x86"
+          }
+          Get-ChildItem $out -Recurse -File -Include *.exe, *.dll | ForEach-Object { $_.FullName.Substring((Get-Location).Path.Length + 1) }
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: felix-binaries-${{ github.sha }}
+          path: staging/binaries/
+          if-no-files-found: error
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: felix-installer-${{ github.sha }}
+          path: |
+            setup/Output/Felix_Setup_*.exe
+            setup/Output/SHA256SUMS.txt
+            setup/Output/release-notes.md
+          if-no-files-found: error

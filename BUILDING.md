@@ -10,8 +10,10 @@ add-ins**, which now also build as 64-bit for 64-bit Office (section 6).
   **Desktop development with C++** workload, plus these individual components:
   - *C++ ATL for latest v145 build tools (x86 & x64)*
   - a Windows 10/11 SDK (installed by the workload)
-- **Microsoft Office** (Excel and Word). Felix `#import`s the Office type
-  libraries by their registry ID, so Office must be installed on the build machine.
+- **Microsoft Office is not needed to build.** The C++ headers generated from
+  Office's type libraries are committed in `common\office_typelibs\` (see its
+  `README.md`, including how to regenerate them). You still need Office to
+  run the add-ins and their tests.
 
 ## 2. Put the libraries in `third_party\`
 
@@ -32,11 +34,16 @@ other locations, copy `Dependencies.local.props.example` to
 > `Dependencies.props` picks `lib32-msvc-14.5` or `lib64-msvc-14.5` per platform.)
 
 Scintilla's headers are already in `common\`. The build copies `Felix\SciLexer.dll`
-next to `Felix.exe`.
+next to `Felix.exe`. It is an old Scintilla 2.01 build; migrating to Scintilla 5 is
+tracked in [ginstrom/felix-cat#44](https://github.com/ginstrom/felix-cat/issues/44).
 
-**No Office on the build machine?** Set `<FelixNoExcel>true</FelixNoExcel>` in
-`Dependencies.local.props`. Felix then builds without the Excel type libraries,
-and Excel export shows a "not available" message instead.
+`BoostDir` and `WtlDir` can also come from environment variables of the same
+name (MSBuild reads them as properties); the GitHub Actions build does that
+(`.github\actions\setup-felix-deps`).
+
+`<FelixNoExcel>true</FelixNoExcel>` in `Dependencies.local.props` still builds
+Felix without Excel export (it shows a "not available" message instead), but
+it's no longer needed for building without Office.
 
 **Lua is no longer needed.** Lua was never actually used: Felix and Word Assist
 only created an unused Lua VM at startup. That code, and the Lua, LuaBridge and
@@ -165,13 +172,11 @@ inside Office, so **their bitness must match Office's**: build **x64** for
 64-bit Office (the default for current Office) and **Win32** for 32-bit Office.
 They talk to Felix.exe across processes, so Felix stays 32-bit either way.
 
-**Office must be installed to build them.** They `#import` the Office type
-libraries (MSO, VBA extensibility, Word, Excel, PowerPoint) by registry ID.
-Without Office the build stops at `error C3505: cannot load type library
-'{2DF8D04C-...}'`. They also `#import "Felix.tlb"`, which the Felix build
-produces (`FelixTlbDir` in `Dependencies.props`). Built and tested against
-64-bit Microsoft 365 (Office 16.0): the newer type libraries needed no extra
-`rename()`s.
+**Office type libraries.** The add-ins use the Office type libraries (MSO, VBA
+extensibility, Word, Excel, PowerPoint, Add-in Designer) through the headers
+in `common\office_typelibs\`, generated from 64-bit Microsoft 365 (Office
+16.0), so Office isn't needed to build them. They also `#import "Felix.tlb"`,
+which the Felix build produces (`FelixTlbDir` in `Dependencies.props`).
 
 **64-bit Boost.** The x64 builds need Boost.Filesystem and Boost.Test built for
 x64 in `<BoostDir>\lib64-msvc-14.5\`. Either install the prebuilt
@@ -279,7 +284,8 @@ Windows 10 or later, asks for admin rights, and:
 - installs the Word, Excel and PowerPoint add-ins (64-bit, each optional) and
   registers them with Office;
 - installs the Visual C++ runtimes (x86 for Felix, x64 for the add-ins), taken
-  from the local Visual Studio (`VcRedist` in the script);
+  from the local Visual Studio (`tools\build-installer.ps1` finds them and
+  passes `/DVcRedist=<folder>`; or use `-VcRedist <folder>`);
 - registers Felix's COM server (`Felix.exe /RegServer`), the `.ftm`, `.fgloss`
   and `.fprefs` file types, and a Start menu shortcut.
 
@@ -288,8 +294,49 @@ Uninstalling removes all of that, but leaves each user's
 memories and glossaries alone. (The 2015 installer's uninstaller deleted
 `%LOCALAPPDATA%\Felix`.)
 
-**Code signing.** Unsigned installers make Windows SmartScreen warn about an
-"unknown publisher". To sign a release, get a code-signing certificate (an
+**Releases from GitHub Actions.** Official releases are built by
+`.github\workflows\release.yml`, not on a personal machine, and are
+**unsigned** for now (what a future signed release would cover is drafted in
+`docs/CODE_SIGNING_POLICY.md`). To make one:
+
+1. Bump the version (below) and, optionally, write `setup\release-notes-<v>.md`.
+   Merge, then push the tag `v<v>` (for example `v3.0.2`). The tag must match
+   `AppVersion` in `setup\FelixSetup.iss`, or the run fails.
+2. The workflow builds Felix and the add-ins on a clean runner, builds the
+   installer, and writes `SHA256SUMS.txt`. For tag builds it also attests the
+   installer's build provenance (`actions/attest`). It uploads the workflow
+   artifact `felix-<v>-release` (installer, `SHA256SUMS.txt`, `release-notes.md`)
+   and creates the **draft** release `Felix <v> (unsigned)` with two assets: the
+   installer and `SHA256SUMS.txt`. The notes are `setup\release-notes-<v>.md`
+   followed by an "Installing and verifying" section generated from
+   `.github\release-notes-install.md`.
+3. Review the draft, then publish it.
+
+Other things to know:
+
+- **Dry run.** Actions > Release > Run workflow (`workflow_dispatch`) on any
+  branch builds everything and uploads the `felix-<v>-release` artifact, but
+  creates no release and no attestation.
+- **Re-running a tag.** If the draft release already exists, re-running that
+  tag's run fails at `gh release create`. Delete the draft and re-run.
+- **No secrets are needed.** The workflow uses only the built-in `GITHUB_TOKEN`.
+- **Signing placeholders.** `release.yml` has two steps marked "SIGNING
+  PLACEHOLDER" (sign program files, before the installer is built; sign the
+  installer, after), plus a "Verify signatures" step. They run only when the
+  repository variable `SIGNING_ENABLED` is `true`. Leave it unset. Until a real
+  signer is added to those steps, setting it to `true` fails the run on purpose,
+  so a release is never labeled signed when it isn't.
+- **SciLexer.** `Felix\SciLexer.dll` is an old third-party Scintilla build that
+  is shipped as provided. Migrating to Scintilla 5 is tracked in
+  [ginstrom/felix-cat#44](https://github.com/ginstrom/felix-cat/issues/44).
+
+`.github\workflows\build.yml` builds the binaries (add-ins for both
+platforms) and an unsigned installer on every push and pull request.
+
+**Signing locally.** Official releases are currently unsigned; don't sign them
+with a self-signed certificate, which gives users no benefit. Unsigned
+installers make Windows SmartScreen warn about an
+"unknown publisher". To sign a build yourself, get a code-signing certificate (an
 OV/individual certificate from a certificate authority, or Microsoft's Azure
 Artifact Signing service), then copy `tools\signing.example.json` to
 `signing.local.json` at the repo root and fill in one method:

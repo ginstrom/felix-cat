@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Not in use: releases are unsigned. Kept for a future SignPath application; see docs/CODE_SIGNING_POLICY.md -->
+<!--
+  SignPath artifact configuration "installer" for the felix-cat project.
+  Paste this into SignPath (Project > Artifact configurations > installer).
+
+  release.yml uploads setup/Output/Felix_Setup_<version>.exe as a GitHub
+  Actions artifact (a zip holding that one file), built from the program
+  files already signed with the "program-files" configuration.
+-->
+<artifact-configuration xmlns="http://signpath.io/artifact-configuration/v1">
+  <zip-file>
+    <pe-file path="Felix_Setup_*.exe" max-matches="1">
+      <authenticode-sign />
+    </pe-file>
+  </zip-file>
+</artifact-configuration>

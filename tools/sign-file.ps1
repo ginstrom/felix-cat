@@ -5,7 +5,7 @@
 # tools\build-installer.ps1 calls this for Felix's binaries, and Inno Setup
 # calls it for the installer and uninstaller. The settings file is not in git:
 # copy tools\signing.example.json to signing.local.json at the repo root (or
-# pass -Config) and fill in one method. See BUILDING.md, "Code signing".
+# pass -Config) and fill in one method. See BUILDING.md, "Signing locally".
 
 param(
     [Parameter(Mandatory = $true)] [string[]]$Path,

@@ -1,0 +1,181 @@
+# Release build: a tag like v3.0.2 builds Felix and the add-ins, builds the
+# installer, writes SHA256SUMS.txt, attests build provenance, and attaches
+# both files to a DRAFT GitHub release for the maintainer to publish.
+#
+# Releases are UNSIGNED for now. The two "SIGNING PLACEHOLDER" steps, around
+# "Build installer", mark where signing goes, in the order it must run: sign
+# Felix's program files, build the installer from them, sign the installer,
+# then "Verify signatures". These steps run only when the repository variable
+# SIGNING_ENABLED is 'true', and until a real signer is added the placeholders
+# fail the run on purpose. What will be signed:
+# docs/CODE_SIGNING_POLICY.md.
+#
+# Running this workflow by hand (workflow_dispatch) is a dry run: it does
+# everything except attest and create the release, and the files are in the
+# run's felix-<version>-release artifact. Only tag builds are attested, so an
+# attestation for the installer always means a build from a release tag.
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:        # dry run: no attestation, no release
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  SIGNING_ENABLED: ${{ vars.SIGNING_ENABLED == 'true' }}
+  # True only for tag pushes: dispatch runs never attest or create a release.
+  PUBLISH: ${{ github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v') }}
+
+jobs:
+  release:
+    runs-on: windows-latest
+    timeout-minutes: 90
+    permissions:
+      contents: write       # create the draft release
+      id-token: write       # attestation: Sigstore certificate via OIDC
+      attestations: write   # attestation: store it on GitHub
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Version
+        shell: pwsh
+        env:
+          REF_TYPE: ${{ github.ref_type }}
+          REF_NAME: ${{ github.ref_name }}
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $iss = Get-Content setup\FelixSetup.iss -Raw
+          if ($iss -notmatch '#define AppVersion "([^"]+)"') { throw 'AppVersion not found in setup\FelixSetup.iss' }
+          $appVersion = $Matches[1]
+          if ($env:REF_TYPE -eq 'tag') {
+            $version = $env:REF_NAME.TrimStart('v')
+            if ($version -notmatch '^\d+\.\d+\.\d+$') { throw "Tag $env:REF_NAME is not vX.Y.Z" }
+            # The version in the source must match the tag (see BUILDING.md,
+            # "Version number"): the installer and Felix's VERSIONINFO agree.
+            if ($appVersion -ne $version) { throw "Tag says $version but setup\FelixSetup.iss says $appVersion. Bump the version first." }
+          } else {
+            # Dry run from a branch: use the version in the source.
+            $version = $appVersion
+          }
+          "FELIX_VERSION=$version" >> $env:GITHUB_ENV
+          "Version: $version; signing: $env:SIGNING_ENABLED; publish: $env:PUBLISH"
+
+      - uses: ./.github/actions/setup-felix-deps
+
+      - uses: microsoft/setup-msbuild@v3
+
+      - name: Install Inno Setup
+        run: choco install innosetup -y --no-progress
+
+      - name: Build binaries
+        shell: pwsh
+        run: >
+          powershell -NoProfile -ExecutionPolicy Bypass -File tools\build-installer.ps1
+          -Unsigned -AllPlatforms -NoRegister -SkipInstaller
+
+      - name: Sign program files (SIGNING PLACEHOLDER)
+        if: env.SIGNING_ENABLED == 'true'
+        shell: pwsh
+        run: |
+          # A signer added here must sign only Felix's own program files:
+          #   Felix\Unicode_Release\Felix.exe
+          #   Felix\Unicode_Release\lang\EngResource.dll
+          #   Felix\Unicode_Release\lang\JpnResource.dll
+          #   <A>\<A>\x64\Release\<A>.dll for A = WordAssist, ExcelAssist, PowerPointAssist
+          # Stage them, sign them, and copy the signed files back to those paths
+          # before the installer is built. SciLexer.dll (Scintilla) and the
+          # Visual C++ runtimes are third-party and are not signed with Felix's
+          # certificate. A signing service that reads files from this run's
+          # artifacts needs an upload-artifact step here and `actions: read` in
+          # the job's permissions.
+          throw 'SIGNING_ENABLED is true, but no signing step has been added here yet.'
+
+      - name: Build installer
+        shell: pwsh
+        run: >
+          powershell -NoProfile -ExecutionPolicy Bypass -File tools\build-installer.ps1
+          -Unsigned -SkipBuild -AppVersion $env:FELIX_VERSION
+
+      - name: Sign installer (SIGNING PLACEHOLDER)
+        if: env.SIGNING_ENABLED == 'true'
+        shell: pwsh
+        run: |
+          # A signer added here signs setup\Output\Felix_Setup_<version>.exe in
+          # place. It must run before "Release files", which hashes the installer.
+          throw 'SIGNING_ENABLED is true, but no signing step has been added here yet.'
+
+      - name: Verify signatures
+        if: env.SIGNING_ENABLED == 'true'
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $files = @(
+            'Felix\Unicode_Release\Felix.exe',
+            'Felix\Unicode_Release\lang\EngResource.dll',
+            'Felix\Unicode_Release\lang\JpnResource.dll',
+            'WordAssist\WordAssist\x64\Release\WordAssist.dll',
+            'ExcelAssist\ExcelAssist\x64\Release\ExcelAssist.dll',
+            'PowerPointAssist\PowerPointAssist\x64\Release\PowerPointAssist.dll',
+            "setup\Output\Felix_Setup_$env:FELIX_VERSION.exe"
+          )
+          $signtool = Get-ChildItem "${env:ProgramFiles(x86)}\Windows Kits\10\bin\*\x64\signtool.exe" |
+            Sort-Object FullName -Descending | Select-Object -First 1
+          $failed = @()
+          foreach ($f in $files) {
+            & $signtool.FullName verify /pa /v $f
+            if ($LASTEXITCODE -ne 0) { $failed += $f }
+          }
+          # The installer must contain the signed program files: install it
+          # silently into a temp folder and check the files there too.
+          $dir = Join-Path $env:RUNNER_TEMP 'felix-install-check'
+          & "setup\Output\Felix_Setup_$env:FELIX_VERSION.exe" /VERYSILENT /SUPPRESSMSGBOXES /NORESTART "/DIR=$dir" /LOG="$env:RUNNER_TEMP\install.log" | Out-Null
+          foreach ($f in 'Felix.exe', 'lang\EngResource.dll', 'lang\JpnResource.dll', 'WordAssist.dll', 'ExcelAssist.dll', 'PowerPointAssist.dll') {
+            & $signtool.FullName verify /pa (Join-Path $dir $f)
+            if ($LASTEXITCODE -ne 0) { $failed += "installed $f" }
+          }
+          if ($failed) { throw "Signature check failed: $($failed -join ', ')" }
+
+      # Writes setup\Output\SHA256SUMS.txt and setup\Output\release-notes.md.
+      - name: Release files
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          tools\make-release-files.ps1 -Version $env:FELIX_VERSION -Signed:($env:SIGNING_ENABLED -eq 'true')
+
+      - name: Attest build provenance
+        # Tag pushes only: `gh attestation verify --repo` accepts any ref, so a
+        # dry-run attestation could not be told apart from a release build.
+        if: env.PUBLISH == 'true'
+        uses: actions/attest@v4
+        with:
+          subject-path: setup/Output/Felix_Setup_${{ env.FELIX_VERSION }}.exe
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: felix-${{ env.FELIX_VERSION }}-release
+          path: |
+            setup/Output/Felix_Setup_${{ env.FELIX_VERSION }}.exe
+            setup/Output/SHA256SUMS.txt
+            setup/Output/release-notes.md
+          if-no-files-found: error
+
+      - name: Create draft release
+        if: env.PUBLISH == 'true'
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.ref_name }}
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $installer = "setup\Output\Felix_Setup_$env:FELIX_VERSION.exe"
+          $title = "Felix $env:FELIX_VERSION"
+          if ($env:SIGNING_ENABLED -ne 'true') { $title += ' (unsigned)' }
+          gh release create $env:TAG $installer setup\Output\SHA256SUMS.txt --draft --verify-tag --title $title --notes-file setup\Output\release-notes.md
+          if ($LASTEXITCODE -ne 0) { throw "gh release create failed with exit code $LASTEXITCODE" }

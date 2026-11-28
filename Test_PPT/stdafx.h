@@ -116,8 +116,8 @@ using namespace boost::foreach ;
 
 #pragma warning( disable : 4278 )
 #pragma warning( disable : 4146 )
-//The following #import imports the IDTExtensibility2 interface based on its LIBID
-#import "libid:AC0714F2-3D04-11D1-AE7D-00A0C90F26F4" version("1.0") lcid("0")  raw_interfaces_only named_guids
+// IDTExtensibility2 (Add-in Designer), from a header generated from its type library
+#include "office_typelibs/addin_designer.h"
 
 #pragma warning( default : 4146 )
 #pragma warning( default : 4278 )

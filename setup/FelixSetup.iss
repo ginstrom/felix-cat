@@ -8,16 +8,28 @@
 ;   Felix\Felix.vcxproj                       Unicode_Release | Win32
 ;   Felix\EngResource, Felix\JpnResource      Unicode_Release | Win32
 ;   <App>Assist\<App>Assist\<App>Assist.vcxproj  Release | x64
-; then compile this script:  ISCC setup\FelixSetup.iss
+; then compile this script:  ISCC /DVcRedist=<folder with the vc_redist exes> setup\FelixSetup.iss
 ;
 ; The uninstaller removes only what this installer put in place. It leaves
 ; each user's %LOCALAPPDATA%\Felix (settings, customized templates, logs) and
 ; their memories and glossaries alone.
 
-#define AppVersion "3.0.1"
-#define Root ".."
+; Each of these can be set from the command line, e.g.
+;   ISCC /DAppVersion=3.0.2 /DVcRedist=<folder> setup\FelixSetup.iss
+; (tools\build-installer.ps1 and the GitHub Actions workflows do this.)
+#ifndef AppVersion
+  #define AppVersion "3.0.1"
+#endif
+; Repo root, which holds the built binaries.
+#ifndef SourceDir
+  #define SourceDir ".."
+#endif
+#define Root SourceDir
 #define FelixBin Root + "\Felix\Unicode_Release"
-#define VcRedist "C:\Program Files\Microsoft Visual Studio\18\Community\VC\Redist\MSVC\v145"
+; Folder with vc_redist.x86.exe and vc_redist.x64.exe (Microsoft-signed).
+#ifndef VcRedist
+  #error Define VcRedist: the folder with vc_redist.x86.exe and vc_redist.x64.exe (tools\build-installer.ps1 does this)
+#endif
 
 [Setup]
 AppId={{98802423-6787-4122-BCEC-08CC2E12F18E}
@@ -50,6 +62,7 @@ CloseApplications=yes
 OutputDir=Output
 OutputBaseFilename=Felix_Setup_{#AppVersion}
 
+; CI never defines SIGN; releases are unsigned (docs/CODE_SIGNING_POLICY.md).
 #ifdef SIGN
 ; Code signing: tools\build-installer.ps1 defines SIGN and the "felixsign"
 ; sign tool (tools\sign-file.ps1) when signing.local.json exists. Inno Setup
@@ -81,14 +94,14 @@ en.TypeCustom=Custom
 en.WordAddin=Word add-in (64-bit Office)
 en.ExcelAddin=Excel add-in (64-bit Office)
 en.PowerPointAddin=PowerPoint add-in (64-bit Office)
-en.InstallingRuntime=Installing the Visual C++ runtime...
+en.RuntimeFailed=Could not install the Visual C++ runtime (%1): %2
 en.RegisteringFelix=Registering Felix...
 jp.TypeFull=Felix と Office アドイン (すべて)
 jp.TypeCustom=カスタム
 jp.WordAddin=Word アドイン (64 ビット Office)
 jp.ExcelAddin=Excel アドイン (64 ビット Office)
 jp.PowerPointAddin=PowerPoint アドイン (64 ビット Office)
-jp.InstallingRuntime=Visual C++ ランタイムをインストールしています...
+jp.RuntimeFailed=Visual C++ ランタイム (%1) をインストールできませんでした: %2
 jp.RegisteringFelix=Felix を登録しています...
 
 [Files]
@@ -111,9 +124,10 @@ Source: {#Root}\WordAssist\WordAssist\x64\Release\WordAssist.dll; DestDir: {app}
 Source: {#Root}\ExcelAssist\ExcelAssist\x64\Release\ExcelAssist.dll; DestDir: {app}; Components: excel; Flags: ignoreversion regserver 64bit
 Source: {#Root}\PowerPointAssist\PowerPointAssist\x64\Release\PowerPointAssist.dll; DestDir: {app}; Components: powerpoint; Flags: ignoreversion regserver 64bit
 
-; Visual C++ runtimes (v14): x86 for Felix, x64 for the add-ins.
-Source: {#VcRedist}\vc_redist.x86.exe; DestDir: {tmp}; Flags: deleteafterinstall
-Source: {#VcRedist}\vc_redist.x64.exe; DestDir: {tmp}; Flags: deleteafterinstall
+; Visual C++ runtimes (v14): x86 for Felix, x64 for the add-ins. Not copied
+; with the other files: PrepareToInstall ([Code]) installs them first.
+Source: {#VcRedist}\vc_redist.x86.exe; Flags: dontcopy
+Source: {#VcRedist}\vc_redist.x64.exe; Flags: dontcopy
 
 [Registry]
 ; File types: Felix memories, glossaries and preferences.
@@ -134,11 +148,38 @@ Name: {group}\Felix; Filename: {app}\Felix.exe
 Name: {group}\{cm:UninstallProgram,Felix}; Filename: {uninstallexe}
 
 [Run]
-Filename: {tmp}\vc_redist.x86.exe; Parameters: "/install /quiet /norestart"; StatusMsg: {cm:InstallingRuntime}; Flags: waituntilterminated
-Filename: {tmp}\vc_redist.x64.exe; Parameters: "/install /quiet /norestart"; StatusMsg: {cm:InstallingRuntime}; Flags: waituntilterminated
 ; Felix's COM server (Felix.App), which the add-ins use to reach Felix.
 Filename: {app}\Felix.exe; Parameters: /RegServer; StatusMsg: {cm:RegisteringFelix}; Flags: waituntilterminated
 Filename: {app}\Felix.exe; Description: {cm:LaunchProgram,Felix}; Flags: nowait postinstall skipifsilent
 
 [UninstallRun]
 Filename: {app}\Felix.exe; Parameters: /UnregServer; RunOnceId: UnregisterFelix; Flags: waituntilterminated
+
+[Code]
+// Runs one Visual C++ runtime installer from the setup's embedded files.
+// Returns '' on success, or an error message.
+function InstallVcRedist(const FileName: String): String;
+var
+  ResultCode: Integer;
+begin
+  Result := '';
+  ExtractTemporaryFile(FileName);
+  if not Exec(ExpandConstant('{tmp}\') + FileName, '/install /quiet /norestart', '',
+              SW_HIDE, ewWaitUntilTerminated, ResultCode) then
+    Result := FmtMessage(CustomMessage('RuntimeFailed'), [FileName, SysErrorMessage(ResultCode)])
+  // 0 = installed, 1638 = a newer version is already installed,
+  // 3010 = installed, restart pending (the files are usable now).
+  else if (ResultCode <> 0) and (ResultCode <> 1638) and (ResultCode <> 3010) then
+    Result := FmtMessage(CustomMessage('RuntimeFailed'), [FileName, IntToStr(ResultCode)]);
+end;
+
+// The Office add-ins are registered (regsvr32) as soon as their files are
+// copied, before [Run], and they can't load without the Visual C++ runtime:
+// on a PC without it, registration failed and setup rolled everything back.
+// So install both runtimes before any file is copied.
+function PrepareToInstall(var NeedsRestart: Boolean): String;
+begin
+  Result := InstallVcRedist('vc_redist.x86.exe');
+  if Result = '' then
+    Result := InstallVcRedist('vc_redist.x64.exe');
+end;
