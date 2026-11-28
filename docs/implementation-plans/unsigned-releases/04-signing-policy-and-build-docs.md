@@ -28,7 +28,7 @@ Step 02 (BUILDING.md describes the final `release.yml`: dispatch dry run, `SIGNI
 - Exclusions: README and manual (step 03); workflows (step 02); no new signing mechanism.
 
 ## Verification
-1. `git ls-files CODE_SIGNING_POLICY.md` is empty; `rg -n CODE_SIGNING_POLICY` outside `docs/designs`, `docs/features`, `docs/implementation-plans` finds only `docs/CODE_SIGNING_POLICY.md` itself, comments in `.github/workflows/release.yml` and `.signpath` files (not README, not BUILDING.md's links as hyperlinks to the policy; a plain mention is fine).
+1. `git ls-files CODE_SIGNING_POLICY.md` is empty; `rg -n CODE_SIGNING_POLICY` outside `docs/designs`, `docs/features`, `docs/implementation-plans` finds only `docs/CODE_SIGNING_POLICY.md` itself, comments in `.github/workflows/release.yml` and `setup/FelixSetup.iss`, and plain-text mentions in `.signpath` files and `BUILDING.md` (not README, not BUILDING.md's links as hyperlinks to the policy; a plain mention is fine).
 2. The required SignPath line and "pending approval" text are present: `rg -n "pending approval|Free code signing provided by" docs/CODE_SIGNING_POLICY.md`.
 3. XML well-formedness of both `.signpath` files: `[xml](Get-Content -Raw <file>)` in PowerShell returns without error.
 4. `rg -n -i "signpath" BUILDING.md` finds nothing (or only the policy-draft reference); `rg -n "SIGNPATH_" .` outside plan/design docs finds nothing.

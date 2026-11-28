@@ -44,9 +44,9 @@ Felix's releases aren't code-signed yet. Code signing lets Windows show who
 published a program; without it, Windows treats the installer as coming from an
 unknown publisher. We plan to sign releases (see `Code signing status`_ below).
 
-Each release is built by GitHub Actions from a tagged commit, and comes with a
-checksum and a build provenance attestation that you can check (see `Verifying
-the download`_).
+Starting with 3.0.1, each release is built by GitHub Actions from a tagged
+commit, and comes with a checksum and a build provenance attestation that you
+can check (see `Verifying the download`_).
 
 SmartScreen
 ~~~~~~~~~~~
@@ -116,8 +116,7 @@ well; see `Code signing status`_.
 
 You can turn Smart App Control off, but that lowers protection for the whole PC,
 so we don't recommend doing it just for Felix. In most cases, recent Windows
-updates let you
-turn it back on without reinstalling Windows.
+updates let you turn it back on without reinstalling Windows.
 
 Office add-ins
 ~~~~~~~~~~~~~~

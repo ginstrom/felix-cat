@@ -71,9 +71,11 @@ therefore not be enough to get past Smart App Control.
 
 ## Privacy
 
-Felix doesn't collect usage data, has no telemetry and doesn't connect to the
-internet on its own. The release does not include or install `Felix.Utilities`
-(the old update tool; an old Felix 2.x install could still have it registered).
+Felix doesn't collect usage data and has no telemetry. At startup (after the
+first launch) Felix calls `Felix.Utilities.CheckUpdates`, if that old update
+tool is registered on the PC (for example, left by a Felix 2.x install). The
+release does not include or install `Felix.Utilities`, so a clean install of
+this release makes no such call.
 
 It opens web pages only when you ask. Help and FAQ in Felix, and the help
 buttons in the add-ins, open the online manual (`ginstrom.github.io/felix-cat`)
